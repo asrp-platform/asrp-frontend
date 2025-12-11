@@ -1,0 +1,49 @@
+@use "../../../shared/mixins" as m;
+
+.outerContainer {
+  z-index: 9999;
+  bottom: 20px;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 1200px) {
+    bottom: 20px;
+  }
+}
+
+.innerContainer {
+  @include m.card-style;
+  margin-inline: 10px;
+  background-color: #f7f8fa;
+
+  @media (min-width: 1200px) {
+    margin-inline: 40px;
+  }
+
+}
+
+.choicesContainer {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    margin-inline: 5px;
+  }
+}
+
+.buttonContainer {
+
+  margin-top: 20px;
+  display: flex;
+  column-gap: 10px;
+  justify-content: flex-end;
+
+  button {
+    min-width: 100px;
+    width: auto;
+  }
+}
+
+

@@ -1,0 +1,72 @@
+.headerElement {
+  display: flex;
+  background-color: #1B1B1B;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  flex-shrink: 0;
+  padding: 10px 20px;
+}
+
+.horizontalMenu {
+
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-main-color-light);
+
+}
+
+.navbar {
+
+  display: none;
+
+  @media (min-width: 1200px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--text-main-color-light);
+    display: inline-block;           /* важно */
+    transition: transform 0.25s ease;
+
+    &:hover {
+      color: var(--text-highlight-main-color-light);
+    }
+  }
+}
+
+.userProfileIcon {
+
+  display: none;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+  border: 2px solid var(--text-main-color-light);
+
+  transition: 0.25s ease;
+
+  &:hover {
+    transform: scale(1.05)
+  }
+
+  @media (min-width: 1200px) {
+    display: flex;
+  }
+}
+
+.burgerMenu {
+
+  @media (min-width: 1200px) {
+    display: none;
+  }
+
+}
+

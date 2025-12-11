@@ -1,0 +1,34 @@
+import styles from "./Footer.module.scss"
+import SocialNetLinks from "./ui/SocialNetLinks.tsx"
+import Rights from "./ui/Rights.tsx"
+
+const Footer = () => {
+    return (
+        <footer className={styles.footerElement}>
+            <div className={styles.infoContainer}>
+                <div className={styles.footerAddress}>
+                    <span>American Society of Russian‑Speaking Pathologists, Inc.</span>
+                    <span>68 Harrison Ave Ste 605 PMB 972536</span>
+                    <span>Boston, Massachusetts 02111-1929 US</span>
+                </div>
+                <div className={styles.footerContacts}>
+                    <div>
+                        <span>+1-000-000-0000</span>
+                    </div>
+                    <div>
+                        <span>Contact@rsapa.prg</span>
+                    </div>
+                    <div>
+                        <SocialNetLinks className={styles.logoContainer} />
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.footerRights}>
+                <Rights />
+            </div>
+        </footer>
+    )
+}
+
+export default Footer

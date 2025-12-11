@@ -1,18 +1,37 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import js from "@eslint/js"
+import globals from "globals"
+import reactHooks from "eslint-plugin-react-hooks"
+import reactRefresh from "eslint-plugin-react-refresh"
+import tseslint from "typescript-eslint"
+import prettier from "eslint-config-prettier"
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
+export default tseslint.config(
+    { ignores: ["dist", "node_modules", "public"] },
+    {
+      extends: [
+        js.configs.recommended,
+        ...tseslint.configs.recommended,
+        prettier,
+      ],
+      files: ["**/*.{ts,tsx}"],
+      languageOptions: {
+        ecmaVersion: 2020,
+        globals: globals.browser,
+      },
+      plugins: {
+        "react-hooks": reactHooks,
+        "react-refresh": reactRefresh,
+      },
 
-export default eslintConfig;
+      rules: {
+        ...reactHooks.configs.recommended.rujles,
+        "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+        "no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+        "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        semi: ["error", "never"],
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
+      },
+    },
+)

@@ -1,0 +1,22 @@
+@mixin card-style () {
+  background-color: var(--container-white-color);
+  padding: 20px 16px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+@mixin antd-editable-input ($height: 40px) {
+  color: #1B1B1B;
+  cursor: default;
+
+  .ant-select-disabled {
+    cursor: default !important;
+  }
+
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

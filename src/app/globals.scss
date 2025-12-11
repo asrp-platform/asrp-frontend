@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+
+:root {
+  // Background colors
+  --layout-background-color: #f8f8f8;
+  --widget-background-dark-color: #1B1B1B;
+
+  // Colors
+  --text-main-color-light: #dcdcdc;
+  --text-highlight-main-color-light: #ffffff;
+
+  --main-theme_color: red;
+
+
+  // paddings
+  --general-vertical-padding: 10px;
+
+  --desktop-container-width: 80vw;
+  --desktop-small-layout-padding-inline: 10vw;
+  --desktop-layout-padding-inline: 20vw;
+
+  --mobile-layout-padding-inline: 2vw;
+
+
+
+
+}
+
+body {
+  background-color: var(--layout-background-color);
+}

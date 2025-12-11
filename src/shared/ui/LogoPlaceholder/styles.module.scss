@@ -1,0 +1,17 @@
+.logoPlaceholder {
+  color: var(--main-theme_color);
+  font-size: 2rem;
+  font-weight: bold;
+  transition: transform 0.25s ease;
+
+  img {
+    width: 48px;
+    height: 48px;
+    transition: transform 0.25s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+
+}

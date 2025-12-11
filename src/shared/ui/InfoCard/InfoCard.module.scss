@@ -1,0 +1,28 @@
+.cardContainer {
+
+  transition: 0.4s ease-in-out;
+
+  width: 350px;
+  min-height: 300px;
+  height: auto;
+
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  padding: 20px 24px;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--layout-background-color);
+  }
+
+}
+
+.titleContainer {
+
+}
+
+.descriptionContainer {
+
+}
