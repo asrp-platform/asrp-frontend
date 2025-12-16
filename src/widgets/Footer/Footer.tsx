@@ -25,6 +25,7 @@ const Footer = () => {
             </div>
 
             <div className={styles.footerRights}>
+                <div className={styles.breakLine} />
                 <Rights />
             </div>
         </footer>

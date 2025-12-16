@@ -6,6 +6,11 @@
   height: 80px;
   flex-shrink: 0;
   padding: 10px 20px;
+
+  @media (min-width: 1200px) {
+    padding: 0 var(--page-container-horizontal-margin)
+  }
+
 }
 
 .horizontalMenu {
@@ -41,33 +46,18 @@
   }
 }
 
-.userProfileIcon {
-
-  display: none;
-
-  width: 48px;
-  height: 48px;
-
-  border-radius: 50%;
-  border: 2px solid var(--text-main-color-light);
-
-  transition: 0.25s ease;
-
-  &:hover {
-    transform: scale(1.05);
-    border: 2px solid var(--text-main-color-red);
-  }
-
-  @media (min-width: 1200px) {
-    display: flex;
-  }
-}
-
 .burgerMenu {
 
   @media (min-width: 1200px) {
     display: none;
   }
 
+}
+
+.authStatusContainer {
+  display: none;
+  @media (min-width: 1200px) {
+    display: flex;
+  }
 }
 

@@ -5,6 +5,14 @@
   font-family: sans-serif;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: var(--layout-background-color);
+}
+
 
 :root {
   // Background colors
@@ -14,6 +22,7 @@
   // Colors
   --text-main-color-light: #dcdcdc;
   --text-highlight-main-color-light: #ffffff;
+  --text-secondary-color-light: #818181;
 
   --heading-main-color-dark: #0F172A;
   --text-main-color-dark: rgb(69 85 108);
@@ -35,8 +44,4 @@
 
 
 
-}
-
-body {
-  background-color: var(--layout-background-color);
 }

@@ -1,0 +1,29 @@
+.userProfileIcon {
+
+  display: none;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+  border: 2px solid var(--text-main-color-light);
+
+  transition: 0.25s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    border: 2px solid var(--text-main-color-red);
+  }
+
+  @media (min-width: 1200px) {
+    display: flex;
+  }
+}
+
+.userCircle {
+  transition: 0.25s ease;
+  &:hover {
+    transform: scale(1.05);
+    color: var(--text-main-color-red);
+  }
+}

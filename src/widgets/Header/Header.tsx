@@ -4,9 +4,9 @@ import { Menu } from "lucide-react";
 
 import styles from "./Header.module.scss"
 import Logo from "../../shared/ui/LogoPlaceholder/Logo.tsx";
+import AuthStatus from "./ui/AuthStatus.tsx";
+
 import {headerMenuItems} from "./headerMenuItems.tsx";
-
-
 
 
 const Header = () => {
@@ -21,7 +21,8 @@ const Header = () => {
                     )}
                 </nav>
 
-                <div className={styles.userProfileIcon}>
+                <div className={styles.authStatusContainer}>
+                    <AuthStatus />
                 </div>
 
                 <div className={styles.burgerMenu}>
