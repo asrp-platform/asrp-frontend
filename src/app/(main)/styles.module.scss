@@ -1,0 +1,427 @@
+@use "../../shared/mixins.scss" as m;
+
+
+.homePageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+
+  @media (min-width: 1200px) {
+    gap: 50px;
+    margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
+  }
+}
+
+
+
+.mainTitleContainer {
+
+  padding: 40px 20px;
+  color: var(--text-main-color-light);
+
+  background-color: #0b0b0c;
+  background-image:
+          radial-gradient(
+                          1200px 600px at 40% 0%,
+                          rgba(240, 84, 90, 0.35),
+                          transparent 60%
+          ),
+          radial-gradient(
+                          1000px 700px at 60% 100%,
+                          rgba(34, 211, 238, 0.30),
+                          transparent 55%
+          );
+
+  background-repeat: no-repeat;
+
+  @media (min-width: 1200px) {
+    padding: 80px 30vw 80px 40px;
+    border-radius: 25px;
+  }
+
+  h1 {
+    font-size: 36px;
+    @media (min-width: 1200px) {
+      font-size: 40px;
+    }
+  }
+
+  h2 {
+    color: var(--text-main-color-red);
+    font-size: 16px;
+    display: block;
+    margin: 20px 0;
+    font-weight: 500;
+  }
+
+  p {
+    line-height: 1.6;
+    font-size: 16px;
+  }
+}
+
+.mainTitleButtonContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.becomeMemberButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: red;
+  color: var(--text-main-color-light);
+  border: none;
+  border-radius: 9999px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #c10007;
+    cursor: pointer;
+  }
+}
+
+.learnMoreButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+
+
+.memberOutcomesContainer {
+  padding: 0 var(--mobile-layout-padding-inline);
+
+  @media (min-width: 1200px) {
+    padding: 0;
+  }
+}
+
+.memberOutcomesInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  h2 {
+    color: var(--text-main-color-red);
+    font-size: 16px;
+  }
+
+  h3 {
+    font-size: 32px;
+  }
+
+  p {
+    display: block;
+    color: var(--text-main-color-dark);
+    padding-right: 25vw;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 1200px) {
+    gap: 20px;
+  }
+}
+
+.memberOutcomesCardContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--text-main-color-dark);
+  gap: 20px;
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    margin-top: 40px;
+  }
+}
+
+.memberOutecomesCard {
+  @include m.main-page-card;
+
+  h5 {
+    color: var(--heading-main-color-dark);
+  }
+
+}
+
+
+
+
+
+.visionContainer {
+  background-color: rgb(23 23 23);
+  padding: 40px 24px;
+
+  h2 {
+    color: var(--text-main-color-red);
+    font-size: 16px;
+  }
+
+  h3 {
+    margin-top: 20px;
+    font-size: 32px;
+    color: var(--text-main-color-light);
+  }
+
+  p {
+    margin-top: 20px;
+    color: var(--text-main-color-light);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 48px 40px;
+    flex-direction: row;
+    border-radius: 25px;
+
+  }
+}
+
+.visionInnerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+  }
+}
+
+.visionInfoContainer {
+  flex: 5;
+}
+
+.guidesContainer {
+  color: var(--text-main-color-light);
+  border: 1px solid #2a5770;
+  border-radius: 25px;
+  padding: 16px 20px;
+  line-height: 1.6;
+  font-size: 14px;
+  flex: 3;
+  background-color: rgb(0,0,0, 0.4);
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    gap: 8px;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 8px 14px;
+    border-radius: 9999px;
+    border: none;
+    transition: 0.3s ease-in-out;
+    font-weight: bolder;
+    &:hover {
+      background-color: #dcdcdc;
+    }
+  }
+
+}
+
+.liFirst::before {
+  @include m.before-list-point;
+  background-color: #00d492;
+}
+
+.liSecond::before {
+  @include m.before-list-point;
+  background-color: #00bcff;
+}
+
+.liThird::before {
+  @include m.before-list-point;
+  background-color: var(--text-main-color-red);
+}
+
+
+
+
+
+.programsContainer {
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 var(--mobile-layout-padding-inline);
+
+  h3 {
+    font-size: 28px;
+  }
+
+  p {
+    color: var(--text-main-color-dark);
+    max-width: 650px;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 0;
+  }
+
+}
+
+.programsCardContainer {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.programCard {
+  @include m.main-page-card;
+}
+
+
+
+
+
+.getInvolvedContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 var(--mobile-layout-padding-inline);
+
+  h3 {
+    font-size: 28px;
+  }
+
+  p {
+    color: var(--text-main-color-dark);
+    max-width: 650px;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 0;
+  }
+}
+
+
+.getInvolvedCardContainer {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.getInvolvedCard {
+  @include m.main-page-card;
+
+  display: flex;
+  flex-direction: column;
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  button {
+    margin-top: auto;
+    padding: 10px 0;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+}
+
+.membershipFormButton {
+  background-color: #ff0000;
+  color: #ffffff;
+  border: none;
+
+  &:hover {
+    background-color: #b91818;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.helpButton {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid var(--border-color-light);
+
+  &:hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
+  }
+}
+
+.donationsButton {
+  background-color: #fdecec;
+  color: #d11c1c;
+  border: 1px solid #f5c2c2;
+
+  &:hover {
+    background-color: #fbdada;
+    transform: translateY(-1px);
+  }
+}
+
+
+
+
+
+.connectContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0 var(--mobile-layout-padding-inline);
+  gap: 20px;
+
+  h2 {
+    color: var(--text-main-color-red);
+    font-size: 16px;
+  }
+
+  h3 {
+    margin-top: 20px;
+    font-size: 32px;
+  }
+
+  p {
+    margin-top: 10px;
+    color: var(--text-main-color-dark);
+    max-width: 650px;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+  }
+
+}
+
+

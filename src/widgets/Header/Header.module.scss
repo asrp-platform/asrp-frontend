@@ -36,7 +36,7 @@
     transition: transform 0.25s ease;
 
     &:hover {
-      color: var(--text-highlight-main-color-light);
+      color: var(--text-main-color-red);
     }
   }
 }
@@ -54,7 +54,8 @@
   transition: 0.25s ease;
 
   &:hover {
-    transform: scale(1.05)
+    transform: scale(1.05);
+    border: 2px solid var(--text-main-color-red);
   }
 
   @media (min-width: 1200px) {

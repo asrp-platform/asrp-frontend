@@ -15,18 +15,23 @@
   --text-main-color-light: #dcdcdc;
   --text-highlight-main-color-light: #ffffff;
 
-  --main-theme_color: red;
+  --heading-main-color-dark: #0F172A;
+  --text-main-color-dark: rgb(69 85 108);
+
+  --text-main-color-red: oklch(70.4% 0.191 22.216);
+
+
+  --border-color-light: #dfdfdf;
 
 
   // paddings
   --general-vertical-padding: 10px;
-
-  --desktop-container-width: 80vw;
-  --desktop-small-layout-padding-inline: 10vw;
-  --desktop-layout-padding-inline: 20vw;
-
   --mobile-layout-padding-inline: 2vw;
 
+
+  // Margins
+  --page-container-horizontal-margin: 13vw;
+  --page-container-vertical-margin: 10px;
 
 
 
