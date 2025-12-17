@@ -353,12 +353,12 @@
 }
 
 .membershipFormButton {
-  background-color: #ff0000;
+  background-color: var(--button-primary);
   color: #ffffff;
   border: none;
 
   &:hover {
-    background-color: #b91818;
+    background-color: var(--button-primary-hover);
     transform: translateY(-1px);
   }
 

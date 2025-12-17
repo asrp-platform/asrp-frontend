@@ -1,0 +1,70 @@
+.outerContainer {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-main-color-dark);
+}
+
+.bottomFormContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+
+.loginFormContainer {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding-inline: 20px;
+  border-radius: 10px;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 20vh;
+
+  .submitContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  label {
+    color: var(--text-main-color-dark) !important;
+  }
+
+  .antdInput {
+    height: 40px;
+    color: var(--text-main-color-dark);
+  }
+
+  button {
+    width: 160px;
+    height: 40px;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+  }
+
+  @media (min-width: 480px) {}
+
+  @media (min-width: 768px) {}
+
+  @media (min-width: 992px) {
+    padding: 5vh 5vw;
+    width: 40vw;
+    height: auto;
+  }
+
+  @media (min-width: 1200px) {
+
+  }
+
+  @media (min-width: 1440px) {}
+
+}
