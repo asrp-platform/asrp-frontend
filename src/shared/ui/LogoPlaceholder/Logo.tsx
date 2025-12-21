@@ -9,9 +9,11 @@ import styles from "./styles.module.scss"
 
 interface IProps {
     clickable?: boolean
+    width?: number
+    height?: number
 }
 
-const Logo = ({ clickable = true }: IProps) => {
+const Logo = ({ clickable = true, width = 48, height = 48 }: IProps) => {
     const router = useRouter();
 
     const handleLogoClick = () => {
@@ -24,7 +26,7 @@ const Logo = ({ clickable = true }: IProps) => {
 
     return (
         <div className={styles.logoPlaceholder} onClick={clickable ? handleLogoClick : undefined}>
-            <Image src={logoPng} alt="logo" />
+            <Image width={width} height={height} src={logoPng} alt="logo" />
         </div>
     )
 }

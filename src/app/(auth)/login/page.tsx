@@ -1,7 +1,12 @@
-"use client"
-
 import styles from "./styles.module.scss"
 import LoginForm from "./ui/LoginForm.tsx";
+import type {Metadata} from "next";
+
+
+export const metadata: Metadata = {
+    title: "ASRP | Login",
+}
+
 
 const LoginPage = () => {
 

@@ -151,10 +151,10 @@
   }
 }
 
-.memberOutecomesCard {
+.memberOutcomesCard {
   @include m.main-page-card;
 
-  h5 {
+  h4 {
     color: var(--heading-main-color-dark);
   }
 

@@ -1,4 +1,4 @@
-import { Menu } from "lucide-react";
+
 
 
 
@@ -7,6 +7,7 @@ import Logo from "../../shared/ui/LogoPlaceholder/Logo.tsx";
 import AuthStatus from "./ui/AuthStatus.tsx";
 
 import {headerMenuItems} from "./headerMenuItems.tsx";
+import SideMenu from "./ui/SideMenu.tsx";
 
 
 const Header = () => {
@@ -26,7 +27,7 @@ const Header = () => {
                 </div>
 
                 <div className={styles.burgerMenu}>
-                    <Menu />
+                    <SideMenu />
                 </div>
             </div>
 

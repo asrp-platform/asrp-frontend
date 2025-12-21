@@ -31,7 +31,7 @@ const LoginForm = () => {
 
     const openNotification = (pauseOnHover: boolean) => {
         notification.error({
-            message: "Server Error",
+            title: "Server Error",
             description: "An unexpected error occurred on the server. Please try again later.",
             showProgress: true,
             pauseOnHover,
@@ -82,8 +82,8 @@ const LoginForm = () => {
             <Typography>
                 <Paragraph>
                     <div className={styles.bottomFormContainer}>
-                        <Link href="/auth/register">Don't have an account?</Link>
-                        <Link href="/auth/password-reset">Forgot password?</Link>
+                        <Link href="/register">Don't have an account?</Link>
+                        <Link href="/password-reset">Forgot password?</Link>
                     </div>
                 </Paragraph>
             </Typography>
