@@ -1,0 +1,144 @@
+.pageContainer {
+
+  @media (min-width: 1200px) {
+    margin: 48px var(--page-container-horizontal-margin);
+  }
+
+}
+
+.headingCardContainer {
+  border: 1px solid var(--border-color-light);
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10vh 12vw;
+  background-color: #fff;
+
+  h1 {
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  p {
+    margin-top: 24px;
+    text-align: center;
+    color: var(--text-main-color-dark);
+    font-size: 18px;
+    line-height: var(--paragraph-line-height);
+  }
+}
+
+
+
+
+.sectionContainer {
+  display: flex;
+  margin: 48px 2vw;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.missionInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  h2 {
+    font-size: 32px;
+    font-weight: lighter;
+  }
+
+  p {
+    line-height: var(--paragraph-line-height);
+    color: var(--text-main-color-dark);
+  }
+}
+
+.initiativesContainer {
+
+  h3 {
+    margin: 24px 0;
+    color: var(--text-secondary-color-red);
+  }
+
+  li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    line-height: var(--paragraph-line-height);
+    color: var(--text-main-color-dark);
+    &::before {
+      content: "";
+      display: block;
+      width: 6px;
+      height: 6px;
+      background-color: var(--text-main-color-dark);
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  }
+}
+
+.missionContainer {
+  flex: 4;
+}
+
+.linksContainer {
+  flex: 2;
+  padding: 20px 24px;
+  background-color: #fff;
+  border: 1px solid var(--border-color-light);
+  border-radius: 25px;
+  box-shadow: var(--card-box-shadow);
+
+  h2 {
+    font-weight: lighter;
+    font-size: 18px;
+  }
+
+  .byLawsLink {
+    background-color: var(--text-secondary-color-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 10px 0;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      cursor: default;
+      background-color: var(--button-primary-hover);
+    }
+  }
+
+  h3 {
+    color: var(--text-secondary-color-red);
+    font-size: 16px;
+  }
+}
+
+.socialMediaContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.mediaLinkContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  a {
+    text-decoration: none;
+    color: var(--text-main-color-dark);
+    &:hover {
+      color: black;
+    }
+  }
+}
+

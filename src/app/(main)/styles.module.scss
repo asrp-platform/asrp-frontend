@@ -78,7 +78,7 @@
   transition: 0.3s ease-in-out;
 
   &:hover {
-    background-color: #c10007;
+    background-color: var(--button-primary-hover);
     cursor: pointer;
   }
 }

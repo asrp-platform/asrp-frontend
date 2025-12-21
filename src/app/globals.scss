@@ -28,7 +28,7 @@ body {
   --text-main-color-dark: rgb(69 85 108);
 
   --text-main-color-red: oklch(70.4% 0.191 22.216);
-
+  --text-secondary-color-red: #DC2626;
 
   --border-color-light: #dfdfdf;
 
@@ -47,7 +47,8 @@ body {
   --page-container-vertical-margin: 10px;
 
 
-
+  --paragraph-line-height: 1.6;
+  --card-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 
 
 }

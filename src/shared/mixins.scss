@@ -2,7 +2,7 @@
   background-color: white;
   padding: 20px 16px;
   border-radius: 25px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-box-shadow);
 }
 
 @mixin antd-editable-input ($height: 40px) {
