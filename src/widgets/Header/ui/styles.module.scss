@@ -15,8 +15,40 @@
     border: 2px solid var(--text-main-color-red);
   }
 
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
   @media (min-width: 1200px) {
     display: flex;
+  }
+}
+
+.avatarSkeleton {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+
+  background: linear-gradient(
+                  90deg,
+                  rgba(255, 255, 255, 0.08) 25%,
+                  rgba(255, 255, 255, 0.16) 37%,
+                  rgba(255, 255, 255, 0.08) 63%
+  );
+  background-size: 400% 100%;
+
+  animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
   }
 }
 
