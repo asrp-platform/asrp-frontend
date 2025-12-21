@@ -11,9 +11,11 @@ export const metadata: Metadata = {
 const Page = () => {
 
     return (
-        <div className={styles.registerFormContainer}>
-            <h2>Become our member</h2>
-            <RegisterForm />
+        <div className={styles.pageContainer}>
+            <div className={styles.registerFormContainer}>
+                <h2>Become our member</h2>
+                <RegisterForm />
+            </div>
         </div>
     )
 }

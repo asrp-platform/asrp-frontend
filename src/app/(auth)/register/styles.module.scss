@@ -1,10 +1,18 @@
 .antdInput {
   height: 40px;
+  color: var(--text-main-color-dark);
 }
 
 .radioGroup {
   display: flex;
   flex-direction: column;
+}
+
+.pageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-main-color-dark);
 }
 
 .registerFormContainer {
@@ -15,17 +23,16 @@
   border-radius: 10px;
   width: 100vw;
   height: auto;
+  color: var(--text-main-color-dark);
 
   h3 {
     margin: 20px 0 var(--general-vertical-padding) 0;
+    color: var(--text-main-color-dark);
   }
 
-  .nameContainer {
-
-  }
-
-  .credentialsContainer {
-
+  label {
+    color: var(--text-main-color-dark) !important;
+    font-size: 16px !important;
   }
 
   .submitButtonContainer {
