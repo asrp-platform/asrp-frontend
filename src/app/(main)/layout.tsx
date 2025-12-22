@@ -53,7 +53,7 @@ export const metadata: Metadata = {
 
 const Layout = async ({children}: {children: ReactNode}) => {
     return (
-        <body>
+        <>
             <header>
                 <Header/>
             </header>
@@ -65,7 +65,7 @@ const Layout = async ({children}: {children: ReactNode}) => {
             <footer>
                 <Footer/>
             </footer>
-        </body>
+        </>
     );
 };
 
