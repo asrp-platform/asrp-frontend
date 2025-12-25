@@ -1,5 +1,5 @@
 import styles from "./Footer.module.scss"
-import SocialNetLinks from "./ui/SocialNetLinks.tsx"
+import SocialNetLinks from "../../shared/ui/social-net-links/SocialNetLinks.tsx"
 import Rights from "./ui/Rights.tsx"
 
 const Footer = () => {

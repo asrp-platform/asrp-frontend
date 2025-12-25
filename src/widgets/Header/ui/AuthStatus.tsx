@@ -61,7 +61,9 @@ const AuthStatus = () => {
 
     if (!user) {
         return (
-            <UserCircle width={32} height={32} className={styles.userCircle} onClick={onUserLoginClick} />
+            <div className={styles.userCircleContainer}>
+                <UserCircle width={32} height={32} className={styles.userCircle} onClick={onUserLoginClick} />
+            </div>
         )
     }
 

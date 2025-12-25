@@ -48,6 +48,15 @@
       height: 40px;
       width: 120px;
       border-radius: 9999px;
+      background-color: #fdecec;
+      color: #d11c1c;
+      border: 1px solid #f5c2c2;
+
+      &:hover {
+        background-color: #fbdada !important;
+        color: #d11c1c !important;
+        transform: translateY(-1px) !important;
+      }
     }
   }
 

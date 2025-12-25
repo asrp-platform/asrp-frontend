@@ -11,8 +11,9 @@ import { useState } from "react"
 import api from "../../axios.ts"
 import { CONTACT_MESSAGE_URL } from "../../shared/backend/restApiUrls.ts"
 import { isAxiosError } from "axios"
-import type { IBackendErrorResponse } from "../../shared/interfaces/BackendResponses.ts"
+
 import useNotification from "antd/es/notification/useNotification"
+import type {IBackendErrorResponse} from "../../shared/types/interfaces.ts";
 
 interface ContactFormFields {
     name: string
@@ -31,7 +32,7 @@ const ContactForm = () => {
 
     const openNotification = (pauseOnHover: boolean) => {
         notification.error({
-            message: "Server Error",
+            title: "Server Error",
             description: "An unexpected error occurred on the server. Please try again later.",
             showProgress: true,
             pauseOnHover,
@@ -99,25 +100,25 @@ const ContactForm = () => {
                         name="name"
                         rules={[{ required: true, message: "Please enter your name!" }]}
                     >
-                        <Input placeholder="Your name" />
+                        <Input placeholder="Your name *" />
                     </Form.Item>
                     <Form.Item<ContactFormFields>
                         name="email"
                         rules={[{ required: true, message: "Please enter your email!" }]}
                     >
-                        <Input placeholder="Email address" />
+                        <Input placeholder="Email address *" />
                     </Form.Item>
                     <Form.Item<ContactFormFields>
                         name="subject"
                         rules={[{ required: true, message: "Please enter message subject!" }]}
                     >
-                        <Input placeholder="Subject" />
+                        <Input placeholder="Subject *" />
                     </Form.Item>
                     <Form.Item<ContactFormFields>
                         name="message"
                         rules={[{ required: true, message: "Please enter your message!" }]}
                     >
-                        <TextArea placeholder="Message" rows={6} cols={40} />
+                        <TextArea placeholder="Message *" rows={6} cols={40} />
                     </Form.Item>
 
                     <div className={styles.submitButtonContainer}>
