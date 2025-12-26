@@ -3,25 +3,22 @@
 .pageContainer {
   display: flex;
   flex-direction: column;
-  margin: 40px var(--page-container-horizontal-margin);
-  gap: 60px;
+  gap: 40px;
+
+  @media (min-width: 1200px) {
+    margin: 40px var(--page-container-horizontal-margin);
+  }
 }
 
 .mainHeadingContainer {
-  padding: 60px 40% 60px 40px;
-
-
-  --color-purple-500: oklch(62.7% 0.265 303.9);
-
+  padding: 40px 30% 60px 40px;
   background: linear-gradient(
                   155deg,
                   #95344e 0%,
                   #ae4e5c 50%,
                   #8b55bd 100%
   );
-
   color: white;
-  border-radius: 25px;
 
   h1 {
     font-size: 2.5rem;
@@ -38,18 +35,30 @@
     color: rgba(255, 255, 255, 0.9);
     max-width: 720px;
   }
+
+  @media (min-width: 1200px) {
+    border-radius: 25px;
+    padding: 60px 40% 60px 40px;
+    gap: 60px;
+  }
 }
 
 .contactInformationContainer {
   display: flex;
-  gap: 40px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 var(--mobile-layout-padding-inline);
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+  }
 }
 
 .informationContainer {
 
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   flex: 1;
 
   h2 {
