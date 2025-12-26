@@ -7,14 +7,19 @@
 }
 
 .headingCardContainer {
-  border: 1px solid var(--border-color-light);
-  border-radius: 25px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10vh 12vw;
+  padding: 5vh 12vw;
   background-color: #fff;
+
+  @media (min-width: 1200px) {
+    padding: 10vh 12vw;
+    border: 1px solid var(--border-color-light);
+    border-radius: 25px;
+  }
 
   h1 {
     text-align: center;
@@ -35,9 +40,15 @@
 
 .sectionContainer {
   display: flex;
-  margin: 48px 2vw;
+  flex-direction: column;
+  margin: 48px 0;
   gap: 40px;
   align-items: flex-start;
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    margin: 48px 2vw;
+  }
 }
 
 .missionInfoContainer {
@@ -45,6 +56,7 @@
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  margin: 0 2vw;
 
   h2 {
     font-size: 32px;
@@ -55,9 +67,15 @@
     line-height: var(--paragraph-line-height);
     color: var(--text-main-color-dark);
   }
+
+  @media (min-width: 1200px) {
+    margin: 0;
+  }
 }
 
 .initiativesContainer {
+
+  margin: 0 2vw;
 
   h3 {
     margin: 24px 0;
@@ -80,19 +98,30 @@
       margin-right: 10px;
     }
   }
+
+  @media (min-width: 1200px) {
+    margin: 0;
+  }
 }
 
 .missionContainer {
-  flex: 4;
+  @media (min-width: 1200px) {
+    flex: 4;
+  }
 }
 
 .linksContainer {
-  flex: 2;
+
   padding: 20px 24px;
   background-color: #fff;
-  border: 1px solid var(--border-color-light);
-  border-radius: 25px;
   box-shadow: var(--card-box-shadow);
+  width: 100%;
+
+  @media (min-width: 1200px) {
+    flex: 2;
+    border: 1px solid var(--border-color-light);
+    border-radius: 25px;
+  }
 
   h2 {
     font-weight: lighter;
