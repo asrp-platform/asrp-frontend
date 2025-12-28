@@ -11,5 +11,9 @@ export const getUserPermissionsStuffUrl = (userId: string | number) =>
     `${STUFF_USERS_URL}/${userId}/permissions`
 
 
+// "http://localhost:8000/api/admin/directors-board"
+export const DIRECTORS_BOARD_URL = `${ADMIN_URL}/directors-board`
+
+
 
 

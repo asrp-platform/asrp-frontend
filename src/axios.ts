@@ -1,6 +1,7 @@
 import axios from "axios"
 import {REFRESH_URL, REST_API_URL} from "./shared/backend/restApiUrls.ts";
-import type {IRefreshResponse} from "./shared/interfaces/BackendResponses.ts";
+import type {IRefreshResponse} from "./shared/types/interfaces.ts";
+
 
 
 const api = axios.create({

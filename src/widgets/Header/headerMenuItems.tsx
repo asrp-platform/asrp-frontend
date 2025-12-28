@@ -9,6 +9,9 @@ import {
     HeartHandshake,
     Mail,
 } from "lucide-react";
+import { Dropdown, type MenuProps} from "antd";
+import styles from "./Header.module.scss"
+
 
 export interface HeaderMenuItem {
     to: string;
@@ -17,6 +20,23 @@ export interface HeaderMenuItem {
     element?: ReactNode;
     icon?: ReactNode;
 }
+
+
+const aboutDropdownItems: MenuProps["items"] = [
+    {
+        key: "1",
+        label: <a href="/about">About us</a>,
+    },
+    {
+        key: "2",
+        label: <a href="/about/directors-board">Directors board</a>,
+    },
+    {
+        key: "3",
+        label: <a href="about/committees">Committees</a>,
+    },
+];
+
 
 export const headerMenuItems: HeaderMenuItem[] = [
     {
@@ -30,6 +50,9 @@ export const headerMenuItems: HeaderMenuItem[] = [
         to: "/about",
         label: "About us",
         icon: <Info size={18} />,
+        element: <Dropdown menu={{ items: aboutDropdownItems }} >
+            <span className={styles.headerMenuItem}>About us</span>
+        </Dropdown>
     },
     {
         key: 3,

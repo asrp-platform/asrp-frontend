@@ -1,0 +1,53 @@
+@use "../../../../../../shared/mixins" as m;
+
+.boardContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+
+.cardContainer, .createCardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  line-height: var(--paragraph-line-height);
+  color: var(--text-secondary-color-light);
+  gap: 10px;
+
+  @include m.card-style;
+  padding: 20px 32px;
+}
+
+.cardTitle {
+  color: var(--text-secondary-color-red);
+}
+
+.photoContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.photoInnerContainer {
+  background-color: #e2e8f0;
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.nameTitle {
+  color: var(--heading-main-color-dark);
+}
+
+.contentContainer {
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-main-color-dark);
+  }
+}
+

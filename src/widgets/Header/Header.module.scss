@@ -34,7 +34,7 @@
     gap: 10px;
   }
 
-  a {
+  .headerMenuItem {
     text-decoration: none;
     color: var(--text-main-color-light);
     display: inline-block;           /* важно */
@@ -60,4 +60,6 @@
     display: flex;
   }
 }
+
+.headerMenuItem {}
 

@@ -18,7 +18,9 @@ const Header = () => {
                 <Logo />
                 <nav className={styles.navbar}>
                     {headerMenuItems.map((item) =>
-                        <a href={item.to} key={item.key}>{item.label}</a>
+                        <div key={item.key}>
+                            {item.element? item.element: <a className={styles.headerMenuItem} href={item.to} >{item.label}</a>}
+                        </div>
                     )}
                 </nav>
 

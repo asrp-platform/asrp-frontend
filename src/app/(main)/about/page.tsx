@@ -14,12 +14,14 @@ export const metadata: Metadata = {
 const Page = () => {
     return (
         <div className={styles.pageContainer}>
-            <div className={styles.headingCardContainer}>
-                <h1>About the American Society of Russian-Speaking Pathologists (ASRP)</h1>
-                <p>
-                    The American Society of Russian-Speaking Pathologists (ASRP) is a not-for-profit professional organization established in 2025 to create a supportive environment fostering networking, collaboration, and professional development. Our goal is to unite pathologists in the United States with similar educational, cultural, and language backgrounds.
-                </p>
-            </div>
+            <section>
+                <div className={styles.headingCardContainer}>
+                    <h1>About the American Society of Russian-Speaking Pathologists (ASRP)</h1>
+                    <p>
+                        The American Society of Russian-Speaking Pathologists (ASRP) is a not-for-profit professional organization established in 2025 to create a supportive environment fostering networking, collaboration, and professional development. Our goal is to unite pathologists in the United States with similar educational, cultural, and language backgrounds.
+                    </p>
+                </div>
+            </section>
             <section>
                 <div className={styles.sectionContainer}>
                     <div className={styles.missionContainer}>

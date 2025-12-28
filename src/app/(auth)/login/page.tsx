@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss"
-import LoginForm from "./ui/LoginForm.tsx";
+import LoginForm from "./(ui)/LoginForm.tsx";
 import type {Metadata} from "next";
 
 

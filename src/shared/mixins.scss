@@ -2,7 +2,8 @@
   background-color: white;
   padding: 20px 16px;
   border-radius: 25px;
-  box-shadow: var(--card-box-shadow);
+  border: 1px solid var(--border-color-light);
+  //box-shadow: var(--card-box-shadow);
 }
 
 @mixin antd-editable-input ($height: 40px) {
@@ -51,4 +52,32 @@
   background-color: var(--text-main-color-red);
   margin-right: 10px;
   margin-bottom: 2px;
+}
+
+@mixin heading-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5vh 12vw;
+  background-color: #fff;
+
+  @media (min-width: 1200px) {
+    padding: 10vh 12vw;
+    border: 1px solid var(--border-color-light);
+    border-radius: 25px;
+  }
+
+  h1 {
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  p {
+    margin-top: 24px;
+    text-align: center;
+    color: var(--text-main-color-dark);
+    font-size: 18px;
+    line-height: var(--paragraph-line-height);
+  }
 }
