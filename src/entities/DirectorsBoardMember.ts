@@ -1,26 +1,34 @@
 
 
-export interface IHeading {
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5
+
+export interface IHeadingBlock {
+    id: string;
     type: "heading";
-    level: 1 | 2 | 3 | 4 | 5;
+    level: HeadingLevel;
     text: string;
 }
 
 
-export interface IParagraph {
+export interface IParagraphBlock {
+    id: string;
     type: "paragraph";
     text: string;
 }
 
 
-export interface IList {
+export interface IListBlock {
+    id: string;
     type: "list";
     items: string[];
 }
 
 
+export type ContentBlock = IHeadingBlock | IParagraphBlock | IListBlock
+
+
 export interface IContent {
-    blocks: Array<IHeading | IParagraph | IList>
+    blocks: ContentBlock[];
 }
 
 

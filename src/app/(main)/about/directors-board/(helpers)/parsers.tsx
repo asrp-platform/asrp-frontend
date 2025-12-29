@@ -1,4 +1,4 @@
-import type {IList} from "../../../../../entities/DirectorsBoardMember.ts";
+import type {IListBlock} from "../../../../../entities/DirectorsBoardMember.ts";
 
 export const headingParser = (level: number, text: string, key: number) => {
     switch (level) {
@@ -18,7 +18,7 @@ export const headingParser = (level: number, text: string, key: number) => {
 }
 
 
-export const listParser = (item: IList, key: number) => {
+export const listParser = (item: IListBlock, key: number) => {
     return (
         <ul key={key}>
             {item.items.map((text, number) => (<li key={number}>{text}</li>))}

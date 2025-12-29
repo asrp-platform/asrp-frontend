@@ -7,17 +7,8 @@
 }
 
 
-.cardContainer, .createCardContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  line-height: var(--paragraph-line-height);
-  color: var(--text-secondary-color-light);
-  gap: 10px;
-
-  @include m.card-style;
-  padding: 20px 32px;
+.cardContainer {
+  @include m.director-member-card-mixin;
 }
 
 .cardTitle {
