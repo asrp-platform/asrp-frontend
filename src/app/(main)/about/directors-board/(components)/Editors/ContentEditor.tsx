@@ -5,6 +5,7 @@
 import styles from "./styles.module.scss"
 import type {ContentBlock, IContent} from "../../../../../../entities/DirectorsBoardMember.ts";
 import HeadingEditor from "./HeadingEditor/HeadingEditor.tsx";
+import ParagraphEditor from "./ParagraphEditor/ParagraphEditor.tsx";
 
 
 interface IProps {
@@ -45,23 +46,38 @@ const ContentEditor = ({value, onChange}: IProps ) => {
                         addBlock({
                         id: crypto.randomUUID(),
                         type: "heading",
-                        level: 2,
+                        level: 3,
                         text: ""
                     })}
                 }
                 >
                     + Heading
                 </button>
+                <button
+                    className={styles.addBlockButton}
+                    onClick={(event) => {
+                        event.preventDefault()
+                        addBlock({
+                            id: crypto.randomUUID(),
+                            type: "paragraph",
+                            text: ""
+                        })}
+                }
+                >
+                    + Paragraph
+                </button>
             </div>
 
-            {value.blocks.map((block) => {
-                switch (block.type) {
-                    case "heading":
-                        return <HeadingEditor key={block.id} block={block} onChange={updateBlock} onDelete={deleteBlock} />
-                    case "paragraph":
-                        return null
-                }
-            })}
+            <div className={styles.editableContentContainer}>
+                {value.blocks.map((block) => {
+                    switch (block.type) {
+                        case "heading":
+                            return <HeadingEditor key={block.id} block={block} onChange={updateBlock} onDelete={deleteBlock} />
+                        case "paragraph":
+                            return <ParagraphEditor key={block.id} block={block} onChange={updateBlock} onDelete={deleteBlock} />
+                    }
+                })}
+            </div>
         </div>
     );
 };

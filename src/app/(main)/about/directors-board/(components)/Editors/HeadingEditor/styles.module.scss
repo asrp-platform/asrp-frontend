@@ -1,3 +1,5 @@
+@use "../editors-mixins" as m;
+
 .headingEditor {
   display: flex;
   align-items: center;
@@ -35,44 +37,10 @@
 
 /* Input как текст */
 .headingInput {
-  flex: 1;
-
-  border: none;
-  outline: none;
-  background: transparent;
-
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
-
-  padding: 2px 0;
-
-  &::placeholder {
-    color: #9ca3af;
-  }
+  @include m.inline-input;
 }
 
 /* Delete button */
 .deleteButton {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-
-  font-size: 14px;
-  color: #9ca3af;
-
-  padding: 4px;
-  border-radius: 4px;
-
-  opacity: 0;
-  transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
-
-  .headingEditor:hover & {
-    opacity: 1;
-  }
-
-  &:hover {
-    color: #ef4444;
-    background-color: #fee2e2;
-  }
+  @include m.delete-block-button-mixin;
 }

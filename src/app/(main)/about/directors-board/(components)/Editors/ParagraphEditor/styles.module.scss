@@ -1,0 +1,26 @@
+@use "../editors-mixins" as m;
+
+.paragraphEditor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 8px;
+  border-radius: 6px;
+
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: #f9fafb;
+  }
+}
+
+.paragraphInput {
+  @include m.inline-input;
+  color: var(--text-secondary-color-light);
+}
+
+/* Delete button */
+.deleteButton {
+  @include m.delete-block-button-mixin;
+}

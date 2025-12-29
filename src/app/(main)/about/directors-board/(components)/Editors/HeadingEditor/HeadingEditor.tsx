@@ -35,7 +35,7 @@ const HeadingEditor = ({ block, onChange, onDelete }: IProps) => {
                 onChange={e =>
                     onChange({ ...block, text: e.target.value })
                 }
-                placeholder="Heading text"
+                placeholder="Heading..."
             />
             <select
                 className={styles.levelSelect}
