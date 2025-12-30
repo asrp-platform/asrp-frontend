@@ -39,8 +39,31 @@
     opacity: 1;
   }
 
+  .listEditor:hover & {
+    opacity: 1;
+  }
+
+  .listItemInputContainer & {
+    opacity: 1;
+  }
+
   &:hover {
     color: var(--text-secondary-color-red);
     background-color: #fee2e2;
+  }
+}
+
+
+@mixin add-button-mixin {
+  padding: 4px 6px;
+  border: 1px solid var(--border-color-light);
+  border-radius: 10px;
+  background-color: #fff;
+  color: var(--text-secondary-color-light);
+  transition: 0.4s ease-in-out;
+  &:hover {
+    background-color: #ede9e9;
+    color: var(--text-main-color-dark);
+    cursor: pointer;
   }
 }

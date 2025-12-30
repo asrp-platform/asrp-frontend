@@ -6,6 +6,7 @@ import styles from "./styles.module.scss"
 import type {ContentBlock, IContent} from "../../../../../../entities/DirectorsBoardMember.ts";
 import HeadingEditor from "./HeadingEditor/HeadingEditor.tsx";
 import ParagraphEditor from "./ParagraphEditor/ParagraphEditor.tsx";
+import ListEditor from "./ListEditor/ListEditor.tsx";
 
 
 interface IProps {
@@ -66,6 +67,19 @@ const ContentEditor = ({value, onChange}: IProps ) => {
                 >
                     + Paragraph
                 </button>
+                <button
+                    className={styles.addBlockButton}
+                    onClick={(event) => {
+                        event.preventDefault()
+                        addBlock({
+                            id: crypto.randomUUID(),
+                            type: "list",
+                            items: []
+                        })}
+                    }
+                >
+                    + List
+                </button>
             </div>
 
             <div className={styles.editableContentContainer}>
@@ -75,6 +89,8 @@ const ContentEditor = ({value, onChange}: IProps ) => {
                             return <HeadingEditor key={block.id} block={block} onChange={updateBlock} onDelete={deleteBlock} />
                         case "paragraph":
                             return <ParagraphEditor key={block.id} block={block} onChange={updateBlock} onDelete={deleteBlock} />
+                        case "list":
+                            return <ListEditor key={block.id} block={block} onChange={updateBlock} onDelete={deleteBlock} />
                     }
                 })}
             </div>

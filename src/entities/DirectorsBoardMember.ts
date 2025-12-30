@@ -17,10 +17,16 @@ export interface IParagraphBlock {
 }
 
 
+export interface IListItem {
+    id: string;
+    text: string;
+}
+
+
 export interface IListBlock {
     id: string;
     type: "list";
-    items: string[];
+    items: IListItem[];
 }
 
 

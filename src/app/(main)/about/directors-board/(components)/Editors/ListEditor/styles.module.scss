@@ -1,0 +1,62 @@
+@use "../editors-mixins" as m;
+
+.listEditorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //gap: 8px;
+
+  padding: 6px 8px;
+  border-radius: 6px;
+
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: #f9fafb;
+  }
+}
+
+.listEditor {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.listItemsContainer {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.addItemButton {
+  @include m.add-button-mixin;
+}
+
+.deleteButton {
+  @include m.delete-block-button-mixin;
+}
+
+.listItemInput {
+  @include m.inline-input;
+  color: var(--text-secondary-color-light);
+}
+
+.listItemInputContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &::before {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    background-color: var(--text-main-color-dark);
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}
