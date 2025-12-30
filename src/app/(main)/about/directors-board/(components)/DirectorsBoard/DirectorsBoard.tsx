@@ -2,12 +2,12 @@
 
 import type {IDirectorsBoardMember} from "../../../../../../entities/DirectorsBoardMember.ts";
 import {useState, useEffect} from "react";
-import {DIRECTORS_BOARD_URL} from "../../../../../../shared/backend/adminApiUrls.ts";
 import api from "../../../../../../axios.ts";
 import {renderer} from "../../(helpers)/renderer.tsx";
 import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx";
 
 import styles from "./styles.module.scss"
+import {DIRECTORS_BOARD_URL} from "../../../../../../shared/backend/restApiUrls.ts";
 
 
 

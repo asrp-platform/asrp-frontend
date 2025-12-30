@@ -46,3 +46,9 @@ export const CONTACT_MESSAGE_URL = `${REST_API_URL}/contact-messages`
 
 // http://localhost:8000/api/media/news_uploaded/{image_name}
 export const getDirectorMemberImageUrl = (imageRelativePath: string) => `${REST_API_URL}/${imageRelativePath}`
+
+
+
+
+// "http://localhost:8000/api/directors-board"
+export const DIRECTORS_BOARD_URL = `${REST_API_URL}/directors-board`

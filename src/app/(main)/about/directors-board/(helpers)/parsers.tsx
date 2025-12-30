@@ -21,6 +21,6 @@ export const headingParser = (level: number, text: string, key: number) => {
 export const listParser = (item: IListBlock, key: number) => {
     return (
         <ul key={key}>
-            {item.items.map((text, number) => (<li key={number}>{text}</li>))}
+            {item.items.map((listItem, number) => (<li key={number}>{listItem.text}</li>))}
         </ul>
 )}

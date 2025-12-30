@@ -12,7 +12,7 @@ export const getUserPermissionsStuffUrl = (userId: string | number) =>
 
 
 // "http://localhost:8000/api/admin/directors-board"
-export const DIRECTORS_BOARD_URL = `${ADMIN_URL}/directors-board`
+export const DIRECTORS_BOARD_ADMIN_URL = `${ADMIN_URL}/directors-board`
 
 // "http://localhost:8000/api/admin/directors-board/images"
-export const DIRECTORS_BOARD_MEMBER_IMAGES_URL = `${DIRECTORS_BOARD_URL}/images`
+export const DIRECTORS_BOARD_MEMBER_IMAGES_URL = `${DIRECTORS_BOARD_ADMIN_URL}/images`
