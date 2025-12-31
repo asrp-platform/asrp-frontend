@@ -8,10 +8,15 @@ import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx
 
 import styles from "./styles.module.scss"
 import {DIRECTORS_BOARD_URL} from "../../../../../../shared/backend/restApiUrls.ts";
+import {useAuth} from "../../../../../../context/AuthProvider.tsx";
 
+
+import CircularProgress from "@mui/material/CircularProgress";
 
 
 const DirectorsBoard = () => {
+
+    const {user} = useAuth();
 
     const [directorMembers, setDirectorMembers] = useState<IDirectorsBoardMember[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -34,7 +39,11 @@ const DirectorsBoard = () => {
     }, [])
 
     if (isLoading) {
-        return "Hello"
+        return (
+            <div className={styles.loadingContainer}>
+                <CircularProgress size={24} />
+            </div>
+        )
     }
 
     return (
@@ -53,7 +62,7 @@ const DirectorsBoard = () => {
                     </div>
                 </div>)
             )}
-            <CreateDirectorMemberCard />
+            { user?.stuff && <CreateDirectorMemberCard /> }
         </div>
     );
 };

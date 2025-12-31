@@ -136,11 +136,9 @@
 .submitButton {
   @extend .buttonBase;
 
-  background-color: var(--text-main-color-dark);
   color: #ffffff;
 
   &:hover {
-    background-color: #111827; // чуть темнее
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   }
 
@@ -158,12 +156,13 @@
   border-color: #fecaca;
 
   &:hover {
-    background-color: #fee2e2;
-    border-color: #fca5a5;
+    background-color: #fee2e2 !important;
+    border-color: #fca5a5 !important;
+    color: var(--text-secondary-color-red) !important;
   }
 
   &:active {
-    background-color: #fecaca;
+    background-color: #fecaca !important;
   }
 }
 

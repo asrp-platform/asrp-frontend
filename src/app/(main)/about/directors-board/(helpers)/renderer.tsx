@@ -12,7 +12,6 @@ export const renderer = (content: IContent) => {
                 return <p key={index}>{item.text}</p>;
             case "list":
                 return listParser(item, index);
-
         }
     })
 

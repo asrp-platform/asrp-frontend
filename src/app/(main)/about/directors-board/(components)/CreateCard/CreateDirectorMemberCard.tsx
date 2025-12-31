@@ -2,20 +2,22 @@
 
 import { useState, type ChangeEvent } from "react";
 import { CirclePlus, Image } from "lucide-react";
-import { Form, Input } from "antd";
+import {Button, Form, Input} from "antd";
 
-import styles from "./styles.module.scss";
-import api from "../../../../../../axios.ts";
 import type { ImagePathResponse, IValidationError } from "../../../../../../shared/types/interfaces.ts";
 import { getDirectorMemberImageUrl } from "../../../../../../shared/backend/restApiUrls.ts";
 import {
     DIRECTORS_BOARD_ADMIN_URL,
     DIRECTORS_BOARD_MEMBER_IMAGES_URL,
 } from "../../../../../../shared/backend/adminApiUrls.ts";
-
-import ContentEditor from "../Editors/ContentEditor.tsx";
 import type { IContent } from "../../../../../../entities/DirectorsBoardMember.ts";
 import { isAxiosError } from "axios";
+
+import ContentEditor from "../Editors/ContentEditor.tsx";
+import api from "../../../../../../axios.ts";
+import styles from "./styles.module.scss";
+import ResetModal from "./ui/ResetModal.tsx";
+
 
 const CreateDirectorMemberCard = () => {
     const [form] = Form.useForm();
@@ -24,11 +26,23 @@ const CreateDirectorMemberCard = () => {
     const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
     const [content, setContent] = useState<IContent>({ blocks: [] });
 
-    const handleReset = () => {
+    const [open, setOpen] = useState<boolean>(false);
+
+
+    const showModal = () => {
+        setOpen(true);
+    }
+
+    const resetForm = () => {
         setCreateMode(false);
         setUploadedImageUrl(null);
         setContent({ blocks: [] });
         form.resetFields();
+    };
+
+
+    const handleReset = () => {
+        showModal();
     };
 
     const handleSubmit = async (values: { name: string; role: string }) => {
@@ -139,17 +153,21 @@ const CreateDirectorMemberCard = () => {
                 <ContentEditor value={content} onChange={setContent} />
 
                 <div className={styles.buttonContainer}>
-                    <button className={styles.submitButton} type="submit">
+                    <Button
+                        htmlType="submit"
+                        type={"primary"}
+                    >
                         Submit
-                    </button>
-                    <button
-                        className={styles.resetButton}
-                        type="button"
+                    </Button>
+                    <Button
+                        htmlType="button"
                         onClick={handleReset}
+                        danger
                     >
                         Reset
-                    </button>
+                    </Button>
                 </div>
+                <ResetModal open={open} setOpen={setOpen} resetForm={resetForm} />
             </Form>
         </div>
     );
