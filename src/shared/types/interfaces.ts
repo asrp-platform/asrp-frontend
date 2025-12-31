@@ -26,3 +26,9 @@ export interface IPaginatedBackendResponse<T> {
 export interface ImagePathResponse {
     path: string
 }
+
+
+export interface IValidationError {
+    field: string;
+    message: string;
+}
