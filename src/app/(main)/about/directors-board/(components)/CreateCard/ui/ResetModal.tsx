@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./CreateCardUI.module.scss"
+import styles from "./UI.module.scss"
 import {Modal, Button} from "antd";
 
 
@@ -39,7 +39,7 @@ const ResetModal = ({open, setOpen, resetForm}: IProps) => {
                         variant={"outlined"}
                         danger
                     >
-                        Discard
+                        Reset
                     </Button>
                 </div>
             ]}

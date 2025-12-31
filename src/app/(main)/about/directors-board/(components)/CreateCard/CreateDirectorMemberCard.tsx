@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ChangeEvent } from "react";
-import { CirclePlus, Image } from "lucide-react";
+import { Image } from "lucide-react";
 import {Button, Form, Input} from "antd";
 
 import type { ImagePathResponse, IValidationError } from "../../../../../../shared/types/interfaces.ts";
@@ -17,6 +17,7 @@ import ContentEditor from "../Editors/ContentEditor.tsx";
 import api from "../../../../../../axios.ts";
 import styles from "./styles.module.scss";
 import ResetModal from "./ui/ResetModal.tsx";
+import AddDirectorMember from "./ui/AddDirectorMember.tsx";
 
 
 const CreateDirectorMemberCard = () => {
@@ -60,7 +61,6 @@ const CreateDirectorMemberCard = () => {
                 const backendErrors: IValidationError[] =
                     error.response.data.detail.errors;
 
-                // 🔥 Маппинг backend → antd Form
                 form.setFields(
                     backendErrors.map((err) => ({
                         name: err.field.split("."), // поддержка вложенных
@@ -86,9 +86,9 @@ const CreateDirectorMemberCard = () => {
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
-
             setUploadedImageUrl(getDirectorMemberImageUrl(res.data.path));
         } catch (error) {
+            // TODO: Нормальная обработка ошибок
             console.error("Image upload failed:", error);
         } finally {
             e.target.value = "";
@@ -96,14 +96,7 @@ const CreateDirectorMemberCard = () => {
     };
 
     if (!createMode) {
-        return (
-            <div
-                className={styles.createCard}
-                onClick={() => setCreateMode(true)}
-            >
-                <CirclePlus width={32} height={32} className={styles.addMemberIcon} />
-            </div>
-        );
+        return <AddDirectorMember setCreateMode={setCreateMode} />
     }
 
     return (
@@ -131,13 +124,13 @@ const CreateDirectorMemberCard = () => {
                         className={styles.photoInput}
                         onChange={handleFileChange}
                     />
-                    <label htmlFor="photo" className={styles.photoLabel}>
-                        {uploadedImageUrl ? (
-                            <img src={uploadedImageUrl} alt="" />
-                        ) : (
+
+                    {uploadedImageUrl ?
+                        <img className={styles.photo} src={uploadedImageUrl} alt="" /> :
+                        <label htmlFor="photo" className={styles.photoLabel}>
                             <Image width={32} height={32} />
-                        )}
-                    </label>
+                        </label>
+                    }
                 </div>
 
                 <Form.Item
@@ -153,20 +146,10 @@ const CreateDirectorMemberCard = () => {
                 <ContentEditor value={content} onChange={setContent} />
 
                 <div className={styles.buttonContainer}>
-                    <Button
-                        htmlType="submit"
-                        type={"primary"}
-                    >
-                        Submit
-                    </Button>
-                    <Button
-                        htmlType="button"
-                        onClick={handleReset}
-                        danger
-                    >
-                        Reset
-                    </Button>
+                    <Button htmlType="submit" type={"primary"}>Submit</Button>
+                    <Button htmlType="button" onClick={handleReset} danger>Reset</Button>
                 </div>
+
                 <ResetModal open={open} setOpen={setOpen} resetForm={resetForm} />
             </Form>
         </div>

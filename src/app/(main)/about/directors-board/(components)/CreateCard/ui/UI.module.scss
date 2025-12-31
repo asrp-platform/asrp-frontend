@@ -1,0 +1,27 @@
+@use "../../../../../../../shared/mixins" as m;
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
+
+.createCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s ease-in-out;
+  color: gray;
+
+  @include m.card-style;
+
+  border: 2px dashed #717171;
+
+  &:hover {
+    background-color: #e6e6e6;
+    cursor: pointer;
+  }
+}
