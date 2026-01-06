@@ -2,7 +2,7 @@
 
 import type { MouseEvent, ChangeEvent } from "react";
 
-import type {HeadingLevel, IHeadingBlock} from "../../../../../../../entities/DirectorsBoardMember.ts";
+import type {HeadingLevel, IHeadingBlock} from "../../../entities/DirectorsBoardMember.ts";
 import styles from "./styles.module.scss"
 
 

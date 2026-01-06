@@ -1,5 +1,4 @@
 import styles from "../Footer.module.scss"
-// import Divider from "../../../shared/((ui))/Divider.tsx"
 import Link from "next/link";
 
 

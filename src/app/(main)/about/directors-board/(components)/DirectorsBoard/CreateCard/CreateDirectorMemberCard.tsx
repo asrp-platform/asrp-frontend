@@ -4,17 +4,17 @@ import { useState, type ChangeEvent } from "react";
 import { Image } from "lucide-react";
 import {Button, Form, Input} from "antd";
 
-import type { ImagePathResponse, IValidationError } from "../../../../../../shared/types/interfaces.ts";
-import { getDirectorMemberImageUrl } from "../../../../../../shared/backend/restApiUrls.ts";
+import type { ImagePathResponse, IValidationError } from "../../../../../../../shared/types/interfaces.ts";
+import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/restApiUrls.ts";
 import {
     DIRECTORS_BOARD_ADMIN_URL,
     DIRECTORS_BOARD_MEMBER_IMAGES_URL,
-} from "../../../../../../shared/backend/adminApiUrls.ts";
-import type { IContent } from "../../../../../../entities/DirectorsBoardMember.ts";
+} from "../../../../../../../shared/backend/adminApiUrls.ts";
+import type { IContent } from "../../../../../../../entities/DirectorsBoardMember.ts";
 import { isAxiosError } from "axios";
 
-import ContentEditor from "../Editors/ContentEditor.tsx";
-import api from "../../../../../../axios.ts";
+import ContentEditor from "../../../../../../../widgets/Editors/ContentEditor.tsx";
+import api from "../../../../../../../axios.ts";
 import styles from "./styles.module.scss";
 import ResetModal from "./ui/ResetModal.tsx";
 import AddDirectorMember from "./ui/AddDirectorMember.tsx";

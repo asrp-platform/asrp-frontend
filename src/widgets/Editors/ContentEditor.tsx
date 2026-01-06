@@ -3,7 +3,7 @@
 
 
 import styles from "./styles.module.scss"
-import type {ContentBlock, IContent} from "../../../../../../entities/DirectorsBoardMember.ts";
+import type {ContentBlock, IContent} from "../../entities/DirectorsBoardMember.ts";
 import HeadingEditor from "./HeadingEditor/HeadingEditor.tsx";
 import ParagraphEditor from "./ParagraphEditor/ParagraphEditor.tsx";
 import ListEditor from "./ListEditor/ListEditor.tsx";

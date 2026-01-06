@@ -1,22 +1,26 @@
 "use client"
 
 import type {IDirectorsBoardMember} from "../../../../../../entities/DirectorsBoardMember.ts";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useMemo} from "react";
 import api from "../../../../../../axios.ts";
-import {renderer} from "../../(helpers)/renderer.tsx";
-import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx";
+import CreateDirectorMemberCard from "./CreateCard/CreateDirectorMemberCard.tsx";
 
 import styles from "./styles.module.scss"
 import {DIRECTORS_BOARD_URL} from "../../../../../../shared/backend/restApiUrls.ts";
 import {useAuth} from "../../../../../../context/AuthProvider.tsx";
 
-
 import CircularProgress from "@mui/material/CircularProgress";
-
+import ViewCard from "./ViewCard/ViewCard.tsx";
+import {reorder} from "../../(helpers)/reorderer.ts";
 
 const DirectorsBoard = () => {
 
-    const {user} = useAuth();
+    const { user } = useAuth();
+
+    const adminView = useMemo(() => {
+        if (!user) return false
+        return user?.stuff
+    }, [user])
 
     const [directorMembers, setDirectorMembers] = useState<IDirectorsBoardMember[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -46,21 +50,20 @@ const DirectorsBoard = () => {
         )
     }
 
+
+    if (directorMembers) {
+        reorder(directorMembers, 0, 3)
+    }
+
+
     return (
         <div className={styles.boardContainer}>
-            {directorMembers.map((member: IDirectorsBoardMember) => (
-                <div className={styles.cardContainer} key={member.id}>
-                    <h2 className={styles.cardTitle}>{member.role}</h2>
-                    <div className={styles.photoContainer}>
-                        <div className={styles.photoInnerContainer}>
-                            {member.photo_url && <img src={member.photo_url} alt="" />}
-                        </div>
-                    </div>
-                    <h3 className={styles.nameTitle}>{member.name}</h3>
-                    <div className={styles.contentContainer}>
-                        {renderer(member.content)}
-                    </div>
-                </div>)
+            {directorMembers.sort((a, b) => a.order - b.order).map((member: IDirectorsBoardMember) =>
+                <ViewCard
+                    key={member.id}
+                    member={member}
+                    adminView={adminView}
+                />
             )}
             { user?.stuff && <CreateDirectorMemberCard /> }
         </div>

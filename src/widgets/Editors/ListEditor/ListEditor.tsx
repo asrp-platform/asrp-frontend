@@ -1,7 +1,7 @@
 "use client"
 
 
-import type {IListBlock, IListItem} from "../../../../../../../entities/DirectorsBoardMember.ts";
+import type {IListBlock, IListItem} from "../../../entities/DirectorsBoardMember.ts";
 import {type ChangeEvent, type MouseEvent} from "react";
 
 import styles from "./styles.module.scss"

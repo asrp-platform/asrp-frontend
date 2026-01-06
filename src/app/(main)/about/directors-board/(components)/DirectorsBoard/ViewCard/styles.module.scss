@@ -1,0 +1,44 @@
+@use "../../../../../../../shared/mixins" as m;
+
+.cardContainer {
+  @include m.director-member-card-mixin;
+}
+
+.cardTitle {
+  color: var(--text-secondary-color-red);
+}
+
+.photoContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.photoInnerContainer {
+  display: flex;
+  align-items: center;
+  background-color: #e2e8f0;
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.nameTitle {
+  color: var(--heading-main-color-dark);
+}
+
+.contentContainer {
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-main-color-dark);
+  }
+}
+
+.adminFooter {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,6 +1,6 @@
 "use client"
 
-import type {IParagraphBlock} from "../../../../../../../entities/DirectorsBoardMember.ts";
+import type {IParagraphBlock} from "../../../entities/DirectorsBoardMember.ts";
 import type {MouseEvent} from "react";
 import styles from "./styles.module.scss"
 
