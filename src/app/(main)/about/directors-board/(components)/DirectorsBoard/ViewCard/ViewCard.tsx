@@ -1,45 +1,42 @@
 "use client"
 
-import {renderer} from "../../../(helpers)/renderer.tsx";
-import type {IDirectorsBoardMember} from "../../../../../../../entities/DirectorsBoardMember.ts";
-import {Button} from "antd";
-
 import styles from "./styles.module.scss";
+import {Button} from "antd";
+import DetailView from "./ui/DetailView.tsx";
+import {useState} from "react";
+import type {IDirectorsBoardMember} from "../../../../../../../entities/DirectorsBoardMember.ts";
 import CardPhoto from "./ui/CardPhoto.tsx";
+import {EditorContent, useEditor} from "@tiptap/react";
+import {detailViewExtensions} from "./helpers/editorExtenstions.tsx";
+
 
 
 interface IProps {
     member: IDirectorsBoardMember;
-    adminView: boolean;
 }
 
 
-const ViewCard = ({member, adminView}: IProps) => {
+const ViewCard = ({member}: IProps) => {
 
+    const [detailOpen, setDetailOpen] = useState(false);
 
-    const onDragStart = (memberCard: IDirectorsBoardMember) => {
-        console.log(memberCard);
-    }
-
+    const editor = useEditor({
+        extensions: detailViewExtensions,
+        content: member.content,
+        immediatelyRender: false,
+        editable: false,
+    }, [member.content]);
 
     return (
-        <div
-            className={styles.cardContainer}
-            key={member.id}
-            draggable={adminView}
-            onDragStart={() => onDragStart(member)}
-        >
+        <div className={styles.cardContainer}>
             <h2 className={styles.cardTitle}>{member.role}</h2>
             <CardPhoto member={member} />
             <h3 className={styles.nameTitle}>{member.name}</h3>
-            <div className={styles.contentContainer}>
-                {renderer(member.content)}
-            </div>
-            {adminView && (
-                <div className={styles.adminFooter}>
-                    <Button type={"primary"}>Edit</Button>
-                </div>
-            )}
+            <EditorContent editor={editor} className={styles.boardEditor} />
+            <Button danger htmlType="button" onClick={() => setDetailOpen(true)}>
+                Read more
+            </Button>
+            <DetailView open={detailOpen} setOpen={setDetailOpen} member={member} />
         </div>
     );
 };

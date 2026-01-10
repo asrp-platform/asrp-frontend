@@ -13,6 +13,40 @@ body {
   background-color: var(--layout-background-color);
 }
 
+.tiptap {
+
+  &:focus {
+    outline: none;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.5rem;
+    margin-left: 0;
+  }
+
+  li {
+    padding-left: 0.5rem;
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.editorMenuButton {
+
+  padding: 0 6px;
+
+  &:hover {
+    background-color: rgb(220, 220, 220);
+    //color: ;
+  }
+
+}
+
 
 :root {
   // Background colors

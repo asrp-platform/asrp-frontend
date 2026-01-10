@@ -11,7 +11,8 @@ import {useAuth} from "../../../../../../context/AuthProvider.tsx";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import ViewCard from "./ViewCard/ViewCard.tsx";
-import {reorder} from "../../(helpers)/reorderer.ts";
+
+
 
 const DirectorsBoard = () => {
 
@@ -51,20 +52,10 @@ const DirectorsBoard = () => {
     }
 
 
-    if (directorMembers) {
-        reorder(directorMembers, 0, 3)
-    }
-
 
     return (
         <div className={styles.boardContainer}>
-            {directorMembers.sort((a, b) => a.order - b.order).map((member: IDirectorsBoardMember) =>
-                <ViewCard
-                    key={member.id}
-                    member={member}
-                    adminView={adminView}
-                />
-            )}
+            {directorMembers.map((member) => <ViewCard key={member.id} member={member} />)}
             { user?.stuff && <CreateDirectorMemberCard /> }
         </div>
     );

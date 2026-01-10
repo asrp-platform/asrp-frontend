@@ -13,10 +13,9 @@ import {
 import type { IContent } from "../../../../../../../entities/DirectorsBoardMember.ts";
 import { isAxiosError } from "axios";
 
-import ContentEditor from "../../../../../../../widgets/Editors/ContentEditor.tsx";
 import api from "../../../../../../../axios.ts";
 import styles from "./styles.module.scss";
-import ResetModal from "./ui/ResetModal.tsx";
+import ResetModal from "../ViewCard/ui/ResetModal.tsx";
 import AddDirectorMember from "./ui/AddDirectorMember.tsx";
 
 
@@ -142,8 +141,6 @@ const CreateDirectorMemberCard = () => {
                         placeholder="Enter name..."
                     />
                 </Form.Item>
-
-                <ContentEditor value={content} onChange={setContent} />
 
                 <div className={styles.buttonContainer}>
                     <Button htmlType="submit" type={"primary"}>Submit</Button>

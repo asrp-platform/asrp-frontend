@@ -1,17 +1,17 @@
 "use client"
 
-import styles from "./UI.module.scss"
+import styles from "./styles.module.scss"
 import {Modal, Button} from "antd";
 
 
 interface IProps {
     open: boolean;
     setOpen: (open: boolean) => void;
-    resetForm: () => void;
+    onReset: () => void;
 }
 
 
-const ResetModal = ({open, setOpen, resetForm}: IProps) => {
+const ResetModal = ({open, setOpen, onReset}: IProps) => {
 
 
 
@@ -21,6 +21,7 @@ const ResetModal = ({open, setOpen, resetForm}: IProps) => {
             title="Discard changes?"
             onCancel={() => setOpen(false)}
             getContainer={false}
+            centered={true}
             footer={[
                 <div className={styles.buttonContainer}>
                     <Button
@@ -34,7 +35,7 @@ const ResetModal = ({open, setOpen, resetForm}: IProps) => {
                         key="confirm"
                         onClick={() => {
                             setOpen(false);
-                            resetForm();
+                            onReset()
                         }}
                         variant={"outlined"}
                         danger
