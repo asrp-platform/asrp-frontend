@@ -10,13 +10,14 @@ import {
     DIRECTORS_BOARD_ADMIN_URL,
     DIRECTORS_BOARD_MEMBER_IMAGES_URL,
 } from "../../../../../../../shared/backend/adminApiUrls.ts";
-import type { IContent } from "../../../../../../../entities/DirectorsBoardMember.ts";
 import { isAxiosError } from "axios";
 
 import api from "../../../../../../../axios.ts";
 import styles from "./styles.module.scss";
 import ResetModal from "../ViewCard/ui/ResetModal.tsx";
 import AddDirectorMember from "./ui/AddDirectorMember.tsx";
+import {EditorContent, useEditor} from "@tiptap/react";
+import {detailViewExtensions} from "../ViewCard/helpers/editorExtenstions.tsx";
 
 
 const CreateDirectorMemberCard = () => {
@@ -24,19 +25,22 @@ const CreateDirectorMemberCard = () => {
 
     const [createMode, setCreateMode] = useState(false);
     const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
-    const [content, setContent] = useState<IContent>({ blocks: [] });
-
     const [open, setOpen] = useState<boolean>(false);
+
+    const editor = useEditor({
+        extensions: detailViewExtensions,
+        immediatelyRender: false,
+        editable: true,
+    });
 
 
     const showModal = () => {
         setOpen(true);
     }
 
-    const resetForm = () => {
+    const reset = () => {
         setCreateMode(false);
         setUploadedImageUrl(null);
-        setContent({ blocks: [] });
         form.resetFields();
     };
 
@@ -48,7 +52,7 @@ const CreateDirectorMemberCard = () => {
     const handleSubmit = async (values: { name: string; role: string }) => {
         const payload = {
             ...values,
-            content,
+            content: editor?.getJSON(),
             photo_url: uploadedImageUrl,
         };
 
@@ -142,12 +146,14 @@ const CreateDirectorMemberCard = () => {
                     />
                 </Form.Item>
 
+                <EditorContent editor={editor}/>
+
                 <div className={styles.buttonContainer}>
                     <Button htmlType="submit" type={"primary"}>Submit</Button>
                     <Button htmlType="button" onClick={handleReset} danger>Reset</Button>
                 </div>
 
-                <ResetModal open={open} setOpen={setOpen} resetForm={resetForm} />
+                <ResetModal open={open} setOpen={setOpen} onReset={reset} />
             </Form>
         </div>
     );

@@ -23,7 +23,14 @@ import {
 } from "lucide-react"
 import { Button } from "antd"
 
-const EditorMenuBar = ({ editor }: { editor: Editor }) => {
+
+interface IProps {
+    editor: Editor
+    show?: boolean
+}
+
+
+const EditorMenuBar = ({ editor, show = true }: IProps) => {
     // Read the current editor's state, and re-render the component when it changes
     const editorState = useEditorState({
         editor,
@@ -179,6 +186,11 @@ const EditorMenuBar = ({ editor }: { editor: Editor }) => {
             disabled: false,
         },
     ]
+
+
+    if (!show) {
+        return null
+    }
 
     return (
         <div className="control-group">
