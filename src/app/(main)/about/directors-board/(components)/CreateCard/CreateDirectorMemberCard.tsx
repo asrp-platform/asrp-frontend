@@ -1,14 +1,11 @@
 "use client";
 
-import { useState, type ChangeEvent } from "react";
-import { Image } from "lucide-react";
+import { useState } from "react";
 import {Button, Form, Input} from "antd";
 
-import type { ImagePathResponse, IValidationError } from "../../../../../../shared/types/interfaces.ts";
-import { getDirectorMemberImageUrl } from "../../../../../../shared/backend/restApiUrls.ts";
+import type { IValidationError } from "../../../../../../shared/types/interfaces.ts";
 import {
     DIRECTORS_BOARD_ADMIN_URL,
-    DIRECTORS_BOARD_MEMBER_IMAGES_URL,
 } from "../../../../../../shared/backend/adminApiUrls.ts";
 import { isAxiosError } from "axios";
 
@@ -19,6 +16,7 @@ import AddDirectorMember from "./ui/AddDirectorMember.tsx";
 import {EditorContent, useEditor} from "@tiptap/react";
 import {detailViewExtensions} from "../ViewCard/helpers/editorExtenstions.tsx";
 import EditorMenuBar from "../../../../../../widgets/TiptapEditor/EditorMenuBar.tsx";
+import PhotoInput from "./ui/PhotoInput.tsx";
 
 
 const CreateDirectorMemberCard = () => {
@@ -78,28 +76,6 @@ const CreateDirectorMemberCard = () => {
         }
     };
 
-    const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        try {
-            const res = await api.post<ImagePathResponse>(
-                DIRECTORS_BOARD_MEMBER_IMAGES_URL,
-                formData,
-                { headers: { "Content-Type": "multipart/form-data" } }
-            );
-            setUploadedImageUrl(getDirectorMemberImageUrl(res.data.path));
-        } catch (error) {
-            // TODO: Нормальная обработка ошибок
-            console.error("Image upload failed:", error);
-        } finally {
-            e.target.value = "";
-        }
-    };
-
     if (!createMode ) {
         return <AddDirectorMember setCreateMode={setCreateMode} />
     }
@@ -110,6 +86,7 @@ const CreateDirectorMemberCard = () => {
 
     return (
         <div className={styles.createCardActive}>
+            <PhotoInput setUploadedImageUrl={setUploadedImageUrl} uploadedImageUrl={uploadedImageUrl} />
             <Form
                 form={form}
                 layout="vertical"
@@ -125,22 +102,6 @@ const CreateDirectorMemberCard = () => {
                         placeholder="Enter role..."
                     />
                 </Form.Item>
-
-                <div className={styles.photoInputContainer}>
-                    <input
-                        type="file"
-                        id="photo"
-                        className={styles.photoInput}
-                        onChange={handleFileChange}
-                    />
-
-                    {uploadedImageUrl ?
-                        <img className={styles.photo} src={uploadedImageUrl} alt="" /> :
-                        <label htmlFor="photo" className={styles.photoLabel}>
-                            <Image width={32} height={32} />
-                        </label>
-                    }
-                </div>
 
                 <Form.Item
                     name="name"

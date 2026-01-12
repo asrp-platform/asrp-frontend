@@ -61,11 +61,10 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
     return (
         <div className={styles.photoContainer}>
             <div className={styles.photoInnerContainer}>
-                {photoUrl ? (
-                    <img src={photoUrl} alt="Member photo" />
-                ) : (
+                {photoUrl ?
+                    <img src={photoUrl} alt="Member photo" /> :
                     <div className={styles.placeholder}>No photo</div>
-                )}
+                }
 
                 {editable && (
                     <>
