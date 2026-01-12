@@ -1,7 +1,7 @@
 "use client"
 
 import styles from "./styles.module.scss";
-import type {IDirectorsBoardMember} from "../../../../../../../../entities/DirectorsBoardMember.ts";
+import type {IDirectorsBoardMember} from "../../../../../../../entities/DirectorsBoardMember.ts";
 
 
 interface IProps {

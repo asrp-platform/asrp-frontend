@@ -2,13 +2,13 @@
 
 import {type ChangeEvent, useEffect, useState } from "react"
 import styles from "./styles.module.scss"
-import type { IDirectorsBoardMember } from "../../../../../../../../entities/DirectorsBoardMember"
-import api from "../../../../../../../../axios"
+import type { IDirectorsBoardMember } from "../../../../../../../entities/DirectorsBoardMember.ts"
+import api from "../../../../../../../axios.ts"
 
 import {
     DIRECTORS_BOARD_MEMBER_IMAGES_URL,
-} from "../../../../../../../../shared/backend/adminApiUrls"
-import { getDirectorMemberImageUrl } from "../../../../../../../../shared/backend/restApiUrls.ts";
+} from "../../../../../../../shared/backend/adminApiUrls.ts"
+import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/restApiUrls.ts";
 
 interface ImagePathResponse {
     path: string

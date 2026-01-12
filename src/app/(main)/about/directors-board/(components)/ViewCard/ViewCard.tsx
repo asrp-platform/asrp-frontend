@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 import {Button} from "antd";
 import DetailView from "./ui/DetailView.tsx";
 import {useState} from "react";
-import type {IDirectorsBoardMember} from "../../../../../../../entities/DirectorsBoardMember.ts";
+import type {IDirectorsBoardMember} from "../../../../../../entities/DirectorsBoardMember.ts";
 import CardPhoto from "./ui/CardPhoto.tsx";
 import {EditorContent, useEditor} from "@tiptap/react";
 import {detailViewExtensions} from "./helpers/editorExtenstions.tsx";

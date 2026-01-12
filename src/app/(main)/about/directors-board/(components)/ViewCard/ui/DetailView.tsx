@@ -4,17 +4,17 @@ import {Modal} from "antd";
 import {useEffect, useRef, useState} from "react";
 
 import styles from "./styles.module.scss"
-import {useAuth} from "../../../../../../../../context/AuthProvider.tsx";
-import type {IDirectorsBoardMember} from "../../../../../../../../entities/DirectorsBoardMember.ts";
+import {useAuth} from "../../../../../../../context/AuthProvider.tsx";
+import type {IDirectorsBoardMember} from "../../../../../../../entities/DirectorsBoardMember.ts";
 import ResetModal from "./ResetModal.tsx";
 import {type Content, EditorContent, useEditor} from "@tiptap/react";
 import {detailViewExtensions} from "../helpers/editorExtenstions.tsx";
-import EditorMenuBar from "../../../../../../../../widgets/TiptapEditor/EditorMenuBar.tsx";
+import EditorMenuBar from "../../../../../../../widgets/TiptapEditor/EditorMenuBar.tsx";
 import {isAxiosError} from "axios";
-import api from "../../../../../../../../axios.ts";
+import api from "../../../../../../../axios.ts";
 import {
     getDirectorsBoardMemberAdminUrl
-} from "../../../../../../../../shared/backend/adminApiUrls.ts";
+} from "../../../../../../../shared/backend/adminApiUrls.ts";
 import CardPhoto from "./CardPhoto.tsx";
 import DetailViewHeader from "./DetailViewHeader.tsx";
 import Loading from "./Loading.tsx";

@@ -1,4 +1,4 @@
-@use "../../../../../../../shared/mixins" as m;
+@use "../../../../../../shared/mixins" as m;
 
 
 @mixin input-mixin {
@@ -6,8 +6,7 @@
   outline: none;
   background: transparent;
   width: 100%;
-  color: var(--text-secondary-color-red);
-  padding: 0;
+  color: var(--text-secondary-color-red) !important;
   margin: 0;
   font-size: 24px;
   font-weight: bold;
@@ -20,7 +19,7 @@
   }
 
   &::placeholder {
-    color: var(--text-secondary-color-light);
+    color: var(--text-main-color-dark);
   }
 
 }
@@ -29,6 +28,9 @@
 .createCardForm :global(.ant-form-item-has-error .ant-input-affix-wrapper) {
   border-color: transparent !important;
   box-shadow: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 
@@ -44,7 +46,6 @@
   flex-direction: column;
   gap: 10px;
   align-items: flex-start;
-  justify-content: center;
 }
 
 
@@ -75,8 +76,9 @@
 }
 
 .photo {
-  max-height: 250px;
-  max-width: 250px;
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
 }
 
 
@@ -162,4 +164,14 @@
   background-color: #fee2e2;
   color: #991b1b;
   font-size: 14px;
+}
+
+.editorContent {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-color-light);
+  border-radius: 10px;
+  color: var(--text-main-color-dark);
+  width: 100%;
+  min-height: 250px;
 }

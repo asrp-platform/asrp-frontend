@@ -4,20 +4,21 @@ import { useState, type ChangeEvent } from "react";
 import { Image } from "lucide-react";
 import {Button, Form, Input} from "antd";
 
-import type { ImagePathResponse, IValidationError } from "../../../../../../../shared/types/interfaces.ts";
-import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/restApiUrls.ts";
+import type { ImagePathResponse, IValidationError } from "../../../../../../shared/types/interfaces.ts";
+import { getDirectorMemberImageUrl } from "../../../../../../shared/backend/restApiUrls.ts";
 import {
     DIRECTORS_BOARD_ADMIN_URL,
     DIRECTORS_BOARD_MEMBER_IMAGES_URL,
-} from "../../../../../../../shared/backend/adminApiUrls.ts";
+} from "../../../../../../shared/backend/adminApiUrls.ts";
 import { isAxiosError } from "axios";
 
-import api from "../../../../../../../axios.ts";
+import api from "../../../../../../axios.ts";
 import styles from "./styles.module.scss";
 import ResetModal from "../ViewCard/ui/ResetModal.tsx";
 import AddDirectorMember from "./ui/AddDirectorMember.tsx";
 import {EditorContent, useEditor} from "@tiptap/react";
 import {detailViewExtensions} from "../ViewCard/helpers/editorExtenstions.tsx";
+import EditorMenuBar from "../../../../../../widgets/TiptapEditor/EditorMenuBar.tsx";
 
 
 const CreateDirectorMemberCard = () => {
@@ -31,6 +32,7 @@ const CreateDirectorMemberCard = () => {
         extensions: detailViewExtensions,
         immediatelyRender: false,
         editable: true,
+        content: "null"
     });
 
 
@@ -98,8 +100,12 @@ const CreateDirectorMemberCard = () => {
         }
     };
 
-    if (!createMode) {
+    if (!createMode ) {
         return <AddDirectorMember setCreateMode={setCreateMode} />
+    }
+
+    if (!editor) {
+        return
     }
 
     return (
@@ -146,7 +152,8 @@ const CreateDirectorMemberCard = () => {
                     />
                 </Form.Item>
 
-                <EditorContent editor={editor}/>
+                <EditorMenuBar editor={editor} />
+                <EditorContent editor={editor} className={styles.editorContent}/>
 
                 <div className={styles.buttonContainer}>
                     <Button htmlType="submit" type={"primary"}>Submit</Button>

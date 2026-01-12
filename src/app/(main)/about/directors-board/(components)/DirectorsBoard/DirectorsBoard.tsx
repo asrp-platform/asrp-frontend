@@ -3,14 +3,14 @@
 import type {IDirectorsBoardMember} from "../../../../../../entities/DirectorsBoardMember.ts";
 import {useState, useEffect, useMemo} from "react";
 import api from "../../../../../../axios.ts";
-import CreateDirectorMemberCard from "./CreateCard/CreateDirectorMemberCard.tsx";
+import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx";
 
 import styles from "./styles.module.scss"
 import {DIRECTORS_BOARD_URL} from "../../../../../../shared/backend/restApiUrls.ts";
 import {useAuth} from "../../../../../../context/AuthProvider.tsx";
 
 import CircularProgress from "@mui/material/CircularProgress";
-import ViewCard from "./ViewCard/ViewCard.tsx";
+import ViewCard from "../ViewCard/ViewCard.tsx";
 
 
 

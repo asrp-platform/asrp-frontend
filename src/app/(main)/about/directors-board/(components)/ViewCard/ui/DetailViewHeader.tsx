@@ -1,7 +1,7 @@
 "use client"
 
 import {Form, Input, Typography} from "antd"
-import type { IDirectorsBoardMember } from "../../../../../../../../entities/DirectorsBoardMember"
+import type { IDirectorsBoardMember } from "../../../../../../../entities/DirectorsBoardMember.ts"
 import styles from "./styles.module.scss"
 import DetailViewTitle from "./DetailViewTitle.tsx";
 import type {ReactNode} from "react";
