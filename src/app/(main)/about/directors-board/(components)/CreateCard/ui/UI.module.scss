@@ -1,6 +1,6 @@
 @use "../../../../../../../shared/mixins" as m;
 
-
+@use "../../shared/mixins" as directors-board-mixins;
 
 .createCard {
   display: flex;
@@ -21,8 +21,8 @@
 }
 
 .photoContainer {
-  width: 180px;
-  height: 180px;
+  width: var(--directors-board-image-width);
+  height: var(--directors-board-image-height);
 }
 
 
@@ -30,21 +30,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 12px;
 }
 
 .uploadedImage {
   width: 100%;
   height: 100%;
-  border-radius: 12px;
   object-fit: cover;
 }
 
 .placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: #9ca3af;
+  @include directors-board-mixins.placeholder;
 }
 
 .photoInput {
@@ -53,17 +49,8 @@
 
 
 .photoOverlay {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.45);
-  color: white;
-  font-size: 14px;
-  opacity: 0;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.2s;
-  width: 180px;
+  @include directors-board-mixins.photoOverlayMixin;
+  width: var(--directors-board-image-width);
   aspect-ratio: 1/1;
   border-radius: 12px;
 }
