@@ -152,7 +152,7 @@ const DetailView = ({open, setOpen, member, onSaved}: IProps) => {
 
                 {isLoading ? <Loading /> : <div className={styles.contentContainer}>
 
-                    <CardPhoto member={member} editable={editable} onPhotoChange={(url) => updateForm("photo_url", url)}/>
+                    { editable && <CardPhoto member={member} editable={editable} onPhotoChange={(url) => updateForm("photo_url", url)}/> }
                     <DetailViewHeader
                         editable={editable}
                         member={member}

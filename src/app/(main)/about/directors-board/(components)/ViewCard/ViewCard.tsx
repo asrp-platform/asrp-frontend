@@ -1,6 +1,6 @@
 "use client"
 
-import type {DragEvent} from "react";
+import {type DragEvent, useMemo} from "react";
 import {useState} from "react";
 
 import {Button} from "antd";
@@ -11,6 +11,7 @@ import DetailView from "./ui/DetailView.tsx";
 import {detailViewExtensions} from "./helpers/editorExtenstions.tsx";
 import type {IDirectorsBoardMember} from "../../../../../../entities/DirectorsBoardMember.ts";
 import styles from "./styles.module.scss";
+import {getPreviewContent} from "./helpers/getPreviewContent.ts";
 
 
 interface IProps {
@@ -30,17 +31,23 @@ const ViewCard = ({
                       setDraggingCard,
 }: IProps) => {
 
-    // Used for updating view card after sending patach request via detail view
+    // Used for updating view card after sending patch request via detail view
     const [currentMember, setCurrentMember] = useState<IDirectorsBoardMember>(member);
     const [detailOpen, setDetailOpen] = useState(false);
 
 
+    const previewContent = useMemo(() => {
+        return getPreviewContent(currentMember.content, 4);
+    }, [currentMember]);
+
+
+
     const editor = useEditor({
         extensions: detailViewExtensions,
-        content: member.content,
+        content: previewContent,
         immediatelyRender: false,
         editable: false,
-    }, [member.content]);
+    }, [previewContent]);
 
     const onSaved = (updatedMemberData: IDirectorsBoardMember) => {
         setCurrentMember(updatedMemberData);
@@ -51,26 +58,16 @@ const ViewCard = ({
         setDraggingCard(member);
     }
 
-
-    const dragEndHandler = (event: DragEvent<HTMLDivElement>) => {
-        event.currentTarget.style.background = "white";
-    }
-
     const dragOverHandler = (event: DragEvent<HTMLDivElement>, member: IDirectorsBoardMember) => {
         if (draggingCard?.id === member.id) return;
 
         event.preventDefault();
-        event.currentTarget.style.background = "lightgray";
     }
 
 
     const dropHandler = (event: DragEvent<HTMLDivElement>, member: IDirectorsBoardMember) => {
         // На какую карточку сбрасываем текущую (currentMember)
         event.preventDefault();
-
-
-        console.log(draggingCard);
-
 
         setDirectorMembers(directorMembers.map((c => {
             if (c.id === member.id) {
@@ -90,7 +87,6 @@ const ViewCard = ({
              onDragStart={() => dragStartHandler(member)}
              onDragOver={(event) => dragOverHandler(event, member)}
              onDrop={(event) => dropHandler(event, member)}
-             onDragEnd={(event) => dragEndHandler(event)}
         >
             <h2 className={styles.cardTitle}>{currentMember.role}</h2>
             <CardPhoto member={currentMember} />

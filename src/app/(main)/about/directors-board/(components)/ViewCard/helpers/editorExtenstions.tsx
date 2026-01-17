@@ -9,7 +9,7 @@ import { Highlight } from "@tiptap/extension-highlight"
 export const detailViewExtensions = [
     TextStyleKit,
     StarterKit.configure({
-        heading: { levels: [1, 2, 3] },
+        heading: { levels: [3, 4, 5] },
     }),
     TextAlign.configure({
         types: ["heading", "paragraph", "image"],
