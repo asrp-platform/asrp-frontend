@@ -10,12 +10,12 @@
 }
 
 .nameTitle {
-  color: var(--heading-main-color-dark);
+  color: var(--text-primary-color-dark);
 }
 
 .contentContainer {
   h1, h2, h3, h4, h5, h6 {
-    color: var(--heading-main-color-dark);
+    color: var(--text-primary-color-dark);
   }
 }
 
@@ -27,5 +27,5 @@
 
 
 .boardEditor {
-  color: var(--text-main-color-dark);
+  color: var(--text-secondary-color-dark);
 }

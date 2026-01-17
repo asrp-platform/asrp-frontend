@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-main-color-dark);
+  color: var(--text-secondary-color-dark);
 }
 
 .bottomFormContainer {
@@ -34,12 +34,12 @@
   }
 
   label {
-    color: var(--text-main-color-dark) !important;
+    color: var(--text-secondary-color-dark) !important;
   }
 
   .antdInput {
     height: 40px;
-    color: var(--text-main-color-dark);
+    color: var(--text-secondary-color-dark);
   }
 
   button {

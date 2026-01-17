@@ -18,46 +18,40 @@
 .mainTitleContainer {
 
   padding: 40px 20px;
-  color: var(--text-main-color-light);
+  color: var(--text-primary-color-light);
 
-  background-color: #0b0b0c;
-  background-image:
-          radial-gradient(
-                          1200px 600px at 40% 0%,
-                          rgba(240, 84, 90, 0.35),
-                          transparent 60%
-          ),
-          radial-gradient(
-                          1000px 700px at 60% 100%,
-                          rgba(34, 211, 238, 0.30),
-                          transparent 55%
-          );
+  background: var(--background-heading-gradient);
 
   background-repeat: no-repeat;
 
   @media (min-width: 1200px) {
-    padding: 80px 30vw 80px 40px;
+    padding: 80px 10vw 80px 40px;
     border-radius: 25px;
   }
 
   h1 {
     font-size: 36px;
+    font-weight: 600;
     @media (min-width: 1200px) {
-      font-size: 40px;
+      font-size: 48px;
     }
   }
 
   h2 {
-    color: var(--text-main-color-red);
+    color: #FCA5A5;
     font-size: 16px;
     display: block;
     margin: 20px 0;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0.16rem;
   }
 
   p {
     line-height: 1.6;
     font-size: 16px;
+    @media (min-width: 1000px) {
+      margin-right: 25vw;
+    }
   }
 }
 
@@ -69,8 +63,8 @@
 .becomeMemberButton {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: red;
-  color: var(--text-main-color-light);
+  background-color: var(--button-primary);
+  color: var(--text-primary-color-light);
   border: none;
   border-radius: 9999px;
   font-size: 16px;
@@ -117,8 +111,8 @@
   gap: 10px;
 
   h2 {
-    color: var(--text-main-color-red);
-    font-size: 16px;
+    color: var(--text-primary-color-red);
+    font-size: 18px;
   }
 
   h3 {
@@ -127,13 +121,9 @@
 
   p {
     display: block;
-    color: var(--text-main-color-dark);
+    color: var(--text-secondary-color-dark);
     padding-right: 25vw;
     line-height: 1.6;
-  }
-
-  @media (min-width: 1200px) {
-    gap: 20px;
   }
 }
 
@@ -142,7 +132,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: var(--text-main-color-dark);
+  color: var(--text-secondary-color-dark);
   gap: 20px;
 
   @media (min-width: 1200px) {
@@ -153,35 +143,26 @@
 
 .memberOutcomesCard {
   @include m.main-page-card;
-
-  h4 {
-    color: var(--heading-main-color-dark);
-  }
-
 }
 
 
 
-
-
 .visionContainer {
-  background-color: rgb(23 23 23);
+  background-color: #FFFFFF;
   padding: 40px 24px;
 
   h2 {
-    color: var(--text-main-color-red);
-    font-size: 16px;
+    color: var(--text-primary-color-red);
+    font-size: 18px;
   }
 
   h3 {
-    margin-top: 20px;
     font-size: 32px;
-    color: var(--text-main-color-light);
+    color: var(--text-secondary-color-dark);
   }
 
   p {
-    margin-top: 20px;
-    color: var(--text-main-color-light);
+    color: var(--text-secondary-color-dark);
     line-height: 1.6;
   }
 
@@ -205,17 +186,29 @@
 
 .visionInfoContainer {
   flex: 5;
+
+  p, h3 {
+    margin-top: 16px;
+  }
+
+  h3 {
+    color: var(--text-primary-color-dark);
+  }
 }
 
 .guidesContainer {
-  color: var(--text-main-color-light);
-  border: 1px solid #2a5770;
+  color: var(--text-secondary-color-dark);
+  border: 1px solid var(--border-color-light);
   border-radius: 25px;
-  padding: 16px 20px;
+  padding: 16px;
   line-height: 1.6;
-  font-size: 14px;
+  font-size: 16px;
   flex: 3;
-  background-color: rgb(0,0,0, 0.4);
+  background-color: rgb(246, 246, 246);
+
+  h3 {
+    color: var(--text-primary-color-dark);
+  }
 
   ul {
     list-style: none;
@@ -237,6 +230,7 @@
     }
   }
 
+
 }
 
 .liFirst::before {
@@ -251,7 +245,7 @@
 
 .liThird::before {
   @include m.before-list-point;
-  background-color: var(--text-main-color-red);
+  background-color: var(--text-primary-color-red);
 }
 
 
@@ -270,7 +264,7 @@
   }
 
   p {
-    color: var(--text-main-color-dark);
+    color: var(--text-secondary-color-dark);
     max-width: 650px;
     line-height: 1.6;
   }
@@ -310,7 +304,7 @@
   }
 
   p {
-    color: var(--text-main-color-dark);
+    color: var(--text-secondary-color-dark);
     max-width: 650px;
     line-height: 1.6;
   }
@@ -339,6 +333,7 @@
 
   p {
     margin-bottom: 10px;
+    color: var(--text-secondary-color-dark);
   }
 
   button {
@@ -373,19 +368,18 @@
   border: 1px solid var(--border-color-light);
 
   &:hover {
-    background-color: #f8fafc;
-    border-color: #94a3b8;
+    background-color: #F8FAFC;
     transform: translateY(-1px);
   }
 }
 
 .donationsButton {
-  background-color: #fdecec;
-  color: #d11c1c;
-  border: 1px solid #f5c2c2;
+  background-color: #FEF2F2;
+  color: #B91C1C;
+  border: var(--red-border);
 
   &:hover {
-    background-color: #fbdada;
+    background-color: #FEE2E2;
     transform: translateY(-1px);
   }
 }
@@ -401,20 +395,8 @@
   gap: 20px;
 
   h2 {
-    color: var(--text-main-color-red);
-    font-size: 16px;
-  }
-
-  h3 {
-    margin-top: 20px;
-    font-size: 32px;
-  }
-
-  p {
-    margin-top: 10px;
-    color: var(--text-main-color-dark);
-    max-width: 650px;
-    line-height: 1.6;
+    color: var(--text-primary-color-red);
+    font-size: 18px;
   }
 
   @media (min-width: 1200px) {
@@ -424,4 +406,19 @@
 
 }
 
+
+.connectInfoContainer {
+  h3 {
+    margin-top: 20px;
+    font-size: 32px;
+    color: var(--text-primary-color-dark);
+  }
+
+  p {
+    margin-top: 10px;
+    color: var(--text-secondary-color-dark);
+    max-width: 650px;
+    line-height: 1.6;
+  }
+}
 

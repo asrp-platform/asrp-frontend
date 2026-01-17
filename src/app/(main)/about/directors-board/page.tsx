@@ -9,7 +9,7 @@ const Page = async () => {
             <section>
                 <div className={styles.headingCardContainer}>
                     <h1>ASRP Board of Directors</h1>
-                    <p>The leadership team guiding the American Society of Russian-speaking Pathologists in its mission to foster community, mentorship, and excellence in pathology.</p>
+                    <p>The leadership team guiding the American Society of Russian-speaking Pathologists.</p>
                 </div>
             </section>
             <section>

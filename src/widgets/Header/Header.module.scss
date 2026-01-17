@@ -1,6 +1,6 @@
 .headerElement {
   display: flex;
-  background-color: #1B1B1B;
+  background-color: var(--widget-background-dark-color);
   justify-content: space-between;
   align-items: center;
   height: 80px;
@@ -19,7 +19,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--text-main-color-light);
+  color: var(--text-primary-color-light);
 
 }
 
@@ -36,12 +36,12 @@
 
   .headerMenuItem {
     text-decoration: none;
-    color: var(--text-main-color-light);
+    color: var(--text-primary-color-light);
     display: inline-block;           /* важно */
     transition: transform 0.25s ease;
 
     &:hover {
-      color: var(--text-main-color-red);
+      color: var(--text-primary-color-red);
     }
   }
 }

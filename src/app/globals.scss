@@ -2,7 +2,13 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+  "SF Pro Text", "SF Pro Display",
+  "Segoe UI",
+  Roboto,
+  "Helvetica Neue",
+  Arial,
+  sans-serif !important;
 }
 
 html {
@@ -51,24 +57,33 @@ body {
 :root {
   // Background colors
   --layout-background-color: #f8f8f8;
-  --widget-background-dark-color: #1B1B1B;
+  --widget-background-dark-color: #171717;
+  --background-heading-gradient: linear-gradient(
+                  155deg,
+                  #95344e 0%,
+                  #ae4e5c 50%,
+                  #8b55bd 100%
+  );
 
   // Colors
-  --text-main-color-light: #dcdcdc;
-  --text-highlight-main-color-light: #ffffff;
+  --text-primary-color-light: #dcdcdc;
   --text-secondary-color-light: #818181;
+  --text-highlight-main-color-light: #ffffff;
 
-  --heading-main-color-dark: #0F172A;
-  --text-main-color-dark: rgb(69 85 108);
+  --text-primary-color-dark: #111827;
+  --text-secondary-color-dark: #475569;
 
-  --text-main-color-red: oklch(70.4% 0.191 22.216);
-  --text-secondary-color-red: #DC2626;
+  --text-primary-color-red: #DC2626;
+  --text-secondary-color-red: #FF6467FF;
 
-  --border-color-light: #dfdfdf;
+  --border-color-light: #CBD5E1;
+  --border-color-red: #FECACA;
 
+  --red-border: 1px solid #FECACA;
+  --light-border: 1px solid #CBD5E1;
 
-  --button-primary: #ff0000;;
-  --button-primary-hover: #b91818;
+  --button-primary: #DC2626;
+  --button-primary-hover: #B91C1C;
 
 
   // paddings
@@ -84,5 +99,16 @@ body {
   --paragraph-line-height: 1.6;
   --card-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 
+
+  // Fonts
+  --font-system-sans: system-ui, -apple-system, BlinkMacSystemFont,
+    "SF Pro Text", "SF Pro Display",
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  --main-page-button-font-size: 16px;
+  --main-page-button-font-weight: 600;
 
 }

@@ -6,13 +6,13 @@
   height: 48px;
 
   border-radius: 50%;
-  border: 2px solid var(--text-main-color-light);
+  border: 2px solid var(--text-primary-color-light);
 
   transition: 0.25s ease;
 
   &:hover {
     transform: scale(1.05);
-    border: 2px solid var(--text-main-color-red);
+    border: 2px solid var(--text-primary-color-red);
   }
 
   img {
@@ -56,7 +56,7 @@
   transition: 0.25s ease;
   &:hover {
     transform: scale(1.05);
-    color: var(--text-main-color-red);
+    color: var(--text-primary-color-red);
   }
 }
 
@@ -127,12 +127,12 @@
 
   a {
     text-decoration: none;
-    color: var(--text-main-color-light);
+    color: var(--text-primary-color-light);
     display: inline-block;           /* важно */
     transition: transform 0.25s ease;
 
     &:hover {
-      color: var(--text-main-color-red);
+      color: var(--text-primary-color-red);
     }
   }
 

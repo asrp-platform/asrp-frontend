@@ -49,12 +49,13 @@
       width: 120px;
       border-radius: 9999px;
       background-color: #fdecec;
-      color: #d11c1c;
-      border: 1px solid #f5c2c2;
+      color: #d11c1c !important;
+      border: var(--red-border);
+      font-weight: 600 !important;
 
       &:hover {
         background-color: #fbdada !important;
-        color: #d11c1c !important;
+        color: var(--text-secondary-color-red) !important;
         transform: translateY(-1px) !important;
       }
     }

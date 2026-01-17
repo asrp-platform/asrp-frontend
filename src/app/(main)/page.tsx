@@ -9,12 +9,10 @@ const MainPage = async () => {
         <div className={styles.homePageContainer}>
             <section>
                 <div className={styles.mainTitleContainer}>
-                    <h1>A professional home for Russian-speaking pathologists in the US</h1>
+                    <h1>A professional home for Russian-speaking pathologists in the U.S.</h1>
                     <h2>OUR MISSION</h2>
                     <p>
-                        A professional community for Russian-speaking pathologists in the United
-                        States. Join our founding members in building a network dedicated to
-                        mentorship, education, and collaborative excellence.
+                        To create and support a platform for a professional community for Russian-speaking pathologists in the United States. Join our founding members in building a network dedicated to mentorship, education, and collaborative excellence.
                     </p>
                     <div className={styles.mainTitleButtonContainer}>
                         <button className={styles.becomeMemberButton}>Become a member</button>
@@ -69,7 +67,6 @@ const MainPage = async () => {
                                 <li className={styles.liSecond}>Championing bilingual education and inclusive mentorship.</li>
                                 <li className={styles.liThird}>Advocating for members in national professional forums.</li>
                             </ul>
-                            <button>Learn about ASRP</button>
                         </div>
                     </div>
                 </div>

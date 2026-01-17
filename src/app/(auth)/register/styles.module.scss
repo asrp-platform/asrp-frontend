@@ -1,6 +1,6 @@
 .antdInput {
   height: 40px;
-  color: var(--text-main-color-dark);
+  color: var(--text-secondary-color-dark);
 }
 
 .radioGroup {
@@ -12,7 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-main-color-dark);
+  color: var(--text-secondary-color-dark);
 }
 
 .registerFormContainer {
@@ -23,15 +23,15 @@
   border-radius: 10px;
   width: 100vw;
   height: auto;
-  color: var(--text-main-color-dark);
+  color: var(--text-secondary-color-dark);
 
   h3 {
     margin: 20px 0 var(--general-vertical-padding) 0;
-    color: var(--text-main-color-dark);
+    color: var(--text-secondary-color-dark);
   }
 
   label {
-    color: var(--text-main-color-dark) !important;
+    color: var(--text-secondary-color-dark) !important;
     font-size: 16px !important;
   }
 

@@ -12,12 +12,7 @@
 
 .mainHeadingContainer {
   padding: 40px 30% 60px 40px;
-  background: linear-gradient(
-                  155deg,
-                  #95344e 0%,
-                  #ae4e5c 50%,
-                  #8b55bd 100%
-  );
+  background: var(--background-heading-gradient);
   color: white;
 
   h1 {
