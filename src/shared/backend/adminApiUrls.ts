@@ -23,3 +23,7 @@ export const getDirectorsBoardMemberAdminUrl = (userId: string | number) => {
 
 // "http://localhost:8000/api/admin/directors-board/images"
 export const DIRECTORS_BOARD_MEMBER_IMAGES_URL = `${DIRECTORS_BOARD_ADMIN_URL}/images`
+
+
+// "http://localhost:8000/api/admin/directors-board/images"
+export const DIRECTORS_BOARD_MEMBER_REORDER_URL = `${DIRECTORS_BOARD_ADMIN_URL}/reorder`

@@ -12,6 +12,8 @@ import {detailViewExtensions} from "./helpers/editorExtenstions.tsx";
 import type {IDirectorsBoardMember} from "../../../../../../entities/DirectorsBoardMember.ts";
 import styles from "./styles.module.scss";
 import {getPreviewContent} from "./helpers/getPreviewContent.ts";
+import api from "../../../../../../axios.ts";
+import {DIRECTORS_BOARD_MEMBER_REORDER_URL} from "../../../../../../shared/backend/adminApiUrls.ts";
 
 
 interface IProps {
@@ -83,22 +85,42 @@ const ViewCard = ({
         setIsDragOver(false);
     }
 
-    const dropHandler = (event: DragEvent<HTMLDivElement>, member: IDirectorsBoardMember) => {
-        // На какую карточку сбрасываем текущую (currentMember)
+    const dropHandler = async (
+        event: DragEvent<HTMLDivElement>,
+        member: IDirectorsBoardMember
+    ) => {
         event.preventDefault();
 
-        setDirectorMembers(directorMembers.map((c => {
+        if (!draggingCard) return;
+
+        const updatedMembers = directorMembers.map(c => {
             if (c.id === member.id) {
-                return {...c, order: draggingCard!.order};
+                return { ...c, order: draggingCard.order };
             }
-            if (c.id === draggingCard?.id) {
-                return {...c, order: member.order};
+            if (c.id === draggingCard.id) {
+                return { ...c, order: member.order };
             }
             return c;
-        })));
-        setDraggingCard(null)
+        });
+
+        setDirectorMembers(updatedMembers);
+        setDraggingCard(null);
         setIsDragOver(false);
-    }
+
+        const payload = updatedMembers
+            .map(m => ({
+                id: m.id,
+                order: m.order,
+            }))
+            .sort((a, b) => a.order - b.order);
+
+        try {
+            await api.put(DIRECTORS_BOARD_MEMBER_REORDER_URL, payload);
+        } catch (error) {
+            console.error("Reorder failed", error);
+            setDirectorMembers(directorMembers);
+        }
+    };
 
     return (
         <div className={cardClasses}

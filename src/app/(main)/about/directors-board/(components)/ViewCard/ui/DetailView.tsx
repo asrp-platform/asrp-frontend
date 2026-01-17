@@ -143,7 +143,7 @@ const DetailView = ({open, setOpen, member, onSaved}: IProps) => {
     return (
         <Modal
             open={open}
-            getContainer={false}
+            getContainer={!editable? false : undefined}
             onCancel={onClose}
             footer={null}
             centered
