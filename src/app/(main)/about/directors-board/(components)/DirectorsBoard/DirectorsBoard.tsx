@@ -1,7 +1,7 @@
 "use client"
 
 import type {IDirectorsBoardMember} from "../../../../../../entities/DirectorsBoardMember.ts";
-import {useState, useEffect, useMemo} from "react";
+import {useState, useEffect} from "react";
 import api from "../../../../../../axios.ts";
 import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx";
 
@@ -18,13 +18,9 @@ const DirectorsBoard = () => {
 
     const { user } = useAuth();
 
-    const adminView = useMemo(() => {
-        if (!user) return false
-        return user?.stuff
-    }, [user])
-
     const [directorMembers, setDirectorMembers] = useState<IDirectorsBoardMember[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
     useEffect(() => {
         const fetchDirectorMembers = async () => {
@@ -55,7 +51,14 @@ const DirectorsBoard = () => {
 
     return (
         <div className={styles.boardContainer}>
-            {directorMembers.map((member) => <ViewCard key={member.id} member={member} />)}
+            {directorMembers.sort((a, b) => b.order - a.order).map((member) => <ViewCard
+                key={member.id}
+                member={member}
+                directorMembers={directorMembers}
+                setDirectorMembers={setDirectorMembers}
+                draggingCard={draggingCard}
+                setDraggingCard={setDraggingCard}
+            />)}
             { user?.stuff && <CreateDirectorMemberCard /> }
         </div>
     );

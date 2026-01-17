@@ -2,6 +2,7 @@
 
 .cardContainer {
   @include m.director-member-card-mixin;
+  cursor: grab;
 }
 
 .cardTitle {
