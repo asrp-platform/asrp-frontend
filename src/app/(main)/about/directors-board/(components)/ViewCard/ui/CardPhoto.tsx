@@ -1,14 +1,12 @@
 "use client"
 
-import {type ChangeEvent, useEffect, useState } from "react"
+import { type ChangeEvent, useEffect, useState } from "react"
 import styles from "./styles.module.scss"
 import type { IDirectorsBoardMember } from "../../../../../../../entities/DirectorsBoardMember.ts"
 import api from "../../../../../../../axios.ts"
 
-import {
-    DIRECTORS_BOARD_MEMBER_IMAGES_URL,
-} from "../../../../../../../shared/backend/adminApiUrls.ts"
-import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/restApiUrls.ts";
+import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "../../../../../../../shared/backend/adminApiUrls.ts"
+import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/restApiUrls.ts"
 
 interface ImagePathResponse {
     path: string
@@ -17,13 +15,11 @@ interface ImagePathResponse {
 interface Props {
     member: IDirectorsBoardMember
     editable?: boolean
-    onPhotoChange?: (photoUrl: string) => void
+    onPhotoChange?: (_photoUrl: string) => void
 }
 
 const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
-    const [photoUrl, setPhotoUrl] = useState<string | null>(
-        member.photo_url ?? null
-    )
+    const [photoUrl, setPhotoUrl] = useState<string | null>(member.photo_url ?? null)
     const [isUploading, setIsUploading] = useState(false)
 
     useEffect(() => {
@@ -61,10 +57,11 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
     return (
         <div className={styles.photoContainer}>
             <div className={styles.photoInnerContainer}>
-                {photoUrl ?
-                    <img src={photoUrl} alt="Member photo" /> :
+                {photoUrl ? (
+                    <img src={photoUrl} alt="Member photo" />
+                ) : (
                     <div className={styles.placeholder}>No photo</div>
-                }
+                )}
 
                 {editable && (
                     <>
@@ -77,10 +74,7 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
                             disabled={isUploading}
                         />
 
-                        <label
-                            htmlFor={`photo-${member.id}`}
-                            className={styles.photoOverlay}
-                        >
+                        <label htmlFor={`photo-${member.id}`} className={styles.photoOverlay}>
                             {isUploading ? "Uploading..." : "Change photo"}
                         </label>
                     </>

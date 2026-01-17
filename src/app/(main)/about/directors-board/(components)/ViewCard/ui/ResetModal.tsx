@@ -1,20 +1,15 @@
 "use client"
 
 import styles from "./styles.module.scss"
-import {Modal, Button} from "antd";
-
+import { Modal, Button } from "antd"
 
 interface IProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    onReset: () => void;
+    open: boolean
+    setOpen: (_open: boolean) => void
+    onReset: () => void
 }
 
-
-const ResetModal = ({open, setOpen, onReset}: IProps) => {
-
-
-
+const ResetModal = ({ open, setOpen, onReset }: IProps) => {
     return (
         <Modal
             open={open}
@@ -24,17 +19,13 @@ const ResetModal = ({open, setOpen, onReset}: IProps) => {
             centered={true}
             footer={[
                 <div className={styles.buttonContainer}>
-                    <Button
-                        key="cancel"
-                        onClick={() => setOpen(false)}
-                        type={"primary"}
-                    >
+                    <Button key="cancel" onClick={() => setOpen(false)} type={"primary"}>
                         Cancel
                     </Button>
                     <Button
                         key="confirm"
                         onClick={() => {
-                            setOpen(false);
+                            setOpen(false)
                             onReset()
                         }}
                         variant={"outlined"}
@@ -42,15 +33,15 @@ const ResetModal = ({open, setOpen, onReset}: IProps) => {
                     >
                         Reset
                     </Button>
-                </div>
+                </div>,
             ]}
         >
             <p>
-                You have unsaved changes. If you continue, all entered data will be
-                permanently lost.
+                You have unsaved changes. If you continue, all entered data will be permanently
+                lost.
             </p>
         </Modal>
-    );
-};
+    )
+}
 
-export default ResetModal;
+export default ResetModal

@@ -1,40 +1,35 @@
 "use client"
 
-import {Modal} from "antd";
-import {useEffect, useRef, useState} from "react";
+import { Modal } from "antd"
+import { useEffect, useRef, useState } from "react"
 
 import styles from "./styles.module.scss"
-import {useAuth} from "../../../../../../../context/AuthProvider.tsx";
-import type {IDirectorsBoardMember} from "../../../../../../../entities/DirectorsBoardMember.ts";
-import ResetModal from "./ResetModal.tsx";
-import {type Content, EditorContent, useEditor} from "@tiptap/react";
-import {detailViewExtensions} from "../helpers/editorExtenstions.tsx";
-import EditorMenuBar from "../../../../../../../widgets/TiptapEditor/EditorMenuBar.tsx";
-import {isAxiosError} from "axios";
-import api from "../../../../../../../axios.ts";
-import {
-    getDirectorsBoardMemberAdminUrl
-} from "../../../../../../../shared/backend/adminApiUrls.ts";
-import CardPhoto from "./CardPhoto.tsx";
-import DetailViewHeader from "./DetailViewHeader.tsx";
-import Loading from "./Loading.tsx";
-import {isTouchDevice} from "../../../../../../../shared/helpers/getDeviceType.ts";
-
+import { useAuth } from "../../../../../../../context/AuthProvider.tsx"
+import type { IDirectorsBoardMember } from "../../../../../../../entities/DirectorsBoardMember.ts"
+import ResetModal from "./ResetModal.tsx"
+import { type Content, EditorContent, useEditor } from "@tiptap/react"
+import { detailViewExtensions } from "../helpers/editorExtenstions.tsx"
+import EditorMenuBar from "../../../../../../../widgets/TiptapEditor/EditorMenuBar.tsx"
+import { isAxiosError } from "axios"
+import api from "../../../../../../../axios.ts"
+import { getDirectorsBoardMemberAdminUrl } from "../../../../../../../shared/backend/adminApiUrls.ts"
+import CardPhoto from "./CardPhoto.tsx"
+import DetailViewHeader from "./DetailViewHeader.tsx"
+import Loading from "./Loading.tsx"
+import { isTouchDevice } from "../../../../../../../shared/helpers/getDeviceType.ts"
 
 interface IProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    member: IDirectorsBoardMember;
-    onSaved: (updated: IDirectorsBoardMember) => void;
+    open: boolean
+    setOpen: (_open: boolean) => void
+    member: IDirectorsBoardMember
+    onSaved: (_updated: IDirectorsBoardMember) => void
 }
 
+const DetailView = ({ open, setOpen, member, onSaved }: IProps) => {
+    const { user } = useAuth()
 
-const DetailView = ({open, setOpen, member, onSaved}: IProps) => {
-
-    const {user} = useAuth();
-
-    const [resetModalOpen, setResetModalOpen] = useState(false);
-    const [content, setContent] = useState<Content>();
+    const [resetModalOpen, setResetModalOpen] = useState(false)
+    const [content, setContent] = useState<Content>()
 
     const [formData, setFormData] = useState({
         name: member.name,
@@ -47,19 +42,22 @@ const DetailView = ({open, setOpen, member, onSaved}: IProps) => {
         content: Content | undefined
     } | null>(null)
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const editable = Boolean(user?.stuff) && !isTouchDevice()
 
-    const editor = useEditor({
-        extensions: detailViewExtensions,
-        content: content,
-        immediatelyRender: false,
-        editable: editable,
-    }, [content, editable]);
+    const editor = useEditor(
+        {
+            extensions: detailViewExtensions,
+            content: content,
+            immediatelyRender: false,
+            editable: editable,
+        },
+        [content, editable]
+    )
 
     const onResetModalCancel = () => {
-        setResetModalOpen(true);
+        setResetModalOpen(true)
     }
 
     const onReset = () => {
@@ -78,37 +76,39 @@ const DetailView = ({open, setOpen, member, onSaved}: IProps) => {
 
     const onClose = () => {
         if (editable) {
-            setResetModalOpen(true);
+            setResetModalOpen(true)
         } else {
             setOpen(false)
         }
     }
 
     const updateForm = (key: string, value: string) => {
-        setFormData((prev) => ({...prev, [key]: value}))
+        setFormData((prev) => ({ ...prev, [key]: value }))
     }
 
     const onSave = async () => {
         try {
-            setIsLoading(true);
+            setIsLoading(true)
             const data = {
                 name: formData.name,
                 role: formData.role,
                 photo_url: formData.photo_url,
                 content: editor?.getJSON(),
             }
-            const response = await api.patch<IDirectorsBoardMember>(getDirectorsBoardMemberAdminUrl(member.id), data)
-            onSaved(response.data);
-            setOpen(false);
-        } catch (e) {
-            if (isAxiosError(e)) {
-
+            const response = await api.patch<IDirectorsBoardMember>(
+                getDirectorsBoardMemberAdminUrl(member.id),
+                data
+            )
+            onSaved(response.data)
+            setOpen(false)
+        } catch (error) {
+            if (isAxiosError(error)) {
+                console.error(error)
             }
         } finally {
-            setIsLoading(false);
+            setIsLoading(false)
         }
     }
-
 
     useEffect(() => {
         if (open) {
@@ -126,59 +126,64 @@ const DetailView = ({open, setOpen, member, onSaved}: IProps) => {
                 content: member.content,
             }
         }
-    }, [open])
-
+    }, [open, member])
 
     useEffect(() => {
         if (open) {
-            setContent(member.content);
+            setContent(member.content)
         }
-    }, [member, open]);
-
+    }, [member, open])
 
     if (!editor) {
-        return;
+        return
     }
-
 
     return (
         <Modal
             open={open}
-            getContainer={!editable? false : undefined}
+            getContainer={!editable ? false : undefined}
             onCancel={onClose}
             footer={null}
             centered={!isTouchDevice()}
         >
             <div className={styles.dataContainer}>
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    <div className={styles.contentContainer}>
+                        {editable && (
+                            <CardPhoto
+                                member={member}
+                                editable={editable}
+                                onPhotoChange={(url) => updateForm("photo_url", url)}
+                            />
+                        )}
+                        <DetailViewHeader
+                            editable={editable}
+                            member={member}
+                            role={formData.role}
+                            name={formData.name}
+                            onChangeRole={(value) => updateForm("role", value)}
+                            onChangeName={(value) => updateForm("name", value)}
+                            onFinish={onSave}
+                            onCancel={onResetModalCancel}
+                            editor={
+                                <>
+                                    <EditorMenuBar editor={editor} show={editable} />
+                                    <EditorContent
+                                        editor={editor}
+                                        className={editable ? styles.editableContent : ""}
+                                    />
+                                </>
+                            }
+                        ></DetailViewHeader>
+                    </div>
+                )}
 
-                {isLoading ? <Loading /> : <div className={styles.contentContainer}>
-
-                    { editable && <CardPhoto member={member} editable={editable} onPhotoChange={(url) => updateForm("photo_url", url)}/> }
-                    <DetailViewHeader
-                        editable={editable}
-                        member={member}
-                        role={formData.role}
-                        name={formData.name}
-                        onChangeRole={value => updateForm("role", value)}
-                        onChangeName={value => updateForm("name", value)}
-                        onFinish={onSave}
-                        onCancel={onResetModalCancel}
-                        editor={
-                            <>
-                                <EditorMenuBar editor={editor} show={editable}/>
-                                <EditorContent editor={editor} className={editable ? styles.editableContent : ""}/></>
-                        }
-                    >
-                    </DetailViewHeader>
-
-
-                </div>}
-
-                <ResetModal open={resetModalOpen} setOpen={setResetModalOpen} onReset={onReset}/>
-
+                <ResetModal open={resetModalOpen} setOpen={setResetModalOpen} onReset={onReset} />
             </div>
         </Modal>
-    );
-};
+    )
+}
 
-export default DetailView;
+export default DetailView

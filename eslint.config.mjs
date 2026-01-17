@@ -6,32 +6,43 @@ import tseslint from "typescript-eslint"
 import prettier from "eslint-config-prettier"
 
 export default tseslint.config(
-    { ignores: ["dist", "node_modules", "public"] },
+    {ignores: ["dist", "node_modules", "public", ".next", ".idea"]},
     {
-      extends: [
-        js.configs.recommended,
-        ...tseslint.configs.recommended,
-        prettier,
-      ],
-      files: ["**/*.{ts,tsx}"],
-      languageOptions: {
-        ecmaVersion: 2020,
-        globals: globals.browser,
-      },
-      plugins: {
-        "react-hooks": reactHooks,
-        "react-refresh": reactRefresh,
-      },
+        extends: [
+            js.configs.recommended,
+            ...tseslint.configs.recommended,
+            prettier,
+        ],
+        files: ["**/*.{ts,tsx,js,jsx}"],
+        languageOptions: {
+            ecmaVersion: 2020,
+            globals: globals.browser,
+        },
+        plugins: {
+            "react-hooks": reactHooks,
+            "react-refresh": reactRefresh,
+        },
 
-      rules: {
-        ...reactHooks.configs.recommended.rujles,
-        "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-        "no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
-        "react/react-in-jsx-scope": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        semi: ["error", "never"],
-        'react-hooks/rules-of-hooks': 'error',
-        'react-hooks/exhaustive-deps': 'warn',
-      },
+        rules: {
+            ...reactHooks.configs.recommended.rules,
+
+            "react-hooks/exhaustive-deps": ["warn", {
+                additionalHooks: "(useMyCustomHook|useAnotherHook)",
+            }],
+
+            "react-refresh/only-export-components": ["warn", {
+                allowConstantExport: true,
+            }],
+
+            "no-unused-vars": ["warn", {
+                argsIgnorePattern: "^_",
+                varsIgnorePattern: "^_",
+            }],
+
+            "@typescript-eslint/no-explicit-any": "off",
+
+
+        }
+
     },
 )

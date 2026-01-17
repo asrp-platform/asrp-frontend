@@ -1,16 +1,17 @@
-import type { ReactNode } from "react";
-import Header from "../../widgets/Header/Header.tsx";
-import Footer from "../../widgets/Footer/Footer.tsx";
-import type { Metadata } from "next";
+import type { ReactNode } from "react"
+import Header from "../../widgets/Header/Header.tsx"
+import Footer from "../../widgets/Footer/Footer.tsx"
+import type { Metadata } from "next"
 
-
+// eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
     metadataBase: new URL("https://asrpath.org"),
     title: {
         default: "ASRP — American Society of Russian-Speaking Pathologists",
         template: "%s | ASRP",
     },
-    description: "ASRP is a professional nonprofit community for Russian-speaking pathologists in the United States, focused on education, mentorship, networking, and career development.",
+    description:
+        "ASRP is a professional nonprofit community for Russian-speaking pathologists in the United States, focused on education, mentorship, networking, and career development.",
     alternates: {
         canonical: "/",
     },
@@ -33,8 +34,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "ASRP — American Society of Russian-Speaking Pathologists",
-        description:
-            "A professional home for Russian-speaking pathologists in the United States.",
+        description: "A professional home for Russian-speaking pathologists in the United States.",
         images: ["/og-image.png"],
     },
     robots: {
@@ -50,23 +50,20 @@ export const metadata: Metadata = {
     },
 }
 
-
-const Layout = async ({children}: {children: ReactNode}) => {
+const Layout = async ({ children }: { children: ReactNode }) => {
     return (
         <>
             <header>
-                <Header/>
+                <Header />
             </header>
 
-            <main>
-                {children}
-            </main>
+            <main>{children}</main>
 
             <footer>
-                <Footer/>
+                <Footer />
             </footer>
         </>
-    );
-};
+    )
+}
 
-export default Layout;
+export default Layout
