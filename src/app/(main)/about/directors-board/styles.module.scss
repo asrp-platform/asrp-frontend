@@ -1,7 +1,7 @@
 @use "../../../../shared/mixins" as m;
 
 .pageContainer {
-  margin: 48px var(--page-container-horizontal-margin);
+  margin: var(--mobile-container-margin-vertical) var(--page-container-inline-margin);
   @media (min-width: 1200px) {
     margin: 48px var(--page-container-horizontal-margin);
   }
@@ -13,5 +13,4 @@
 
 .headingCardContainer {
   @include m.heading-card-container;
-
 }

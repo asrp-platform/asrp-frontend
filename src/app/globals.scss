@@ -89,12 +89,19 @@ body {
 
   // paddings
   --general-vertical-padding: 10px;
+
+
+  // mobile paddings
   --mobile-layout-padding-inline: 2vw;
 
 
-  // Margins
+  // Desktop Margins
   --page-container-horizontal-margin: 13vw;
   --page-container-vertical-margin: 10px;
+
+  // Mobile Margins
+  --mobile-container-margin-inline: 10px;
+  --mobile-container-margin-vertical: 10px;
 
 
   --paragraph-line-height: 1.6;

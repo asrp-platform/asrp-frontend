@@ -18,6 +18,7 @@ import {
 import CardPhoto from "./CardPhoto.tsx";
 import DetailViewHeader from "./DetailViewHeader.tsx";
 import Loading from "./Loading.tsx";
+import {isTouchDevice} from "../../../../../../../shared/helpers/getDeviceType.ts";
 
 
 interface IProps {
@@ -48,7 +49,7 @@ const DetailView = ({open, setOpen, member, onSaved}: IProps) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const editable = Boolean(user?.stuff)
+    const editable = Boolean(user?.stuff) && !isTouchDevice()
 
     const editor = useEditor({
         extensions: detailViewExtensions,
@@ -146,7 +147,7 @@ const DetailView = ({open, setOpen, member, onSaved}: IProps) => {
             getContainer={!editable? false : undefined}
             onCancel={onClose}
             footer={null}
-            centered
+            centered={!isTouchDevice()}
         >
             <div className={styles.dataContainer}>
 

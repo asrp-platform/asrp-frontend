@@ -11,6 +11,7 @@ import {useAuth} from "../../../../../../context/AuthProvider.tsx";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import ViewCard from "../ViewCard/ViewCard.tsx";
+import {isTouchDevice} from "../../../../../../shared/helpers/getDeviceType.ts";
 
 
 
@@ -60,7 +61,7 @@ const DirectorsBoard = () => {
                 setDraggingCard={setDraggingCard}
                 draggable={draggable}
             />)}
-            { user?.stuff && <CreateDirectorMemberCard /> }
+            { (user?.stuff && !isTouchDevice() ) && <CreateDirectorMemberCard /> }
         </div>
     );
 };
