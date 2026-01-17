@@ -2,7 +2,32 @@
 
 .cardContainer {
   @include m.director-member-card-mixin;
+  position: relative;
+  transition:
+          box-shadow 0.15s ease,
+          transform 0.15s ease,
+          border-color 0.15s ease;
+}
+
+.cardContainer * {
+  pointer-events: none;
+}
+
+.cardContainer button,
+.cardContainer a {
+  pointer-events: auto;
+}
+
+.draggable {
   cursor: grab;
+}
+
+.dragOver {
+  transition: 0.3s ease-in-out;
+  transform: scale(0.99);
+  box-shadow:
+          0 0 0 2px rgba(255, 99, 71, 0.45), /* акцентный ring */
+          0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .cardTitle {

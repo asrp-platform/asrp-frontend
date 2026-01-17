@@ -20,6 +20,7 @@ interface IProps {
     setDirectorMembers: (memberList: IDirectorsBoardMember[]) => void;
     draggingCard: IDirectorsBoardMember | null;
     setDraggingCard: (newDragging: IDirectorsBoardMember | null) => void;
+    draggable?: boolean
 }
 
 
@@ -29,17 +30,26 @@ const ViewCard = ({
                       setDirectorMembers,
                       draggingCard,
                       setDraggingCard,
+                      draggable = false,
 }: IProps) => {
 
     // Used for updating view card after sending patch request via detail view
     const [currentMember, setCurrentMember] = useState<IDirectorsBoardMember>(member);
     const [detailOpen, setDetailOpen] = useState(false);
 
+    const [isDragOver, setIsDragOver] = useState<boolean>(false);
 
     const previewContent = useMemo(() => {
         return getPreviewContent(currentMember.content, 4);
     }, [currentMember]);
 
+    const cardClasses = useMemo(() => {
+        return `
+            ${styles.cardContainer}
+            ${draggable ? styles.draggable : ""}
+            ${isDragOver ? styles.dragOver : ""}
+        `;
+    }, [draggable, isDragOver]);
 
 
     const editor = useEditor({
@@ -58,12 +68,20 @@ const ViewCard = ({
         setDraggingCard(member);
     }
 
-    const dragOverHandler = (event: DragEvent<HTMLDivElement>, member: IDirectorsBoardMember) => {
-        if (draggingCard?.id === member.id) return;
-
+    const dragOverHandler = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
     }
 
+    const dragEnterHandler = (
+        member: IDirectorsBoardMember
+    ) => {
+        if (draggingCard?.id === member.id) return;
+        setIsDragOver(true);
+    };
+
+    const dragLeaveHandler = () => {
+        setIsDragOver(false);
+    }
 
     const dropHandler = (event: DragEvent<HTMLDivElement>, member: IDirectorsBoardMember) => {
         // На какую карточку сбрасываем текущую (currentMember)
@@ -79,14 +97,17 @@ const ViewCard = ({
             return c;
         })));
         setDraggingCard(null)
+        setIsDragOver(false);
     }
 
     return (
-        <div className={styles.cardContainer}
-             draggable={true}
+        <div className={cardClasses}
+             draggable={draggable}
              onDragStart={() => dragStartHandler(member)}
-             onDragOver={(event) => dragOverHandler(event, member)}
+             onDragOver={(event) => dragOverHandler(event)}
              onDrop={(event) => dropHandler(event, member)}
+             onDragEnter={() => dragEnterHandler(member)}
+             onDragLeave={dragLeaveHandler}
         >
             <h2 className={styles.cardTitle}>{currentMember.role}</h2>
             <CardPhoto member={currentMember} />

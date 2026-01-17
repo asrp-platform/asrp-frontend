@@ -30,7 +30,7 @@ const CreateDirectorMemberCard = () => {
         extensions: detailViewExtensions,
         immediatelyRender: false,
         editable: true,
-        content: "null"
+        content: ""
     });
 
 

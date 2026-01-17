@@ -22,6 +22,8 @@ const DirectorsBoard = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
+    const draggable = user?.stuff
+
     useEffect(() => {
         const fetchDirectorMembers = async () => {
 
@@ -47,8 +49,6 @@ const DirectorsBoard = () => {
         )
     }
 
-
-
     return (
         <div className={styles.boardContainer}>
             {directorMembers.sort((a, b) => b.order - a.order).map((member) => <ViewCard
@@ -58,6 +58,7 @@ const DirectorsBoard = () => {
                 setDirectorMembers={setDirectorMembers}
                 draggingCard={draggingCard}
                 setDraggingCard={setDraggingCard}
+                draggable={draggable}
             />)}
             { user?.stuff && <CreateDirectorMemberCard /> }
         </div>

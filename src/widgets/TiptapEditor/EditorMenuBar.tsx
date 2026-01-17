@@ -7,8 +7,6 @@ import {
     AlignRight,
     Bold,
     Code,
-    Heading1,
-    Heading2,
     Heading3,
     Highlighter,
     Italic,
@@ -19,7 +17,7 @@ import {
     Redo,
     SeparatorHorizontal,
     CornerDownLeft,
-    Link,
+    Link, Heading4, Heading5,
 } from "lucide-react"
 import { Button } from "antd"
 
@@ -69,22 +67,23 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
     })
 
     const options = [
-        {
-            icon: <Heading1 width={18} />,
-            onClick: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
-            pressed: editorState.isHeading1,
-            disabled: false,
-        },
-        {
-            icon: <Heading2 width={18} />,
-            onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
-            pressed: editorState.isHeading2,
-            disabled: false,
-        },
+
         {
             icon: <Heading3 width={18} />,
             onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
             pressed: editorState.isHeading3,
+            disabled: false,
+        },
+        {
+            icon: <Heading4 width={18} />,
+            onClick: () => editor.chain().focus().toggleHeading({ level: 4 }).run(),
+            pressed: editorState.isHeading4,
+            disabled: false,
+        },
+        {
+            icon: <Heading5 width={18} />,
+            onClick: () => editor.chain().focus().toggleHeading({ level: 5 }).run(),
+            pressed: editorState.isHeading5,
             disabled: false,
         },
         {
