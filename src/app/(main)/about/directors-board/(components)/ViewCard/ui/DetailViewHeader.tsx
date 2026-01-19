@@ -17,6 +17,7 @@ interface Props {
     onChangeRole: (_value: string) => void
     onChangeName: (_value: string) => void
     onFinish: () => void
+    onDelete: () => void
     onCancel: () => void
     editor: ReactNode
 }
@@ -29,6 +30,7 @@ const DetailViewHeader = ({
     onChangeRole,
     onChangeName,
     onFinish,
+    onDelete,
     onCancel,
     editor,
 }: Props) => {
@@ -68,7 +70,12 @@ const DetailViewHeader = ({
                     <Input value={name} onChange={(e) => onChangeName(e.target.value)} />
                 </Form.Item>
                 {editor}
-                <DetailViewEditButtons editable={editable} onCancel={onCancel} onSave={onFinish} />
+                <DetailViewEditButtons
+                    editable={editable}
+                    onCancel={onCancel}
+                    onSave={onFinish}
+                    onDelete={onDelete}
+                />
             </Form>
         </div>
     )

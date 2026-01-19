@@ -1,7 +1,7 @@
 @use "../../../shared/mixins" as m;
 
 .outerContainer {
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     padding: var(--general-vertical-padding) var(--page-container-horizontal-margin);
   }
 }
@@ -9,7 +9,7 @@
 .innerContainer {
   @include m.card-style;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     margin-inline: var(--desktop-layout-padding-inline);
   }
 
@@ -26,9 +26,11 @@
   h2 {
     font-size: 20px;
   }
+
   h4 {
     font-size: 16px;
   }
+
   p {
     font-size: 14px;
     line-height: 1.6;
@@ -36,17 +38,20 @@
 }
 
 /* tablet */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .legalContent {
     padding: 24px;
   }
+
   .section {
     h2 {
       font-size: 24px;
     }
+
     h4 {
       font-size: 18px;
     }
+
     p {
       font-size: 15px;
     }
@@ -54,17 +59,20 @@
 }
 
 /* desktop */
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   .legalContent {
     padding: 32px;
   }
+
   .section {
     h2 {
       font-size: 28px;
     }
+
     h4 {
       font-size: 20px;
     }
+
     p {
       font-size: 16px;
     }

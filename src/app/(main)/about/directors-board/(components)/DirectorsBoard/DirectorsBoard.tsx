@@ -1,41 +1,45 @@
 "use client"
 
-import type {IDirectorsBoardMember} from "../../../../../../entities/DirectorsBoardMember.ts";
-import {useState, useEffect} from "react";
-import api from "../../../../../../axios.ts";
-import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx";
+import type { IDirectorsBoardMember } from "../../../../../../entities/DirectorsBoardMember.ts"
+import { useState, useEffect, useMemo } from "react"
+import api from "../../../../../../axios.ts"
+import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx"
 
 import styles from "./styles.module.scss"
-import {DIRECTORS_BOARD_URL} from "../../../../../../shared/backend/restApiUrls.ts";
-import {useAuth} from "../../../../../../context/AuthProvider.tsx";
+import { DIRECTORS_BOARD_URL } from "../../../../../../shared/backend/restApiUrls.ts"
+import { useAuth } from "../../../../../../context/AuthProvider.tsx"
 
-import CircularProgress from "@mui/material/CircularProgress";
-import ViewCard from "../ViewCard/ViewCard.tsx";
-import {isTouchDevice} from "../../../../../../shared/helpers/getDeviceType.ts";
-
-
+import CircularProgress from "@mui/material/CircularProgress"
+import ViewCard from "../ViewCard/ViewCard.tsx"
+import { isTouchDevice } from "../../../../../../shared/helpers/getDeviceType.ts"
+import { usePermissions } from "../../../../../../context/PermissionsProvider.tsx"
 
 const DirectorsBoard = () => {
-
-    const { user } = useAuth();
+    const { user } = useAuth()
+    const { permissions } = usePermissions()
 
     const [directorMembers, setDirectorMembers] = useState<IDirectorsBoardMember[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
-    const draggable = user?.stuff
+    const canEdit = useMemo(() => {
+        return user?.stuff && permissions.includes("director_board.update")
+    }, [user?.stuff, permissions])
+
+    const canCreate = useMemo(() => {
+        return user?.stuff && permissions.includes("director_board.create") && !isTouchDevice()
+    }, [user?.stuff, permissions])
 
     useEffect(() => {
         const fetchDirectorMembers = async () => {
-
             try {
-                setIsLoading(true);
-                const response = await api.get<IDirectorsBoardMember[]>(DIRECTORS_BOARD_URL);
+                setIsLoading(true)
+                const response = await api.get<IDirectorsBoardMember[]>(DIRECTORS_BOARD_URL)
                 setDirectorMembers(response.data)
             } catch (error) {
-                console.error(error);
+                console.error(error)
             } finally {
-                setIsLoading(false);
+                setIsLoading(false)
             }
         }
 
@@ -52,18 +56,22 @@ const DirectorsBoard = () => {
 
     return (
         <div className={styles.boardContainer}>
-            {directorMembers.sort((a, b) => b.order - a.order).map((member) => <ViewCard
-                key={member.id}
-                member={member}
-                directorMembers={directorMembers}
-                setDirectorMembers={setDirectorMembers}
-                draggingCard={draggingCard}
-                setDraggingCard={setDraggingCard}
-                draggable={draggable}
-            />)}
-            { (user?.stuff && !isTouchDevice() ) && <CreateDirectorMemberCard /> }
+            {directorMembers
+                .sort((a, b) => b.order - a.order)
+                .map((member) => (
+                    <ViewCard
+                        key={member.id}
+                        member={member}
+                        directorMembers={directorMembers}
+                        setDirectorMembers={setDirectorMembers}
+                        draggingCard={draggingCard}
+                        setDraggingCard={setDraggingCard}
+                        canEdit={canEdit}
+                    />
+                ))}
+            {canCreate && <CreateDirectorMemberCard />}
         </div>
-    );
-};
+    )
+}
 
-export default DirectorsBoard;
+export default DirectorsBoard

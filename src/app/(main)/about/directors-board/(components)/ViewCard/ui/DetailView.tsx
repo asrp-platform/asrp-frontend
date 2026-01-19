@@ -1,10 +1,9 @@
 "use client"
 
-import { Modal } from "antd"
+import { message, Modal } from "antd"
 import { useEffect, useRef, useState } from "react"
 
 import styles from "./styles.module.scss"
-import { useAuth } from "../../../../../../../context/AuthProvider.tsx"
 import type { IDirectorsBoardMember } from "../../../../../../../entities/DirectorsBoardMember.ts"
 import ResetModal from "./ResetModal.tsx"
 import { type Content, EditorContent, useEditor } from "@tiptap/react"
@@ -23,11 +22,11 @@ interface IProps {
     setOpen: (_open: boolean) => void
     member: IDirectorsBoardMember
     onSaved: (_updated: IDirectorsBoardMember) => void
+    onDeleted: (_deletedCardId: number) => void
+    canEdit: boolean
 }
 
-const DetailView = ({ open, setOpen, member, onSaved }: IProps) => {
-    const { user } = useAuth()
-
+const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IProps) => {
     const [resetModalOpen, setResetModalOpen] = useState(false)
     const [content, setContent] = useState<Content>()
 
@@ -44,7 +43,7 @@ const DetailView = ({ open, setOpen, member, onSaved }: IProps) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const editable = Boolean(user?.stuff) && !isTouchDevice()
+    const editable = canEdit && !isTouchDevice()
 
     const editor = useEditor(
         {
@@ -62,14 +61,8 @@ const DetailView = ({ open, setOpen, member, onSaved }: IProps) => {
 
     const onReset = () => {
         if (!initialRef.current) return
-
-        // 1. Откат формы
         setFormData(initialRef.current.formData)
-
-        // 2. Откат editor
         editor?.commands.setContent(initialRef.current.content ?? {})
-
-        // 3. Закрываем модалку
         setResetModalOpen(false)
         setOpen(false)
     }
@@ -86,7 +79,7 @@ const DetailView = ({ open, setOpen, member, onSaved }: IProps) => {
         setFormData((prev) => ({ ...prev, [key]: value }))
     }
 
-    const onSave = async () => {
+    const handleSave = async () => {
         try {
             setIsLoading(true)
             const data = {
@@ -104,6 +97,24 @@ const DetailView = ({ open, setOpen, member, onSaved }: IProps) => {
         } catch (error) {
             if (isAxiosError(error)) {
                 console.error(error)
+            }
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const handleDelete = async () => {
+        try {
+            setIsLoading(true)
+            const response = await api.delete<number>(
+                getDirectorsBoardMemberAdminUrl(Number(member.id))
+            )
+            const deletedCardId = response.data
+            onDeleted(deletedCardId)
+        } catch (error) {
+            if (isAxiosError(error)) {
+                console.error(error)
+                message.error("Something went wrong. Please try again.")
             }
         } finally {
             setIsLoading(false)
@@ -165,7 +176,8 @@ const DetailView = ({ open, setOpen, member, onSaved }: IProps) => {
                             name={formData.name}
                             onChangeRole={(value) => updateForm("role", value)}
                             onChangeName={(value) => updateForm("name", value)}
-                            onFinish={onSave}
+                            onFinish={handleSave}
+                            onDelete={handleDelete}
                             onCancel={onResetModalCancel}
                             editor={
                                 <>

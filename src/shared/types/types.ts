@@ -7,3 +7,10 @@ export enum Role {
     Postdoc = "Postdoc",
     Applicant = "Applicant",
 }
+
+/* eslint-disable */
+// @ts-ignore
+export enum ContactMessageType {
+    ContactMessage = "CONTACT_MESSAGE",
+    GetInvolvedMessage = "GET_INVOLVED_MESSAGE",
+}

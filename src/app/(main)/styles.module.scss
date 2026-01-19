@@ -7,7 +7,7 @@
   justify-content: center;
   gap: 20px;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     gap: 50px;
     margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
   }
@@ -16,15 +16,12 @@
 
 
 .mainTitleContainer {
-
   padding: 40px 20px;
   color: var(--text-primary-color-light);
-
   background: var(--background-heading-gradient);
-
   background-repeat: no-repeat;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     padding: 80px 10vw 80px 40px;
     border-radius: 25px;
   }
@@ -32,7 +29,8 @@
   h1 {
     font-size: 36px;
     font-weight: 600;
-    @media (min-width: 1200px) {
+
+    @media (width >= 1200px) {
       font-size: 48px;
     }
   }
@@ -49,7 +47,8 @@
   p {
     line-height: 1.6;
     font-size: 16px;
-    @media (min-width: 1000px) {
+
+    @media (width >= 1000px) {
       margin-right: 25vw;
     }
   }
@@ -81,17 +80,16 @@
   margin-top: 20px;
   padding: 10px 20px;
   background: transparent;
-  color: #ffffff;
+  color: #fff;
   font-size: 16px;
   font-weight: 500;
   border-radius: 9999px;
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border: 1.5px solid rgb(255 255 255 / 0.6);
   cursor: pointer;
-
   transition: 0.3s ease-in-out;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(255 255 255 / 0.1);
   }
 }
 
@@ -100,7 +98,7 @@
 .memberOutcomesContainer {
   padding: 0 var(--mobile-layout-padding-inline);
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     padding: 0;
   }
 }
@@ -135,7 +133,7 @@
   color: var(--text-secondary-color-dark);
   gap: 20px;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     flex-direction: row;
     margin-top: 40px;
   }
@@ -148,7 +146,7 @@
 
 
 .visionContainer {
-  background-color: #FFFFFF;
+  background-color: #FFF;
   padding: 40px 24px;
 
   h2 {
@@ -166,7 +164,7 @@
     line-height: 1.6;
   }
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     padding: 48px 40px;
     flex-direction: row;
     border-radius: 25px;
@@ -179,7 +177,7 @@
   flex-direction: column;
   gap: 20px;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     flex-direction: row;
   }
 }
@@ -204,7 +202,7 @@
   line-height: 1.6;
   font-size: 16px;
   flex: 3;
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(246 246 246);
 
   h3 {
     color: var(--text-primary-color-dark);
@@ -225,6 +223,7 @@
     border: none;
     transition: 0.3s ease-in-out;
     font-weight: bolder;
+
     &:hover {
       background-color: #dcdcdc;
     }
@@ -235,16 +234,19 @@
 
 .liFirst::before {
   @include m.before-list-point;
+
   background-color: #00d492;
 }
 
 .liSecond::before {
   @include m.before-list-point;
+
   background-color: #00bcff;
 }
 
 .liThird::before {
   @include m.before-list-point;
+
   background-color: var(--text-primary-color-red);
 }
 
@@ -253,7 +255,6 @@
 
 
 .programsContainer {
-
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -269,7 +270,7 @@
     line-height: 1.6;
   }
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     padding: 0;
   }
 
@@ -280,7 +281,7 @@
   gap: 20px;
   grid-template-columns: 1fr;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -309,7 +310,7 @@
     line-height: 1.6;
   }
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     padding: 0;
   }
 }
@@ -320,7 +321,7 @@
   gap: 20px;
   grid-template-columns: 1fr;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
@@ -349,7 +350,7 @@
 
 .membershipFormButton {
   background-color: var(--button-primary);
-  color: #ffffff;
+  color: #fff;
   border: none;
 
   &:hover {
@@ -363,7 +364,7 @@
 }
 
 .helpButton {
-  background-color: #ffffff;
+  background-color: #fff;
   color: #0f172a;
   border: 1px solid var(--border-color-light);
 
@@ -399,7 +400,7 @@
     font-size: 18px;
   }
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     grid-template-columns: 1fr 1fr;
     padding: 0;
   }

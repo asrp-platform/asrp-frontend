@@ -21,7 +21,7 @@ interface IProps {
     setDirectorMembers: (_memberList: IDirectorsBoardMember[]) => void
     draggingCard: IDirectorsBoardMember | null
     setDraggingCard: (_newDragging: IDirectorsBoardMember | null) => void
-    draggable?: boolean
+    canEdit?: boolean
 }
 
 const ViewCard = ({
@@ -30,7 +30,7 @@ const ViewCard = ({
     setDirectorMembers,
     draggingCard,
     setDraggingCard,
-    draggable = false,
+    canEdit = false,
 }: IProps) => {
     // Used for updating view card after sending patch request via detail view
     const [currentMember, setCurrentMember] = useState<IDirectorsBoardMember>(member)
@@ -39,16 +39,16 @@ const ViewCard = ({
     const [isDragOver, setIsDragOver] = useState<boolean>(false)
 
     const previewContent = useMemo(() => {
-        return getPreviewContent(currentMember.content, 4)
+        return getPreviewContent(currentMember.content, 3)
     }, [currentMember])
 
     const cardClasses = useMemo(() => {
         return `
             ${styles.cardContainer}
-            ${draggable ? styles.draggable : ""}
+            ${canEdit ? styles.draggable : ""}
             ${isDragOver ? styles.dragOver : ""}
         `
-    }, [draggable, isDragOver])
+    }, [canEdit, isDragOver])
 
     const editor = useEditor(
         {
@@ -63,6 +63,11 @@ const ViewCard = ({
     const onSaved = (updatedMemberData: IDirectorsBoardMember) => {
         setCurrentMember(updatedMemberData)
         editor?.commands.setContent(updatedMemberData.content)
+    }
+
+    const onDeleted = (deletedCardId: number) => {
+        setDirectorMembers(directorMembers.filter((member) => member.id !== deletedCardId))
+        setDetailOpen(false)
     }
 
     const dragStartHandler = (member: IDirectorsBoardMember) => {
@@ -119,7 +124,7 @@ const ViewCard = ({
     return (
         <div
             className={cardClasses}
-            draggable={draggable}
+            draggable={canEdit}
             onDragStart={() => dragStartHandler(member)}
             onDragOver={(event) => dragOverHandler(event)}
             onDrop={(event) => dropHandler(event, member)}
@@ -138,6 +143,8 @@ const ViewCard = ({
                 setOpen={setDetailOpen}
                 member={currentMember}
                 onSaved={onSaved}
+                onDeleted={onDeleted}
+                canEdit={canEdit}
             />
         </div>
     )

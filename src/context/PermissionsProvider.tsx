@@ -15,8 +15,8 @@ import api from "../axios.ts"
 import { getUserPermissionsStuffUrl } from "../shared/backend/adminApiUrls.ts"
 
 interface IPermissionsContext {
-    permissions: IPermission[]
-    setPermissions: Dispatch<SetStateAction<IPermission[]>>
+    permissions: string[]
+    setPermissions: Dispatch<SetStateAction<string[]>>
     isPermissionsLoading: boolean
 }
 
@@ -28,7 +28,7 @@ const PermissionsContext = createContext<IPermissionsContext | null>(null)
 
 export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
     const { user, isUserLoading } = useAuth()
-    const [permissions, setPermissions] = useState<IPermission[]>([])
+    const [permissions, setPermissions] = useState<string[]>([])
     const [isPermissionsLoading, setIsPermissionsLoading] = useState<boolean>(false)
 
     useEffect(() => {
@@ -42,7 +42,7 @@ export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
             try {
                 setIsPermissionsLoading(true)
                 const response = await api.get<IPermission[]>(getUserPermissionsStuffUrl(user.id))
-                setPermissions(response.data)
+                setPermissions(response.data.map((p) => p.action))
             } catch (error) {
                 console.error(error)
             } finally {

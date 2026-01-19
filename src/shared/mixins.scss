@@ -1,12 +1,13 @@
-@mixin card-style () {
+@mixin card-style() {
   background-color: white;
   padding: 20px 16px;
   border-radius: 25px;
   border: 1px solid var(--border-color-light);
-  //box-shadow: var(--card-box-shadow);
+
+  // box-shadow: var(--card-box-shadow);
 }
 
-@mixin antd-editable-input ($height: 40px) {
+@mixin antd-editable-input($height: 40px) {
   color: #1B1B1B;
   cursor: default;
 
@@ -22,14 +23,14 @@
   align-items: center;
 }
 
-@mixin main-page-card () {
+@mixin main-page-card() {
   padding: 20px 24px;
   background-color: #fff;
   border: 1px solid var(--border-color-light);
   border-radius: 20px;
   box-shadow:
-          0 4px 12px rgba(15, 23, 42, 0.06),
-          0 1px 2px rgba(15, 23, 42, 0.04);
+          0 4px 12px rgb(15 23 42 / 0.06),
+          0 1px 2px rgb(15 23 42 / 0.04);
   line-height: 1.6;
 
   h4 {
@@ -43,7 +44,7 @@
   }
 }
 
-@mixin before-list-point () {
+@mixin before-list-point() {
   display: inline-block;
   content: "";
   width: 6px;
@@ -63,7 +64,7 @@
   background-color: #fff;
   border-radius: 10px;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     padding: 8vh 12vw;
     border: 1px solid var(--border-color-light);
     border-radius: 25px;

@@ -7,14 +7,13 @@
   flex-shrink: 0;
   padding: 10px 20px;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     padding: 0 var(--page-container-horizontal-margin)
   }
 
 }
 
 .horizontalMenu {
-
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -24,10 +23,9 @@
 }
 
 .navbar {
-
   display: none;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,8 +45,7 @@
 }
 
 .burgerMenu {
-
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     display: none;
   }
 
@@ -56,7 +53,8 @@
 
 .authStatusContainer {
   display: none;
-  @media (min-width: 1200px) {
+
+  @media (width >= 1200px) {
     display: flex;
   }
 }

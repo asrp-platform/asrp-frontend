@@ -10,9 +10,14 @@
 
 .buttonContainer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 10px;
   margin-top: 10px;
+}
+
+.rightContainer {
+  display: flex;
+  gap: 10px;
 }
 
 .editableContent {

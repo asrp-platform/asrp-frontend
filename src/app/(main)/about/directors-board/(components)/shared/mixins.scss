@@ -2,7 +2,7 @@
 
 @mixin photoOverlayMixin {
   position: absolute;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgb(0 0 0 / 0.45);
   color: white;
   font-size: 14px;
   opacity: 0;
@@ -12,6 +12,7 @@
   align-items: center;
   transition: opacity 0.2s;
 }
+
 @mixin placeholder {
   display: flex;
   align-items: center;

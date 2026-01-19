@@ -2,49 +2,41 @@
 
 import styles from "./ContactForm.module.scss"
 
-import { type FormProps, Input, Result, Spin } from "antd"
+import { type FormProps, Input, message, Spin } from "antd"
 import { Form } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import { Button } from "antd"
 import { useForm } from "antd/es/form/Form"
 import { useState } from "react"
-import api from "../../axios.ts"
-import { CONTACT_MESSAGE_URL } from "../../shared/backend/restApiUrls.ts"
 import { isAxiosError } from "axios"
 
-import useNotification from "antd/es/notification/useNotification"
-import type {IBackendErrorResponse} from "../../shared/types/interfaces.ts";
+import api from "../../axios.ts"
+import { CONTACT_MESSAGE_URL } from "../../shared/backend/restApiUrls.ts"
+import type { IBackendErrorResponse } from "../../shared/types/interfaces.ts"
+import { ContactMessageType } from "../../shared/types/types.ts"
 
 interface ContactFormFields {
     name: string
     email: string
     subject: string
-    message: string
+    contact_message: string
 }
 
 const ContactForm = () => {
     const [form] = useForm()
 
-    const [messageSent, setMessageSent] = useState<boolean>(false)
     const [messageLoading, setMessageLoading] = useState<boolean>(false)
-
-    const [notification, contextHolder] = useNotification()
-
-    const openNotification = (pauseOnHover: boolean) => {
-        notification.error({
-            title: "Server Error",
-            description: "An unexpected error occurred on the server. Please try again later.",
-            showProgress: true,
-            pauseOnHover,
-        })
-    }
 
     const onFinish: FormProps<ContactFormFields>["onFinish"] = (values) => {
         const sendContactMessage = async () => {
             try {
                 setMessageLoading(true)
-                await api.post(CONTACT_MESSAGE_URL, values)
-                setMessageSent(true)
+                await api.post(CONTACT_MESSAGE_URL, {
+                    ...values,
+                    type: ContactMessageType.ContactMessage,
+                })
+                message.success("Your message has been sent successfully.")
+                form.resetFields()
             } catch (error) {
                 if (isAxiosError(error)) {
                     setMessageLoading(false)
@@ -60,7 +52,7 @@ const ContactForm = () => {
                             form.setFields(fieldErrors)
                         }
                     } else if (error.response?.status === 500) {
-                        openNotification(false)
+                        message.error("Something went wrong. Please try again.")
                     }
                 }
             } finally {
@@ -71,22 +63,9 @@ const ContactForm = () => {
         sendContactMessage()
     }
 
-    if (messageSent) {
-        return (
-            <div className={styles.messageSentContainer}>
-                <Result
-                    status="success"
-                    title="Successfully sent message"
-                    subTitle="We will respond as soon as possible"
-                />
-            </div>
-        )
-    }
-
     return (
         <div className={styles.contactFormContainer}>
             <h3 className={styles.contactFormTitle}>Send a message</h3>
-            {contextHolder}
             <Spin spinning={messageLoading}>
                 <Form
                     name="contactForm"
@@ -115,7 +94,7 @@ const ContactForm = () => {
                         <Input placeholder="Subject *" />
                     </Form.Item>
                     <Form.Item<ContactFormFields>
-                        name="message"
+                        name="contact_message"
                         rules={[{ required: true, message: "Please enter your message!" }]}
                     >
                         <TextArea placeholder="Message *" rows={6} cols={40} />

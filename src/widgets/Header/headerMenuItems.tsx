@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from "react"
 import {
     House,
     Info,
@@ -8,19 +8,17 @@ import {
     Newspaper,
     HeartHandshake,
     Mail,
-} from "lucide-react";
-import { Dropdown, type MenuProps} from "antd";
+} from "lucide-react"
+import { Dropdown, type MenuProps } from "antd"
 import styles from "./Header.module.scss"
 
-
 export interface HeaderMenuItem {
-    to: string;
-    label: string;
-    key: number | string;
-    element?: ReactNode;
-    icon?: ReactNode;
+    to: string
+    label: string
+    key: number | string
+    element?: ReactNode
+    icon?: ReactNode
 }
-
 
 const aboutDropdownItems: MenuProps["items"] = [
     {
@@ -33,10 +31,9 @@ const aboutDropdownItems: MenuProps["items"] = [
     },
     {
         key: "3",
-        label: <a href="about/committees">Committees</a>,
+        label: <a href="/about/committees">Committees</a>,
     },
-];
-
+]
 
 export const headerMenuItems: HeaderMenuItem[] = [
     {
@@ -50,9 +47,11 @@ export const headerMenuItems: HeaderMenuItem[] = [
         to: "/about",
         label: "About us",
         icon: <Info size={18} />,
-        element: <Dropdown menu={{ items: aboutDropdownItems }} >
-            <span className={styles.headerMenuItem}>About us</span>
-        </Dropdown>
+        element: (
+            <Dropdown menu={{ items: aboutDropdownItems }}>
+                <span className={styles.headerMenuItem}>About us</span>
+            </Dropdown>
+        ),
     },
     {
         key: 3,
@@ -90,4 +89,4 @@ export const headerMenuItems: HeaderMenuItem[] = [
         label: "Contacts",
         icon: <Mail size={18} />,
     },
-];
+]

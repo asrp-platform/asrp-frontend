@@ -13,9 +13,6 @@
     "*.{ts,tsx,js,jsx}": [
       "eslint --fix",
       "prettier --write"
-    ],
-    "*.{css,scss}": [
-      "stylelint --fix"
     ]
   },
   "dependencies": {
@@ -47,6 +44,7 @@
     "eslint-plugin-react-refresh": "^0.4.26",
     "husky": "^9.1.7",
     "prettier": "3.7.4",
+    "stylelint-scss": "^7.0.0",
     "typescript": "^5"
   }
 }

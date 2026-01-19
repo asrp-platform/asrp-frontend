@@ -7,7 +7,7 @@
   padding: 0 var(--mobile-layout-padding-inline);
   margin-bottom: var(--mobile-container-margin-vertical);
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     grid-template-columns: 1fr 1fr;
     padding: 0;
   }

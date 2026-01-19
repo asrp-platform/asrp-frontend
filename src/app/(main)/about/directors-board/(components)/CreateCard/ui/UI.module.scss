@@ -1,5 +1,4 @@
 @use "../../../../../../../shared/mixins" as m;
-
 @use "../../shared/mixins" as directors-board-mixins;
 
 .createCard {
@@ -50,6 +49,7 @@
 
 .photoOverlay {
   @include directors-board-mixins.photoOverlayMixin;
+
   width: var(--directors-board-image-width);
   aspect-ratio: 1/1;
   border-radius: 12px;

@@ -2,6 +2,7 @@
 
 .cardContainer {
   @include m.director-member-card-mixin;
+
   position: relative;
   transition:
           box-shadow 0.15s ease,
@@ -30,12 +31,12 @@
   transition: 0.3s ease-in-out;
   transform: scale(0.99);
   box-shadow:
-          0 0 0 2px rgba(255, 99, 71, 0.45), /* акцентный ring */
-          0 8px 24px rgba(0, 0, 0, 0.08);
+          0 0 0 2px rgb(255 99 71 / 0.45), /* акцентный ring */
+          0 8px 24px rgb(0 0 0 / 0.08);
 }
 
 .cardTitle {
-  color: var(--text-secondary-color-red);
+  color: var(--text-primary-color-red);
 }
 
 .nameTitle {

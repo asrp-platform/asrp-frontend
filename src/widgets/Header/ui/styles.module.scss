@@ -1,13 +1,9 @@
 .userProfileIcon {
-
   display: none;
-
   width: 48px;
   height: 48px;
-
   border-radius: 50%;
   border: 2px solid var(--text-primary-color-light);
-
   transition: 0.25s ease;
 
   &:hover {
@@ -22,7 +18,7 @@
     border-radius: 50%;
   }
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     display: flex;
   }
 }
@@ -31,15 +27,13 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-
   background: linear-gradient(
                   90deg,
-                  rgba(255, 255, 255, 0.08) 25%,
-                  rgba(255, 255, 255, 0.16) 37%,
-                  rgba(255, 255, 255, 0.08) 63%
+                  rgb(255 255 255 / 0.08) 25%,
+                  rgb(255 255 255 / 0.16) 37%,
+                  rgb(255 255 255 / 0.08) 63%
   );
   background-size: 400% 100%;
-
   animation: shimmer 1.4s ease infinite;
 }
 
@@ -47,6 +41,7 @@
   0% {
     background-position: 100% 0;
   }
+
   100% {
     background-position: -100% 0;
   }
@@ -54,6 +49,7 @@
 
 .userCircle {
   transition: 0.25s ease;
+
   &:hover {
     transform: scale(1.05);
     color: var(--text-primary-color-red);
@@ -92,7 +88,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgb(0 0 0 / 0.4);
   z-index: 999; // меньше, чем меню
   transition: opacity 0.3s ease;
 }
@@ -101,13 +97,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 4vw 0 4vw;
+  padding: 10px 4vw 0;
 }
 
 .breakLine {
   width: 100%;
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgb(255 255 255 / 0.15);
   margin: var(--general-vertical-padding) 0;
 }
 

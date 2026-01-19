@@ -21,7 +21,6 @@ body {
 }
 
 .tiptap {
-
   &:focus {
     outline: none;
   }
@@ -44,12 +43,12 @@ body {
 }
 
 .editorMenuButton {
-
   padding: 0 6px;
 
   &:hover {
-    background-color: rgb(220, 220, 220);
-    //color: ;
+    background-color: rgb(220 220 220);
+
+    // color: ;
   }
 
 }
@@ -69,20 +68,15 @@ body {
   // Colors
   --text-primary-color-light: #dcdcdc;
   --text-secondary-color-light: #818181;
-  --text-highlight-main-color-light: #ffffff;
-
+  --text-highlight-main-color-light: #fff;
   --text-primary-color-dark: #111827;
   --text-secondary-color-dark: #475569;
-
   --text-primary-color-red: #DC2626;
   --text-secondary-color-red: #FF6467FF;
-
   --border-color-light: #CBD5E1;
   --border-color-red: #FECACA;
-
   --red-border: 1px solid #FECACA;
   --light-border: 1px solid #CBD5E1;
-
   --button-primary: #DC2626;
   --button-primary-hover: #B91C1C;
 
@@ -102,19 +96,17 @@ body {
   // Mobile Margins
   --mobile-container-margin-inline: 10px;
   --mobile-container-margin-vertical: 10px;
-
-
   --paragraph-line-height: 1.6;
-  --card-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  --card-box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
 
 
   // Fonts
-  --font-system-sans: system-ui, -apple-system, BlinkMacSystemFont,
+  --font-system-sans: system-ui, -apple-system, blinkmacsystemfont,
     "SF Pro Text", "SF Pro Display",
     "Segoe UI",
-    Roboto,
+    roboto,
     "Helvetica Neue",
-    Arial,
+    arial,
     sans-serif;
   --main-page-button-font-size: 16px;
   --main-page-button-font-weight: 600;
