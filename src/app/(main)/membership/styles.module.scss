@@ -1,0 +1,208 @@
+@use "../../../shared/mixins" as m;
+
+.page {
+  min-height: 100vh;
+  background: #f8fafc;
+  color: var(--text-primary-color-dark);
+  padding: 8vh var(--page-container-horizontal-margin) 10vh;
+}
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--general-vertical-blocks-gap);
+}
+
+.hero {
+  @include m.heading-card-container;
+  padding: 10vh 5vw;
+}
+
+.heroTitle {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.heroText {
+  max-width: 720px;
+  margin: 0 auto;
+  color: #475569;
+}
+
+
+
+.whySection {
+  border: var(--light-border);
+  border-radius: 24px;
+  padding: 48px 32px;
+}
+
+.whyGrid {
+  display: grid;
+  gap: 48px;
+  grid-template-columns: 5fr 3fr;
+  align-items: flex-start;
+}
+
+.whyTextBlock {
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  h2 {
+    color: var(--text-primary-color-dark);
+    font-weight: 500;
+    font-size: 32px;
+  }
+
+  p, ul {
+    color: var(--text-secondary-color-dark);
+    line-height: 1.6;
+  }
+
+  ul {
+    padding-left: 20px;
+    li {
+      margin-top: 6px;
+    }
+  }
+}
+
+.joinCard {
+  background: #ffffff;
+  border: var(--light-border);
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: auto;
+  color: var(--text-secondary-color-dark);
+}
+
+.determinedInfo {
+  font-size: 12px;
+}
+
+.primaryButton {
+  background: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-1px);
+    background: var(--button-primary-hover);
+  }
+}
+
+
+
+.ready {
+  @include m.heading-card-container;
+  padding: 10vh 5vw;
+  background: linear-gradient(
+                  90deg,
+                  #4b0f7a 0%,
+                  #b12a7d 45%,
+                  #f5b6c1 100%
+  );
+  color: white;
+
+  h2 {
+    font-weight: 600;
+    font-size: 36px;
+  }
+
+  p {
+    color: white;
+  }
+
+
+}
+
+.readyButtonsContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+
+  button {
+    border-radius: 9999px;
+    padding: 12px 24px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    transition: 0.3s ease-in-out;
+    font-weight: 500;
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  .becomeMemberButton {
+    background-color: var(--button-primary);
+    color: white;
+    &:hover {
+      background-color: var(--button-primary-hover);
+    }
+  }
+
+  .memberLoginButton {
+    background-color: rgb(255,255,255, 0.2);
+    color: white;
+    border: var(--light-border);
+
+    &:hover {
+      background-color: rgb(255,255,255, 0.3);
+    }
+  }
+
+  .renewMembershipButton {
+    color: #7F1D1D;
+    &:hover {
+      background-color: #fee2e2;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+.categoriesSection {
+  margin-top: 40px;
+}
+
+.centerCategoriesTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 32px;
+  color: var(--text-primary-color-dark);
+}
+
+.categoriesInfo {
+  color: var(--text-secondary-color-dark);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.cardsGrid {
+  margin-top: 20px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
