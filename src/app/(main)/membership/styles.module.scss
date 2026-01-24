@@ -15,7 +15,7 @@
 
 .hero {
   @include m.heading-card-container;
-  padding: 10vh 5vw;
+  padding: var(--general-container-padding);
 }
 
 .heroTitle {

@@ -1,25 +1,28 @@
 import styles from "./styles.module.scss"
-import MembershipInfoCard from "./ui/MembershipInfoCard.tsx"
+import MembershipInfoCard from "./(ui)/MembershipInfoCard.tsx"
 import Image from "next/image"
+import PageTitleCard from "../../../shared/ui/PageTitleCard/PageTitleCard.tsx"
 
 const MembershipPage = () => {
     return (
         <div className={styles.page} id="top">
             <div className={styles.pageContainer}>
-                <section className={styles.hero}>
-                    <h1 className={styles.heroTitle}>
-                        Membership in the American Society of Russian-Speaking
-                        <br />
-                        Pathologists (ASRP)
-                    </h1>
-                    <p className={styles.heroText}>
-                        By becoming a member, you connect with colleagues who share similar
-                        educational, cultural, and language backgrounds and who understand the
-                        unique challenges you face. Joining our community means having a supportive
-                        space where you can grow professionally at every stage of your training and
-                        career.
-                    </p>
-                </section>
+                <PageTitleCard
+                    title={
+                        <h1 className={styles.heroTitle}>
+                            Membership in the American Society
+                            <br />
+                            of Russian-Speaking Pathologists (ASRP)
+                        </h1>
+                    }
+                    className={styles.hero}
+                    content="By becoming a member, you connect with colleagues who share similar
+                             educational, cultural, and language backgrounds and who understand the
+                             unique challenges you face. Joining our community means having a supportive
+                             space where you can grow professionally at every stage of your training and
+                             career."
+                    contentClassName={styles.heroText}
+                />
 
                 {/* Why join */}
                 <section className={styles.whySection}>

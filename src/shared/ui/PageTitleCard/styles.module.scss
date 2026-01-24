@@ -1,0 +1,17 @@
+@use "../../mixins" as m;
+
+.cardTitleSection {
+  @include m.heading-card-container;
+  padding: 10vh 5vw;
+}
+
+.cardTitle {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.cardContent {
+  margin: 0 auto;
+  color: #475569;
+}
