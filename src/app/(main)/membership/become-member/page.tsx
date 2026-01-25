@@ -1,10 +1,12 @@
 import PageTitleCard from "../../../../shared/ui/PageTitleCard/PageTitleCard.tsx"
+import PageSection from "../../../../shared/ui/PageSection/PageSection.tsx"
 import styles from "./styles.module.scss"
+import MembershipApplicationForm from "../../../../features/MembershipApplicationForm/MembershipApplicationForm.tsx"
 
 const Page = () => {
     const title = (
         <div className={styles.titleContainer}>
-            <span>MEMEBERSHIP FORM</span>
+            <span>MEMBERSHIP FORM</span>
             <h1>Join ASRP and become part of a growing community</h1>
         </div>
     )
@@ -20,6 +22,9 @@ const Page = () => {
                     className={styles.pageTitleContainer}
                     contentClassName={styles.pageTitleContent}
                 />
+                <PageSection className={styles.personalInformationSection}>
+                    <MembershipApplicationForm />
+                </PageSection>
             </div>
         </div>
     )
