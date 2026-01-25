@@ -32,16 +32,6 @@
     gap: 10px;
   }
 
-  .headerMenuItem {
-    text-decoration: none;
-    color: var(--text-primary-color-light);
-    display: inline-block;           /* важно */
-    transition: transform 0.25s ease;
-
-    &:hover {
-      color: var(--text-primary-color-red);
-    }
-  }
 }
 
 .burgerMenu {
@@ -59,5 +49,19 @@
   }
 }
 
-.headerMenuItem {}
+.headerMenuItem {
+  text-decoration: none;
+  color: var(--text-primary-color-light);
+  display: inline-block;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    color: var(--text-primary-color-red);
+  }
+
+  &:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+}
 
