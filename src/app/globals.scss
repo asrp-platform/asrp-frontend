@@ -47,8 +47,6 @@ body {
 
   &:hover {
     background-color: rgb(220 220 220);
-
-    // color: ;
   }
 
 }
@@ -63,6 +61,12 @@ body {
                   #95344e 0%,
                   #ae4e5c 50%,
                   #8b55bd 100%
+  );
+  --background-pink-gradient: linear-gradient(
+                  90deg,
+                  #4b0f7a 0%,
+                  #b12a7d 45%,
+                  #f5b6c1 100%
   );
 
   // Colors
@@ -83,10 +87,12 @@ body {
 
   // paddings
   --general-vertical-padding: 10px;
+  --general-vertical-blocks-gap: 20px;
+  --general-container-padding: 10vh 5vw;
 
 
   // mobile paddings
-  --mobile-layout-padding-inline: 2vw;
+  --mobile-layout-padding-inline: 5vw;
 
 
   // Desktop Margins

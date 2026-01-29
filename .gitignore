@@ -43,3 +43,6 @@ next-env.d.ts
 
 # Other Custom Ignore
 *.xml
+
+
+/.idea/
