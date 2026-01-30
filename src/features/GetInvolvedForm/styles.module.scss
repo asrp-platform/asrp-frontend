@@ -1,36 +1,126 @@
-.involvedForm {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 24px;
-  padding: 24px;
-  flex: 1;
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
-  form {
-    display: flex;
-    flex-direction: column;
+  h2 {
+    color: var(--text-primary-color-dark);
   }
 
-  input,
-  textarea {
-    border: 1px solid #cbd5f5;
-    font-size: 0.95rem;
-  }
-
-  .buttonContainer {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .submitButton {
-    border-radius: 999px;
-    background: var(--button-primary);
-    color: white;
-    font-weight: 600;
-    transition: 0.3s ease-in-out;
-    width: 200px;
-
-    &:hover {
-      background: var(--button-primary-hover) !important;
+  p {
+    @media (min-width: 1200px) {
+      display: inline-block;
+      max-width: 600px;
+      line-height: 1.6;
+      color: var(--text-secondary-color-dark);
     }
   }
+
 }
+
+.formCard {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  border: var(--light-border);
+}
+
+.intentionGrid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.intentionGridColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-secondary-color-dark);
+
+  h3 {
+    color: var(--text-primary-color-dark);
+    font-weight: 600;
+  }
+}
+
+
+.intentionCheckboxContainer {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+
+
+.checkboxGrid {
+  display: grid;
+  gap: 12px 24px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.submitRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  border-top: 1px solid var(--border-color-light);
+  padding-top: 20px;
+}
+
+.helperTextContainer {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.submitButtonContainer {
+  flex: 7;
+}
+
+.helperTextContainer {
+  flex: 5;
+  line-height: 1;
+  span {
+    font-size: 12px;
+
+  }
+}
+
+.submitButton {
+  border: none;
+  outline: none;
+  background: var(--button-primary);
+  color: white;
+  border-radius: 9999px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background: var(--button-primary-hover) !important;
+    transform: translateY(-1px) !important;
+    border: none !important;
+  }
+}
+
+.checkboxContainer {
+  padding: 4px 10px;
+  border: var(--light-border);
+  border-radius: 9999px;
+  background-color: #fcf9fa;
+}
+
+.otherTitle {
+  font-weight: 600;
+}
+

@@ -1,0 +1,173 @@
+.page {
+  min-height: 100vh;
+  background: #f8fafc;
+  color: var(--text-secondary-color-dark);
+
+  h1, h2, h3 {
+    color: var(--text-primary-color-dark);
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--general-vertical-blocks-gap);
+  padding: 32px 16px 64px;
+  margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
+}
+
+.hero {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 48px 24px;
+  text-align: center;
+
+  h1 {
+    font-size: 32px;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  p {
+    max-width: 720px;
+    margin: 0 auto 12px;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+}
+
+.infoSection {
+  display: grid;
+  gap: 32px;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 24px;
+  line-height: 1.6;
+}
+
+.infoText  {
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: var(--text-primary-color-dark);
+  }
+}
+
+.infoCard {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  border: var(--light-border);
+
+  h3 {
+    font-weight: 600;
+    color: var(--text-primary-color-dark);
+  }
+
+  ul {
+    margin: 16px 0;
+    padding-left: 18px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+}
+
+.smallText {
+  font-size: 13px;
+}
+
+.formSection {
+  border: none !important;
+  padding: 0 !important;
+}
+
+.formIntro {
+  margin-bottom: 24px;
+}
+
+.formCard {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
+.intentionGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.submitRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  button {
+    align-self: flex-start;
+    background: #dc2626;
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  span {
+    font-size: 13px;
+    color: var(--text-secondary-color-dark);
+    max-width: 480px;
+  }
+}
+
+/* Breakpoints */
+@media (min-width: 480px) {
+  .hero h1 {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .infoSection {
+    grid-template-columns: 1.6fr 1fr;
+  }
+
+  .intentionGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 992px) {
+  .hero {
+    padding: 64px 48px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
