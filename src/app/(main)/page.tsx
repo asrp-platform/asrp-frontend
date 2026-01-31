@@ -166,7 +166,7 @@ const MainPage = async () => {
                                 Help with mentorship matching, educational programming,
                                 communications, or technology.
                             </p>
-                            <Link href="#" className={styles.helpLink}>
+                            <Link href="/contacts/get-involved" className={styles.helpLink}>
                                 I'd like to help
                             </Link>
                         </div>

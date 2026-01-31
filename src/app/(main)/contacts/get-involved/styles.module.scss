@@ -55,6 +55,10 @@
   border-radius: 24px;
   padding: 24px;
   line-height: 1.6;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .infoText  {
