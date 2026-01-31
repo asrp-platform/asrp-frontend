@@ -14,6 +14,9 @@ import { useState } from "react"
 import api from "../../axios.ts"
 import { CONTACT_MESSAGE_URL } from "../../shared/backend/restApiUrls.ts"
 import { isAxiosError } from "axios"
+import { setFormFieldsErrors } from "../../shared/helpers/setFormFieldsErrors.ts"
+import ContactPreferencesSection from "./ui/ContactPreferencesSection.tsx"
+import LeadershipAndCommitteesSection from "./ui/LeadershipAndCommitteesSection.tsx"
 
 const { TextArea } = Input
 
@@ -108,13 +111,13 @@ const GetInvolvedForm = () => {
         try {
             setIsLoading(true)
             await api.post(CONTACT_MESSAGE_URL, requestData)
+            resetFormFields()
         } catch (error) {
             if (isAxiosError(error)) {
-                console.error(error)
+                setFormFieldsErrors(error, form)
             }
         } finally {
             setIsLoading(false)
-            resetFormFields()
         }
     }
 
@@ -191,52 +194,17 @@ const GetInvolvedForm = () => {
                 </Form.Item>
 
                 <div className={styles.intentionGrid}>
-                    <div className={styles.intentionGridColumn}>
-                        <h3>Future leadership & committee roles</h3>
-                        <div className={styles.intentionCheckboxContainer}>
-                            <Checkbox
-                                className={styles.intentionCheckbox}
-                                value="future_committee_working"
-                                onChange={(e) => setChecked(e, "future_committee_working")}
-                            />
-
-                            <span>
-                                I would like to be considered for future committee or working group
-                                roles as ASRP grows.
-                            </span>
-                        </div>
-                        <div className={styles.intentionCheckboxContainer}>
-                            <Checkbox
-                                className={styles.intentionCheckbox}
-                                value="future_leadership_positions"
-                                onChange={(e) => setChecked(e, "future_leadership_positions")}
-                            />
-                            <span>
-                                I may be interested in future leadership positions (for example,
-                                committee chair, taskforce lead, or board role).
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className={styles.intentionGridColumn}>
-                        <h3>Contact preferences</h3>
-                        <p className={styles.contactText}>
-                            By submitting this form, you agree that ASRP may contact you by email
-                            regarding volunteer opportunities, events, and society updates.
-                        </p>
-
-                        <div className={styles.intentionCheckboxContainer}>
-                            <Checkbox
-                                className={styles.intentionCheckbox}
-                                value="receive_updates"
-                                onChange={(e) => setChecked(e, "receive_updates")}
-                            />
-                            <span>
-                                I would also like to receive occasional updates about ASRP news,
-                                meetings, and educational programs.
-                            </span>
-                        </div>
-                    </div>
+                    <LeadershipAndCommitteesSection
+                        setChecked={setChecked}
+                        future_committee_working_checked={intentionChecks.future_committee_working}
+                        future_leadership_positions_checked={
+                            intentionChecks.future_leadership_positions
+                        }
+                    />
+                    <ContactPreferencesSection
+                        checked={intentionChecks.receive_updates}
+                        setChecked={setChecked}
+                    />
                 </div>
 
                 <div className={styles.submitRow}>
