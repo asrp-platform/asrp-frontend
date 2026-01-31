@@ -33,7 +33,7 @@ const ContactForm = () => {
                 setMessageLoading(true)
                 await api.post(CONTACT_MESSAGE_URL, {
                     ...values,
-                    type: ContactMessageType.ContactMessage,
+                    type: ContactMessageType.Contact,
                 })
                 message.success("Your message has been sent successfully.")
                 form.resetFields()
