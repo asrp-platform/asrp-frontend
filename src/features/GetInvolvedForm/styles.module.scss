@@ -70,28 +70,38 @@
 .submitRow {
   display: flex;
   justify-content: space-between;
+  flex-direction: column-reverse;
   align-items: center;
   gap: 16px;
   margin-top: 24px;
   border-top: 1px solid var(--border-color-light);
   padding-top: 20px;
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
+
+
+
 .helperTextContainer {
-  color: #64748b;
-  font-size: 14px;
+  flex: 5;
+  color: var(--text-secondary-color-dark);
+  font-size: 12px;
+  line-height: 1.25;
 }
 
 .submitButtonContainer {
   flex: 7;
-}
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
 
-.helperTextContainer {
-  flex: 5;
-  line-height: 1;
-  span {
-    font-size: 12px;
-
+  @media (min-width: 1200px) {
+    justify-content: flex-start;
   }
 }
 
@@ -101,7 +111,7 @@
   background: var(--button-primary);
   color: white;
   border-radius: 9999px;
-  padding: 12px 16px;
+  padding: 20px 24px;
   font-size: 14px;
   font-weight: 500;
   transition: 0.3s ease-in-out;

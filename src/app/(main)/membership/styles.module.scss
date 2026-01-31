@@ -13,7 +13,7 @@
   gap: var(--general-vertical-blocks-gap);
 }
 
-.hero {
+.heroSection {
   @include m.heading-card-container;
   padding: var(--general-container-padding);
 }

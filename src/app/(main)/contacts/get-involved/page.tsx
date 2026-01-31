@@ -1,12 +1,13 @@
 import styles from "./styles.module.scss"
 import GetInvolvedForm from "../../../../features/GetInvolvedForm/GetInvolvedForm.tsx"
 import PageSection from "../../../../shared/ui/PageSection/PageSection.tsx"
+import clsx from "clsx"
 
 export default function GetInvolvedPage() {
     return (
         <div className={styles.page} id="top">
             <main className={styles.main}>
-                <PageSection className={styles.hero}>
+                <PageSection className={clsx(styles.section, styles.heroSection)}>
                     <h1>
                         Get Involved with the American Society of
                         <br />
@@ -27,7 +28,7 @@ export default function GetInvolvedPage() {
                     </p>
                 </PageSection>
 
-                <PageSection className={styles.infoSection}>
+                <PageSection className={clsx(styles.section, styles.infoSection)}>
                     <div className={styles.infoText}>
                         <h2>Help us build the founding chapter of ASRP</h2>
                         <p>
@@ -59,7 +60,7 @@ export default function GetInvolvedPage() {
                         </p>
                     </div>
                 </PageSection>
-                <PageSection className={styles.formSection}>
+                <PageSection className={clsx(styles.section, styles.formSection)}>
                     <GetInvolvedForm />
                 </PageSection>
             </main>
