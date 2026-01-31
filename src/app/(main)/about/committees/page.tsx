@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss"
-import GetInvolvedForm from "../../../../features/GetInvolvedForm/GetInvolvedForm.tsx"
+import GetInvolvedCommitteesForm from "../../../../features/GetInvolvedCommitteesForm/GetInvolvedCommitteesForm.tsx"
 
 export default function ASRPCommitteesPage() {
     return (
@@ -29,7 +29,7 @@ export default function ASRPCommitteesPage() {
                         </ul>
                         <p>Please use the form to let us know how you would like to contribute.</p>
                     </div>
-                    <GetInvolvedForm />
+                    <GetInvolvedCommitteesForm />
                 </div>
             </section>
         </div>
