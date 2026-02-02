@@ -100,7 +100,7 @@
 .submitButton {
   border: none;
   outline: none;
-  background: var(--button-primary);
+  background: var(--button-primary-red);
   color: white;
   border-radius: 9999px;
   padding: 20px 24px;
@@ -109,7 +109,7 @@
   transition: 0.3s ease-in-out;
 
   &:hover {
-    background: var(--button-primary-hover) !important;
+    background: var(--button-primary-red-hover) !important;
     transform: translateY(-1px) !important;
     border: none !important;
   }

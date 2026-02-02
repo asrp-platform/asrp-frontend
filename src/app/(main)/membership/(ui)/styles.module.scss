@@ -20,7 +20,7 @@
   font-weight: 600;
 }
 
-.secondaryButton {
+.secondaryLink {
   margin-top: auto;
   background: var(--text-primary-color-red);
   color: #ffffff;
@@ -31,7 +31,7 @@
   width: 100%;
   transition: 0.3s ease-in-out;
   &:hover {
-    background-color: var(--button-primary-hover);
+    background-color: var(--button-primary-red-hover);
     transform: translateY(-1px);
   }
 }

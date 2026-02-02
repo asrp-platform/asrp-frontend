@@ -43,10 +43,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
                     </ul>
                 </nav>
             </aside>
-            <section className={styles.accountContentSection}>
-                {children}
-                Section Content
-            </section>
+            <section className={styles.accountContentSection}>{children}</section>
         </div>
     )
 }
