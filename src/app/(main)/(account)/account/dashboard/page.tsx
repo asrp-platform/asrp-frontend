@@ -1,17 +1,15 @@
 import styles from "./styles.module.scss"
 import Link from "next/link"
+import ProfileHeaderSection from "../(shared)/ProfileHeaderSection.tsx"
 
 const Page = () => {
     return (
         <div className={styles.container}>
-            <section className={styles.sectionHeader}>
-                <h1 className={styles.title}>Dashboard</h1>
-                <p className={styles.subtitle}>
-                    Manage your ASRP membership and account information.
-                </p>
-            </section>
+            <ProfileHeaderSection
+                title="Dashboard"
+                subtitle="Manage your ASRP membership and account information."
+            />
 
-            {/* Membership Status */}
             <section className={styles.card}>
                 <div className={styles.cardHeader}>
                     <h2 className={styles.cardTitle}>Membership status</h2>
@@ -28,7 +26,6 @@ const Page = () => {
                 </div>
             </section>
 
-            {/* Quick Actions */}
             <section className={styles.card}>
                 <h2 className={styles.cardTitle}>Quick actions</h2>
                 <div className={styles.actionsRow}>
@@ -47,7 +44,6 @@ const Page = () => {
                 </div>
             </section>
 
-            {/* Profile Summary */}
             <section className={styles.card}>
                 <h2 className={styles.cardTitle}>Profile summary</h2>
                 <div className={styles.profileRow}>
