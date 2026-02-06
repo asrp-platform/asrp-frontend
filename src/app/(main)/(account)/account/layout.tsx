@@ -1,12 +1,44 @@
 "use client"
 
-import type { ReactNode } from "react"
+import { type ReactNode } from "react"
 
 import styles from "./layout.module.scss"
 import Link from "next/link"
 import { ShieldAlert } from "lucide-react"
 
 import { useAuth } from "../../../../context/AuthProvider.tsx"
+
+interface NavlistItem {
+    href: string
+    label: string
+}
+
+const navItemsList: NavlistItem[] = [
+    {
+        href: "/account/dashboard",
+        label: "Dashboard",
+    },
+    {
+        href: "/account/profile",
+        label: "Profile",
+    },
+    {
+        href: "/account/membership",
+        label: "Membership",
+    },
+    {
+        href: "/account/payments",
+        label: "Payments",
+    },
+    {
+        href: "/account/communication-preferences",
+        label: "Communication Preferences",
+    },
+    {
+        href: "/account/security",
+        label: "Security",
+    },
+]
 
 const Layout = ({ children }: { children: ReactNode }) => {
     const { user } = useAuth()
@@ -45,36 +77,13 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 <h3>MY ACCOUNT</h3>
                 <nav className={styles.accountNav}>
                     <ul className={styles.accountNavList}>
-                        <li className={styles.accountNavItem}>
-                            <Link className={styles.navItemLink} href="#">
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li className={styles.accountNavItem}>
-                            <Link className={styles.navItemLink} href="#">
-                                Profile
-                            </Link>
-                        </li>
-                        <li className={styles.accountNavItem}>
-                            <Link className={styles.navItemLink} href="#">
-                                Membership
-                            </Link>
-                        </li>
-                        <li className={styles.accountNavItem}>
-                            <Link className={styles.navItemLink} href="#">
-                                Payments
-                            </Link>
-                        </li>
-                        <li className={styles.accountNavItem}>
-                            <Link className={styles.navItemLink} href="#">
-                                Communication Preferences
-                            </Link>
-                        </li>
-                        <li className={styles.accountNavItem}>
-                            <Link className={styles.navItemLink} href="#">
-                                Security
-                            </Link>
-                        </li>
+                        {navItemsList.map((item: NavlistItem) => (
+                            <li className={styles.accountNavItem}>
+                                <Link className={styles.navItemLink} href={item.href}>
+                                    {item.label}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
                 </nav>
             </aside>
