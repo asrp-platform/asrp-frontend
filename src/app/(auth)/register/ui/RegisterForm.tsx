@@ -172,7 +172,7 @@ const RegisterForm = () => {
             </div>
 
             <div className={styles.submitButtonContainer}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" className={styles.submitButton}>
                     Submit
                 </Button>
             </div>
