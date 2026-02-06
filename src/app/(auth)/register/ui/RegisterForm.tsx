@@ -1,17 +1,16 @@
 "use client"
 
-import { useRouter } from 'next/navigation'
-import { Button, Form, type FormProps, Input, Select } from "antd";
-import { useForm } from "antd/es/form/Form";
-import { isAxiosError } from "axios";
-import useNotification from "antd/es/notification/useNotification";
+import { useRouter } from "next/navigation"
+import { Button, Form, type FormProps, Input, Select } from "antd"
+import { useForm } from "antd/es/form/Form"
+import { isAxiosError } from "axios"
+import useNotification from "antd/es/notification/useNotification"
 
-import styles from "../styles.module.scss";
-import { Role } from "../../../../shared/types/types.ts";
-import api from "../../../../axios.ts";
-import {REGISTER_URL} from "../../../../shared/backend/restApiUrls.ts";
-import type {IBackendErrorResponse} from "../../../../shared/types/interfaces.ts";
-
+import styles from "../styles.module.scss"
+import { Role } from "../../../../shared/types/types.ts"
+import api from "../../../../axios.ts"
+import { REGISTER_URL } from "../../../../shared/backend/restApiUrls.ts"
+import type { IBackendErrorResponse } from "../../../../shared/types/interfaces.ts"
 
 type FieldType = {
     email: string
@@ -21,13 +20,13 @@ type FieldType = {
     lastname: string
     institution: string
     role: Role
+    city: string
+    country: string
 }
 
-
 const RegisterForm = () => {
-
-    const router = useRouter();
-    const [form] = useForm();
+    const router = useRouter()
+    const [form] = useForm()
 
     const [notification, contextHolder] = useNotification()
 
@@ -81,74 +80,88 @@ const RegisterForm = () => {
     }
 
     return (
-        <Form layout="vertical" onFinish={onFinish} form={form}>
+        <Form layout="vertical" onFinish={onFinish} form={form} className={styles.registerForm}>
             {contextHolder}
-            <div>
-                <h3>Name</h3>
-                <div className={styles.nameContainer}>
-                    <Form.Item<FieldType>
-                        label="Firstname"
-                        name="firstname"
-                        rules={[{required: true, message: "Please enter your name"}]}
-                    >
-                        <Input className={styles.antdInput}/>
-                    </Form.Item>
-
-                    <Form.Item<FieldType>
-                        label="Lastname"
-                        name="lastname"
-                        rules={[{required: true, message: "Please enter your lastname"}]}
-                    >
-                        <Input className={styles.antdInput}/>
-                    </Form.Item>
-                </div>
-            </div>
-
-            <div className={styles.credentialsContainer}>
-                <h3>Credentials</h3>
+            <h2>Name</h2>
+            <div className={styles.twoFieldContainer}>
                 <Form.Item<FieldType>
-                    label="Email"
-                    name="email"
-                    rules={[{required: true, message: "Please enter your email"}]}
-                    className={styles.emailInput}
+                    label="Firstname"
+                    name="firstname"
+                    rules={[{ required: true, message: "Please enter your name" }]}
                 >
-                    <Input className={styles.antdInput}/>
+                    <Input className={styles.antdInput} />
                 </Form.Item>
 
-                <div className={styles.passwordsContainer}>
-                    <Form.Item<FieldType>
-                        label="Password"
-                        name="password"
-                        rules={[{required: true, message: "Please enter your password"}]}
-                    >
-                        <Input.Password className={styles.antdInput}/>
-                    </Form.Item>
-
-                    <Form.Item<FieldType>
-                        label="Repeat password"
-                        name="repeat_password"
-                        rules={[{required: true, message: "Please repeat your password"}]}
-                    >
-                        <Input.Password className={styles.antdInput}/>
-                    </Form.Item>
-                </div>
+                <Form.Item<FieldType>
+                    label="Lastname"
+                    name="lastname"
+                    rules={[{ required: true, message: "Please enter your lastname" }]}
+                >
+                    <Input className={styles.antdInput} />
+                </Form.Item>
             </div>
 
-            <div className={styles.institutionContainer}>
+            <h2>Credentials</h2>
+            <Form.Item<FieldType>
+                label="Email"
+                name="email"
+                rules={[{ required: true, message: "Please enter your email" }]}
+                className={styles.emailInput}
+            >
+                <Input className={styles.antdInput} />
+            </Form.Item>
+
+            <div className={styles.twoFieldContainer}>
+                <Form.Item<FieldType>
+                    label="Password"
+                    name="password"
+                    rules={[{ required: true, message: "Please enter your password" }]}
+                >
+                    <Input.Password className={styles.antdInput} />
+                </Form.Item>
+
+                <Form.Item<FieldType>
+                    label="Repeat password"
+                    name="repeat_password"
+                    rules={[{ required: true, message: "Please repeat your password" }]}
+                >
+                    <Input.Password className={styles.antdInput} />
+                </Form.Item>
+            </div>
+
+            <div className={styles.twoFieldContainer}>
+                <Form.Item<FieldType>
+                    label="Country"
+                    name="country"
+                    rules={[{ required: true, message: "Please enter your country" }]}
+                >
+                    <Input className={styles.antdInput} />
+                </Form.Item>
+
+                <Form.Item<FieldType>
+                    label="City"
+                    name="city"
+                    rules={[{ required: true, message: "Please select your city" }]}
+                >
+                    <Input className={styles.antdInput} />
+                </Form.Item>
+            </div>
+
+            <h2>Professional information</h2>
+
+            <div className={styles.twoFieldContainer}>
                 <Form.Item<FieldType>
                     label="Institution"
                     name="institution"
-                    rules={[{required: true, message: "Please enter your institution"}]}
+                    rules={[{ required: true, message: "Please enter your institution" }]}
                 >
-                    <Input className={styles.antdInput}/>
+                    <Input className={styles.antdInput} />
                 </Form.Item>
-            </div>
 
-            <div className={styles.roleContainer}>
                 <Form.Item<FieldType>
                     label="Role"
                     name="role"
-                    rules={[{required: true, message: "Please select your role"}]}
+                    rules={[{ required: true, message: "Please select your role" }]}
                 >
                     <Select className={styles.antdInput}>
                         {Object.values(Role).map((role) => (
@@ -164,7 +177,7 @@ const RegisterForm = () => {
                 </Button>
             </div>
         </Form>
-    );
-};
+    )
+}
 
-export default RegisterForm;
+export default RegisterForm

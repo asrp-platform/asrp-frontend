@@ -11,7 +11,7 @@ const Page = () => {
     return (
         <div className={styles.pageContainer}>
             <div className={styles.registerFormContainer}>
-                <h2>Become our member</h2>
+                <h1>Become our member</h1>
                 <RegisterForm />
             </div>
         </div>
