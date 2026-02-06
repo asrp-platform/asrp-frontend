@@ -51,7 +51,13 @@ $link-hover-background-color: #fcf9fa;
 
   &:hover {
     background-color: $link-hover-background-color;
+    transform: translateY(-1px);
   }
+}
+
+.activeLink {
+  font-weight: 600;
+  background-color: $link-hover-background-color;
 }
 
 
