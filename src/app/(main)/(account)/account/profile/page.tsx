@@ -4,6 +4,7 @@ import { Typography } from "antd"
 import styles from "./styles.module.scss"
 import UserProfileCard from "./(ui)/UserProfileCard.tsx"
 import { useAuth } from "../../../../../context/AuthProvider.tsx"
+import ResidencyCard from "./(ui)/ResidencyCard.tsx"
 
 const { Title, Text } = Typography
 
@@ -20,13 +21,14 @@ export default function ASRPAccountProfilePage() {
                 <section className={styles.section}>
                     <div className={styles.header}>
                         <div>
-                            <Title level={2}>Profile</Title>
+                            <Title level={1}>Profile</Title>
                             <Text type="secondary">
                                 Manage your personal and professional information.
                             </Text>
                         </div>
                     </div>
                     <UserProfileCard user={user} />
+                    <ResidencyCard />
                 </section>
             </div>
         </div>
