@@ -3,8 +3,12 @@
 import { Button, Checkbox, Col, Form, type FormProps, Input, Row } from "antd"
 
 import styles from "../(ui)/styles.module.scss"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
+import api from "../../../../../../axios.ts"
+import type { IUser, IUserProfessionalInformation } from "../../../../../../entities/User.ts"
+import { getUserProfessionalInformationUrl } from "../../../../../../shared/backend/restApiUrls.ts"
+import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
 
 type FieldType = {
     medical_school: string
@@ -16,7 +20,11 @@ type FieldType = {
     is_us_lab_professional: boolean
 }
 
-const ProfessionalInfoForm = () => {
+interface IProps {
+    user: IUser
+}
+
+const ProfessionalInfoForm = ({ user }: IProps) => {
     const [professionalInfoForm] = Form.useForm()
 
     const [isLoading, setIsLoading] = useState(false)
@@ -24,15 +32,42 @@ const ProfessionalInfoForm = () => {
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
         try {
             setIsLoading(true)
-            console.log(values)
+            await api.put(getUserProfessionalInformationUrl(user.id), values)
         } catch (error: unknown) {
             if (isAxiosError(error)) {
-                console.error(error)
+                if (error.status === 422) {
+                    setFormFieldsErrors(error, professionalInfoForm)
+                }
             }
         } finally {
             setIsLoading(false)
         }
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get<IUserProfessionalInformation>(
+                    getUserProfessionalInformationUrl(user.id)
+                )
+                professionalInfoForm.setFieldsValue({
+                    medical_school: response.data.medical_school,
+                    medical_school_country: response.data.medical_school_country,
+                    years_from_to: response.data.years_from_to,
+
+                    is_board_certified_pathologist: response.data.is_board_certified_pathologist,
+                    is_us_pathology_trainee: response.data.is_us_pathology_trainee,
+                    is_us_lab_professional: response.data.is_us_lab_professional,
+                })
+            } catch (error) {
+                if (isAxiosError(error)) {
+                    console.error(error)
+                }
+            }
+        }
+
+        fetchData()
+    }, [professionalInfoForm, user.id])
 
     return (
         <div>
@@ -95,6 +130,7 @@ const ProfessionalInfoForm = () => {
                     name="is_us_lab_professional"
                     valuePropName="checked"
                     style={{ marginBottom: 0 }}
+                    required
                 >
                     <Checkbox>Other U.S.-based laboratory professional</Checkbox>
                 </Form.Item>

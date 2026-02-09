@@ -16,7 +16,7 @@ const UserProfileCard = ({ user }: IProps) => {
         <Card className={styles.card}>
             <PersonalInfoForm user={user} />
             <Divider />
-            <ProfessionalInfoForm />
+            <ProfessionalInfoForm user={user} />
         </Card>
     )
 }

@@ -38,17 +38,19 @@ export const getUserPasswordChangeUrl = (user_id: number | string) =>
 // http:127.0.0.1:8000/api/users/current-user
 export const CURRENT_USER_URL = `${USERS_URL}/current-user`
 
+// User professional information urls
+
+// http:127.0.0.1:8000/api/users/:user_id/professional-information
+export const getUserProfessionalInformationUrl = (user_id: number | string): string =>
+    `${getUserUrl(user_id)}/professional-information`
 
 // Feedback
 // "http://localhost:8000/api/contact-messages"
 export const CONTACT_MESSAGE_URL = `${REST_API_URL}/contact-messages`
 
-
 // http://localhost:8000/api/media/news_uploaded/{image_name}
-export const getDirectorMemberImageUrl = (imageRelativePath: string) => `${REST_API_URL}/${imageRelativePath}`
-
-
-
+export const getDirectorMemberImageUrl = (imageRelativePath: string) =>
+    `${REST_API_URL}/${imageRelativePath}`
 
 // "http://localhost:8000/api/directors-board"
 export const DIRECTORS_BOARD_URL = `${REST_API_URL}/directors-board`
