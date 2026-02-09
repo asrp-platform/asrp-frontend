@@ -3,6 +3,11 @@
 import styles from "../(ui)/styles.module.scss"
 import { Button, Col, Form, type FormProps, Input, Row } from "antd"
 import type { IUser } from "../../../../../../entities/User.ts"
+import { useState } from "react"
+import { isAxiosError } from "axios"
+import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
+import api from "../../../../../../axios.ts"
+import { getUserUrl } from "../../../../../../shared/backend/restApiUrls.ts"
 
 interface IProps {
     user: IUser
@@ -24,8 +29,21 @@ type FieldType = {
 const PersonalInfoForm = ({ user }: IProps) => {
     const [personalInfoForm] = Form.useForm()
 
+    const [isLoading, setIsLoading] = useState(false)
+
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-        console.log(values)
+        try {
+            setIsLoading(true)
+            await api.put(getUserUrl(user.id), values)
+        } catch (error) {
+            if (isAxiosError(error)) {
+                if (error.status === 422) {
+                    setFormFieldsErrors(error, personalInfoForm)
+                }
+            }
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -37,28 +55,33 @@ const PersonalInfoForm = ({ user }: IProps) => {
                 layout="vertical"
                 onFinish={onFinish}
                 initialValues={{
-                    firstName: user.firstname,
-                    lastName: user.lastname,
-                    credentials: "MD, PhD",
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    credentials: user.credentials,
+                    middlename: user.middlename,
+                    suffix: user.suffix,
                     email: user.email,
-                    country: "United States",
+                    country: user.country,
+                    city: user.city,
+                    state: user.state,
+                    phone_number: user.phone_number,
                 }}
             >
                 <Row gutter={16}>
                     <Col xs={24} md={12}>
-                        <Form.Item label="First name" name="firstName" rules={[{ required: true }]}>
+                        <Form.Item label="First name" name="firstname" rules={[{ required: true }]}>
                             <Input className={styles.antInputDisabled} disabled />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} md={12}>
-                        <Form.Item label="Last name" name="lastName" rules={[{ required: true }]}>
+                        <Form.Item label="Last name" name="lastname" rules={[{ required: true }]}>
                             <Input className={styles.antInputDisabled} disabled />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} md={12}>
-                        <Form.Item label="Middle name" name="middleName">
+                        <Form.Item label="Middle name" name="middlename">
                             <Input />
                         </Form.Item>
                     </Col>
@@ -82,7 +105,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
                     </Col>
 
                     <Col xs={24} md={12}>
-                        <Form.Item label="Phone" name="phone">
+                        <Form.Item label="Phone" name="phone_number">
                             <Input />
                         </Form.Item>
                     </Col>
@@ -111,7 +134,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
                         Request name change (moderator approval required)
                     </Button>
 
-                    <Button type="primary" danger htmlType="submit">
+                    <Button type="primary" danger htmlType="submit" loading={isLoading}>
                         Save changes
                     </Button>
                 </div>
