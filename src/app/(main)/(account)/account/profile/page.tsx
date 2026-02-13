@@ -28,7 +28,7 @@ export default function ASRPAccountProfilePage() {
                         </div>
                     </div>
                     <UserProfileCard user={user} />
-                    <ResidencyCard />
+                    <ResidencyCard user={user} />
                 </section>
             </div>
         </div>

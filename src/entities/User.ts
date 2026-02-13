@@ -45,3 +45,14 @@ export interface IUserProfessionalInformation {
     created_at: string
     updated_at: string
 }
+
+export interface IUserResidency {
+    id: number
+    institution: string
+    speciality: string
+    city: string
+    state: string
+    country: string
+    years_from_to: string
+    user_id: number
+}

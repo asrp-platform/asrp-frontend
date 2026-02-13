@@ -44,6 +44,16 @@ export const CURRENT_USER_URL = `${USERS_URL}/current-user`
 export const getUserProfessionalInformationUrl = (user_id: number | string): string =>
     `${getUserUrl(user_id)}/professional-information`
 
+// http:127.0.0.1:8000/api/users/:user_id/residencies
+export const getUserResidenciesUrl = (user_id: number | string): string =>
+    `${getUserUrl(user_id)}/residencies`
+
+// http:127.0.0.1:8000/api/users/:user_id/residencies/:residencyId
+export const getUserResidencyByIdUrl = (
+    userId: number | string,
+    residencyId: number | string
+): string => `${getUserUrl(userId)}/residencies/${residencyId}`
+
 // Feedback
 // "http://localhost:8000/api/contact-messages"
 export const CONTACT_MESSAGE_URL = `${REST_API_URL}/contact-messages`

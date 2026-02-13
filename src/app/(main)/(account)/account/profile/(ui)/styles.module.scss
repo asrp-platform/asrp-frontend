@@ -1,3 +1,6 @@
+@use "../../../../../../shared/mixins" as m;
+
+
 .card {
   border-radius: 24px;
 }
@@ -56,4 +59,35 @@
 .formFieldsContainer {
   margin-top: 20px;
 }
+
+
+.residenciesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+
+.residencyFormContainer {
+  border: var(--light-border);
+  border-radius: 25px;
+  padding: 16px 24px;
+}
+
+.updateButton {
+  @include m.submitButton;
+  padding: 10px 16px;
+}
+
+.cancelButton {
+  padding: 10px 16px;
+  border-radius: 9999px;
+  transition: 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+
 
