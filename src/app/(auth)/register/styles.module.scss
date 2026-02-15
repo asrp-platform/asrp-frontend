@@ -1,6 +1,10 @@
 .antdInput {
-  height: 40px;
   color: var(--text-secondary-color-dark);
+  background-color: var(--layout-background-color);
+  transition: 0.3s ease;
+  &:hover {
+    border-color: var(--border-color-red);
+  }
 }
 
 .radioGroup {
@@ -19,15 +23,18 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  padding: 40px 20px;
-  border-radius: 10px;
-  width: 100vw;
+  border-radius: 25px;
   height: auto;
-  color: var(--text-secondary-color-dark);
+  width: 100%;
 
-  h3 {
-    margin: 20px 0 var(--general-vertical-padding) 0;
-    color: var(--text-secondary-color-dark);
+  @media (min-width: 1200px) {
+    padding: 24px 32px;
+    margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
+    border: var(--light-border);
+  }
+
+  h1, h2 {
+    color: var(--text-primary-color-dark);
   }
 
   label {
@@ -35,56 +42,49 @@
     font-size: 16px !important;
   }
 
-  .submitButtonContainer {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+}
 
-    button {
-      width: 200px;
-      height: 40px;
-      border-radius: 999px;
-    }
+
+.registerForm {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.twoFieldContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+
+  @media (min-width: 992px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
   }
 
-  @media (width >= 480px) {}
-
-  @media (width >= 768px) {
-    .nameContainer, .passwordsContainer{
-      display: flex;
-      justify-content: space-between;
-
-      input {
-        width: 40vw;
-      }
-    }
-
-    .emailInput {
-      width: 40vw;
-    }
-
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
   }
+}
 
-  @media (width >= 992px) {
-    margin: 5vh 0;
+.submitButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submitButton {
+  width: 200px;
+  height: 40px;
+  border-radius: 999px;
+  background-color: var(--button-primary);
+  transition: 0.3s ease-in-out;
+  font-weight: 600;
+  font-size: 16px;
+
+  &:hover {
+    background-color: var(--button-primary-hover) !important;
+    transform: translateY(-1px);
   }
-
-  @media (width >= 1200px) {
-    padding: 5vh 5vw;
-    width: 80vw;
-    height: auto;
-
-    .nameContainer, .passwordsContainer {
-      input {
-        width: 30vw;
-      }
-    }
-
-    .emailInput {
-      width: 30vw;
-    }
-  }
-
-  @media (width >= 1440px) {}
-
 }
