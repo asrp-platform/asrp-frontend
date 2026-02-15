@@ -5,6 +5,7 @@ import styles from "./styles.module.scss"
 import UserProfileCard from "./(ui)/UserProfileCard.tsx"
 import { useAuth } from "../../../../../context/AuthProvider.tsx"
 import ResidencyCard from "./(ui)/ResidencyCard.tsx"
+import FellowshipCard from "./(ui)/FellowshipCard.tsx"
 
 const { Title, Text } = Typography
 
@@ -29,6 +30,7 @@ export default function ASRPAccountProfilePage() {
                     </div>
                     <UserProfileCard user={user} />
                     <ResidencyCard user={user} />
+                    <FellowshipCard user={user} />
                 </section>
             </div>
         </div>

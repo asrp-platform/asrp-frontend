@@ -54,6 +54,16 @@ export const getUserResidencyByIdUrl = (
     residencyId: number | string
 ): string => `${getUserUrl(userId)}/residencies/${residencyId}`
 
+// http:127.0.0.1:8000/api/users/:user_id/fellowships
+export const getUserFellowshipsUrl = (user_id: number | string): string =>
+    `${getUserUrl(user_id)}/fellowships`
+
+// http:127.0.0.1:8000/api/users/:user_id/fellowships/:fellowshipId
+export const getUserFellowshipByIdUrl = (
+    userId: number | string,
+    residencyId: number | string
+): string => `${getUserUrl(userId)}/fellowships/${residencyId}`
+
 // Feedback
 // "http://localhost:8000/api/contact-messages"
 export const CONTACT_MESSAGE_URL = `${REST_API_URL}/contact-messages`

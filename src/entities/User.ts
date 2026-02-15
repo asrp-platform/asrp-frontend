@@ -58,3 +58,16 @@ export interface IUserResidency {
 }
 
 export type IUserResidencyFormValues = Omit<IUserResidency, "id" | "user_id">
+
+export interface IUserFellowship {
+    id: number
+    institution: string
+    speciality: string
+    city: string
+    state: string
+    country: string
+    years_from_to: string
+    user_id: number
+}
+
+export type IUserFellowshipFormValues = Omit<IUserFellowship, "id" | "user_id">
