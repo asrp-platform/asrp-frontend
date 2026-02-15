@@ -68,8 +68,9 @@ const ResidencyCard = ({ user }: IProps) => {
     return (
         <Card title="Residency" className={styles.card}>
             <Text className={styles.residencySubtitle}>
-                If you are a medical student, residency applicant, or otherwise do not have
-                residency training to report, please enter N/A.
+                If you are a medical student, residency applicant, U.S.-based laboratory
+                professional, or otherwise do not have residency training to report, please enter
+                N/A in the required fields below.
             </Text>
 
             <div className={styles.residenciesContainer}>

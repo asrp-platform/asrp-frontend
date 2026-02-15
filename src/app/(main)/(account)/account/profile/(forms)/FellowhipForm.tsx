@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, Flex } from "antd"
+import { Button, Col, Form, Input, Row, Flex, Modal } from "antd"
 import { useEffect, useState } from "react"
 import type { IUserFellowshipFormValues } from "../../../../../../entities/User"
 import styles from "../(ui)/styles.module.scss"
@@ -27,6 +27,7 @@ const FellowshipForm = ({ initialValues, onSubmit, onDelete, startInEditMode = f
     const [form] = Form.useForm<IUserFellowshipFormValues>()
     const [mode, setMode] = useState<Mode>(startInEditMode ? "edit" : "view")
     const [isLoading, setIsLoading] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
     const isView = mode === "view"
 
@@ -51,6 +52,18 @@ const FellowshipForm = ({ initialValues, onSubmit, onDelete, startInEditMode = f
     const handleCancel = () => {
         form.setFieldsValue(initialValues ?? emptyValues)
         setMode("view")
+    }
+
+    const handleDeleteConfirm = async () => {
+        if (!onDelete) return
+
+        try {
+            setIsLoading(true)
+            await onDelete()
+            setIsDeleteModalOpen(false)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -121,7 +134,7 @@ const FellowshipForm = ({ initialValues, onSubmit, onDelete, startInEditMode = f
                         </Flex>
 
                         {onDelete && (
-                            <Button danger onClick={onDelete}>
+                            <Button danger onClick={() => setIsDeleteModalOpen(true)}>
                                 Delete
                             </Button>
                         )}
@@ -133,12 +146,27 @@ const FellowshipForm = ({ initialValues, onSubmit, onDelete, startInEditMode = f
                 <Button
                     type="primary"
                     onClick={() => setMode("edit")}
-                    danger
                     className={styles.editButton}
                 >
                     Edit
                 </Button>
             )}
+
+            <Modal
+                open={isDeleteModalOpen}
+                title="Delete fellowship?"
+                onCancel={() => setIsDeleteModalOpen(false)}
+                onOk={handleDeleteConfirm}
+                okText="Yes, delete"
+                okButtonProps={{ danger: true }}
+                cancelText="Cancel"
+                centered
+                getContainer={false}
+            >
+                <p>
+                    This action cannot be undone. Are you sure you want to delete this fellowship?
+                </p>
+            </Modal>
         </div>
     )
 }

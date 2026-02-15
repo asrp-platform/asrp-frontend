@@ -72,7 +72,8 @@ const FellowshipCard = ({ user }: IProps) => {
     return (
         <Card title="Fellowship" className={styles.card}>
             <Text className={styles.residencySubtitle}>
-                If you do not have fellowship training to report, please enter N/A.
+                If you have not secured a fellowship or you practice without fellowship training,
+                please enter N/A in the required fields below.
             </Text>
 
             <div className={styles.residenciesContainer}>
