@@ -1,39 +1,43 @@
-import { Button, Col, Form, Input, Row } from "antd"
+import { Button, Col, Form, Input, Row, Flex } from "antd"
 import { useEffect, useState } from "react"
-import type { IUserResidency } from "../../../../../../entities/User.ts"
+import type { IUserResidencyFormValues } from "../../../../../../entities/User"
 import styles from "../(ui)/styles.module.scss"
-import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
+import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors"
 import { isAxiosError } from "axios"
 
 interface IProps {
-    residency?: IUserResidency
-    onSubmit: (_residencyId: number | string, _values: IUserResidency) => Promise<void>
+    initialValues?: IUserResidencyFormValues
+    onSubmit: (_values: IUserResidencyFormValues) => Promise<void>
+    onDelete?: () => Promise<void>
+    startInEditMode?: boolean
 }
 
 type Mode = "view" | "edit"
 
-const ResidencyForm = ({ residency, onSubmit }: IProps) => {
-    const [form] = Form.useForm()
+const emptyValues: IUserResidencyFormValues = {
+    institution: "",
+    speciality: "",
+    city: "",
+    state: "",
+    country: "",
+    years_from_to: "",
+}
 
+const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = false }: IProps) => {
+    const [form] = Form.useForm<IUserResidencyFormValues>()
+    const [mode, setMode] = useState<Mode>(startInEditMode ? "edit" : "view")
     const [isLoading, setIsLoading] = useState(false)
-    const [mode, setMode] = useState<Mode>(residency ? "view" : "edit")
+
+    const isView = mode === "view"
 
     useEffect(() => {
-        console.log("ResidencyForm mounted")
-    }, [])
+        form.setFieldsValue(initialValues ?? emptyValues)
+    }, [initialValues, form])
 
-    useEffect(() => {
-        if (residency) {
-            form.setFieldsValue(residency)
-        } else {
-            form.resetFields()
-        }
-    }, [residency, form])
-
-    const handleFinish = async (values: IUserResidency) => {
+    const handleFinish = async (values: IUserResidencyFormValues) => {
         try {
             setIsLoading(true)
-            await onSubmit(residency!.id, { ...values, id: residency!.id })
+            await onSubmit(values)
             setMode("view")
         } catch (error) {
             if (isAxiosError(error)) {
@@ -45,11 +49,9 @@ const ResidencyForm = ({ residency, onSubmit }: IProps) => {
     }
 
     const handleCancel = () => {
-        form.setFieldsValue(residency)
+        form.setFieldsValue(initialValues ?? emptyValues)
         setMode("view")
     }
-
-    const isView = mode === "view"
 
     return (
         <div className={styles.residencyFormContainer}>
@@ -109,29 +111,30 @@ const ResidencyForm = ({ residency, onSubmit }: IProps) => {
                 </Row>
 
                 {!isView && (
-                    <div style={{ display: "flex", gap: 12 }}>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            loading={isLoading}
-                            className={styles.updateButton}
-                        >
-                            Update
-                        </Button>
+                    <Flex justify="space-between">
+                        <Flex gap={8}>
+                            <Button type="primary" htmlType="submit" loading={isLoading}>
+                                Save
+                            </Button>
 
-                        <Button className={styles.cancelButton} onClick={handleCancel}>
-                            Cancel
-                        </Button>
-                    </div>
+                            <Button onClick={handleCancel}>Cancel</Button>
+                        </Flex>
+
+                        {onDelete && (
+                            <Button danger onClick={onDelete}>
+                                Delete
+                            </Button>
+                        )}
+                    </Flex>
                 )}
             </Form>
 
             {isView && (
                 <Button
                     type="primary"
-                    className={styles.updateButton}
                     onClick={() => setMode("edit")}
-                    htmlType="button"
+                    danger
+                    className={styles.editButton}
                 >
                     Edit
                 </Button>

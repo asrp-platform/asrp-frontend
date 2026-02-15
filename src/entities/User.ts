@@ -56,3 +56,5 @@ export interface IUserResidency {
     years_from_to: string
     user_id: number
 }
+
+export type IUserResidencyFormValues = Omit<IUserResidency, "id" | "user_id">
