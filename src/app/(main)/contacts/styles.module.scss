@@ -44,8 +44,9 @@
   gap: 20px;
   padding: 0 var(--mobile-layout-padding-inline);
 
-  @media (width >= 1200px) {
+  @media (min-width: 1200px) {
     flex-direction: row;
+    padding: 0;
   }
 }
 
@@ -56,7 +57,7 @@
   flex: 1;
 
   h2 {
-    color: var(--text-secondary-color-red);
+    color: var(--text-primary-color-red);
     font-size: 18px;
   }
 

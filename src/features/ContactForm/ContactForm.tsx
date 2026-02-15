@@ -5,7 +5,7 @@ import styles from "./ContactForm.module.scss"
 import { type FormProps, Input, message, Spin } from "antd"
 import { Form } from "antd"
 import TextArea from "antd/es/input/TextArea"
-import { Button } from "antd"
+
 import { useForm } from "antd/es/form/Form"
 import { useState } from "react"
 import { isAxiosError } from "axios"
@@ -32,8 +32,13 @@ const ContactForm = () => {
             try {
                 setMessageLoading(true)
                 await api.post(CONTACT_MESSAGE_URL, {
-                    ...values,
-                    type: ContactMessageType.Contact,
+                    name: values.name,
+                    email: values.email,
+                    type: ContactMessageType.ContactMessage,
+                    message_content: {
+                        subject: values.subject,
+                        contact_message: values.contact_message,
+                    },
                 })
                 message.success("Your message has been sent successfully.")
                 form.resetFields()
@@ -101,9 +106,7 @@ const ContactForm = () => {
                     </Form.Item>
 
                     <div className={styles.submitButtonContainer}>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
+                        <button>Submit</button>
                     </div>
                 </Form>
             </Spin>

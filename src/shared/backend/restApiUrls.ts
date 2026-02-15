@@ -74,3 +74,6 @@ export const getDirectorMemberImageUrl = (imageRelativePath: string) =>
 
 // "http://localhost:8000/api/directors-board"
 export const DIRECTORS_BOARD_URL = `${REST_API_URL}/directors-board`
+
+// http://localhost:8000/api/media/bylaws/bylaws.pdf
+export const BYLAWS_URL = `${REST_API_URL}/media/bylaws/bylaws.pdf`

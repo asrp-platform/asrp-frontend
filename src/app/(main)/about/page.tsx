@@ -2,6 +2,7 @@ import styles from "./styles.module.scss"
 import Link from "next/link"
 import Image from "next/image"
 import type { Metadata } from "next"
+import { BYLAWS_URL } from "../../../shared/backend/restApiUrls.ts"
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
@@ -59,7 +60,12 @@ const Page = () => {
                     <div className={styles.linksContainer}>
                         <h2>Quick Links</h2>
                         {/* TODO: ссылка */}
-                        <Link className={styles.byLawsLink} href="#">
+                        <Link
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.byLawsLink}
+                            href={BYLAWS_URL}
+                        >
                             📄 View Our Bylaws
                         </Link>
                         <h3>Our Social Media:</h3>
