@@ -47,18 +47,12 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get<IUserProfessionalInformation>(
+                const response = await api.get<IUserProfessionalInformation | null>(
                     getUserProfessionalInformationUrl(user.id)
                 )
-                professionalInfoForm.setFieldsValue({
-                    medical_school: response.data.medical_school,
-                    medical_school_country: response.data.medical_school_country,
-                    years_from_to: response.data.years_from_to,
-
-                    is_board_certified_pathologist: response.data.is_board_certified_pathologist,
-                    is_us_pathology_trainee: response.data.is_us_pathology_trainee,
-                    is_us_lab_professional: response.data.is_us_lab_professional,
-                })
+                if (response.data) {
+                    professionalInfoForm.setFieldsValue(response.data)
+                }
             } catch (error) {
                 if (isAxiosError(error)) {
                     console.error(error)

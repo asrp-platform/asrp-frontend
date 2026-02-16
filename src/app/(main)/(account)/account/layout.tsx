@@ -9,6 +9,7 @@ import { useAuth } from "../../../../context/AuthProvider.tsx"
 import NotAuthorized from "../../../../shared/ui/NotAuthorized/NotAuthorized.tsx"
 import clsx from "clsx"
 import { usePathname } from "next/navigation"
+import Loading from "../../about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 interface NavListItem {
     href: string
@@ -50,9 +51,13 @@ const navItemsList: NavListItem[] = [
 ]
 
 const Layout = ({ children }: { children: ReactNode }) => {
-    const { user } = useAuth()
+    const { user, isUserLoading } = useAuth()
 
     const pathname = usePathname()
+
+    if (isUserLoading) {
+        return <Loading />
+    }
 
     if (!user) {
         return <NotAuthorized />
