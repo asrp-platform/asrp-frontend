@@ -59,14 +59,13 @@ const Page = () => {
                     </div>
                     <div className={styles.linksContainer}>
                         <h2>Quick Links</h2>
-                        {/* TODO: ссылка */}
                         <Link
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.byLawsLink}
                             href={BYLAWS_URL}
                         >
-                            📄 View Our Bylaws
+                            View Our Bylaws
                         </Link>
                         <h3>Our Social Media:</h3>
                         <div className={styles.socialMediaContainer}>

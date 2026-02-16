@@ -1,9 +1,15 @@
+@use "../../shared/mixins" as m;
+
 .involvedForm {
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 24px;
   padding: 24px 32px;
   flex: 1;
+
+  @media (min-width: 1200px) {
+    padding: 24px 36px;
+  }
 
   form {
     display: flex;
@@ -27,12 +33,12 @@
     color: white;
     font-weight: 600;
     transition: 0.3s ease-in-out;
-    padding: 18px;
     width: 200px;
-    padding: 18px 0;
+    padding: 18px;
 
     &:hover {
-      background: var(--button-primary-red-hover) !important;
+      transform: translateY(-1px);
+      background: var(--button-primary-hover) !important;
     }
   }
 }
