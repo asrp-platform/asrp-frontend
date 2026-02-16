@@ -55,9 +55,7 @@ const MembershipPage = () => {
                                 professional status and complete a brief online form to become part
                                 of our community.
                             </p>
-                            <button className={styles.primaryButton}>
-                                Fill out membership form
-                            </button>
+                            <button className={styles.primaryLink}>Fill out membership form</button>
                             <p className={styles.determinedInfo}>
                                 Membership dues and categories are determined by the Society and
                                 support educational, mentorship, and networking initiatives.
