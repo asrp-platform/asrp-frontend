@@ -2,19 +2,25 @@
 
 .pageContainer {
   @media (width >= 1200px) {
-    margin: 48px var(--page-container-horizontal-margin);
+    margin: 48px var(--mobile-container-margin-inline);
   }
 
 }
 
 .headingCardContainer {
+  margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
   @include m.heading-card-container;
+
+  @media (min-width: 1200px) {
+    margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
+  }
 }
 
 
 
 .involved {
-  margin-top: 4rem;
+  margin-top: 20px;
+  padding: 0 var(--mobile-container-margin-inline);
 }
 
 .involvedGrid {
@@ -22,8 +28,9 @@
   gap: 20px;
   flex-direction: column;
 
-  @media (width >= 1200px) {
+  @media (min-width: 1200px) {
     flex-direction: row;
+    margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
   }
 }
 
