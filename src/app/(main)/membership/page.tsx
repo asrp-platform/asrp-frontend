@@ -2,6 +2,7 @@ import styles from "./styles.module.scss"
 import MembershipInfoCard from "./(ui)/MembershipInfoCard.tsx"
 import Image from "next/image"
 import PageTitleCard from "../../../shared/ui/PageTitleCard/PageTitleCard.tsx"
+import PageSection from "../../../shared/ui/PageSection/PageSection.tsx"
 
 const MembershipPage = () => {
     return (
@@ -25,7 +26,7 @@ const MembershipPage = () => {
                 />
 
                 {/* Why join */}
-                <section className={styles.whySection}>
+                <PageSection className={styles.whySection}>
                     <div className={styles.whyGrid}>
                         <div className={styles.whyTextBlock}>
                             <h2>Why become a member?</h2>
@@ -62,17 +63,17 @@ const MembershipPage = () => {
                             </p>
                         </div>
                     </div>
-                </section>
+                </PageSection>
 
-                <section className={styles.ready}>
+                <PageSection className={styles.ready}>
                     <h2 className={styles.readyTitle}>
-                        Ready to shape the future <br />
+                        Ready to shape the future <br className={styles.readyTitleDivider} />
                         of pathology together?
                     </h2>
                     <p className={styles.readyText}>
                         Help build a lasting home for Russian-speaking professionals. Join a network
                         committed to
-                        <br />
+                        <br className={styles.readyTextDivider} />
                         mentorship, advocacy, and research excellence.
                     </p>
                     <div className={styles.readyButtonsContainer}>
@@ -80,7 +81,7 @@ const MembershipPage = () => {
                         <button className={styles.memberLoginButton}>Member Login</button>
                         <button className={styles.renewMembershipButton}>Renew Membership</button>
                     </div>
-                </section>
+                </PageSection>
 
                 {/* Membership categories */}
                 <section className={styles.categoriesSection}>
@@ -88,7 +89,7 @@ const MembershipPage = () => {
                     <p className={styles.categoriesInfo}>
                         ASRP offers several membership categories to reflect different stages of
                         training and
-                        <br />
+                        <br className={styles.categoriesTextDivider} />
                         professional involvement, while supporting a shared mission and community.
                     </p>
 
