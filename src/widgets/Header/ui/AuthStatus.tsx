@@ -11,6 +11,10 @@ import { useMemo } from "react"
 import api from "../../../axios.ts"
 
 import styles from "./styles.module.scss"
+import avatarPlaceholder from "../../../../public/icons/header/doctor-svgrepo-com.svg"
+import Link from "next/link"
+import Image from "next/image"
+import styles from "./styles.module.scss"
 import Link from "next/link"
 
 const AuthStatus = () => {
@@ -73,7 +77,11 @@ const AuthStatus = () => {
     return (
         <Dropdown menu={{ items }} placement="bottomRight">
             <div className={styles.userProfileIcon}>
-                {user.avatar_path && <img src={getAvatarUrl(user.avatar_path)} alt="Avatar" />}
+                {user.avatar_path ? (
+                    <img src={getAvatarUrl(user.avatar_path)} alt="Avatar" />
+                ) : (
+                    <Image src={avatarPlaceholder} alt="Avatar" />
+                )}
             </div>
         </Dropdown>
     )
