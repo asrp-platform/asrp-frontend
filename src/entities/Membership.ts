@@ -1,25 +1,14 @@
 import type { IUser } from "./User.ts"
 
-/* eslint-disable */
-export enum MembershipTypeEnum {
-    PATHWAY = "PATHWAY",
-    AFFILIATE = "AFFILIATE",
-    ACTIVE = "ACTIVE",
-    TRAINEE = "TRAINEE",
-    HONORARY = "HONORARY",
-}
-
 export interface IMembershipType {
     id: number
     name: string
-    type: MembershipTypeEnum
     price_usd: number | string
     duration: number
     description: string
     is_purchasable: boolean
     stripe_price_id: string
 }
-
 
 export interface IUserMembership {
     id: number | string

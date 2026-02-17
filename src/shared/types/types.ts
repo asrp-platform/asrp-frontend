@@ -11,6 +11,7 @@ export enum Role {
 /* eslint-disable */
 // @ts-ignore
 export enum ContactMessageType {
-    ContactMessage = "CONTACT_MESSAGE",
-    GetInvolvedMessage = "GET_INVOLVED_MESSAGE",
+    Contact = "CONTACT",
+    GetInvolved = "GET_INVOLVED",
+    GetInvolvedCommittees = "GET_INVOLVED_COMMITTEES",
 }

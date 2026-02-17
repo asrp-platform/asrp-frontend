@@ -56,7 +56,7 @@
   transition: transform 0.25s ease;
 
   &:hover {
-    color: var(--text-primary-color-red);
+    cursor: pointer;
   }
 
   &:visited {

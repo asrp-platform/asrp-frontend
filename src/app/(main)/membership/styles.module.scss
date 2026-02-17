@@ -86,7 +86,7 @@
   font-size: 12px;
 }
 
-.primaryButton {
+.primaryLink {
   background: #dc2626;
   color: #ffffff;
   border: none;
@@ -97,7 +97,7 @@
   transition: 0.3s ease-in-out;
   &:hover {
     transform: translateY(-1px);
-    background: var(--button-primary-hover);
+    background: var(--button-primary-red-hover);
   }
 }
 
@@ -145,10 +145,10 @@
   }
 
   .becomeMemberButton {
-    background-color: var(--button-primary);
+    background-color: var(--button-primary-red);
     color: white;
     &:hover {
-      background-color: var(--button-primary-hover);
+      background-color: var(--button-primary-red-hover);
     }
   }
 

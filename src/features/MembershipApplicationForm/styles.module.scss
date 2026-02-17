@@ -110,7 +110,7 @@ $desktop-text-font-size: 14px;
 }
 
 .submitButton {
-  background-color: var(--button-primary);
+  background-color: var(--button-primary-red);
   color: white;
   font-weight: 600;
   font-size: 16px;
@@ -126,7 +126,7 @@ $desktop-text-font-size: 14px;
 
   &:hover {
     // redeclared antd default styles
-    background-color: var(--button-primary-hover) !important;
+    background-color: var(--button-primary-red-hover) !important;
     color: white !important;
     border: none !important;
     transform: translateY(-1px);
