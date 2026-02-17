@@ -62,7 +62,7 @@
 .becomeMemberButton {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: var(--button-primary);
+  background-color: var(--button-primary-red);
   color: var(--text-primary-color-light);
   border: none;
   border-radius: 9999px;
@@ -72,7 +72,7 @@
   text-decoration: none;
 
   &:hover {
-    background-color: var(--button-primary-hover);
+    background-color: var(--button-primary-red-hover);
     cursor: pointer;
   }
   &:visited {
@@ -368,12 +368,12 @@
 
 .membershipFormLink {
   @include getInvolvedLinkMixin;
-  background-color: var(--button-primary);
+  background-color: var(--button-primary-red);
   color: #fff;
   border: none;
 
   &:hover {
-    background-color: var(--button-primary-hover);
+    background-color: var(--button-primary-red-hover);
   }
 
 }

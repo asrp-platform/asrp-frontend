@@ -54,7 +54,7 @@ body {
 
 :root {
   // Background colors
-  --layout-background-color: #f8f8f8;
+  --layout-background-color: #F8FAFC;
   --widget-background-dark-color: #171717;
   --background-heading-gradient: linear-gradient(
                   155deg,
@@ -77,12 +77,19 @@ body {
   --text-secondary-color-dark: #475569;
   --text-primary-color-red: #DC2626;
   --text-secondary-color-red: #FF6467FF;
-  --border-color-light: #CBD5E1;
+  --border-color-light: #e2e8f0;
   --border-color-red: #FECACA;
   --red-border: 1px solid #FECACA;
-  --light-border: 1px solid #CBD5E1;
-  --button-primary: #DC2626;
-  --button-primary-hover: #B91C1C;
+  --light-border: 1px solid #e2e8f0;
+
+  --button-primary-red: #DC2626;
+  --button-primary-red-hover: #B91C1C;
+
+  --button-secondary-red-hover: #fef2f2;;
+
+
+  --button-primary-light: transparent;
+  --button-primary-light-hover: #f8fafc;
 
 
   // paddings

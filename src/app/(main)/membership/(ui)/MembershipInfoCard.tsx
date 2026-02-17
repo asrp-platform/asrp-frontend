@@ -41,7 +41,7 @@ const MembershipInfoCard = ({
             <p>{info}</p>
             <span className={styles.price}>${price} / year</span>
             <div className={styles.subdescription}>{subDescription}</div>
-            {renderButton && <button className={styles.secondaryButton}>Join</button>}
+            {renderButton && <button className={styles.secondaryLink}>Join</button>}
         </div>
     )
 }

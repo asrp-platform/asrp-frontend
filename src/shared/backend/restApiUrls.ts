@@ -38,17 +38,39 @@ export const getUserPasswordChangeUrl = (user_id: number | string) =>
 // http:127.0.0.1:8000/api/users/current-user
 export const CURRENT_USER_URL = `${USERS_URL}/current-user`
 
+// User professional information urls
+
+// http:127.0.0.1:8000/api/users/:user_id/professional-information
+export const getUserProfessionalInformationUrl = (user_id: number | string): string =>
+    `${getUserUrl(user_id)}/professional-information`
+
+// http:127.0.0.1:8000/api/users/:user_id/residencies
+export const getUserResidenciesUrl = (user_id: number | string): string =>
+    `${getUserUrl(user_id)}/residencies`
+
+// http:127.0.0.1:8000/api/users/:user_id/residencies/:residencyId
+export const getUserResidencyByIdUrl = (
+    userId: number | string,
+    residencyId: number | string
+): string => `${getUserUrl(userId)}/residencies/${residencyId}`
+
+// http:127.0.0.1:8000/api/users/:user_id/fellowships
+export const getUserFellowshipsUrl = (user_id: number | string): string =>
+    `${getUserUrl(user_id)}/fellowships`
+
+// http:127.0.0.1:8000/api/users/:user_id/fellowships/:fellowshipId
+export const getUserFellowshipByIdUrl = (
+    userId: number | string,
+    residencyId: number | string
+): string => `${getUserUrl(userId)}/fellowships/${residencyId}`
 
 // Feedback
 // "http://localhost:8000/api/contact-messages"
 export const CONTACT_MESSAGE_URL = `${REST_API_URL}/contact-messages`
 
-
 // http://localhost:8000/api/media/news_uploaded/{image_name}
-export const getDirectorMemberImageUrl = (imageRelativePath: string) => `${REST_API_URL}/${imageRelativePath}`
-
-
-
+export const getDirectorMemberImageUrl = (imageRelativePath: string) =>
+    `${REST_API_URL}/${imageRelativePath}`
 
 // "http://localhost:8000/api/directors-board"
 export const DIRECTORS_BOARD_URL = `${REST_API_URL}/directors-board`
