@@ -14,8 +14,6 @@ import styles from "./styles.module.scss"
 import avatarPlaceholder from "../../../../public/icons/header/doctor-svgrepo-com.svg"
 import Link from "next/link"
 import Image from "next/image"
-import styles from "./styles.module.scss"
-import Link from "next/link"
 
 const AuthStatus = () => {
     const { user, isUserLoading } = useAuth()

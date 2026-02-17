@@ -44,14 +44,14 @@
       height: 40px;
       width: 120px;
       border-radius: 9999px;
-      background-color: var(--button-primary);
+      background-color: var(--button-primary-red);
       color: white;
       border: var(--red-border);
       font-weight: 600 !important;
       transition: 0.3s ease-in-out;
 
       &:hover {
-        background-color: var(--button-primary-hover);
+        background-color: var(--button-primary-red-hover);
         transform: translateY(-1px);
         cursor: pointer;
       }

@@ -34,7 +34,7 @@ const ContactForm = () => {
                 await api.post(CONTACT_MESSAGE_URL, {
                     name: values.name,
                     email: values.email,
-                    type: ContactMessageType.ContactMessage,
+                    type: ContactMessageType.Contact,
                     message_content: {
                         subject: values.subject,
                         contact_message: values.contact_message,

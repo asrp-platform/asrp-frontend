@@ -14,6 +14,4 @@ export enum ContactMessageType {
     Contact = "CONTACT",
     GetInvolved = "GET_INVOLVED",
     GetInvolvedCommittees = "GET_INVOLVED_COMMITTEES",
-    ContactMessage = "CONTACT",
-    GetInvolvedMessage = "GET_INVOLVED",
 }
