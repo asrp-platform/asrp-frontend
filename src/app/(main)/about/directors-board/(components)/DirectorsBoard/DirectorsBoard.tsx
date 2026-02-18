@@ -11,12 +11,13 @@ import { useAuth } from "../../../../../../context/AuthProvider.tsx"
 
 import CircularProgress from "@mui/material/CircularProgress"
 import ViewCard from "../ViewCard/ViewCard.tsx"
-import { isTouchDevice } from "../../../../../../shared/helpers/getDeviceType.ts"
 import { usePermissions } from "../../../../../../context/PermissionsProvider.tsx"
+import { useIsMobile } from "../../../../../../shared/hooks/useIsMobile.ts"
 
 const DirectorsBoard = () => {
     const { user } = useAuth()
     const { permissions } = usePermissions()
+    const isMobile = useIsMobile()
 
     const [directorMembers, setDirectorMembers] = useState<IDirectorsBoardMember[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -27,8 +28,8 @@ const DirectorsBoard = () => {
     }, [user?.stuff, permissions])
 
     const canCreate = useMemo(() => {
-        return user?.stuff && permissions.includes("director_board.create") && !isTouchDevice()
-    }, [user?.stuff, permissions])
+        return user?.stuff && permissions.includes("director_board.create") && !isMobile
+    }, [user?.stuff, permissions, isMobile])
 
     useEffect(() => {
         const fetchDirectorMembers = async () => {
