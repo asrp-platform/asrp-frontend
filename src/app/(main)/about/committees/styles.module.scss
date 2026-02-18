@@ -12,12 +12,8 @@
 }
 
 .headingCardContainer {
-  margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
   @include m.heading-card-container;
 
-  @media (min-width: 1200px) {
-    margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
-  }
 }
 
 
@@ -32,7 +28,6 @@
 
   @media (min-width: 1200px) {
     flex-direction: row;
-    margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
   }
 }
 

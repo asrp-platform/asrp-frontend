@@ -20,13 +20,15 @@ const Header = () => {
                                     menu={{
                                         items: item.children.map((item: HeaderMenuItem) => ({
                                             key: item.key,
-                                            label: item.label,
+                                            label: (
+                                                <a className={styles.headerMenuItem} href={item.to}>
+                                                    {item.label}
+                                                </a>
+                                            ),
                                         })),
                                     }}
                                 >
-                                    <a className={styles.headerMenuItem} href={item.to}>
-                                        {item.label}
-                                    </a>
+                                    <span className={styles.headerMenuItem}>{item.label}</span>
                                 </Dropdown>
                             )
                         }
