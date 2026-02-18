@@ -128,8 +128,8 @@
     display: inline-block;           /* важно */
     transition: transform 0.25s ease;
 
-    &:hover {
-      color: var(--text-primary-color-red);
+    &:visited {
+      color: var(--text-primary-color-light);
     }
   }
 
@@ -144,4 +144,36 @@
   align-items: center;
   width: 48px;
   height: 48px;
+}
+
+
+.subMenu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 32px;
+
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+
+  transition:
+          max-height 450ms ease,
+          opacity 200ms ease;
+}
+
+.open {
+  max-height: 500px; // больше максимальной высоты контента
+  opacity: 1;
+}
+
+
+.subMenuItem {
+  padding: 8px 0;
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+.arrow {
+  margin-left: auto;
+  font-size: 14px;
 }

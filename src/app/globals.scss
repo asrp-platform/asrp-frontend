@@ -36,6 +36,10 @@ body {
   }
 }
 
+main {
+  min-height: 70vh;
+}
+
 .button-group {
   display: flex;
   gap: 4px;

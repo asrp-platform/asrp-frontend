@@ -16,7 +16,9 @@ const Footer = () => {
                         <span>+1-000-000-0000</span>
                     </div>
                     <div>
-                        <span>Contact@rsapa.prg</span>
+                        <a href="mailto:admin@asrpath.org" className={styles.contactValue}>
+                            admin@asrpath.org
+                        </a>
                     </div>
                     <div>
                         <SocialNetLinks className={styles.logoContainer} />

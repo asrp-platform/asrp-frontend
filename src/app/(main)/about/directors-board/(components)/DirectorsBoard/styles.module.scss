@@ -4,10 +4,9 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
-  padding: 0 var(--mobile-layout-padding-inline);
   margin-bottom: var(--mobile-container-margin-vertical);
 
-  @media (width >= 1200px) {
+  @media (min-width: 1200px) {
     grid-template-columns: 1fr 1fr;
     padding: 0;
   }
