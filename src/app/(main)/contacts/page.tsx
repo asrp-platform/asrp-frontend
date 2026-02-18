@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss"
-import SocialNetLinks from "../../../shared/ui/social-net-links/SocialNetLinks.tsx";
-import ContactForm from "../../../features/ContactForm/ContactForm.tsx";
+import SocialNetLinks from "../../../shared/ui/social-net-links/SocialNetLinks.tsx"
+import ContactForm from "../../../features/ContactForm/ContactForm.tsx"
 
 const Page = () => {
     return (
@@ -9,7 +9,8 @@ const Page = () => {
                 <div className={styles.mainHeadingContainer}>
                     <h1>Get in touch with ASRP</h1>
                     <p>
-                        Whether you have questions, collaboration ideas, sponsorship inquiries, or suggestions for new programs — we are here to listen and help.
+                        Whether you have questions, collaboration ideas, sponsorship inquiries, or
+                        suggestions for new programs — we are here to listen and help.
                     </p>
                 </div>
             </section>
@@ -21,8 +22,8 @@ const Page = () => {
                         <div className={styles.informationCard}>
                             <div className={styles.contactItem}>
                                 <h4 className={styles.contactLabel}>Email</h4>
-                                <a href="mailto:contact@rsapa.org" className={styles.contactValue}>
-                                    contact@rsapa.org
+                                <a href="mailto:admin@asrpath.org" className={styles.contactValue}>
+                                    admin@asrpath.org
                                 </a>
                             </div>
                             <div className={styles.contactItem}>
@@ -34,8 +35,10 @@ const Page = () => {
                             <div className={styles.contactItem}>
                                 <h4 className={styles.contactLabel}>Mailing address</h4>
                                 <address className={styles.contactValue}>
-                                    American Society of Russian-Speaking Pathologists, Inc.<br/>
-                                    68 Harrison Ave Ste 605 PMB 972536<br/>
+                                    American Society of Russian-Speaking Pathologists, Inc.
+                                    <br />
+                                    68 Harrison Ave Ste 605 PMB 972536
+                                    <br />
                                     Boston, Massachusetts 02111-1929 US
                                 </address>
                             </div>
@@ -51,7 +54,7 @@ const Page = () => {
                 </div>
             </section>
         </div>
-    );
-};
+    )
+}
 
-export default Page;
+export default Page

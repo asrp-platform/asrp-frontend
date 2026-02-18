@@ -1,20 +1,24 @@
 @use "../../../../shared/mixins" as m;
 
 .pageContainer {
-  @media (width >= 1200px) {
+  margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  @media (min-width: 1200px) {
     margin: 48px var(--page-container-horizontal-margin);
+    gap: 5vh;
   }
-
 }
 
 .headingCardContainer {
   @include m.heading-card-container;
+
 }
 
 
 
 .involved {
-  margin-top: 4rem;
 }
 
 .involvedGrid {
@@ -22,7 +26,7 @@
   gap: 20px;
   flex-direction: column;
 
-  @media (width >= 1200px) {
+  @media (min-width: 1200px) {
     flex-direction: row;
   }
 }
@@ -30,9 +34,9 @@
 .involvedText {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
   color: #334155;
   flex: 1;
+  padding: 0 var(--mobile-container-margin-horizontal);
 
   h2 {
     font-size: 1.75rem;

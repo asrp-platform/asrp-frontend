@@ -1,12 +1,11 @@
 @use "../../../../shared/mixins" as m;
 
 .pageContainer {
-  margin: var(--mobile-container-margin-vertical) var(--page-container-inline-margin);
-
-  @media (width >= 1200px) {
+  margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+  @media (min-width: 1200px) {
     margin: 48px var(--page-container-horizontal-margin);
   }
-
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   gap: 20px;

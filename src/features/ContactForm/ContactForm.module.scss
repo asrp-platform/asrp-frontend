@@ -15,10 +15,6 @@
   font-weight: 600;
 }
 
-.contactFormTitle {
-  font-size: 16px;
-}
-
 .contactFormContainer {
   width: 100%;
   min-height: 50vh;
@@ -29,7 +25,8 @@
 
   h3 {
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 600;
   }
 
   .contactForm {
@@ -47,15 +44,16 @@
       height: 40px;
       width: 120px;
       border-radius: 9999px;
-      background-color: #fdecec;
-      color: #d11c1c !important;
+      background-color: var(--button-primary-red);
+      color: white;
       border: var(--red-border);
       font-weight: 600 !important;
+      transition: 0.3s ease-in-out;
 
       &:hover {
-        background-color: #fbdada !important;
-        color: var(--text-secondary-color-red) !important;
-        transform: translateY(-1px) !important;
+        background-color: var(--button-primary-red-hover);
+        transform: translateY(-1px);
+        cursor: pointer;
       }
     }
   }

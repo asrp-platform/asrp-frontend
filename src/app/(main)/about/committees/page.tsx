@@ -1,10 +1,11 @@
 import styles from "./styles.module.scss"
 import GetInvolvedCommitteesForm from "../../../../features/GetInvolvedCommitteesForm/GetInvolvedCommitteesForm.tsx"
+import PageSection from "../../../../shared/ui/PageSection/PageSection.tsx"
 
 export default function ASRPCommitteesPage() {
     return (
         <div className={styles.pageContainer} id="top">
-            <section className={styles.headingCardContainer}>
+            <PageSection className={styles.headingCardContainer}>
                 <h1>ASRP Committees</h1>
                 <p>
                     Our committee structure is currently being developed. In the coming months, ASRP
@@ -15,7 +16,7 @@ export default function ASRPCommitteesPage() {
                     We warmly invite members and pathology trainees who are interested in building
                     ASRP from the ground up to get involved.
                 </p>
-            </section>
+            </PageSection>
 
             <section className={styles.involved}>
                 <div className={styles.involvedGrid}>

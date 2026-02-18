@@ -158,6 +158,8 @@
 .visionContainer {
   background-color: #FFF;
   padding: 40px 24px;
+  border: var(--light-border);
+  box-shadow: var(--card-box-shadow);
 
   h2 {
     color: var(--text-primary-color-red);

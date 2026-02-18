@@ -15,7 +15,7 @@ import { getDirectorsBoardMemberAdminUrl } from "../../../../../../../shared/bac
 import CardPhoto from "./CardPhoto.tsx"
 import DetailViewHeader from "./DetailViewHeader.tsx"
 import Loading from "./Loading.tsx"
-import { isTouchDevice } from "../../../../../../../shared/helpers/getDeviceType.ts"
+import { useIsMobile } from "../../../../../../../shared/hooks/useIsMobile.ts"
 
 interface IProps {
     open: boolean
@@ -30,6 +30,7 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
     const [resetModalOpen, setResetModalOpen] = useState(false)
     const [content, setContent] = useState<Content>()
 
+    const isMobile = useIsMobile()
     const [formData, setFormData] = useState({
         name: member.name,
         role: member.role,
@@ -43,7 +44,7 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const editable = canEdit && !isTouchDevice()
+    const editable = canEdit && !isMobile
 
     const editor = useEditor(
         {
@@ -155,7 +156,7 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
             getContainer={!editable ? false : undefined}
             onCancel={onClose}
             footer={null}
-            centered={!isTouchDevice()}
+            centered={!isMobile}
         >
             <div className={styles.dataContainer}>
                 {isLoading ? (
