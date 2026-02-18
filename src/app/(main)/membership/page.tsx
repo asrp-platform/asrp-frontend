@@ -3,6 +3,7 @@ import MembershipInfoCard from "./(ui)/MembershipInfoCard.tsx"
 import Image from "next/image"
 import PageTitleCard from "../../../shared/ui/PageTitleCard/PageTitleCard.tsx"
 import PageSection from "../../../shared/ui/PageSection/PageSection.tsx"
+import Link from "next/link"
 
 const MembershipPage = () => {
     return (
@@ -56,7 +57,9 @@ const MembershipPage = () => {
                                 professional status and complete a brief online form to become part
                                 of our community.
                             </p>
-                            <button className={styles.primaryLink}>Fill out membership form</button>
+                            <Link href="/membership/become-member" className={styles.primaryLink}>
+                                Fill out membership form
+                            </Link>
                             <p className={styles.determinedInfo}>
                                 Membership dues and categories are determined by the Society and
                                 support educational, mentorship, and networking initiatives.
@@ -77,13 +80,18 @@ const MembershipPage = () => {
                         mentorship, advocacy, and research excellence.
                     </p>
                     <div className={styles.readyButtonsContainer}>
-                        <button className={styles.becomeMemberButton}>Become a Member</button>
-                        <button className={styles.memberLoginButton}>Member Login</button>
-                        <button className={styles.renewMembershipButton}>Renew Membership</button>
+                        <Link href="/membership/become-member" className={styles.primaryLink}>
+                            Become a Member
+                        </Link>
+                        <Link href="/login" className={styles.memberLoginLink}>
+                            Member Login
+                        </Link>
+                        <Link href="#" className={styles.renewMembershipLink}>
+                            Renew Membership
+                        </Link>
                     </div>
                 </PageSection>
 
-                {/* Membership categories */}
                 <section className={styles.categoriesSection}>
                     <h2 className={styles.centerCategoriesTitle}>Membership categories</h2>
                     <p className={styles.categoriesInfo}>

@@ -102,9 +102,14 @@
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+  text-align: center;
+  text-decoration: none;
   &:hover {
     transform: translateY(-1px);
     background: var(--button-primary-red-hover);
+  }
+  &:visited {
+    color: #ffffff;
   }
 }
 
@@ -165,14 +170,18 @@
     gap: 10px;
   }
 
-  button {
+  a {
     border-radius: 9999px;
     padding: 12px 24px;
     font-size: 16px;
     outline: none;
     border: none;
     transition: 0.3s ease-in-out;
-    font-weight: 500;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    color: white;
 
     &:hover {
       transform: translateY(-1px);
@@ -181,23 +190,24 @@
 
   .becomeMemberButton {
     background-color: var(--button-primary-red);
-    color: white;
     &:hover {
       background-color: var(--button-primary-red-hover);
     }
   }
 
-  .memberLoginButton {
+  .memberLoginLink {
     background-color: rgb(255,255,255, 0.2);
-    color: white;
     border: var(--light-border);
-
+    &:visited {
+      color: #ffffff;
+    }
     &:hover {
       background-color: rgb(255,255,255, 0.3);
     }
   }
 
-  .renewMembershipButton {
+  .renewMembershipLink {
+    background-color: white;
     color: #7F1D1D;
     &:hover {
       background-color: #fee2e2;

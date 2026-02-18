@@ -1,4 +1,5 @@
 import styles from "./styles.module.scss"
+import type { ReactNode } from "react"
 
 interface IProps {
     title: string
@@ -8,7 +9,7 @@ interface IProps {
     subDescription: string
     price: number | string
     renderButton?: boolean
-    icon?: React.ReactNode
+    icon?: ReactNode
 }
 
 const MembershipInfoCard = ({

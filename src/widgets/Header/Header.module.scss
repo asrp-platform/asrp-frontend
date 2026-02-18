@@ -25,7 +25,7 @@
 .navbar {
   display: none;
 
-  @media (width >= 1200px) {
+  @media (min-width: 1200px) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,7 +35,7 @@
 }
 
 .burgerMenu {
-  @media (width >= 1200px) {
+  @media (min-width: 1200px) {
     display: none;
   }
 
@@ -44,8 +44,12 @@
 .authStatusContainer {
   display: none;
 
-  @media (width >= 1200px) {
+  @media (min-width: 1200px) {
     display: flex;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }
 
