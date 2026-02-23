@@ -24,14 +24,14 @@ const menuItems = [
         label: "Users",
     },
     {
-        key: "/administration/applications",
+        key: "/administration/memberships",
         icon: <TeamOutlined />,
-        label: "Applications",
+        label: "Memberships",
     },
     {
-        key: "/administration/messages",
+        key: "/administration/contact-messages",
         icon: <MailOutlined />,
-        label: "Messages",
+        label: "Contact Messages",
     },
 ]
 

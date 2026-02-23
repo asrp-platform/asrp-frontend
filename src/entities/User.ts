@@ -8,9 +8,6 @@ export interface IUser {
     credentials: string | null
 
     email: string
-    phone_number: string | null
-    telegram_username: string | null
-
     stuff: boolean
     description: string | null
 
@@ -20,11 +17,13 @@ export interface IUser {
 
     languages_spoken: string | null
     professional_interests: string | null
+    telegram_username: string | null
 
     institution: string
     role: string
 
     avatar_path: string | null
+    phone_number: string | null
 
     pending: boolean
     email_confirmed: boolean

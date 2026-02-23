@@ -1,0 +1,62 @@
+@use "../../../../shared/mixins" as m;
+
+
+// ContactRequestsTableTab styles
+.outerContainer {
+  margin-top: var(--general-vertical-padding);
+  @include m.card-style;
+}
+
+.notAnsweredTag {
+  transition: 0.3s ease-in;
+  &:hover {
+    cursor: pointer;
+    background-color: #fa541c;
+    color: white;
+  }
+
+}
+
+.approvalStatusTag {
+  &:hover {
+    cursor: pointer;
+    background-color: #fff;
+  }
+}
+
+
+
+
+
+
+
+.searchFilterDropdown {
+  width: 260px;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.searchFilterDropdownInput {
+  margin-bottom: 6px;
+}
+
+.searchFilterDropdownButtonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchButton, .resetButton {
+  margin-right: 10px;
+  width: 60px;
+}
+
+
+// MembershipTab styles
+.innerButtonContainer {
+  display: flex;
+  margin-top: 8px;
+  justify-content: flex-end;
+  gap: 10px;
+}
