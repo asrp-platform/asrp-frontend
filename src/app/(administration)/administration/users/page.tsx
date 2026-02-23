@@ -19,6 +19,7 @@ import styles from "./styles.module.scss"
 import type { Key } from "react"
 import type { ColumnsType } from "antd/lib/table"
 import { getSortOrder } from "../../../../shared/helpers/getSortOrder.ts"
+import { getBooleanColumnSearchProps } from "../../../../widgets/TableDropdown/getTableBooleanFilterDropdown.tsx"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -225,7 +226,7 @@ const Page = () => {
             key: "Stuff",
             render: (_, record) =>
                 record.stuff ? <Tag color="volcano">Admin</Tag> : <Tag color="blue">Member</Tag>,
-            ...getColumnSearchProps("stuff"),
+            ...getBooleanColumnSearchProps<ITableFilters>("stuff", filters, setFilters),
         },
         {
             title: "Pending",
@@ -233,7 +234,7 @@ const Page = () => {
             key: "pending",
             render: (value: boolean) =>
                 value ? <Tag color="gold">Yes</Tag> : <Tag color="green">No</Tag>,
-            ...getColumnSearchProps("pending"),
+            ...getBooleanColumnSearchProps<ITableFilters>("pending", filters, setFilters),
         },
 
         {
@@ -242,6 +243,7 @@ const Page = () => {
             key: "email_confirmed",
             render: (value: boolean) =>
                 value ? <Tag color="green">Confirmed</Tag> : <Tag color="red">Not Confirmed</Tag>,
+            ...getBooleanColumnSearchProps<ITableFilters>("email_confirmed", filters, setFilters),
         },
         {
             title: "Created At",
