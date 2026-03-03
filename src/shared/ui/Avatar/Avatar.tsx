@@ -1,22 +1,23 @@
 "use client"
 
-import type { IUser } from "../../../../../../../entities/User.ts"
+import type { IUser } from "../../../entities/User.ts"
 import styles from "./avatar.module.scss"
-import { getAvatarUrl, putUserAvatarUrl } from "../../../../../../../shared/backend/restApiUrls.ts"
+import { getAvatarUrl, putUserAvatarUrl } from "../../backend/restApiUrls.ts"
 import { type ChangeEvent, useState } from "react"
-import api from "../../../../../../../axios.ts"
-import type { ImagePathResponse } from "../../../../../../../shared/types/interfaces.ts"
+import api from "../../../axios.ts"
+import type { ImagePathResponse } from "../../types/interfaces.ts"
 import { message } from "antd"
 import CircularProgress from "@mui/material/CircularProgress"
 import axios from "axios"
 
 interface AvatarProps {
     user: IUser
+    editable?: boolean
 }
 
 const MAX_FILE_SIZE_MB = 5
 
-const Avatar = ({ user }: AvatarProps) => {
+const Avatar = ({ user, editable = false }: AvatarProps) => {
     const [avatarPath, setAvatarPath] = useState<string | null>(user.avatar_path ?? null)
     const [isUploading, setIsUploading] = useState(false)
 
@@ -24,13 +25,11 @@ const Avatar = ({ user }: AvatarProps) => {
         const file = e.target.files?.[0]
         if (!file) return
 
-        // 🔎 Validate type
         if (!file.type.startsWith("image/")) {
             message.error("Only image files are allowed")
             return
         }
 
-        // 🔎 Validate size
         if (file.size / 1024 / 1024 > MAX_FILE_SIZE_MB) {
             message.error(`File must be smaller than ${MAX_FILE_SIZE_MB}MB`)
             return
@@ -61,6 +60,24 @@ const Avatar = ({ user }: AvatarProps) => {
             setIsUploading(false)
             e.target.value = ""
         }
+    }
+
+    if (!editable) {
+        if (avatarPath) {
+            return (
+                <img
+                    src={`${getAvatarUrl(avatarPath)}?v=${Date.now()}`}
+                    alt="avatar"
+                    className={styles.avatarImage}
+                />
+            )
+        }
+
+        return (
+            <div className={styles.avatarFallback}>
+                {user.firstname[0]} {user.lastname[0]}
+            </div>
+        )
     }
 
     return (

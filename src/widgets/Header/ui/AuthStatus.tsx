@@ -4,16 +4,15 @@ import { useRouter } from "next/navigation"
 import { UserCircle } from "lucide-react"
 
 import { useAuth } from "../../../context/AuthProvider.tsx"
-import { getAvatarUrl, LOGOUT_URL } from "../../../shared/backend/restApiUrls.ts"
+import { LOGOUT_URL } from "../../../shared/backend/restApiUrls.ts"
 import { Dropdown, type MenuProps } from "antd"
 import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons"
 import { useMemo } from "react"
 import api from "../../../axios.ts"
 
 import styles from "./styles.module.scss"
-import avatarPlaceholder from "../../../../public/icons/header/doctor-svgrepo-com.svg"
 import Link from "next/link"
-import Image from "next/image"
+import Avatar from "../../../shared/ui/Avatar/Avatar.tsx"
 
 const AuthStatus = () => {
     const { user, isUserLoading } = useAuth()
@@ -75,11 +74,7 @@ const AuthStatus = () => {
     return (
         <Dropdown menu={{ items }} placement="bottomRight">
             <div className={styles.userProfileIcon}>
-                {user.avatar_path ? (
-                    <img src={getAvatarUrl(user.avatar_path)} alt="Avatar" />
-                ) : (
-                    <Image src={avatarPlaceholder} alt="Avatar" />
-                )}
+                <Avatar user={user} />
             </div>
         </Dropdown>
     )
