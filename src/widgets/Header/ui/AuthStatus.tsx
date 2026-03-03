@@ -12,7 +12,7 @@ import api from "../../../axios.ts"
 
 import styles from "./styles.module.scss"
 import Link from "next/link"
-import Avatar from "../../../shared/ui/Avatar/Avatar.tsx"
+import UserAvatar from "../../../shared/ui/Avatar/UserAvatar.tsx"
 
 const AuthStatus = () => {
     const { user, isUserLoading } = useAuth()
@@ -74,7 +74,7 @@ const AuthStatus = () => {
     return (
         <Dropdown menu={{ items }} placement="bottomRight">
             <div className={styles.userProfileIcon}>
-                <Avatar user={user} />
+                <UserAvatar user={user} />
             </div>
         </Dropdown>
     )

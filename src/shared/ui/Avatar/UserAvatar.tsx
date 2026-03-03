@@ -3,7 +3,7 @@
 import type { IUser } from "../../../entities/User.ts"
 import styles from "./avatar.module.scss"
 import { getAvatarUrl, putUserAvatarUrl } from "../../backend/restApiUrls.ts"
-import { type ChangeEvent, useState } from "react"
+import { type ChangeEvent, type CSSProperties, useState } from "react"
 import api from "../../../axios.ts"
 import type { ImagePathResponse } from "../../types/interfaces.ts"
 import { message } from "antd"
@@ -13,13 +13,15 @@ import axios from "axios"
 interface AvatarProps {
     user: IUser
     editable?: boolean
+    size?: number
 }
 
 const MAX_FILE_SIZE_MB = 5
 
-const Avatar = ({ user, editable = false }: AvatarProps) => {
+const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
     const [avatarPath, setAvatarPath] = useState<string | null>(user.avatar_path ?? null)
     const [isUploading, setIsUploading] = useState(false)
+    const [cacheBuster, setCacheBuster] = useState(0)
 
     const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -46,6 +48,7 @@ const Avatar = ({ user, editable = false }: AvatarProps) => {
             })
 
             setAvatarPath(res.data.path)
+            setCacheBuster(Date.now())
 
             message.success("Avatar updated successfully")
         } catch (error: unknown) {
@@ -62,11 +65,13 @@ const Avatar = ({ user, editable = false }: AvatarProps) => {
         }
     }
 
+    const avatarStyles: CSSProperties = size ? { width: size, height: size } : {}
+
     if (!editable) {
         if (avatarPath) {
             return (
                 <img
-                    src={`${getAvatarUrl(avatarPath)}?v=${Date.now()}`}
+                    src={`${getAvatarUrl(avatarPath)}?v=${cacheBuster}`}
                     alt="avatar"
                     className={styles.avatarImage}
                 />
@@ -81,7 +86,7 @@ const Avatar = ({ user, editable = false }: AvatarProps) => {
     }
 
     return (
-        <div className={styles.avatarWrapper}>
+        <div className={styles.avatarWrapper} style={avatarStyles}>
             {avatarPath ? (
                 <img
                     src={`${getAvatarUrl(avatarPath)}?v=${Date.now()}`}
@@ -117,4 +122,4 @@ const Avatar = ({ user, editable = false }: AvatarProps) => {
     )
 }
 
-export default Avatar
+export default UserAvatar

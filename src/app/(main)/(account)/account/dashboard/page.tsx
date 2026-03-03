@@ -4,7 +4,7 @@ import styles from "./styles.module.scss"
 import Link from "next/link"
 import ProfileHeaderSection from "../(shared)/ProfileHeaderSection.tsx"
 import { useAuth } from "../../../../../context/AuthProvider.tsx"
-import Avatar from "../../../../../shared/ui/Avatar/Avatar.tsx"
+import UserAvatar from "../../../../../shared/ui/Avatar/UserAvatar.tsx"
 
 const Page = () => {
     const { user } = useAuth()
@@ -57,7 +57,7 @@ const Page = () => {
             <section className={styles.card}>
                 <h2 className={styles.cardTitle}>Profile summary</h2>
                 <div className={styles.profileRow}>
-                    <Avatar user={user} editable />
+                    <UserAvatar user={user} editable />
 
                     <div className={styles.profileInfo}>
                         <div className={styles.primaryText}>
