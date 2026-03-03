@@ -1,7 +1,13 @@
 "use client"
 
 import { Layout, Menu } from "antd"
-import { UserOutlined, TeamOutlined, MailOutlined, DashboardOutlined } from "@ant-design/icons"
+import {
+    UserOutlined,
+    TeamOutlined,
+    MailOutlined,
+    DashboardOutlined,
+    FileTextOutlined,
+} from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useMemo, useState } from "react"
 import styles from "./layout.module.scss"
@@ -32,6 +38,11 @@ const menuItems = [
         key: "/administration/contact-messages",
         icon: <MailOutlined />,
         label: "Contact Messages",
+    },
+    {
+        key: "/administration/legal-documents",
+        icon: <FileTextOutlined />,
+        label: "Legal Documents",
     },
 ]
 
