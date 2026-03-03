@@ -35,21 +35,6 @@ const PhotoInput = ({ setUploadedImageUrl, uploadedImageUrl }: IProps) => {
         }
     }
 
-    // <input
-    //     type="file"
-    //     id="photo"
-    //     accept="image/*"
-    //     className={styles.photoInput}
-    //     onChange={handleFileChange}
-    // />
-    //
-    // {uploadedImageUrl ?
-    //     <img className={styles.photo} src={uploadedImageUrl} alt="" /> :
-    //     <label htmlFor="photo" className={styles.photoLabel}>
-    //         <Image width={32} height={32} />
-    //     </label>
-    // }
-
     return (
         <div className={styles.photoInputContainer}>
             <div className={styles.photoContainer}>

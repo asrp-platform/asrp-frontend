@@ -1,8 +1,18 @@
+"use client"
+
 import styles from "./styles.module.scss"
 import Link from "next/link"
 import ProfileHeaderSection from "../(shared)/ProfileHeaderSection.tsx"
+import { useAuth } from "../../../../../context/AuthProvider.tsx"
+import Avatar from "./ui/Avatar/Avatar.tsx"
 
 const Page = () => {
+    const { user } = useAuth()
+
+    if (!user) {
+        return
+    }
+
     return (
         <div className={styles.container}>
             <ProfileHeaderSection
@@ -47,10 +57,13 @@ const Page = () => {
             <section className={styles.card}>
                 <h2 className={styles.cardTitle}>Profile summary</h2>
                 <div className={styles.profileRow}>
-                    <div className={styles.avatar}>EM</div>
+                    <Avatar user={user} />
+
                     <div className={styles.profileInfo}>
-                        <div className={styles.primaryText}>E. Member</div>
-                        <div className={styles.mutedText}>member@email.com</div>
+                        <div className={styles.primaryText}>
+                            {user.firstname} {user.lastname}
+                        </div>
+                        <div className={styles.mutedText}>{user.email}</div>
                         <div className={styles.mutedText}>Academic Medical Center</div>
                         <span className={styles.roleBadge}>Member</span>
                     </div>

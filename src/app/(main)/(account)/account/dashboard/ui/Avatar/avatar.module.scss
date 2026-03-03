@@ -1,0 +1,64 @@
+.avatarWrapper {
+  position: relative;
+  height: 72px;
+  width: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+
+.avatarFallback {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.avatarImage {
+  height: 72px;
+  width: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+
+
+.avatarOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.avatarWrapper:hover .avatarOverlay {
+  opacity: 1;
+}
+
+.avatarInput {
+  display: none;
+}
+
+.avatarLabel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

@@ -32,6 +32,9 @@ export const USERS_URL = `${REST_API_URL}/users`
 // http:127.0.0.1:8000/api/users/:user_id
 export const getUserUrl = (user_id: number | string) => `${USERS_URL}/${user_id}`
 
+// http:127.0.0.1:8000/api/users/:user_id/avatar
+export const putUserAvatarUrl = (user_id: number | string) => `${getUserUrl(user_id)}/avatar`
+
 export const getUserPasswordChangeUrl = (user_id: number | string) =>
     `${getUserUrl(user_id)}/password-change`
 
