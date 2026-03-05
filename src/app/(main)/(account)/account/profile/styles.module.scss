@@ -1,3 +1,15 @@
+.title {
+  color: var(--text-primary-color-dark);
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.titleInfo {
+  margin-top: 6px;
+  color: var(--text-secondary-color-dark);
+  font-size: 14px;
+}
+
 .page {
   min-height: 100vh;
   background: #f8fafc;

@@ -4,6 +4,7 @@ import styles from "./styles.module.scss"
 import type { ICommunicationPreferences } from "../../../../../entities/User.ts"
 import { useState } from "react"
 import CommunicationSwitchCard from "./ui/CommunicationSwitchCard.tsx"
+import Card from "../../../../../widgets/Card/Card.tsx"
 
 const Page = () => {
     const [communicationPreferences, setCommunicationPreferences] = useState<
@@ -28,8 +29,7 @@ const Page = () => {
                 <p className={styles.titleInfo}>Manage how you receive communications from ASRP.</p>
             </section>
 
-            <section className={styles.communicationsContainer}>
-                <h2 className={styles.communicationsContainerTitle}>Required communications</h2>
+            <Card title="Required communications">
                 <CommunicationSwitchCard
                     title="Membership & account notifications"
                     description="Includes renewal reminders, payment confirmations, policy updates, and other essential account-related messages."
@@ -39,10 +39,9 @@ const Page = () => {
                     These communications are required to maintain an active ASRP membership and
                     cannot be disabled.
                 </p>
-            </section>
+            </Card>
 
-            <section className={styles.communicationsContainer}>
-                <h2 className={styles.communicationsContainerTitle}>Optional communications</h2>
+            <Card title="Optional communications">
                 <CommunicationSwitchCard
                     title="Newsletters"
                     description="Periodic society newsletters with announcements, highlights, and educational content."
@@ -71,7 +70,7 @@ const Page = () => {
                     preferenceKey="volunteer_opportunities"
                     defaultChecked={communicationPreferences["volunteer_opportunities"]}
                 />
-            </section>
+            </Card>
         </div>
     )
 }

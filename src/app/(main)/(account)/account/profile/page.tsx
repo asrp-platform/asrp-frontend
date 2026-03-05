@@ -1,13 +1,10 @@
 "use client"
 
-import { Typography } from "antd"
 import styles from "./styles.module.scss"
 import UserProfileCard from "./(ui)/UserProfileCard.tsx"
 import { useAuth } from "../../../../../context/AuthProvider.tsx"
 import ResidencyCard from "./(ui)/ResidencyCard.tsx"
 import FellowshipCard from "./(ui)/FellowshipCard.tsx"
-
-const { Title, Text } = Typography
 
 export default function ASRPAccountProfilePage() {
     const { user } = useAuth()
@@ -22,10 +19,10 @@ export default function ASRPAccountProfilePage() {
                 <section className={styles.section}>
                     <div className={styles.header}>
                         <div>
-                            <Title level={1}>Profile</Title>
-                            <Text type="secondary">
+                            <h1 className={styles.title}>Profile</h1>
+                            <p className={styles.titleInfo}>
                                 Manage your personal and professional information.
-                            </Text>
+                            </p>
                         </div>
                     </div>
                     <UserProfileCard user={user} />

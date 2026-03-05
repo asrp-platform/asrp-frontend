@@ -1,9 +1,11 @@
 .title {
   color: var(--text-primary-color-dark);
   font-weight: 600;
+  font-size: 28px;
 }
 
 .titleInfo {
+  margin-top: 6px;
   color: var(--text-secondary-color-dark);
   font-size: 14px;
 }
@@ -49,13 +51,6 @@
 
 .switchContainer {
   flex: 1;
-}
-
-
-.title {
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--text-primary-color-dark);
 }
 
 .info {
