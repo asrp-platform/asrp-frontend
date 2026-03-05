@@ -1,0 +1,27 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  text-align: center;
+}
+
+.icon {
+  font-size: 48px;
+  color: #bbb;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.description {
+  color: #666;
+  margin-bottom: 24px;
+}

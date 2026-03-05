@@ -70,3 +70,12 @@ export interface IUserFellowship {
 }
 
 export type IUserFellowshipFormValues = Omit<IUserFellowship, "id" | "user_id">
+
+export interface ICommunicationPreferences {
+    membership_account_notifications: boolean
+    newsletters: boolean
+    events_meetings: boolean
+    committees_leadership: boolean
+    volunteer_opportunities: boolean
+    user_id: number
+}

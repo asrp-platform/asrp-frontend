@@ -1,5 +1,7 @@
+import ComingSoon from "../../../widgets/ComingSoon/ComingSoon.tsx"
+
 const Page = () => {
-    return <div>Education</div>
+    return <ComingSoon showBackButton />
 }
 
 export default Page

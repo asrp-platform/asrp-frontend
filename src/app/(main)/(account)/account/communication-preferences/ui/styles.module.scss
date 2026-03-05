@@ -1,0 +1,52 @@
+
+
+
+
+.communicationsContainer {
+  margin-top: 20px;
+  padding: 24px;
+  border: var(--light-border);
+  border-radius: 24px;
+  background-color: #fff;
+}
+
+
+.communicationsContainerTitle {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text-primary-color-dark);
+}
+
+
+.container {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 250px;
+  border: var(--light-border);
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.infoContainer {
+  flex: 9
+}
+
+.switchContainer {
+  flex: 1;
+}
+
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-primary-color-dark);
+}
+
+.info {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 10px;
+  color: var(--text-secondary-color-dark);
+}
