@@ -1,5 +1,7 @@
+import ComingSoon from "../../../../../widgets/ComingSoon/ComingSoon.tsx"
+
 const Page = () => {
-    return <div>User payments page</div>
+    return <ComingSoon />
 }
 
 export default Page

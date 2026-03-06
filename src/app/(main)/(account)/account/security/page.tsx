@@ -2,8 +2,26 @@
 
 import styles from "./styles.module.scss"
 import Card from "../../../../../widgets/Card/Card.tsx"
+import { useRouter } from "next/navigation"
+import { useAuth } from "../../../../../context/AuthProvider.tsx"
+import { useState } from "react"
+import ChangePasswordModal from "./ui/ChangePasswordModal.tsx"
 
 const Page = () => {
+    const { user } = useAuth()
+
+    const router = useRouter()
+
+    const [changePasswordOpen, setChangePasswordOpen] = useState(false)
+
+    const onResetClick = () => {
+        router.push("/password-reset")
+    }
+
+    if (!user) {
+        return
+    }
+
     return (
         <div>
             <section className={styles.titleContainer}>
@@ -19,10 +37,15 @@ const Page = () => {
                 </p>
 
                 <div className={styles.buttonContainer}>
-                    <button>Change Password</button>
-                    <button>Reset Password</button>
+                    <button onClick={() => setChangePasswordOpen(true)}>Change Password</button>
+                    <button onClick={onResetClick}>Reset Password</button>
                 </div>
             </Card>
+            <ChangePasswordModal
+                open={changePasswordOpen}
+                onClose={() => setChangePasswordOpen(false)}
+                user_id={user.id}
+            />
         </div>
     )
 }
