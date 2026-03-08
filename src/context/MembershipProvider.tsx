@@ -9,8 +9,6 @@ import {
     useEffect,
     useState,
 } from "react"
-import api from "../axios.ts"
-import { CURRENT_USER_MEMBERSHIP } from "../shared/backend/restApiUrls.ts"
 import type { IUserMembership } from "../entities/Membership.ts"
 import { useAuth } from "./AuthProvider.tsx"
 
@@ -44,8 +42,8 @@ export const MembershipProvider = ({ children }: MembershipProviderProps) => {
         const fetchMembership = async () => {
             try {
                 setIsMembershipLoading(true)
-                const response = await api.get<IUserMembership>(CURRENT_USER_MEMBERSHIP)
-                setMembership(response.data)
+                // const response = await api.get<IUserMembership>(CURRENT_USER_MEMBERSHIP)
+                // setMembership(response.data)
             } catch (error) {
                 console.error(error)
                 setMembership(null)
