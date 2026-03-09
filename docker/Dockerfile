@@ -1,15 +1,15 @@
-# ---------- 1 stage: deps ----------
+# ---------- deps ----------
 FROM node:20-alpine AS deps
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+RUN apk add --no-cache libc6-compat
 
+COPY package.json package-lock.json ./
 RUN npm ci
 
 
-# ---------- 2 stage: build ----------
+# ---------- build ----------
 FROM node:20-alpine AS builder
-
 WORKDIR /app
 
 ARG NEXT_PUBLIC_API_URL
@@ -21,16 +21,16 @@ COPY . .
 RUN npm run build
 
 
-# ---------- 3 stage: production ----------
+# ---------- runtime ----------
 FROM node:20-alpine AS runner
-
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-COPY package.json package-lock.json ./
+RUN apk add --no-cache libc6-compat
 
-RUN npm ci --omit=dev
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --ignore-scripts
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public

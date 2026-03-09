@@ -33,9 +33,5 @@ docker pull max31ru12/asrp-prod-frontend:latest
 ### Run container
 
 ```bash
-docker run -d \
--p <port:port> \
---name <container_name> \
---network <network> \
-max31ru12/asrp-prod-frontend:latest
+docker run -d -p 3000:3000 --name asrp_frontend --network asrp-backend_default max31ru12/asrp-prod-frontend:latest
 ```
