@@ -1,4 +1,4 @@
-const domain = "http://localhost:8000"
+const domain = process.env.NEXT_PUBLIC_API_URL
 
 export const REST_API_URL = `${domain}/api`
 

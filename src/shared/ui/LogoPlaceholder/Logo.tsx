@@ -28,7 +28,12 @@ const Logo = ({ clickable = true, width = 48, height = 48 }: IProps) => {
     return (
         <div className={styles.logoPlaceholder} onClick={clickable ? handleLogoClick : undefined}>
             {isMobile ? (
-                <Image height={height} src="/logo/png/LogoLightHorizontal.png" alt="logo" />
+                <Image
+                    height={height}
+                    width={width}
+                    src="/logo/png/LogoLightHorizontal.png"
+                    alt="logo"
+                />
             ) : (
                 <Image
                     width={width}
