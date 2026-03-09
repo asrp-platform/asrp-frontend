@@ -1,6 +1,8 @@
 # ---------- 1 stage: build ----------
 FROM node:20-alpine AS builder
 
+ENV NEXT_PRIVATE_BUILD_WORKER_COUNT=1
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
