@@ -35,4 +35,4 @@ jobs:
         run: npm run build
 
       - name: Build Docker image
-        run: docker build -t asrp-frontend-test .
+        run: docker build -t asrp-frontend-test -f ./docker/Dockerfile .
