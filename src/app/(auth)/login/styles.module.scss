@@ -26,6 +26,7 @@
 
   .submitContainer {
     display: flex;
+    align-items: center;
     justify-content: space-between;
   }
 
@@ -40,15 +41,6 @@
   .antdInput {
     height: 40px;
     color: var(--text-secondary-color-dark);
-  }
-
-  button {
-    width: 160px;
-    height: 40px;
-    color: #fff;
-    border: none;
-    border-radius: 999px;
-    transition: 0.3s ease-in-out;
   }
 
   @media (width >= 480px) {}

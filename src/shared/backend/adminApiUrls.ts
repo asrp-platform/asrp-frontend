@@ -1,4 +1,4 @@
-const domain = "http://localhost:8000"
+const domain = process.env.NEXT_PUBLIC_API_URL
 
 // "http://localhost:8000/api/admin"
 export const ADMIN_URL = `${domain}/api/admin`

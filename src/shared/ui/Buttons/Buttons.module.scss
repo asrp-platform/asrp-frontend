@@ -1,0 +1,15 @@
+.primaryButton {
+  border-radius: 999px;
+  background: var(--button-primary-red);
+  color: white;
+  font-weight: 600;
+  transition: 0.3s ease-in-out;
+  padding: 10px 24px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: var(--button-primary-red-hover);
+  }
+}

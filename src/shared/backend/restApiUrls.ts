@@ -38,6 +38,9 @@ export const putUserAvatarUrl = (user_id: number | string) => `${getUserUrl(user
 export const getUserPasswordChangeUrl = (user_id: number | string) =>
     `${getUserUrl(user_id)}/password-change`
 
+export const getUserNameChangeRequestUrl = (user_id: number | string) =>
+    `${getUserUrl(user_id)}/name-change-requests`
+
 // http:127.0.0.1:8000/api/users/current-user
 export const CURRENT_USER_URL = `${USERS_URL}/current-user`
 
