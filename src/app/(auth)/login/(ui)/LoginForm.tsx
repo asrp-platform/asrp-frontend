@@ -1,17 +1,17 @@
 "use client"
 
-import {Button, Checkbox, Form, type FormProps, Input, Typography} from "antd";
-import styles from "../styles.module.scss";
-import Link from "next/link";
-import api from "../../../../axios.ts";
-import type {LoginResponse} from "../types.ts";
-import {LOGIN_URL} from "../../../../shared/backend/restApiUrls.ts";
-import {isAxiosError} from "axios";
-import {useRouter} from "next/navigation";
-import {useForm} from "antd/es/form/Form";
-import {useAuth} from "../../../../context/AuthProvider.tsx";
-import useNotification from "antd/es/notification/useNotification";
-
+import { Checkbox, Form, type FormProps, Input, Typography } from "antd"
+import styles from "../styles.module.scss"
+import Link from "next/link"
+import api from "../../../../axios.ts"
+import type { LoginResponse } from "../types.ts"
+import { LOGIN_URL } from "../../../../shared/backend/restApiUrls.ts"
+import { isAxiosError } from "axios"
+import { useRouter } from "next/navigation"
+import { useForm } from "antd/es/form/Form"
+import { useAuth } from "../../../../context/AuthProvider.tsx"
+import useNotification from "antd/es/notification/useNotification"
+import PrimaryButton from "../../../../shared/ui/Buttons/PrimaryButton.tsx"
 
 type FieldType = {
     email: string
@@ -22,10 +22,9 @@ type FieldType = {
 const { Paragraph } = Typography
 
 const LoginForm = () => {
-
-    const router = useRouter();
-    const [form] = useForm();
-    const { fetchUser } = useAuth();
+    const router = useRouter()
+    const [form] = useForm()
+    const { fetchUser } = useAuth()
 
     const [notification, contextHolder] = useNotification()
 
@@ -91,12 +90,10 @@ const LoginForm = () => {
                 <Form.Item<FieldType> name="remember_me" valuePropName="checked">
                     <Checkbox checked={false}>Remember me</Checkbox>
                 </Form.Item>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
+                <PrimaryButton htmlType="submit" label={"Submit"} />
             </div>
         </Form>
-    );
-};
+    )
+}
 
-export default LoginForm;
+export default LoginForm
