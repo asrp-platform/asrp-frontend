@@ -84,7 +84,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
 
                     <Col xs={24} md={12}>
                         <Form.Item label="Middle name" name="middlename">
-                            <Input />
+                            <Input className={styles.antInputDisabled} disabled />
                         </Form.Item>
                     </Col>
 

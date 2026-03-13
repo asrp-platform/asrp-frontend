@@ -6,6 +6,7 @@ export interface INameChangeRequest {
     id: number
     firstname: string
     lastname: string
+    middlename: string
     reason_change: string
     reason_rejecting: string | null
     status: NameChangeRequestStatus

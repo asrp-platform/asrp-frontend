@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { Table, Tag } from "antd"
-import type { SorterResult, TablePaginationConfig } from "antd/es/table/interface"
 import type { ColumnsType } from "antd/lib/table"
 
 import api from "../../../../../axios.ts"
@@ -10,15 +9,31 @@ import Loading from "../../../../(main)/about/directors-board/(components)/ViewC
 
 import { NAME_CHANGE_REQUESTS_URL } from "../../../../../shared/backend/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
-import type { INameChangeRequest } from "../../../../../entities/NameChangeRequest.ts"
+import type {
+    INameChangeRequest,
+    NameChangeRequestStatus,
+} from "../../../../../entities/NameChangeRequest.ts"
 
 import { getSortOrder } from "../../../../../shared/helpers/getSortOrder.ts"
+import { handleTableChange } from "../../../../../shared/helpers/antdTableHelpers.ts"
+import { getSelectTableFilterDropdown } from "../../../../../widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"
+
+interface ITableFilters {
+    status?: NameChangeRequestStatus
+}
+
+const statusOptions = [
+    { label: "Pending", value: "PENDING" },
+    { label: "Approved", value: "APPROVED" },
+    { label: "Rejected", value: "REJECTED" },
+]
 
 const NameChangeRequestsTable = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [tableData, setTableData] =
         useState<IPaginatedBackendResponse<INameChangeRequest> | null>()
 
+    const [filters, setFilters] = useState<ITableFilters>({})
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [pageSize] = useState<number>(10)
     const [ordering, setOrdering] = useState<string[]>([])
@@ -35,6 +50,7 @@ const NameChangeRequestsTable = () => {
                             page: currentPage,
                             page_size: pageSize,
                             ordering: ordering.length ? ordering.join(",") : null,
+                            ...filters,
                         },
                     }
                 )
@@ -48,27 +64,31 @@ const NameChangeRequestsTable = () => {
         }
 
         fetchRequests()
-    }, [currentPage, pageSize, ordering])
+    }, [currentPage, pageSize, ordering, filters])
 
     const columns: ColumnsType<INameChangeRequest> = [
         {
             title: "User",
-            key: "user",
-            render: (_, record) => `${record.user_id} ${record.user_id}`,
+            dataIndex: "user_id",
+            key: "user_id",
+            sorter: true,
+            sortOrder: getSortOrder("user_id", ordering),
+            render: (_, record) => `${record.user_id}`,
         },
         {
-            title: "New Firstname",
+            title: "New first name",
             dataIndex: "firstname",
             key: "firstname",
-            sorter: true,
-            sortOrder: getSortOrder("firstname", ordering),
         },
         {
-            title: "New Lastname",
+            title: "New last name",
             dataIndex: "lastname",
             key: "lastname",
-            sorter: true,
-            sortOrder: getSortOrder("lastname", ordering),
+        },
+        {
+            title: "New middlename",
+            dataIndex: "middlename",
+            key: "middlename",
         },
         {
             title: "Reason",
@@ -88,13 +108,15 @@ const NameChangeRequestsTable = () => {
             key: "status",
             sorter: true,
             sortOrder: getSortOrder("status", ordering),
-            render: (value) => {
-                if (value === "PENDING") return <Tag color="gold">Pending</Tag>
+            render: (_, record) => {
+                console.log(record)
+                if (record.status === "PENDING") return <Tag color="gold">Pending</Tag>
 
-                if (value === "APPROVED") return <Tag color="green">Approved</Tag>
+                if (record.status === "APPROVED") return <Tag color="green">Approved</Tag>
 
                 return <Tag color="red">Rejected</Tag>
             },
+            ...getSelectTableFilterDropdown("status", filters, setFilters, statusOptions),
         },
         {
             title: "Created At",
@@ -105,30 +127,6 @@ const NameChangeRequestsTable = () => {
             render: (value: string) => new Date(value).toLocaleString(),
         },
     ]
-
-    const handleTableChange = (
-        _pagination: TablePaginationConfig,
-        _filters: any,
-        sorter: SorterResult<INameChangeRequest> | SorterResult<INameChangeRequest>[]
-    ) => {
-        if (Array.isArray(sorter)) return
-
-        const field = sorter.field as string | undefined
-        const order = sorter.order
-
-        if (!field) {
-            setOrdering([])
-            return
-        }
-
-        if (order === "ascend") {
-            setOrdering([field])
-        } else if (order === "descend") {
-            setOrdering([`-${field}`])
-        } else {
-            setOrdering([])
-        }
-    }
 
     if (isLoading || !tableData) {
         return <Loading />
@@ -145,7 +143,9 @@ const NameChangeRequestsTable = () => {
                 onChange: (page) => setCurrentPage(page),
             }}
             rowKey="id"
-            onChange={handleTableChange}
+            onChange={(pagination, filters, sorter) =>
+                handleTableChange(pagination, filters, sorter, setOrdering)
+            }
             scroll={{ x: 1 }}
         />
     )

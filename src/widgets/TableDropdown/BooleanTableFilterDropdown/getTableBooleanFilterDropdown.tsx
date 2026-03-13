@@ -2,12 +2,7 @@ import type { FilterDropdownProps } from "antd/es/table/interface"
 import { Button, Radio } from "antd"
 
 import styles from "./styles.module.scss"
-import type { Key } from "react"
-
-const getFilteredValue = (value: any) => {
-    if (value === null || value === undefined) return null
-    return [value as Key] as Key[]
-}
+import { getFilteredValue } from "../helpers.ts"
 
 export const getBooleanColumnSearchProps = <TFilters extends Record<string, any>>(
     dataIndex: string,
