@@ -21,6 +21,8 @@ import { getSortOrder } from "../../../../../shared/helpers/getSortOrder.ts"
 import { handleTableChange } from "../../../../../shared/helpers/antdTableHelpers.ts"
 import { getSelectTableFilterDropdown } from "../../../../../widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"
 import NameChangeStatusModal from "../../../../../features/NameChangeRequestModal/NameChangeRequestModal.tsx"
+import PermissionGuard from "../../../../../shared/ui/PermissionGuard/PermissionGuard.tsx"
+import { usePermissions } from "../../../../../context/PermissionsProvider.tsx"
 
 interface ITableFilters {
     status?: NameChangeRequestStatus
@@ -35,6 +37,11 @@ const statusOptions = [
 ]
 
 const NameChangeRequestsTable = () => {
+    const { permissions } = usePermissions()
+
+    const canView = permissions.includes("name_change_request.view")
+    const canUpdate = canView && permissions.includes("name_change_requests.update")
+
     const [isLoading, setIsLoading] = useState(true)
     const [statusUpdateLoading, setStatusUpdateLoading] = useState<boolean>(false)
     const [tableData, setTableData] =
@@ -100,7 +107,6 @@ const NameChangeRequestsTable = () => {
         const fetchRequests = async () => {
             try {
                 setIsLoading(true)
-
                 const response = await api.get<IPaginatedBackendResponse<INameChangeRequest>>(
                     NAME_CHANGE_REQUESTS_URL,
                     {
@@ -112,7 +118,6 @@ const NameChangeRequestsTable = () => {
                         },
                     }
                 )
-
                 setTableData(response.data)
             } catch (error) {
                 console.error(error)
@@ -121,8 +126,10 @@ const NameChangeRequestsTable = () => {
             }
         }
 
-        fetchRequests()
-    }, [currentPage, pageSize, ordering, filters])
+        if (canView) {
+            fetchRequests()
+        }
+    }, [currentPage, pageSize, ordering, filters, canView])
 
     const columns: ColumnsType<INameChangeRequest> = [
         {
@@ -171,7 +178,7 @@ const NameChangeRequestsTable = () => {
                     return (
                         <Tag
                             color="gold"
-                            onClick={() => openModal(record)}
+                            onClick={canUpdate ? () => openModal(record) : undefined}
                             style={{ cursor: "pointer" }}
                         >
                             Pending
@@ -194,12 +201,16 @@ const NameChangeRequestsTable = () => {
         },
     ]
 
+    if (!canView) {
+        return <PermissionGuard allowed={false} />
+    }
+
     if (isLoading || !tableData) {
         return <Loading />
     }
 
     return (
-        <>
+        <PermissionGuard allowed={canView}>
             <Table
                 dataSource={tableData.data}
                 columns={columns}
@@ -221,7 +232,7 @@ const NameChangeRequestsTable = () => {
                 onClose={closeModal}
                 onSubmit={changeNameChangeRequestStatus}
             />
-        </>
+        </PermissionGuard>
     )
 }
 

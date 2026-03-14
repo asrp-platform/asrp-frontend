@@ -6,7 +6,7 @@ import AccessDenied from "./AccessDenied"
 interface Props {
     allowed: boolean
     fallback?: ReactNode
-    children: ReactNode
+    children?: ReactNode
 }
 
 const PermissionGuard = ({ allowed, fallback, children }: Props) => {
@@ -14,7 +14,7 @@ const PermissionGuard = ({ allowed, fallback, children }: Props) => {
         return fallback ?? <AccessDenied />
     }
 
-    return <>{children}</>
+    return <>{children || fallback}</>
 }
 
 export default PermissionGuard
