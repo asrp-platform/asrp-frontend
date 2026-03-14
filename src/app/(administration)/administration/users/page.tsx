@@ -3,6 +3,7 @@
 import { Tabs } from "antd"
 import UsersTable from "./tabs/UsersTable.tsx"
 import NameChangeRequestsTable from "./tabs/NameChangeRequestsTable.tsx"
+import AdministratorsPermissions from "./tabs/AdministratorsPermissions.tsx"
 
 const Page = () => {
     const items = [
@@ -15,6 +16,11 @@ const Page = () => {
             label: `Name change requests`,
             key: "name-changes",
             children: <NameChangeRequestsTable />,
+        },
+        {
+            label: `Administrators permissions`,
+            key: "administrators-permissions",
+            children: <AdministratorsPermissions />,
         },
     ]
 
