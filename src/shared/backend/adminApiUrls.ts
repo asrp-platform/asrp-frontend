@@ -8,6 +8,10 @@ export const getUserPermissionsStuffUrl = (userId: string | number) =>
 
 export const NAME_CHANGE_REQUESTS_URL = `${STUFF_USERS_URL}/name-change-requests`
 
+// "http://localhost:8000/api/admin/users/name-change-requests"
+export const getUserNameChangeRequestById = (userId: number | string, requestId: number | string) =>
+    `${STUFF_USERS_URL}/${userId}/name-change-requests/${requestId}`
+
 // Directors Board
 export const DIRECTORS_BOARD_ADMIN_URL = `${ADMIN_URL}/directors-board`
 

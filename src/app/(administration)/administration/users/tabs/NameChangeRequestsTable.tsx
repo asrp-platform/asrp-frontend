@@ -7,7 +7,10 @@ import type { ColumnsType } from "antd/lib/table"
 import api from "../../../../../axios.ts"
 import Loading from "../../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
-import { NAME_CHANGE_REQUESTS_URL } from "../../../../../shared/backend/adminApiUrls.ts"
+import {
+    getUserNameChangeRequestById,
+    NAME_CHANGE_REQUESTS_URL,
+} from "../../../../../shared/backend/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
 import type {
     INameChangeRequest,
@@ -17,10 +20,13 @@ import type {
 import { getSortOrder } from "../../../../../shared/helpers/getSortOrder.ts"
 import { handleTableChange } from "../../../../../shared/helpers/antdTableHelpers.ts"
 import { getSelectTableFilterDropdown } from "../../../../../widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"
+import NameChangeStatusModal from "../../../../../features/NameChangeRequestModal/NameChangeRequestModal.tsx"
 
 interface ITableFilters {
     status?: NameChangeRequestStatus
 }
+
+type UpdateStatusAction = { action: "approve" } | { action: "reject"; reason_rejecting: string }
 
 const statusOptions = [
     { label: "Pending", value: "PENDING" },
@@ -30,6 +36,7 @@ const statusOptions = [
 
 const NameChangeRequestsTable = () => {
     const [isLoading, setIsLoading] = useState(true)
+    const [statusUpdateLoading, setStatusUpdateLoading] = useState<boolean>(false)
     const [tableData, setTableData] =
         useState<IPaginatedBackendResponse<INameChangeRequest> | null>()
 
@@ -37,6 +44,57 @@ const NameChangeRequestsTable = () => {
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [pageSize] = useState<number>(10)
     const [ordering, setOrdering] = useState<string[]>([])
+    const [statusModalOpen, setStatusModalOpen] = useState(false)
+    const [selectedRow, setSelectedRow] = useState<INameChangeRequest | null>(null)
+
+    const openModal = (row: INameChangeRequest) => {
+        setStatusModalOpen(true)
+        setSelectedRow(row)
+    }
+
+    const closeModal = () => {
+        setStatusModalOpen(false)
+        setSelectedRow(null)
+    }
+
+    const updateStatusInTable = (selectedRow: INameChangeRequest, action: "approve" | "reject") => {
+        setTableData(
+            (prev) =>
+                ({
+                    ...prev,
+                    data: prev?.data.map((row) =>
+                        row.id === selectedRow.id ? { ...row, status: action } : row
+                    ),
+                }) as IPaginatedBackendResponse<INameChangeRequest>
+        )
+    }
+
+    const changeNameChangeRequestStatus = async (data: UpdateStatusAction) => {
+        if (!selectedRow) {
+            return
+        }
+        try {
+            setStatusUpdateLoading(true)
+            if (data.action === "approve") {
+                await api.patch(
+                    getUserNameChangeRequestById(selectedRow.user_id, selectedRow.id),
+                    data
+                )
+                updateStatusInTable(selectedRow, data.action)
+            }
+            if (data.action === "reject") {
+                await api.patch(
+                    getUserNameChangeRequestById(selectedRow.user_id, selectedRow.id),
+                    data
+                )
+                updateStatusInTable(selectedRow, data.action)
+            }
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setStatusUpdateLoading(false)
+        }
+    }
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -109,8 +167,16 @@ const NameChangeRequestsTable = () => {
             sorter: true,
             sortOrder: getSortOrder("status", ordering),
             render: (_, record) => {
-                console.log(record)
-                if (record.status === "PENDING") return <Tag color="gold">Pending</Tag>
+                if (record.status === "PENDING")
+                    return (
+                        <Tag
+                            color="gold"
+                            onClick={() => openModal(record)}
+                            style={{ cursor: "pointer" }}
+                        >
+                            Pending
+                        </Tag>
+                    )
 
                 if (record.status === "APPROVED") return <Tag color="green">Approved</Tag>
 
@@ -133,21 +199,29 @@ const NameChangeRequestsTable = () => {
     }
 
     return (
-        <Table
-            dataSource={tableData.data}
-            columns={columns}
-            pagination={{
-                current: currentPage,
-                pageSize: pageSize,
-                total: tableData?.count,
-                onChange: (page) => setCurrentPage(page),
-            }}
-            rowKey="id"
-            onChange={(pagination, filters, sorter) =>
-                handleTableChange(pagination, filters, sorter, setOrdering)
-            }
-            scroll={{ x: 1 }}
-        />
+        <>
+            <Table
+                dataSource={tableData.data}
+                columns={columns}
+                pagination={{
+                    current: currentPage,
+                    pageSize: pageSize,
+                    total: tableData?.count,
+                    onChange: (page) => setCurrentPage(page),
+                }}
+                rowKey="id"
+                onChange={(pagination, filters, sorter) =>
+                    handleTableChange(pagination, filters, sorter, setOrdering)
+                }
+                scroll={{ x: 1 }}
+            />
+            <NameChangeStatusModal
+                open={statusModalOpen}
+                loading={statusUpdateLoading}
+                onClose={closeModal}
+                onSubmit={changeNameChangeRequestStatus}
+            />
+        </>
     )
 }
 
