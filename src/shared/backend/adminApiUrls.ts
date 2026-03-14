@@ -33,3 +33,10 @@ export const getDirectorsBoardMemberAdminUrl = (userId: string | number) => {
 export const DIRECTORS_BOARD_MEMBER_IMAGES_URL = `${DIRECTORS_BOARD_ADMIN_URL}/images`
 // "http://localhost:8000/api/admin/directors-board/images"
 export const DIRECTORS_BOARD_MEMBER_REORDER_URL = `${DIRECTORS_BOARD_ADMIN_URL}/reorder`
+
+// Legal documents
+// "http://localhost:8000/api/admin/legal-documents"
+export const LEGAL_DOCUMENTS_ADMIN_URL = `${ADMIN_URL}/legal-documents`
+
+// "http://localhost:8000/api/admin/legal-documents/bylaws"
+export const BYLAWS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/bylaws`

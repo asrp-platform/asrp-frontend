@@ -165,7 +165,6 @@ const NameChangeRequestsTable = () => {
             title: "Reject Reason",
             dataIndex: "reason_rejecting",
             key: "reason_rejecting",
-            render: (value: string | null) => value ?? "—",
         },
         {
             title: "Status",
