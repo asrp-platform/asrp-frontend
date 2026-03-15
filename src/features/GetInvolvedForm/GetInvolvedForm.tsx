@@ -17,7 +17,7 @@ import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "../../shared/helpers/setFormFieldsErrors.ts"
 import ContactPreferencesSection from "./ui/ContactPreferencesSection.tsx"
 import LeadershipAndCommitteesSection from "./ui/LeadershipAndCommitteesSection.tsx"
-import { ContactMessageType } from "../../shared/types/types.ts"
+import { ContactMessageType } from "../../entities/ContactMessage.ts"
 
 const { TextArea } = Input
 

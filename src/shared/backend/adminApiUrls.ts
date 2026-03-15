@@ -40,3 +40,6 @@ export const LEGAL_DOCUMENTS_ADMIN_URL = `${ADMIN_URL}/legal-documents`
 
 // "http://localhost:8000/api/admin/legal-documents/bylaws"
 export const BYLAWS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/bylaws`
+
+// Feedback
+export const CONTACT_MESSAGES_ADMIN_URL = `${ADMIN_URL}/contact-messages`
