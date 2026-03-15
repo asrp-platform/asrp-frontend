@@ -162,7 +162,7 @@ const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = fa
                 okButtonProps={{ danger: true }}
                 cancelText="Cancel"
                 centered
-                destroyOnClose
+                destroyOnHidden
                 getContainer={false}
             >
                 <p>This action cannot be undone. Are you sure you want to delete this residency?</p>

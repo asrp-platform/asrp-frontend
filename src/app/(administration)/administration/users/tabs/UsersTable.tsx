@@ -19,7 +19,7 @@ import styles from "../styles.module.scss"
 import type { Key } from "react"
 import type { ColumnsType } from "antd/lib/table"
 import { getSortOrder } from "../../../../../shared/helpers/getSortOrder.ts"
-import { getBooleanColumnSearchProps } from "../../../../../widgets/TableDropdown/getTableBooleanFilterDropdown.tsx"
+import { getBooleanColumnSearchProps } from "../../../../../widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
 
 interface ITableFilters {
     firstname__startswith?: string

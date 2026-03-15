@@ -32,10 +32,10 @@ export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
     const [isPermissionsLoading, setIsPermissionsLoading] = useState<boolean>(false)
 
     useEffect(() => {
-        if (isUserLoading) {
+        if (isUserLoading || !user) {
             return
         }
-        if (!user) {
+        if (user && !user.stuff) {
             return
         }
         const fetchUsersPermissions = async () => {
