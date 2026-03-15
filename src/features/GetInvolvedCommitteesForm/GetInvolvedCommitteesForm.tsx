@@ -5,8 +5,9 @@ import styles from "./styles.module.scss"
 import { isAxiosError } from "axios"
 import api from "../../axios.ts"
 import { CONTACT_MESSAGE_URL } from "../../shared/backend/restApiUrls.ts"
-import { ContactMessageType } from "../../shared/types/types.ts"
+
 import { useState } from "react"
+import { ContactMessageType } from "../../entities/ContactMessage.ts"
 
 type GetInvolvedFormValues = {
     name: string

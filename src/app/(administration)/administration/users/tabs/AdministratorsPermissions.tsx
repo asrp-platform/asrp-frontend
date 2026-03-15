@@ -22,7 +22,6 @@ interface ITableFilters {
     firstname__startswith?: string
     lastname__startswith?: string
     email__startswith?: string
-    pending?: boolean
     stuff?: boolean
 }
 
