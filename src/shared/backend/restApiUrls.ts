@@ -21,6 +21,8 @@ export const getUserUrl = (user_id: number | string) => `${USERS_URL}/${user_id}
 export const putUserAvatarUrl = (user_id: number | string) => `${getUserUrl(user_id)}/avatar`
 export const getUserPasswordChangeUrl = (user_id: number | string) =>
     `${getUserUrl(user_id)}/password-change`
+export const getUserNameChangeRequestUrl = (userId: number | string) =>
+    `${USERS_URL}/${userId}/name-change-requests`
 
 export const CURRENT_USER_URL = `${USERS_URL}/current-user`
 

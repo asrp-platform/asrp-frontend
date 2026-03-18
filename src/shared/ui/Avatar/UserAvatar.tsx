@@ -67,29 +67,11 @@ const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
 
     const avatarStyles: CSSProperties = size ? { width: size, height: size } : {}
 
-    if (!editable) {
-        if (avatarPath) {
-            return (
-                <img
-                    src={`${getAvatarUrl(avatarPath)}?v=${cacheBuster}`}
-                    alt="avatar"
-                    className={styles.avatarImage}
-                />
-            )
-        }
-
-        return (
-            <div className={styles.avatarFallback}>
-                {user.firstname[0]} {user.lastname[0]}
-            </div>
-        )
-    }
-
     return (
         <div className={styles.avatarWrapper} style={avatarStyles}>
             {avatarPath ? (
                 <img
-                    src={`${getAvatarUrl(avatarPath)}?v=${Date.now()}`}
+                    src={`${getAvatarUrl(avatarPath)}?v=${cacheBuster}`}
                     alt="avatar"
                     className={styles.avatarImage}
                 />
@@ -99,25 +81,29 @@ const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
                 </div>
             )}
 
-            {isUploading && (
-                <div className={styles.loadingOverlay}>
-                    <CircularProgress size={40} />
-                </div>
-            )}
+            {editable && (
+                <>
+                    {isUploading && (
+                        <div className={styles.loadingOverlay}>
+                            <CircularProgress size={40} />
+                        </div>
+                    )}
 
-            <div className={styles.avatarOverlay}>
-                <input
-                    type="file"
-                    accept="image/*"
-                    id="avatar-input"
-                    className={styles.avatarInput}
-                    onChange={handleFileChange}
-                    disabled={isUploading}
-                />
-                <label htmlFor="avatar-input" className={styles.avatarLabel}>
-                    Change
-                </label>
-            </div>
+                    <div className={styles.avatarOverlay}>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            id="avatar-input"
+                            className={styles.avatarInput}
+                            onChange={handleFileChange}
+                            disabled={isUploading}
+                        />
+                        <label htmlFor="avatar-input" className={styles.avatarLabel}>
+                            Change
+                        </label>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
