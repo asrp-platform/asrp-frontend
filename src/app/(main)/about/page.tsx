@@ -48,8 +48,7 @@ const Page = () => {
                             <h3>Key initiatives</h3>
                             <ul>
                                 <li>
-                                    Unite most Russian-speaking pathologists across the United
-                                    States
+                                    Unite Russian-speaking pathologists across the United States
                                 </li>
                                 <li>Launch high-quality educational programs</li>
                                 <li>Obtain the ability to offer CME credits</li>

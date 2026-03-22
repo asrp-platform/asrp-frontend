@@ -2,13 +2,12 @@
 
 import type { IUser } from "../../../entities/User.ts"
 import styles from "./avatar.module.scss"
-import { getAvatarUrl, putUserAvatarUrl } from "../../backend/restApiUrls.ts"
-import { type ChangeEvent, type CSSProperties, useState } from "react"
+import { type ChangeEvent, type CSSProperties, useEffect, useState } from "react"
 import api from "../../../axios.ts"
-import type { ImagePathResponse } from "../../types/interfaces.ts"
 import { message } from "antd"
 import CircularProgress from "@mui/material/CircularProgress"
-import axios from "axios"
+import { CURRENT_USER_AVATAR_URL } from "../../backend/currentUserUrls.ts"
+import { isAxiosError } from "axios"
 
 interface AvatarProps {
     user: IUser
@@ -19,9 +18,8 @@ interface AvatarProps {
 const MAX_FILE_SIZE_MB = 5
 
 const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
-    const [avatarPath, setAvatarPath] = useState<string | null>(user.avatar_path ?? null)
+    const [avatarPath, setAvatarPath] = useState<string | null>(null)
     const [isUploading, setIsUploading] = useState(false)
-    const [cacheBuster, setCacheBuster] = useState(0)
 
     const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -43,18 +41,16 @@ const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
         try {
             setIsUploading(true)
 
-            const res = await api.put<ImagePathResponse>(putUserAvatarUrl(user.id), formData, {
+            const res = await api.put(CURRENT_USER_AVATAR_URL, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
 
-            setAvatarPath(res.data.path)
-            setCacheBuster(Date.now())
+            setAvatarPath(res.data)
 
             message.success("Avatar updated successfully")
         } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
+            if (isAxiosError(error)) {
                 const backendMessage = error.response?.data?.detail || error.response?.data?.message
-
                 message.error(backendMessage || "Failed to upload avatar")
             } else {
                 message.error("Unexpected error occurred")
@@ -67,14 +63,22 @@ const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
 
     const avatarStyles: CSSProperties = size ? { width: size, height: size } : {}
 
+    useEffect(() => {
+        const getAvatarUrl = async () => {
+            try {
+                const response = await api.get(CURRENT_USER_AVATAR_URL)
+                setAvatarPath(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getAvatarUrl()
+    }, [])
+
     return (
         <div className={styles.avatarWrapper} style={avatarStyles}>
             {avatarPath ? (
-                <img
-                    src={`${getAvatarUrl(avatarPath)}?v=${cacheBuster}`}
-                    alt="avatar"
-                    className={styles.avatarImage}
-                />
+                <img src={avatarPath} alt="avatar" className={styles.avatarImage} />
             ) : (
                 <div className={styles.avatarFallback}>
                     {user.firstname[0]} {user.lastname[0]}

@@ -13,13 +13,7 @@
 ### Build container
 
 ```bash
-docker build -t max31ru12/asrp-prod-frontend:latest -f ./docker/Dockerfile .
-```
-
-or build from scratch using
-
-```bash
-docker build --no-cache --build-arg NEXT_PUBLIC_API_URL=/api -t max31ru12/asrp-prod-frontend:latest -f ./docker/Dockerfile .
+docker build --build-arg NEXT_PUBLIC_API_URL=/api -t max31ru12/asrp-prod-frontend:latest -f ./docker/Dockerfile .
 ```
 
 ### Push image to DockerHub

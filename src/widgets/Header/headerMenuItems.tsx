@@ -39,7 +39,7 @@ export const headerMenuItems: HeaderMenuItem[] = [
             {
                 key: "2-2",
                 to: "/about/directors-board",
-                label: "Directors board",
+                label: "Board of directors",
             },
             {
                 key: "2-3",

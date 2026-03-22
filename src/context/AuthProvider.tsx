@@ -12,7 +12,7 @@ import {
 } from "react"
 import api from "../axios.ts"
 import type { IUser } from "../entities/User.ts"
-import { CURRENT_USER_URL } from "../shared/backend/restApiUrls.ts"
+import { CURRENT_USER_URL } from "../shared/backend/currentUserUrls.ts"
 
 interface IAuthContext {
     user: IUser | null

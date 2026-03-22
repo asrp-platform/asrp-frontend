@@ -13,9 +13,9 @@ const MainPage = async () => {
                         <h2>OUR MISSION</h2>
                         <p>
                             To create and support a platform for a professional community for
-                            Russian-speaking pathologists in the United States. Join our founding
-                            members in building a network dedicated to mentorship, education, and
-                            collaborative excellence.
+                            Russian-speaking pathologists in the United States. Join our members in
+                            building a network dedicated to mentorship, education, and collaborative
+                            excellence.
                         </p>
                         <div className={styles.mainTitleButtonContainer}>
                             <Link
