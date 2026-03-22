@@ -57,14 +57,16 @@ const UserProfileCard = ({ user }: IProps) => {
                 <div className={styles.avatarContainer}>
                     <div className={styles.avatarInnerContainer}>
                         <UserAvatar user={user} editable size={120} />
-                        <Button
-                            danger
-                            loading={isDeletingAvatar}
-                            disabled={isDeletingAvatar}
-                            onClick={handleDeleteAvatarClick}
-                        >
-                            Delete Avatar
-                        </Button>
+                        {user.avatar_path && (
+                            <Button
+                                danger
+                                loading={isDeletingAvatar}
+                                disabled={isDeletingAvatar}
+                                onClick={handleDeleteAvatarClick}
+                            >
+                                Delete Avatar
+                            </Button>
+                        )}
                     </div>
                 </div>
 
