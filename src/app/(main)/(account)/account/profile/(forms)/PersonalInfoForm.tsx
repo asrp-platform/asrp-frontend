@@ -8,6 +8,7 @@ import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
 import api from "../../../../../../axios.ts"
 import { getUserUrl } from "../../../../../../shared/backend/restApiUrls.ts"
+import ChangeNameModal from "../(ui)/RequestNameChangeModal.tsx"
 
 interface IProps {
     user: IUser
@@ -30,6 +31,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
     const [personalInfoForm] = Form.useForm()
 
     const [isLoading, setIsLoading] = useState(false)
+    const [nameChangeModalOpen, setNameChangeModalOpen] = useState(false)
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
         try {
@@ -82,7 +84,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
 
                     <Col xs={24} md={12}>
                         <Form.Item label="Middle name" name="middlename">
-                            <Input />
+                            <Input className={styles.antInputDisabled} disabled />
                         </Form.Item>
                     </Col>
 
@@ -130,7 +132,12 @@ const PersonalInfoForm = ({ user }: IProps) => {
                 </Row>
 
                 <div className={styles.personalInfoActions}>
-                    <Button type="link" danger className={styles.linkButton}>
+                    <Button
+                        type="link"
+                        danger
+                        className={styles.linkButton}
+                        onClick={() => setNameChangeModalOpen(true)}
+                    >
                         Request name change (moderator approval required)
                     </Button>
 
@@ -139,6 +146,10 @@ const PersonalInfoForm = ({ user }: IProps) => {
                     </Button>
                 </div>
             </Form>
+            <ChangeNameModal
+                open={nameChangeModalOpen}
+                setNameChangeModalOpen={setNameChangeModalOpen}
+            />
         </div>
     )
 }

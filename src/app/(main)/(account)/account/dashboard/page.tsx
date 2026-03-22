@@ -57,8 +57,7 @@ const Page = () => {
             <section className={styles.card}>
                 <h2 className={styles.cardTitle}>Profile summary</h2>
                 <div className={styles.profileRow}>
-                    <UserAvatar user={user} editable />
-
+                    <UserAvatar user={user} editable size={120} />
                     <div className={styles.profileInfo}>
                         <div className={styles.primaryText}>
                             {user.firstname} {user.lastname}

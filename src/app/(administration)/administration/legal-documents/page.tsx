@@ -1,7 +1,13 @@
 "use client"
 
+import { BylawsFileCard } from "./ui/Bylaws.tsx"
+
 const Page = () => {
-    return <div>Legal documents</div>
+    return (
+        <>
+            <BylawsFileCard />
+        </>
+    )
 }
 
 export default Page

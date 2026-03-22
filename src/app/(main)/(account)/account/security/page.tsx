@@ -44,7 +44,6 @@ const Page = () => {
             <ChangePasswordModal
                 open={changePasswordOpen}
                 onClose={() => setChangePasswordOpen(false)}
-                user_id={user.id}
             />
         </div>
     )

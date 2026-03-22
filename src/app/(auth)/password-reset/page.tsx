@@ -1,18 +1,18 @@
 "use client"
 
-import {useForm} from "antd/es/form/Form"
-import {Button, Form, type FormProps, Input, Result, Spin, Typography} from "antd"
-import {CaretLeftOutlined} from "@ant-design/icons"
-import {useRouter} from "next/navigation"
+import { useForm } from "antd/es/form/Form"
+import { Button, Form, type FormProps, Input, Result, Spin, Typography } from "antd"
+import { CaretLeftOutlined } from "@ant-design/icons"
+import { useRouter } from "next/navigation"
 
-import {isAxiosError} from "axios"
-import {useState} from "react"
+import { isAxiosError } from "axios"
+import { useState } from "react"
 import useNotification from "antd/es/notification/useNotification"
 import styles from "./PasswordResetPage.module.scss"
-import api from "../../../axios.ts";
-import {PASSWORD_RESET_URL} from "../../../shared/backend/restApiUrls.ts";
+import api from "../../../axios.ts"
+import { PASSWORD_RESET_URL } from "../../../shared/backend/restApiUrls.ts"
 
-const {Title, Paragraph} = Typography
+const { Title, Paragraph } = Typography
 
 type FieldType = {
     email: string
@@ -86,9 +86,9 @@ const Page = () => {
                         <Form.Item
                             label="Email"
                             name="email"
-                            rules={[{required: true, message: "Please enter your email"}]}
+                            rules={[{ required: true, message: "Please enter your email" }]}
                         >
-                            <Input/>
+                            <Input />
                         </Form.Item>
                         <Button type="primary" htmlType="submit" className={styles.resetButton}>
                             Reset Password
@@ -96,9 +96,9 @@ const Page = () => {
                         <Button
                             className={styles.backButton}
                             htmlType="submit"
-                            onClick={() => router.push("/auth/login")}
+                            onClick={() => router.push("/login")}
                         >
-                            <CaretLeftOutlined/>
+                            <CaretLeftOutlined />
                             Back to sign in
                         </Button>
                     </Form>

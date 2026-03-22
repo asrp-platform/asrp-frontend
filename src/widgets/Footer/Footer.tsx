@@ -13,9 +13,6 @@ const Footer = () => {
                 </div>
                 <div className={styles.footerContacts}>
                     <div>
-                        <span>+1-000-000-0000</span>
-                    </div>
-                    <div>
                         <a href="mailto:admin@asrpath.org" className={styles.contactValue}>
                             admin@asrpath.org
                         </a>

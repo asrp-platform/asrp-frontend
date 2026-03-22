@@ -27,12 +27,6 @@ const Page = () => {
                                 </a>
                             </div>
                             <div className={styles.contactItem}>
-                                <h4 className={styles.contactLabel}>Phone</h4>
-                                <a href="tel:+10000000000" className={styles.contactValue}>
-                                    +1-000-000-0000
-                                </a>
-                            </div>
-                            <div className={styles.contactItem}>
                                 <h4 className={styles.contactLabel}>Mailing address</h4>
                                 <address className={styles.contactValue}>
                                     American Society of Russian-Speaking Pathologists, Inc.

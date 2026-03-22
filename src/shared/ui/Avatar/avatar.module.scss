@@ -1,9 +1,9 @@
 .avatarWrapper {
   position: relative;
-  height: 72px;
-  width: 72px;
   border-radius: 50%;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 
@@ -20,10 +20,12 @@
 }
 
 .avatarImage {
-  height: 100%;
   width: 100%;
-  border-radius: 50%;
+  height: 100%;
   object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  aspect-ratio: 1 / 1;
 }
 
 
@@ -33,11 +35,9 @@
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   opacity: 0;
   transition: 0.2s;
 }
