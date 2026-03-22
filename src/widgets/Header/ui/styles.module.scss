@@ -4,6 +4,9 @@
   border-radius: 50%;
   border: 2px solid var(--text-primary-color-light);
   transition: 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     transform: scale(1.05);

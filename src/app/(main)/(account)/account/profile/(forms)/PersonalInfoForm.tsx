@@ -147,7 +147,6 @@ const PersonalInfoForm = ({ user }: IProps) => {
                 </div>
             </Form>
             <ChangeNameModal
-                userId={user.id}
                 open={nameChangeModalOpen}
                 setNameChangeModalOpen={setNameChangeModalOpen}
             />

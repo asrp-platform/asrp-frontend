@@ -11,20 +11,13 @@ export const PASSWORD_RESET_URL = `${AUTH_URL}/password-reset`
 export const VERIFY_PASSWORD_RESET_TOKEN_URL = `${PASSWORD_RESET_URL}/verify`
 export const CONFIRM_PASSWORD_RESET_URL = `${PASSWORD_RESET_URL}/confirm`
 
-// Media urls
-export const getAvatarUrl = (avatarPath: string) =>
-    `${REST_API_URL}/${avatarPath.replace(/^\/+/, "")}`
-
 // Users urls
 export const USERS_URL = "/users"
 export const getUserUrl = (user_id: number | string) => `${USERS_URL}/${user_id}`
-export const putUserAvatarUrl = (user_id: number | string) => `${getUserUrl(user_id)}/avatar`
 export const getUserPasswordChangeUrl = (user_id: number | string) =>
     `${getUserUrl(user_id)}/password-change`
 export const getUserNameChangeRequestUrl = (userId: number | string) =>
     `${USERS_URL}/${userId}/name-change-requests`
-
-export const CURRENT_USER_URL = `${USERS_URL}/current-user`
 
 // User professional information urls
 export const getUserProfessionalInformationUrl = (user_id: number | string): string =>

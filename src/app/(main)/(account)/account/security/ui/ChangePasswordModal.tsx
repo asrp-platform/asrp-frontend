@@ -2,15 +2,14 @@
 
 import { Modal, Form, Input, message } from "antd"
 import { useState } from "react"
-import { getUserPasswordChangeUrl } from "../../../../../../shared/backend/restApiUrls.ts"
 import api from "../../../../../../axios.ts"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
+import { CURRENT_USER_CHANGE_PASSWORD_URL } from "../../../../../../shared/backend/currentUserUrls.ts"
 
 interface Props {
     open: boolean
     onClose: () => void
-    user_id: string | number
 }
 
 interface ChangePasswordPayload {
@@ -19,7 +18,7 @@ interface ChangePasswordPayload {
     confirm_new_password: "string"
 }
 
-const ChangePasswordModal = ({ open, onClose, user_id }: Props) => {
+const ChangePasswordModal = ({ open, onClose }: Props) => {
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
 
@@ -35,7 +34,7 @@ const ChangePasswordModal = ({ open, onClose, user_id }: Props) => {
 
             setLoading(true)
 
-            await api.post(getUserPasswordChangeUrl(user_id), payload)
+            await api.post(CURRENT_USER_CHANGE_PASSWORD_URL, payload)
 
             message.success("Password changed successfully")
 
