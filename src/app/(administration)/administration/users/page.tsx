@@ -18,7 +18,7 @@ const Page = () => {
             children: <NameChangeRequestsTable />,
         },
         {
-            label: `Administrators permissions`,
+            label: `Administrators & Permissions`,
             key: "administrators-permissions",
             children: <AdministratorsPermissions />,
         },

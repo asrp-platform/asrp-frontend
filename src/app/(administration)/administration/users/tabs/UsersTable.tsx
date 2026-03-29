@@ -7,7 +7,6 @@ import api from "../../../../../axios.ts"
 import type { IUser } from "../../../../../entities/User.ts"
 import Loading from "../../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { Button, Input, type InputRef, Table, Tag } from "antd"
-import Link from "next/link"
 import type {
     FilterDropdownProps,
     FilterValue,
@@ -20,6 +19,8 @@ import type { Key } from "react"
 import type { ColumnsType } from "antd/lib/table"
 import { getSortOrder } from "../../../../../shared/helpers/getSortOrder.ts"
 import { getBooleanColumnSearchProps } from "../../../../../widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
+import { usePermissions } from "../../../../../context/PermissionsProvider.tsx"
+import RoleTag from "./ui/tags/RoleTag.tsx"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -30,6 +31,8 @@ interface ITableFilters {
 }
 
 const UsersTable = () => {
+    const { permissions } = usePermissions()
+
     const [isLoading, setIsLoading] = useState(true)
     const [tableData, setTableData] = useState<IPaginatedBackendResponse<IUser> | null>()
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -38,6 +41,9 @@ const UsersTable = () => {
     const [filters, setFilters] = useState<ITableFilters>({})
     const [ordering, setOrdering] = useState<string[]>([])
     const searchInput = useRef<InputRef>(null)
+
+    const canPromoteAdminRole = permissions.includes("admin.create")
+    const canRevokeAdminRole = permissions.includes("admin.delete")
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -178,9 +184,6 @@ const UsersTable = () => {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            render: (text, record: IUser) => (
-                <Link href={`/users/${record.id}/profile`}>{text}</Link>
-            ),
             ...getColumnSearchProps("email"),
         },
         {
@@ -225,7 +228,23 @@ const UsersTable = () => {
             title: "Stuff",
             key: "Stuff",
             render: (_, record) =>
-                record.stuff ? <Tag color="volcano">Admin</Tag> : <Tag color="blue">Member</Tag>,
+                record.stuff ? (
+                    <RoleTag
+                        canAssignRole={canRevokeAdminRole}
+                        targetUserId={record.id}
+                        role={"stuff"}
+                    >
+                        Admin
+                    </RoleTag>
+                ) : (
+                    <RoleTag
+                        canAssignRole={canPromoteAdminRole}
+                        targetUserId={record.id}
+                        role={"member"}
+                    >
+                        Member
+                    </RoleTag>
+                ),
             ...getBooleanColumnSearchProps<ITableFilters>("stuff", filters, setFilters),
         },
         {
@@ -291,19 +310,22 @@ const UsersTable = () => {
     }
 
     return (
-        <Table
-            dataSource={tableData.data}
-            columns={columns}
-            pagination={{
-                current: currentPage,
-                pageSize: pageSize,
-                total: tableData?.count,
-                onChange: (page) => setCurrentPage(page),
-            }}
-            rowKey="id"
-            onChange={handleTableChange}
-            scroll={{ x: 1 }}
-        />
+        <>
+            <Table
+                dataSource={tableData.data}
+                columns={columns}
+                pagination={{
+                    current: currentPage,
+                    pageSize: pageSize,
+                    total: tableData?.count,
+                    onChange: (page) => setCurrentPage(page),
+                }}
+                rowKey="id"
+                onChange={handleTableChange}
+                scroll={{ x: 1 }}
+            />
+            {/*<PromoteToAdminModal />*/}
+        </>
     )
 }
 
