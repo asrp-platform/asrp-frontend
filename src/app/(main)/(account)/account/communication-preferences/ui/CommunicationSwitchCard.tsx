@@ -44,7 +44,10 @@ const CommunicationSwitchCard = ({
                     }}
                 >
                     {preferenceKey && setSwitch ? (
-                        <Switch onChange={(checked) => setSwitch(preferenceKey, checked)} />
+                        <Switch
+                            checked={defaultChecked}
+                            onChange={(checked) => setSwitch(preferenceKey, checked)}
+                        />
                     ) : (
                         <Switch defaultChecked={defaultChecked} disabled />
                     )}
