@@ -11,8 +11,6 @@ const api = axios.create({
     withCredentials: true,
 })
 
-console.log(REFRESH_URL)
-
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("accessToken")
