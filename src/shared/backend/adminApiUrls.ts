@@ -3,6 +3,8 @@ export const ADMIN_URL = "/admin"
 // Users
 export const STUFF_USERS_URL = `${ADMIN_URL}/users`
 
+export const getStuffUsersUrl = (userId: string | number) => `${STUFF_USERS_URL}/${userId}`
+
 export const getUserPermissionsStuffUrl = (userId: string | number) =>
     `${STUFF_USERS_URL}/${userId}/permissions`
 

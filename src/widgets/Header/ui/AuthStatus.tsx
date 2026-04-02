@@ -4,15 +4,15 @@ import { useRouter } from "next/navigation"
 import { UserCircle } from "lucide-react"
 
 import { useAuth } from "../../../context/AuthProvider.tsx"
-import { LOGOUT_URL } from "../../../shared/backend/restApiUrls.ts"
 import { Dropdown, type MenuProps } from "antd"
 import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons"
 import { useMemo } from "react"
-import api from "../../../axios.ts"
 
 import styles from "./styles.module.scss"
 import Link from "next/link"
 import UserAvatar from "../../../shared/ui/Avatar/UserAvatar.tsx"
+import { handleLogout } from "../helpers/logout.ts"
+import { onUserLoginClick } from "../helpers/login.ts"
 
 const AuthStatus = () => {
     const { user, isUserLoading } = useAuth()
@@ -21,12 +21,6 @@ const AuthStatus = () => {
     const isAdmin = useMemo(() => {
         return user?.stuff
     }, [user])
-
-    const handleLogout = async () => {
-        await api.post(LOGOUT_URL)
-        localStorage.removeItem("accessToken")
-        window.location.reload()
-    }
 
     const items: MenuProps["items"] = [
         {
@@ -50,10 +44,6 @@ const AuthStatus = () => {
         },
     ]
 
-    const onUserLoginClick = () => {
-        router.push("/login")
-    }
-
     if (isUserLoading) {
         return <div className={styles.avatarSkeleton} />
     }
@@ -65,7 +55,7 @@ const AuthStatus = () => {
                     width={32}
                     height={32}
                     className={styles.userCircle}
-                    onClick={onUserLoginClick}
+                    onClick={() => onUserLoginClick(router)}
                 />
             </div>
         )

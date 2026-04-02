@@ -14,10 +14,6 @@ export const CONFIRM_PASSWORD_RESET_URL = `${PASSWORD_RESET_URL}/confirm`
 // Users urls
 export const USERS_URL = "/users"
 export const getUserUrl = (user_id: number | string) => `${USERS_URL}/${user_id}`
-export const getUserPasswordChangeUrl = (user_id: number | string) =>
-    `${getUserUrl(user_id)}/password-change`
-export const getUserNameChangeRequestUrl = (userId: number | string) =>
-    `${USERS_URL}/${userId}/name-change-requests`
 
 // User professional information urls
 export const getUserProfessionalInformationUrl = (user_id: number | string): string =>

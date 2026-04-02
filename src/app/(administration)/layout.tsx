@@ -11,6 +11,7 @@ import {
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useMemo, useState } from "react"
 import styles from "./layout.module.scss"
+import BackToMainSiteButton from "../../shared/ui/Buttons/BackToMainSiteButton.tsx"
 
 const { Header, Sider, Content } = Layout
 
@@ -60,7 +61,7 @@ const AdminLayout = ({ children }: IProps) => {
         <Layout className={styles.layout}>
             <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
                 <div className={styles.siderTitle}>
-                    {collapsed ? "ASRP" : "ASRP Administration"}
+                    {collapsed ? "ASRP" : <BackToMainSiteButton href="/" />}
                 </div>
 
                 <Menu

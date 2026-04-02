@@ -2,25 +2,61 @@
 
 import styles from "./styles.module.scss"
 import type { ICommunicationPreferences } from "../../../../../entities/User.ts"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CommunicationSwitchCard from "./ui/CommunicationSwitchCard.tsx"
 import Card from "../../../../../widgets/Card/Card.tsx"
+import { getUserUrl } from "../../../../../shared/backend/restApiUrls.ts"
+import { useAuth } from "../../../../../context/AuthProvider.tsx"
+import api from "../../../../../axios.ts"
+
+type ChangablePreferences = Omit<
+    ICommunicationPreferences,
+    "user_id" | "membership_account_notifications"
+>
 
 const Page = () => {
-    const [communicationPreferences, setCommunicationPreferences] = useState<
-        Omit<ICommunicationPreferences, "user_id" | "membership_account_notifications">
-    >({
+    // TODO: current user url
+    const { user } = useAuth()
+
+    const [communicationPreferences, setCommunicationPreferences] = useState<ChangablePreferences>({
         newsletters: false,
         events_meetings: false,
         committees_leadership: false,
         volunteer_opportunities: false,
     })
 
-    const setPreference = (preferenceKey: string, checked: boolean) => {
+    const setPreference = async (preferenceKey: string, checked: boolean) => {
+        if (!user) {
+            return
+        }
+        try {
+            await api.patch(`${getUserUrl(user.id)}/communication-preferences`, {
+                [preferenceKey]: checked,
+            })
+        } catch (error) {
+            console.log(error)
+        }
         setCommunicationPreferences((prev) => ({ ...prev, [preferenceKey]: checked }))
-
-        console.log(communicationPreferences)
     }
+
+    useEffect(() => {
+        if (!user) {
+            return
+        }
+
+        const fetchCommunicationPreferences = async () => {
+            try {
+                const response = await api.get<ChangablePreferences>(
+                    `${getUserUrl(user.id)}/communication-preferences`
+                )
+                setCommunicationPreferences(response.data)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        fetchCommunicationPreferences()
+    }, [user])
 
     return (
         <div>
@@ -47,7 +83,7 @@ const Page = () => {
                     description="Periodic society newsletters with announcements, highlights, and educational content."
                     setSwitch={setPreference}
                     preferenceKey="newsletters"
-                    defaultChecked={communicationPreferences["newsletters"]}
+                    defaultChecked={communicationPreferences.newsletters}
                 />
                 <CommunicationSwitchCard
                     title="Events & meetings"

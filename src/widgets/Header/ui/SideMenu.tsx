@@ -1,88 +1,80 @@
 "use client"
 
-import { useState } from "react"
-import { Menu } from "lucide-react"
-import { X } from "lucide-react"
+import { useEffect, useState } from "react"
+import { LogOut, Menu, User } from "lucide-react"
 
 import styles from "./styles.module.scss"
-import Logo from "../../../shared/ui/LogoPlaceholder/Logo.tsx"
-import { headerMenuItems } from "../headerMenuItems.tsx"
+import { useAuth } from "../../../context/AuthProvider.tsx"
+import SideMenuHeader from "./SideMenuHeader.tsx"
+import BreakLine from "./BreakLine.tsx"
+import SideMenuItemList from "./SideMenuItemList.tsx"
+import { handleLogout } from "../helpers/logout.ts"
 import Link from "next/link"
+import { UserOutlined } from "@ant-design/icons"
+import { useRouter } from "next/navigation"
+import { onUserLoginClick } from "../helpers/login.ts"
 
 const SideMenu = () => {
+    const { user } = useAuth()
+    const router = useRouter()
+
     const [isOpen, setIsOpen] = useState(false)
 
     const onClick = () => {
         setIsOpen(!isOpen)
     }
 
-    const [openKey, setOpenKey] = useState<string | number | null>(null)
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden"
+        } else {
+            document.body.style.overflow = ""
+        }
+
+        return () => {
+            document.body.style.overflow = ""
+        }
+    }, [isOpen])
 
     return (
         <div>
             <Menu width={24} height={24} onClick={onClick} className={styles.menuIconContainer} />
             {isOpen && <div className={styles.overlay} onClick={onClick}></div>}
+
             <div className={`${styles.sideMenuContainer} ${isOpen && styles.active}`}>
                 <div className={styles.sideMenu}>
-                    <div className={styles.sideMenuHeader}>
-                        <Logo width={32} height={32} />
-                        <X onClick={onClick} />
-                    </div>
-                    <div className={styles.breakLine}></div>
-                    <div className={styles.sideMenuBody}>
-                        {headerMenuItems.map((item) => {
-                            const isOpenItem = openKey === item.key
+                    <SideMenuHeader setIsOpen={setIsOpen} />
+                    <BreakLine />
 
-                            return (
-                                <div key={item.key}>
-                                    <div
-                                        className={styles.menuItemContainer}
-                                        onClick={() => {
-                                            if (item.children) {
-                                                setOpenKey(isOpenItem ? null : item.key)
-                                            } else {
-                                                setIsOpen(false)
-                                            }
-                                        }}
-                                    >
-                                        <span className={styles.menuIcon}>{item.icon}</span>
+                    {user && (
+                        <Link href="/account/profile">
+                            <div className={styles.userMobileProfileContainer}>
+                                <User className={styles.userMobileProfileIcon} size={18} />
+                                <span>Profile</span>
+                            </div>
+                        </Link>
+                    )}
 
-                                        {item.children ? (
-                                            <>
-                                                <span>{item.label}</span>
-                                                <span className={styles.arrow}>
-                                                    {isOpenItem ? "▼" : "▶"}
-                                                </span>
-                                            </>
-                                        ) : (
-                                            <Link href={item.to} onClick={onClick}>
-                                                {item.label}
-                                            </Link>
-                                        )}
-                                    </div>
-
-                                    {item.children && (
-                                        <div
-                                            className={`${styles.subMenu} ${
-                                                isOpenItem ? styles.open : ""
-                                            }`}
-                                        >
-                                            {item.children.map((child) => (
-                                                <Link
-                                                    key={child.key}
-                                                    href={child.to}
-                                                    className={styles.subMenuItem}
-                                                    onClick={onClick}
-                                                >
-                                                    {child.label}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <SideMenuItemList setIsOpen={setIsOpen} onClick={onClick} />
+                    <BreakLine />
+                    {user ? (
+                        <div className={styles.authMobileMenuContainer} onClick={handleLogout}>
+                            <span className={styles.authMobileMenuIcon}>
+                                <LogOut size={18} />
+                            </span>
+                            <span>Logout</span>
+                        </div>
+                    ) : (
+                        <div
+                            className={styles.authMobileMenuContainer}
+                            onClick={() => onUserLoginClick(router)}
+                        >
+                            <span className={styles.authMobileMenuIcon}>
+                                <UserOutlined size={18} />
+                            </span>
+                            <span>Login</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
