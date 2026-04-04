@@ -35,9 +35,9 @@ export type PracticeSetting =
     | "other"
 
 export type FieldType = {
-    firstName: string
-    lastName: string
-    middleName?: string
+    firstname: string
+    lastname: string
+    middlename?: string
     suffix?: string
     credentials?: Credentials
     email: string
@@ -45,14 +45,17 @@ export type FieldType = {
     country: string
     state: string
     city: string
-    primaryInstitution: string
-    jobTitle: JobTitle
-    practiceSetting?: PracticeSetting
+
+    primary_affiliation: string
+    job_title: JobTitle
+    practice_setting?: PracticeSetting
     subspecialty?: string
-    membership: MembershipKey
-    referralSource?: string
-    telegramUsername?: string
-    interestStatement?: string
+
+    membership_type: MembershipKey
+
+    hear_about_asrp: string
+    tg_username?: string
+    interest_description?: string
 }
 
-export type MembershipKey = "active" | "trainee" | "affiliate" | "pathway" | "honorary"
+export type MembershipKey = "ACTIVE" | "TRAINEE" | "AFFILIATE" | "PATHWAY" | "HONORARY"
