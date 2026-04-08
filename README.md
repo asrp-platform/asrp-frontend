@@ -2,9 +2,7 @@
 
 ## Getting Started
 
-
-
-
+For local development NEXT_PUBLIC_API_URL must be provided.
 
 
 ## Deployment

@@ -8,4 +8,4 @@ export const CURRENT_USER_CHANGE_PASSWORD_URL = `${CURRENT_USER_URL}/password-ch
 
 export const CURRENT_USER_NAME_CHANGE_URL = `${CURRENT_USER_URL}/name-change-requests`
 
-export const CURRENT_USER_MEMBERSHIP_URL = `${CURRENT_USER_URL}/membership`
+export const CURRENT_USER_MEMBERSHIP_URL = `${CURRENT_USER_URL}/membership-requests`

@@ -158,7 +158,8 @@ const MembershipApplicationForm = () => {
                 is_agrees_communications: agreements.is_agrees_communications,
             }
 
-            await api.post(CURRENT_USER_MEMBERSHIP_URL, data)
+            const response = await api.post<string>(CURRENT_USER_MEMBERSHIP_URL, data)
+            window.location.href = response.data
         } catch (error: unknown) {
             if (isAxiosError(error)) {
                 if (error.response?.status === 401) {
