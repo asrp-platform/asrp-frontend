@@ -96,11 +96,19 @@ const CookieBanner = ({ onClose }: IProps) => {
                     <div className={styles.buttonContainer}>
                         <Button onClick={rejectAll}>Reject all</Button>
                         {dirty ? (
-                            <Button className={styles.acceptButton} type="primary" onClick={saveConsent}>
+                            <Button
+                                className={styles.acceptButton}
+                                type="primary"
+                                onClick={saveConsent}
+                            >
                                 Save preferences
                             </Button>
                         ) : (
-                            <Button className={styles.acceptButton} type="primary" onClick={acceptAll}>
+                            <Button
+                                className={styles.acceptButton}
+                                type="primary"
+                                onClick={acceptAll}
+                            >
                                 Accept all
                             </Button>
                         )}

@@ -51,7 +51,7 @@ const FellowshipCard = ({ user }: IProps) => {
     const handleUpdate = async (id: number, values: IUserFellowshipFormValues) => {
         const response = await api.put<IUserFellowship>(
             getUserFellowshipByIdUrl(user.id, id),
-            values
+            values,
         )
 
         setUserFellowships((prev) => prev.map((f) => (f.id === id ? response.data : f)))

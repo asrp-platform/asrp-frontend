@@ -48,7 +48,7 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
         const fetchData = async () => {
             try {
                 const response = await api.get<IUserProfessionalInformation | null>(
-                    getUserProfessionalInformationUrl(user.id)
+                    getUserProfessionalInformationUrl(user.id),
                 )
                 if (response.data) {
                     professionalInfoForm.setFieldsValue(response.data)

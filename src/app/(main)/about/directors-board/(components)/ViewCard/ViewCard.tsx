@@ -57,7 +57,7 @@ const ViewCard = ({
             immediatelyRender: false,
             editable: false,
         },
-        [previewContent]
+        [previewContent],
     )
 
     const onSaved = (updatedMemberData: IDirectorsBoardMember) => {

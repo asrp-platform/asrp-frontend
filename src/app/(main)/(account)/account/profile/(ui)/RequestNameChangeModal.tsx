@@ -42,7 +42,7 @@ const ChangeNameModal = ({ open, setNameChangeModalOpen }: IProps) => {
                     messageApi.error(detail ?? "Name change request already exists")
                 } else if (status === 429) {
                     messageApi.warning(
-                        detail ?? "You are sending requests too quickly. Please try again later."
+                        detail ?? "You are sending requests too quickly. Please try again later.",
                     )
                 } else if (status === 500) {
                     messageApi.error("Something went wrong on the server. Please try again later.")

@@ -46,7 +46,7 @@ const GetInvolvedCommitteesForm = () => {
                         (err: { field: string; message: string }) => ({
                             name: err.field,
                             errors: [err.message],
-                        })
+                        }),
                     )
 
                     form.setFields(fieldErrors)

@@ -1,61 +1,65 @@
 @use "../../../../../../shared/mixins" as m;
 
 .cardContainer {
-  @include m.director-member-card-mixin;
+    @include m.director-member-card-mixin;
 
-  position: relative;
-  transition:
-          box-shadow 0.15s ease,
-          transform 0.15s ease,
-          border-color 0.15s ease;
+    position: relative;
+    transition:
+        box-shadow 0.15s ease,
+        transform 0.15s ease,
+        border-color 0.15s ease;
 
-  button {
-    margin-top: auto;
-  }
+    button {
+        margin-top: auto;
+    }
 }
 
 .cardContainer * {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .cardContainer button,
 .cardContainer a {
-  pointer-events: auto;
+    pointer-events: auto;
 }
 
 .draggable {
-  cursor: grab;
+    cursor: grab;
 }
 
 .dragOver {
-  transition: 0.3s ease-in-out;
-  transform: scale(0.99);
-  box-shadow:
-          0 0 0 2px rgb(255 99 71 / 0.45), /* акцентный ring */
-          0 8px 24px rgb(0 0 0 / 0.08);
+    transition: 0.3s ease-in-out;
+    transform: scale(0.99);
+    box-shadow:
+        0 0 0 2px rgb(255 99 71 / 0.45),
+        /* акцентный ring */ 0 8px 24px rgb(0 0 0 / 0.08);
 }
 
 .cardTitle {
-  color: var(--text-primary-color-red);
+    color: var(--text-primary-color-red);
 }
 
 .nameTitle {
-  color: var(--text-primary-color-dark);
+    color: var(--text-primary-color-dark);
 }
 
 .contentContainer {
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--text-primary-color-dark);
-  }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--text-primary-color-dark);
+    }
 }
 
 .adminFooter {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
-
 .boardEditor {
-  color: var(--text-secondary-color-dark);
+    color: var(--text-secondary-color-dark);
 }

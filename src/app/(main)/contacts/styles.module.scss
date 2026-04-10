@@ -1,118 +1,114 @@
 @use "../../../shared/mixins" as m;
 
 .pageContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 
-  @media (min-width: 1200px) {
-    margin: 48px var(--page-container-horizontal-margin);
-    gap: 5vh;
-  }
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+        gap: 5vh;
+    }
 }
 
 .mainHeadingContainer {
-  padding: 40px 30% 60px 40px;
-  background: var(--background-heading-gradient);
-  color: white;
+    padding: 40px 30% 60px 40px;
+    background: var(--background-heading-gradient);
+    color: white;
 
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-    color: #FFF;
-    margin-bottom: 16px;
-  }
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        color: #fff;
+        margin-bottom: 16px;
+    }
 
-  p {
-    font-size: 1.05rem;
-    font-weight: 400;
-    line-height: 1.6;
-    color: rgb(255 255 255 / 0.9);
-    max-width: 720px;
-  }
+    p {
+        font-size: 1.05rem;
+        font-weight: 400;
+        line-height: 1.6;
+        color: rgb(255 255 255 / 0.9);
+        max-width: 720px;
+    }
 
-  @media (width >= 1200px) {
-    border-radius: 25px;
-    padding: 60px 40% 60px 40px;
-    gap: 60px;
-  }
+    @media (width >= 1200px) {
+        border-radius: 25px;
+        padding: 60px 40% 60px 40px;
+        gap: 60px;
+    }
 }
 
 .contactInformationContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin: 0 var(--mobile-container-margin-inline);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 var(--mobile-container-margin-inline);
 
-  @media (min-width: 1200px) {
-    flex-direction: row;
-    padding: 0;
-  }
+    @media (min-width: 1200px) {
+        flex-direction: row;
+        padding: 0;
+    }
 }
 
 .informationContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
 
-  h2 {
-    color: var(--text-primary-color-red);
-    font-size: 18px;
-  }
+    h2 {
+        color: var(--text-primary-color-red);
+        font-size: 18px;
+    }
 
-  h3 {
-    font-size: 30px;
-  }
-
+    h3 {
+        font-size: 30px;
+    }
 }
 
 .informationCard {
-  @include m.card-style;
+    @include m.card-style;
 
-  padding: 24px;
+    padding: 24px;
 }
 
 .contactItem:not(:last-child) {
-  margin-bottom: 24px;
+    margin-bottom: 24px;
 }
 
 .contactLabel {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #0f172a; /* slate-900 */
-  margin-bottom: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0f172a; /* slate-900 */
+    margin-bottom: 6px;
 }
 
 .contactValue {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #334155; /* slate-700 */
-  text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #334155; /* slate-700 */
+    text-decoration: none;
 }
 
 .followUsContainer {
-  @include m.card-style;
+    @include m.card-style;
 
-  padding: 24px;
+    padding: 24px;
 }
 
 .logoContainer {
-  display: flex;
-  align-items: center;
-  padding: var(--general-vertical-padding) 0;
-  gap: 16px;
+    display: flex;
+    align-items: center;
+    padding: var(--general-vertical-padding) 0;
+    gap: 16px;
 
-
-  a {
-    all: unset;
-    cursor: pointer;
-  }
-
+    a {
+        all: unset;
+        cursor: pointer;
+    }
 }
 
 .sendMessageFormContainer {
-  flex: 1;
-
+    flex: 1;
 }

@@ -1,7 +1,9 @@
-import ComingSoon from "../../../../../widgets/ComingSoon/ComingSoon.tsx"
+import PaymentsTable from "./ui/PaymentsTable.tsx"
 
 const Page = () => {
-    return <ComingSoon />
+    return <PaymentsTable />
+
+    // return <ComingSoon />
 }
 
 export default Page

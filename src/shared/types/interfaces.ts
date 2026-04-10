@@ -27,8 +27,7 @@ export interface ImagePathResponse {
     path: string
 }
 
-
 export interface IValidationError {
-    field: string;
-    message: string;
+    field: string
+    message: string
 }

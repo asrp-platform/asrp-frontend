@@ -1,147 +1,143 @@
 @mixin button-mixin {
-  display: inline-block;
-  border-radius: 999px;
-  background: transparent;
-  padding: 8px 16px;
-  font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: 0.3s ease-in-out;
-
-  &:visited {
+    display: inline-block;
+    border-radius: 999px;
+    background: transparent;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
     text-decoration: none;
-  }
-  &:hover {
-    transform: translateY(-1px);
-    background: var(--button-primary-light-hover);
-  }
+    transition: 0.3s ease-in-out;
+
+    &:visited {
+        text-decoration: none;
+    }
+    &:hover {
+        transform: translateY(-1px);
+        background: var(--button-primary-light-hover);
+    }
 }
 
-
-
 .container {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .sectionHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .title {
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
 }
 
 .subtitle {
-  font-size: 14px;
-  color: #64748b; // slate-500
+    font-size: 14px;
+    color: #64748b; // slate-500
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0; // slate-200
-  border-radius: 24px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0; // slate-200
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .cardTitle {
-  font-size: 18px;
-  font-weight: 600;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .cardActions {
-  padding-top: 8px;
+    padding-top: 8px;
 }
 
 .primaryText {
-  font-size: 14px;
-  font-weight: 500;
-  color: #0f172a; // slate-900
+    font-size: 14px;
+    font-weight: 500;
+    color: #0f172a; // slate-900
 }
 
 .mutedText {
-  font-size: 12px;
-  color: #64748b; // slate-500
+    font-size: 12px;
+    color: #64748b; // slate-500
 }
 
 .badgeActive {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: #dcfce7; // green-100
-  color: #166534; // green-700
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #dcfce7; // green-100
+    color: #166534; // green-700
 }
 
 .actionsRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .primaryLink {
-  border: var(--red-border);
-  color: var(--button-primary-red);
-  font-weight: 600;
-  @include button-mixin;
+    border: var(--red-border);
+    color: var(--button-primary-red);
+    font-weight: 600;
+    @include button-mixin;
 
-  &:hover {
-    background: #fef2f2;
-  }
+    &:hover {
+        background: #fef2f2;
+    }
 }
 
 .secondaryLink {
-  border: 1px solid #cbd5f5;
-  background: var(--button-primary-light);
-  color: var(--text-primary-color-dark);
-  @include button-mixin;
+    border: 1px solid #cbd5f5;
+    background: var(--button-primary-light);
+    color: var(--text-primary-color-dark);
+    @include button-mixin;
 
-  &:hover {
-    background: var(--button-primary-light-hover);
-  }
-
+    &:hover {
+        background: var(--button-primary-light-hover);
+    }
 }
 
 .profileRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
 }
 
 .profileInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .roleBadge {
-  margin-top: 6px;
-  align-self: flex-start;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: #f1f5f9; // slate-100
+    margin-top: 6px;
+    align-self: flex-start;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #f1f5f9; // slate-100
 }

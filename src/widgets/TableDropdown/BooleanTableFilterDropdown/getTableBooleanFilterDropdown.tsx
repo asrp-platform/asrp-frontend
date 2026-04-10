@@ -7,7 +7,7 @@ import { getFilteredValue } from "../helpers.ts"
 export const getBooleanColumnSearchProps = <TFilters extends Record<string, any>>(
     dataIndex: string,
     filters: TFilters,
-    setFilters: (_prev: any) => void
+    setFilters: (_prev: any) => void,
 ) => {
     const value = filters[dataIndex]
 

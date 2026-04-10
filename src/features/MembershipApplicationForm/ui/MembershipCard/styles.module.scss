@@ -1,25 +1,24 @@
 @use "../../../../shared/mixins" as m;
 
 .membershipCardContainer {
-  @include m.card-style;
-  padding: 10px 16px;
-  border-radius: 16px;
-  background-color: #f9fbfc;
-  p {
-    font-size: 12px;
-  }
+    @include m.card-style;
+    padding: 10px 16px;
+    border-radius: 16px;
+    background-color: #f9fbfc;
+    p {
+        font-size: 12px;
+    }
 }
 
 .activeMembershipCard {
+    background-color: #fcf9f9;
+    transition: 0.3s ease-in-out;
 
-  background-color: #fcf9f9;
-  transition: 0.3s ease-in-out;
+    &:hover {
+        border: 1px solid var(--text-primary-color-red);
+    }
 
-  &:hover {
-    border: 1px solid var(--text-primary-color-red);
-  }
-
-  p {
-    color: var(--text-secondary-color-dark);
-  }
+    p {
+        color: var(--text-secondary-color-dark);
+    }
 }

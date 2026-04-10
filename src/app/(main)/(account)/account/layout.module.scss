@@ -1,85 +1,70 @@
 $link-hover-background-color: var(--layout-background-color);
 
-
 .profileLayoutContainer {
-  margin: 5vh 13vw;
-  display: grid;
-  gap: 30px;
-  grid-template-columns: 1fr 3.25fr;
-  min-height: 100vh;
-  align-items: flex-start;
+    margin: 5vh 13vw;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr 3.25fr;
+    min-height: 100vh;
+    align-items: flex-start;
 }
 
-
 .accountAside {
-  padding: 20px 16px;
-  background-color: #fff;
-  border-radius: 24px;
-  border: var(--light-border);
+    padding: 20px 16px;
+    background-color: #fff;
+    border-radius: 24px;
+    border: var(--light-border);
 
-  h3 {
-    color: var(--text-secondary-color-dark);
-    font-size: 12px;
-    margin: 0 10px 10px;
-  }
+    h3 {
+        color: var(--text-secondary-color-dark);
+        font-size: 12px;
+        margin: 0 10px 10px;
+    }
 }
 
 .accountNav {
-
 }
 
 .accountNavList {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .accountNavItem {
-  font-weight: 300;
+    font-weight: 300;
 }
 
 .navItemLink {
-  text-decoration: none;
-  color: black;
-  padding: 4px 10px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  border-radius: 10px;
-  transition: 0.3s ease-in-out;
+    text-decoration: none;
+    color: black;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
 
-  &:hover {
-    background-color: $link-hover-background-color;
-    transform: translateY(-1px);
-  }
+    &:hover {
+        background-color: $link-hover-background-color;
+        transform: translateY(-1px);
+    }
 }
 
 .activeLink {
-  font-weight: 600;
-  background-color: $link-hover-background-color;
+    font-weight: 600;
+    background-color: $link-hover-background-color;
 }
-
-
-
-
 
 .accountContentSection {
-
 }
-
-
-
-
 
 .container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 24px;
-  background: #f8fafc; // slate-50
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    background: #f8fafc; // slate-50
 }
-
-
-

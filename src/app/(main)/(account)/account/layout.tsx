@@ -5,11 +5,11 @@ import { type ReactNode } from "react"
 import styles from "./layout.module.scss"
 import Link from "next/link"
 
-import { useAuth } from "../../../../context/AuthProvider.tsx"
 import NotAuthorized from "../../../../shared/ui/NotAuthorized/NotAuthorized.tsx"
 import clsx from "clsx"
 import { usePathname } from "next/navigation"
 import Loading from "../../about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import { useCurrentUserQuery } from "../../../../shared/hooks/useCurrentUserQuery.ts"
 
 interface NavListItem {
     href: string
@@ -51,11 +51,11 @@ const navItemsList: NavListItem[] = [
 ]
 
 const Layout = ({ children }: { children: ReactNode }) => {
-    const { user, isUserLoading } = useAuth()
+    const { data: user, isLoading } = useCurrentUserQuery()
 
     const pathname = usePathname()
 
-    if (isUserLoading) {
+    if (isLoading) {
         return <Loading />
     }
 
@@ -74,7 +74,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                                 <Link
                                     className={clsx(
                                         styles.navItemLink,
-                                        item.match.includes(pathname) && styles.activeLink
+                                        item.match.includes(pathname) && styles.activeLink,
                                     )}
                                     href={item.href}
                                 >

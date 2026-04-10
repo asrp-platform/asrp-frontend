@@ -1,152 +1,150 @@
 @use "../../../shared/mixins" as m;
 
 .pageContainer {
-  margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
-  @media (min-width: 1200px) {
-    margin: 48px var(--page-container-horizontal-margin);
-  }
-
+    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+    }
 }
 
 .headingCardContainer {
-  @include m.heading-card-container;
+    @include m.heading-card-container;
 }
 
 .sectionContainer {
-  display: flex;
-  flex-direction: column;
-  margin: 5vh 0;
-  gap: 40px;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin: 5vh 0;
+    gap: 40px;
+    align-items: flex-start;
 
-  @media (min-width: 1200px) {
-    flex-direction: row;
-  }
+    @media (min-width: 1200px) {
+        flex-direction: row;
+    }
 }
 
 .missionInfoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  margin: 0 2vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin: 0 2vw;
 
-  h2 {
-    font-size: 32px;
-    font-weight: 600;
-    color: var(--text-primary-color-dark);
-  }
+    h2 {
+        font-size: 32px;
+        font-weight: 600;
+        color: var(--text-primary-color-dark);
+    }
 
-  p {
-    line-height: var(--paragraph-line-height);
-    color: var(--text-secondary-color-dark);
-  }
+    p {
+        line-height: var(--paragraph-line-height);
+        color: var(--text-secondary-color-dark);
+    }
 
-  @media (min-width: 1200px) {
-    margin: 0;
-  }
+    @media (min-width: 1200px) {
+        margin: 0;
+    }
 }
 
 .initiativesContainer {
-  margin: 0 2vw;
+    margin: 0 2vw;
 
-  @media (min-width: 1200px) {
-    margin: 0;
-  }
-
-  h3 {
-    margin: 24px 0;
-    color: var(--text-primary-color-red);
-    font-weight: 600;
-  }
-
-  li {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    line-height: var(--paragraph-line-height);
-    color: var(--text-secondary-color-dark);
-
-    &::before {
-      content: "";
-      display: block;
-      width: 6px;
-      height: 6px;
-      background-color: var(--text-secondary-color-dark);
-      border-radius: 50%;
-      margin-right: 10px;
+    @media (min-width: 1200px) {
+        margin: 0;
     }
-  }
+
+    h3 {
+        margin: 24px 0;
+        color: var(--text-primary-color-red);
+        font-weight: 600;
+    }
+
+    li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        line-height: var(--paragraph-line-height);
+        color: var(--text-secondary-color-dark);
+
+        &::before {
+            content: "";
+            display: block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--text-secondary-color-dark);
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    }
 }
 
 .missionContainer {
-  @media (min-width: 1200px) {
-    flex: 4;
-  }
+    @media (min-width: 1200px) {
+        flex: 4;
+    }
 }
 
 .linksContainer {
-  padding: 20px 24px;
-  background-color: #fff;
-  box-shadow: var(--card-box-shadow);
-  border: var(--light-border);
-  border-radius: 25px;
-  width: 100%;
+    padding: 20px 24px;
+    background-color: #fff;
+    box-shadow: var(--card-box-shadow);
+    border: var(--light-border);
+    border-radius: 25px;
+    width: 100%;
 
-  @media (min-width: 1200px) {
-    flex: 2;
-  }
-
-  h2 {
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--text-primary-color-dark);
-  }
-
-  .byLawsLink {
-    background-color: var(--button-primary-red);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-    padding: 10px 0;
-    border-radius: 999px;
-    text-decoration: none;
-    color: #fff;
-    transition: 0.3s ease-in-out;
-
-    &:hover {
-      cursor: pointer;
-      transform: translateY(-1px);
-      background-color: var(--button-primary-red-hover);
+    @media (min-width: 1200px) {
+        flex: 2;
     }
-  }
 
-  h3 {
-    color: var(--text-primary-color-red);
-    font-size: 16px;
-  }
+    h2 {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--text-primary-color-dark);
+    }
+
+    .byLawsLink {
+        background-color: var(--button-primary-red);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        padding: 10px 0;
+        border-radius: 999px;
+        text-decoration: none;
+        color: #fff;
+        transition: 0.3s ease-in-out;
+
+        &:hover {
+            cursor: pointer;
+            transform: translateY(-1px);
+            background-color: var(--button-primary-red-hover);
+        }
+    }
+
+    h3 {
+        color: var(--text-primary-color-red);
+        font-size: 16px;
+    }
 }
 
 .socialMediaContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .mediaLinkContainer {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+    display: flex;
+    gap: 10px;
+    align-items: center;
 
-  a {
-    text-decoration: none;
-    color: var(--text-secondary-color-dark);
-    transition: 0.3s ease-in-out;
-    &:hover {
-      color: var(--text-primary-color-dark);
+    a {
+        text-decoration: none;
+        color: var(--text-secondary-color-dark);
+        transition: 0.3s ease-in-out;
+        &:hover {
+            color: var(--text-primary-color-dark);
+        }
     }
-  }
 }
-

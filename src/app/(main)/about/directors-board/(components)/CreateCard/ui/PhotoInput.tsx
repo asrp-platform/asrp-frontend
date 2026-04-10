@@ -24,7 +24,7 @@ const PhotoInput = ({ setUploadedImageUrl, uploadedImageUrl }: IProps) => {
             const res = await api.post<ImagePathResponse>(
                 DIRECTORS_BOARD_MEMBER_IMAGES_URL,
                 formData,
-                { headers: { "Content-Type": "multipart/form-data" } }
+                { headers: { "Content-Type": "multipart/form-data" } },
             )
             setUploadedImageUrl(getDirectorMemberImageUrl(res.data.path))
         } catch (error) {

@@ -1,90 +1,89 @@
 .antdInput {
-  color: var(--text-secondary-color-dark);
-  background-color: var(--layout-background-color);
-  transition: 0.3s ease;
-  &:hover {
-    border-color: var(--border-color-red);
-  }
+    color: var(--text-secondary-color-dark);
+    background-color: var(--layout-background-color);
+    transition: 0.3s ease;
+    &:hover {
+        border-color: var(--border-color-red);
+    }
 }
 
 .radioGroup {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .pageContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--text-secondary-color-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-secondary-color-dark);
 }
 
 .registerFormContainer {
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  border-radius: 25px;
-  height: auto;
-  width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+    height: auto;
+    width: 100%;
 
-  @media (min-width: 1200px) {
-    padding: 24px 32px;
-    margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
-    border: var(--light-border);
-  }
+    @media (min-width: 1200px) {
+        padding: 24px 32px;
+        margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
+        border: var(--light-border);
+    }
 
-  h1, h2 {
-    color: var(--text-primary-color-dark);
-  }
+    h1,
+    h2 {
+        color: var(--text-primary-color-dark);
+    }
 
-  label {
-    color: var(--text-secondary-color-dark) !important;
-    font-size: 16px !important;
-  }
-
+    label {
+        color: var(--text-secondary-color-dark) !important;
+        font-size: 16px !important;
+    }
 }
 
-
 .registerForm {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .twoFieldContainer {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
 
-  @media (min-width: 992px) {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
+    @media (min-width: 992px) {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
 
-  @media (min-width: 1200px) {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
+    @media (min-width: 1200px) {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
 }
 
 .submitButtonContainer {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .submitButton {
-  width: 200px;
-  height: 40px;
-  border-radius: 999px;
-  background-color: var(--button-primary-red);
-  transition: 0.3s ease-in-out;
-  font-weight: 600;
-  font-size: 16px;
+    width: 200px;
+    height: 40px;
+    border-radius: 999px;
+    background-color: var(--button-primary-red);
+    transition: 0.3s ease-in-out;
+    font-weight: 600;
+    font-size: 16px;
 
-  &:hover {
-    background-color: var(--button-primary-red-hover) !important;
-    transform: translateY(-1px);
-  }
+    &:hover {
+        background-color: var(--button-primary-red-hover) !important;
+        transform: translateY(-1px);
+    }
 }

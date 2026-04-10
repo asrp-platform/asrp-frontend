@@ -1,32 +1,30 @@
 .layout {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
-
 .siderTitle {
-  height: 64px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 18px;
+    height: 64px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .layoutHeader {
-  background: #fff;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  font-size: 22px;
-  font-weight: 600;
+    background: #fff;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
 }
 
-
 .content {
-  margin: 24px;
-  padding: 24px;
-  background: #fff;
-  border-radius: 8px;
-  min-height: 360px;
+    margin: 24px;
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    min-height: 360px;
 }

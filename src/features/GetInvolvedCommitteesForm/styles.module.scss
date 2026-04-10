@@ -1,45 +1,45 @@
 @use "../../shared/mixins" as m;
 
 .involvedForm {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 24px;
-  padding: 24px 32px;
-  flex: 1;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    padding: 24px 32px;
+    flex: 1;
 
-  @media (min-width: 1200px) {
-    padding: 24px 36px;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-
-  input,
-  textarea {
-    border: 1px solid #cbd5f5;
-    font-size: 0.95rem;
-  }
-
-  .buttonContainer {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .submitButton {
-    border-radius: 999px;
-    background: var(--button-primary-red);
-    color: white;
-    font-weight: 600;
-    transition: 0.3s ease-in-out;
-    padding: 18px;
-    width: 200px;
-    padding: 18px;
-
-    &:hover {
-      transform: translateY(-1px);
-      background: var(--button-primary-red-hover) !important;
+    @media (min-width: 1200px) {
+        padding: 24px 36px;
     }
-  }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    input,
+    textarea {
+        border: 1px solid #cbd5f5;
+        font-size: 0.95rem;
+    }
+
+    .buttonContainer {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .submitButton {
+        border-radius: 999px;
+        background: var(--button-primary-red);
+        color: white;
+        font-weight: 600;
+        transition: 0.3s ease-in-out;
+        padding: 18px;
+        width: 200px;
+        padding: 18px;
+
+        &:hover {
+            transform: translateY(-1px);
+            background: var(--button-primary-red-hover) !important;
+        }
+    }
 }

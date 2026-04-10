@@ -5,7 +5,7 @@ export const handleTableChange = <T>(
     _pagination: TablePaginationConfig,
     _filters: any,
     sorter: SorterResult<T> | SorterResult<T>[],
-    setOrdering: Dispatch<SetStateAction<string[]>>
+    setOrdering: Dispatch<SetStateAction<string[]>>,
 ) => {
     if (Array.isArray(sorter)) return
 

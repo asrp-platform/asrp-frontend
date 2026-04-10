@@ -1,62 +1,62 @@
 .outerContainer {
-  min-height: 100vh;
-  min-width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--text-secondary-color-dark);
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-secondary-color-dark);
 }
 
 .bottomFormContainer {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
 }
 
-
 .loginFormContainer {
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  padding-inline: 20px;
-  border-radius: 10px;
-  width: 100vw;
-  height: 100vh;
-  padding-top: 20vh;
-
-  .submitContainer {
+    background-color: #fff;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    flex-direction: column;
+    padding-inline: 20px;
+    border-radius: 10px;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 20vh;
 
-  h2 {
-    margin-bottom: 20px;
-  }
+    .submitContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-  label {
-    color: var(--text-secondary-color-dark) !important;
-  }
+    h2 {
+        margin-bottom: 20px;
+    }
 
-  .antdInput {
-    height: 40px;
-    color: var(--text-secondary-color-dark);
-  }
+    label {
+        color: var(--text-secondary-color-dark) !important;
+    }
 
-  @media (width >= 480px) {}
+    .antdInput {
+        height: 40px;
+        color: var(--text-secondary-color-dark);
+    }
 
-  @media (width >= 768px) {}
+    @media (width >= 480px) {
+    }
 
-  @media (width >= 992px) {
-    padding: 5vh 5vw;
-    width: 40vw;
-    height: auto;
-  }
+    @media (width >= 768px) {
+    }
 
-  @media (width >= 1200px) {
+    @media (width >= 992px) {
+        padding: 5vh 5vw;
+        width: 40vw;
+        height: auto;
+    }
 
-  }
+    @media (width >= 1200px) {
+    }
 
-  @media (width >= 1440px) {}
-
+    @media (width >= 1440px) {
+    }
 }

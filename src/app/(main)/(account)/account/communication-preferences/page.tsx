@@ -47,7 +47,7 @@ const Page = () => {
         const fetchCommunicationPreferences = async () => {
             try {
                 const response = await api.get<ChangablePreferences>(
-                    `${getUserUrl(user.id)}/communication-preferences`
+                    `${getUserUrl(user.id)}/communication-preferences`,
                 )
                 setCommunicationPreferences(response.data)
             } catch (error) {
