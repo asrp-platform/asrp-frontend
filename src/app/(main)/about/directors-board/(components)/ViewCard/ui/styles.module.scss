@@ -1,90 +1,87 @@
 @use "../../shared/mixins" as directors-board-mixins;
 
-
 .dataContainer {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
 }
 
 .buttonContainer {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .rightContainer {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 .editableContent {
-  margin-top: 10px;
-  padding: 5px 10px;
-  border: 1px solid var(--border-color-light);
-  border-radius: 10px;
-  color: var(--text-secondary-color-dark);
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-color-light);
+    border-radius: 10px;
+    color: var(--text-secondary-color-dark);
 }
 
 .inputTitle {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .photoContainer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
-
 .photoContainer {
-  margin: 10px 0;
-  display: flex;
-  justify-content: center;
-  width: 100%;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .photoInnerContainer {
-  position: relative;
-  width: 180px;
-  height: 180px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #f3f4f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 
 .placeholder {
-  @include directors-board-mixins.placeholder;
+    @include directors-board-mixins.placeholder;
 }
 
 .photoInput {
-  display: none;
+    display: none;
 }
 
 .photoOverlay {
-  @include directors-board-mixins.photoOverlayMixin;
+    @include directors-board-mixins.photoOverlayMixin;
 }
 
-
 .loadingContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 400px;
 }
 
 .photoInnerContainer:hover .photoOverlay {
-  opacity: 1;
+    opacity: 1;
 }

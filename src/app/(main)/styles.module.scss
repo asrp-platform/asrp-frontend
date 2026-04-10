@@ -1,444 +1,417 @@
 @use "../../shared/mixins.scss" as m;
 
-
 .homePageContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-
-  @media (width >= 1200px) {
-    gap: 50px;
-    margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
-  }
-}
-
-
-
-.mainTitleContainer {
-  padding: 40px 20px;
-  color: var(--text-primary-color-light);
-  background: var(--background-heading-gradient);
-  background-repeat: no-repeat;
-
-  @media (width >= 1200px) {
-    padding: 80px 10vw 80px 40px;
-    border-radius: 25px;
-  }
-
-  h1 {
-    font-size: 36px;
-    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
 
     @media (width >= 1200px) {
-      font-size: 48px;
+        gap: 50px;
+        margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
     }
-  }
+}
 
-  h2 {
-    color: #FCA5A5;
-    font-size: 16px;
-    display: block;
-    margin: 20px 0;
-    font-weight: 600;
-    letter-spacing: 0.16rem;
-  }
+.mainTitleContainer {
+    padding: 40px 20px;
+    color: var(--text-primary-color-light);
+    background: var(--background-heading-gradient);
+    background-repeat: no-repeat;
 
-  p {
-    line-height: 1.6;
-    font-size: 16px;
-
-    @media (width >= 1000px) {
-      margin-right: 25vw;
+    @media (width >= 1200px) {
+        padding: 80px 10vw 80px 40px;
+        border-radius: 25px;
     }
-  }
+
+    h1 {
+        font-size: 36px;
+        font-weight: 600;
+
+        @media (width >= 1200px) {
+            font-size: 48px;
+        }
+    }
+
+    h2 {
+        color: #fca5a5;
+        font-size: 16px;
+        display: block;
+        margin: 20px 0;
+        font-weight: 600;
+        letter-spacing: 0.16rem;
+    }
+
+    p {
+        line-height: 1.6;
+        font-size: 16px;
+
+        @media (width >= 1000px) {
+            margin-right: 25vw;
+        }
+    }
 }
 
 .mainTitleButtonContainer {
-  display: flex;
-  gap: 20px;
+    display: flex;
+    gap: 20px;
 }
 
 .becomeMemberButton {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: var(--button-primary-red);
-  color: var(--text-primary-color-light);
-  border: none;
-  border-radius: 9999px;
-  font-size: 16px;
-  font-weight: bold;
-  transition: 0.3s ease-in-out;
-  text-decoration: none;
-
-  &:hover {
-    background-color: var(--button-primary-red-hover);
-    cursor: pointer;
-  }
-  &:visited {
-    color: inherit;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--button-primary-red);
+    color: var(--text-primary-color-light);
+    border: none;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
     text-decoration: none;
-  }
+
+    &:hover {
+        background-color: var(--button-primary-red-hover);
+        cursor: pointer;
+    }
+    &:visited {
+        color: inherit;
+        text-decoration: none;
+    }
 }
 
 .learnMoreButton {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: transparent;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 9999px;
-  border: var(--light-border);
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-  text-decoration: none;
-
-  &:hover {
-    background-color: rgb(255 255 255 / 0.1);
-  }
-  &:visited {
-    color: inherit;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: transparent;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 9999px;
+    border: var(--light-border);
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
     text-decoration: none;
-  }
+
+    &:hover {
+        background-color: rgb(255 255 255 / 0.1);
+    }
+    &:visited {
+        color: inherit;
+        text-decoration: none;
+    }
 }
 
-
-
 .memberOutcomesContainer {
-  padding: 0 var(--mobile-layout-padding-inline);
+    padding: 0 var(--mobile-layout-padding-inline);
 
-  @media (width >= 1200px) {
-    padding: 0;
-  }
+    @media (width >= 1200px) {
+        padding: 0;
+    }
 }
 
 .memberOutcomesInfoContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-  h2 {
-    color: var(--text-primary-color-red);
-    font-size: 18px;
-  }
+    h2 {
+        color: var(--text-primary-color-red);
+        font-size: 18px;
+    }
 
-  h3 {
-    font-size: 32px;
-  }
+    h3 {
+        font-size: 32px;
+    }
 
-  p {
-    display: block;
-    color: var(--text-secondary-color-dark);
-    padding-right: 25vw;
-    line-height: 1.6;
-  }
+    p {
+        display: block;
+        color: var(--text-secondary-color-dark);
+        padding-right: 25vw;
+        line-height: 1.6;
+    }
 }
 
 .memberOutcomesCardContainer {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: var(--text-secondary-color-dark);
-  gap: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--text-secondary-color-dark);
+    gap: 20px;
 
-  @media (width >= 1200px) {
-    flex-direction: row;
-    margin-top: 40px;
-  }
+    @media (width >= 1200px) {
+        flex-direction: row;
+        margin-top: 40px;
+    }
 }
 
 .memberOutcomesCard {
-  @include m.main-page-card;
+    @include m.main-page-card;
 }
 
-
-
 .visionContainer {
-  background-color: #FFF;
-  padding: 40px 24px;
-  border: var(--light-border);
-  box-shadow: var(--card-box-shadow);
+    background-color: #fff;
+    padding: 40px 24px;
+    border: var(--light-border);
+    box-shadow: var(--card-box-shadow);
 
-  h2 {
-    color: var(--text-primary-color-red);
-    font-size: 18px;
-  }
+    h2 {
+        color: var(--text-primary-color-red);
+        font-size: 18px;
+    }
 
-  h3 {
-    font-size: 32px;
-    color: var(--text-secondary-color-dark);
-  }
+    h3 {
+        font-size: 32px;
+        color: var(--text-secondary-color-dark);
+    }
 
-  p {
-    color: var(--text-secondary-color-dark);
-    line-height: 1.6;
-  }
+    p {
+        color: var(--text-secondary-color-dark);
+        line-height: 1.6;
+    }
 
-  @media (width >= 1200px) {
-    padding: 48px 40px;
-    flex-direction: row;
-    border-radius: 25px;
-
-  }
+    @media (width >= 1200px) {
+        padding: 48px 40px;
+        flex-direction: row;
+        border-radius: 25px;
+    }
 }
 
 .visionInnerContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
-  @media (width >= 1200px) {
-    flex-direction: row;
-  }
+    @media (width >= 1200px) {
+        flex-direction: row;
+    }
 }
 
 .visionInfoContainer {
-  flex: 5;
+    flex: 5;
 
-  p, h3 {
-    margin-top: 16px;
-  }
+    p,
+    h3 {
+        margin-top: 16px;
+    }
 
-  h3 {
-    color: var(--text-primary-color-dark);
-  }
+    h3 {
+        color: var(--text-primary-color-dark);
+    }
 }
 
 .guidesContainer {
-  color: var(--text-secondary-color-dark);
-  border: 1px solid var(--border-color-light);
-  border-radius: 25px;
-  padding: 16px;
-  line-height: 1.6;
-  font-size: 16px;
-  flex: 3;
-  background-color: rgb(246 246 246);
+    color: var(--text-secondary-color-dark);
+    border: 1px solid var(--border-color-light);
+    border-radius: 25px;
+    padding: 16px;
+    line-height: 1.6;
+    font-size: 16px;
+    flex: 3;
+    background-color: rgb(246 246 246);
 
-  h3 {
-    color: var(--text-primary-color-dark);
-  }
-
-  ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    gap: 8px;
-  }
-
-  button {
-    margin-top: 20px;
-    padding: 8px 14px;
-    border-radius: 9999px;
-    border: none;
-    transition: 0.3s ease-in-out;
-    font-weight: bolder;
-
-    &:hover {
-      background-color: #dcdcdc;
+    h3 {
+        color: var(--text-primary-color-dark);
     }
-  }
 
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        gap: 8px;
+    }
 
+    button {
+        margin-top: 20px;
+        padding: 8px 14px;
+        border-radius: 9999px;
+        border: none;
+        transition: 0.3s ease-in-out;
+        font-weight: bolder;
+
+        &:hover {
+            background-color: #dcdcdc;
+        }
+    }
 }
 
 .liFirst::before {
-  @include m.before-list-point;
+    @include m.before-list-point;
 
-  background-color: #00d492;
+    background-color: #00d492;
 }
 
 .liSecond::before {
-  @include m.before-list-point;
+    @include m.before-list-point;
 
-  background-color: #00bcff;
+    background-color: #00bcff;
 }
 
 .liThird::before {
-  @include m.before-list-point;
+    @include m.before-list-point;
 
-  background-color: var(--text-primary-color-red);
+    background-color: var(--text-primary-color-red);
 }
 
-
-
-
-
 .programsContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 0 var(--mobile-layout-padding-inline);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 var(--mobile-layout-padding-inline);
 
-  h3 {
-    font-size: 28px;
-  }
+    h3 {
+        font-size: 28px;
+    }
 
-  p {
-    color: var(--text-secondary-color-dark);
-    max-width: 650px;
-    line-height: 1.6;
-  }
+    p {
+        color: var(--text-secondary-color-dark);
+        max-width: 650px;
+        line-height: 1.6;
+    }
 
-  @media (width >= 1200px) {
-    padding: 0;
-  }
-
+    @media (width >= 1200px) {
+        padding: 0;
+    }
 }
 
 .programsCardContainer {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
 
-  @media (width >= 1200px) {
-    grid-template-columns: 1fr 1fr;
-  }
+    @media (width >= 1200px) {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .programCard {
-  @include m.main-page-card;
+    @include m.main-page-card;
 }
-
-
-
-
 
 .getInvolvedContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 0 var(--mobile-layout-padding-inline);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 var(--mobile-layout-padding-inline);
 
-  h3 {
-    font-size: 28px;
-  }
+    h3 {
+        font-size: 28px;
+    }
 
-  p {
-    color: var(--text-secondary-color-dark);
-    max-width: 650px;
-    line-height: 1.6;
-  }
+    p {
+        color: var(--text-secondary-color-dark);
+        max-width: 650px;
+        line-height: 1.6;
+    }
 
-  @media (width >= 1200px) {
-    padding: 0;
-  }
+    @media (width >= 1200px) {
+        padding: 0;
+    }
 }
 
-
 .getInvolvedCardContainer {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
 
-  @media (width >= 1200px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+    @media (width >= 1200px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 .getInvolvedCard {
-  @include m.main-page-card;
+    @include m.main-page-card;
 
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-  p {
-    margin-bottom: 10px;
-    color: var(--text-secondary-color-dark);
-  }
+    p {
+        margin-bottom: 10px;
+        color: var(--text-secondary-color-dark);
+    }
 }
 
 @mixin getInvolvedLinkMixin {
-  margin-top: auto;
-  padding: 6px 0;
-  border-radius: 9999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-decoration: none;
-  text-align: center;
-
-  &:visited {
+    margin-top: auto;
+    padding: 6px 0;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
     text-decoration: none;
-  }
-  &:hover {
-    transform: translateY(-1px);
-  }
+    text-align: center;
+
+    &:visited {
+        text-decoration: none;
+    }
+    &:hover {
+        transform: translateY(-1px);
+    }
 }
 
 .membershipFormLink {
-  @include getInvolvedLinkMixin;
-  background-color: var(--button-primary-red);
-  color: #fff;
-  border: none;
+    @include getInvolvedLinkMixin;
+    background-color: var(--button-primary-red);
+    color: #fff;
+    border: none;
 
-  &:hover {
-    background-color: var(--button-primary-red-hover);
-  }
-
+    &:hover {
+        background-color: var(--button-primary-red-hover);
+    }
 }
 
 .helpLink {
-  @include getInvolvedLinkMixin;
-  background-color: #fff;
-  color: #0f172a;
-  border: 1px solid var(--border-color-light);
+    @include getInvolvedLinkMixin;
+    background-color: #fff;
+    color: #0f172a;
+    border: 1px solid var(--border-color-light);
 
-  &:hover {
-    background-color: #F8FAFC;
-    transform: translateY(-1px);
-  }
+    &:hover {
+        background-color: #f8fafc;
+        transform: translateY(-1px);
+    }
 }
 
 .donationsLink {
-  @include getInvolvedLinkMixin;
-  background-color: #FEF2F2;
-  color: #B91C1C;
-  border: var(--red-border);
+    @include getInvolvedLinkMixin;
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: var(--red-border);
 
-  &:hover {
-    background-color: #FEE2E2;
-    transform: translateY(-1px);
-  }
+    &:hover {
+        background-color: #fee2e2;
+        transform: translateY(-1px);
+    }
 }
-
-
-
-
 
 .connectContainer {
-  display: grid;
-  grid-template-columns: 1fr;
-  padding: 0 var(--mobile-layout-padding-inline);
-  gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0 var(--mobile-layout-padding-inline);
+    gap: 20px;
 
-  h2 {
-    color: var(--text-primary-color-red);
-    font-size: 18px;
-  }
+    h2 {
+        color: var(--text-primary-color-red);
+        font-size: 18px;
+    }
 
-  @media (width >= 1200px) {
-    grid-template-columns: 1fr 1fr;
-    padding: 0;
-  }
-
+    @media (width >= 1200px) {
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+    }
 }
-
 
 .connectInfoContainer {
-  h3 {
-    margin-top: 20px;
-    font-size: 32px;
-    color: var(--text-primary-color-dark);
-  }
+    h3 {
+        margin-top: 20px;
+        font-size: 32px;
+        color: var(--text-primary-color-dark);
+    }
 
-  p {
-    margin-top: 10px;
-    color: var(--text-secondary-color-dark);
-    max-width: 650px;
-    line-height: 1.6;
-  }
+    p {
+        margin-top: 10px;
+        color: var(--text-secondary-color-dark);
+        max-width: 650px;
+        line-height: 1.6;
+    }
 }
-

@@ -1,136 +1,124 @@
 @use "../../../../../../shared/mixins" as m;
 
-
 .card {
-  border-radius: 24px;
+    border-radius: 24px;
 }
 
 .avatarContainer {
-  margin-bottom: 10px;
-  display: flex;
+    margin-bottom: 10px;
+    display: flex;
 }
 
 .avatarInnerContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  button {
-    width: 150px;
-  }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    button {
+        width: 150px;
+    }
 }
 
-.titleLevelTwo, .titleLevelThree {
-  color: var(--text-primary-color-dark);
-  font-size: 22px;
-  margin-bottom: 20px;
-  font-weight: 600;
+.titleLevelTwo,
+.titleLevelThree {
+    color: var(--text-primary-color-dark);
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 .titleLevelThree {
-  font-size: 18px;
-  margin-bottom: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
 .linkButton {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 .personalInfoActions {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
-
 
 .antInputDisabled {
-  background-color: var(--layout-background-color) !important;
+    background-color: var(--layout-background-color) !important;
 }
 
-
-
-
 .professionalInfoForm {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .checkboxItem {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
-
 
 .professionalInfoActions {
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
 }
-
 
 // Residency
 
 .residencySubtitle {
-  color: var(--text-secondary-color-dark);
+    color: var(--text-secondary-color-dark);
 }
 
 .formFieldsContainer {
-  margin-top: 20px;
+    margin-top: 20px;
 }
-
 
 .residenciesContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
 }
 
-
 .residencyFormContainer {
-  border: var(--light-border);
-  border-radius: 25px;
-  padding: 16px 24px;
+    border: var(--light-border);
+    border-radius: 25px;
+    padding: 16px 24px;
 }
 
 .editButton {
-  font-weight: 600;
-  padding: 8px 24px;
-  background-color: var(--button-primary-red);
-  transition: 0.3s ease-in-out;
-  &:hover {
-    transform: translateY(-1px);
-    background-color: var(--button-primary-red-hover) !important;
-  }
-
+    font-weight: 600;
+    padding: 8px 24px;
+    background-color: var(--button-primary-red);
+    transition: 0.3s ease-in-out;
+    &:hover {
+        transform: translateY(-1px);
+        background-color: var(--button-primary-red-hover) !important;
+    }
 }
 
 .updateButton {
-  @include m.submitButton;
-  padding: 10px 16px;
+    @include m.submitButton;
+    padding: 10px 16px;
 }
 
 .cancelButton {
-  padding: 10px 16px;
-  border-radius: 9999px;
-  transition: 0.3s ease-in-out;
-  &:hover {
-    transform: translateY(-1px);
-  }
+    padding: 10px 16px;
+    border-radius: 9999px;
+    transition: 0.3s ease-in-out;
+    &:hover {
+        transform: translateY(-1px);
+    }
 }
 
 .addResidencyButton {
-  margin-top: 10px;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  color: var(--text-primary-color-red);
-  font-weight: 600;
-  transition: 0.3s ease-in-out;
-  &:hover {
-    transform: translateY(-1px);
-    color: var(--button-primary-red-hover);
-    cursor: pointer;
-  }
+    margin-top: 10px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary-color-red);
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
+    &:hover {
+        transform: translateY(-1px);
+        color: var(--button-primary-red-hover);
+        cursor: pointer;
+    }
 }
-
-
-

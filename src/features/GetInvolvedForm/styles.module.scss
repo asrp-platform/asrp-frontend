@@ -1,128 +1,122 @@
 .formContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
-  h2 {
-    color: var(--text-primary-color-dark);
-  }
-
-  p {
-    @media (min-width: 1200px) {
-      display: inline-block;
-      max-width: 600px;
-      line-height: 1.6;
-      color: var(--text-secondary-color-dark);
+    h2 {
+        color: var(--text-primary-color-dark);
     }
-  }
 
+    p {
+        @media (min-width: 1200px) {
+            display: inline-block;
+            max-width: 600px;
+            line-height: 1.6;
+            color: var(--text-secondary-color-dark);
+        }
+    }
 }
 
 .formCard {
-  background: #fff;
-  border-radius: 16px;
-  padding: 32px;
-  border: var(--light-border);
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    border: var(--light-border);
 }
 
 .intentionGrid {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: 1fr;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
 
-  @media (min-width: 1200px) {
-    grid-template-columns: 1fr 1fr;
-  }
+    @media (min-width: 1200px) {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .intentionGridColumn {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: 12px;
-  color: var(--text-secondary-color-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-secondary-color-dark);
 
-  h3 {
-    color: var(--text-primary-color-dark);
-    font-weight: 600;
-  }
+    h3 {
+        color: var(--text-primary-color-dark);
+        font-weight: 600;
+    }
 }
 
-
 .checkboxGrid {
-  display: grid;
-  gap: 12px 24px;
-  grid-template-columns: 1fr;
+    display: grid;
+    gap: 12px 24px;
+    grid-template-columns: 1fr;
 
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
+    @media (min-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .submitRow {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column-reverse;
-  align-items: center;
-  gap: 16px;
-  margin-top: 24px;
-  border-top: 1px solid var(--border-color-light);
-  padding-top: 20px;
-
-  @media (min-width: 1200px) {
-    flex-direction: row;
+    display: flex;
     justify-content: space-between;
+    flex-direction: column-reverse;
     align-items: center;
-  }
+    gap: 16px;
+    margin-top: 24px;
+    border-top: 1px solid var(--border-color-light);
+    padding-top: 20px;
+
+    @media (min-width: 1200px) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
-
-
-
 .helperTextContainer {
-  flex: 5;
-  color: var(--text-secondary-color-dark);
-  font-size: 12px;
-  line-height: 1.25;
+    flex: 5;
+    color: var(--text-secondary-color-dark);
+    font-size: 12px;
+    line-height: 1.25;
 }
 
 .submitButtonContainer {
-  flex: 7;
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
+    flex: 7;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
 
-  @media (min-width: 1200px) {
-    justify-content: flex-start;
-  }
+    @media (min-width: 1200px) {
+        justify-content: flex-start;
+    }
 }
 
 .submitButton {
-  border: none;
-  outline: none;
-  background: var(--button-primary-red);
-  color: white;
-  border-radius: 9999px;
-  padding: 20px 24px;
-  font-size: 14px;
-  font-weight: 500;
-  transition: 0.3s ease-in-out;
+    border: none;
+    outline: none;
+    background: var(--button-primary-red);
+    color: white;
+    border-radius: 9999px;
+    padding: 20px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
 
-  &:hover {
-    background: var(--button-primary-red-hover) !important;
-    transform: translateY(-1px) !important;
-    border: none !important;
-  }
+    &:hover {
+        background: var(--button-primary-red-hover) !important;
+        transform: translateY(-1px) !important;
+        border: none !important;
+    }
 }
 
 .checkboxContainer {
-  padding: 4px 10px;
-  border: var(--light-border);
-  border-radius: 9999px;
-  background-color: #fcf9fa;
+    padding: 4px 10px;
+    border: var(--light-border);
+    border-radius: 9999px;
+    background-color: #fcf9fa;
 }
 
 .otherTitle {
-  font-weight: 600;
+    font-weight: 600;
 }
-

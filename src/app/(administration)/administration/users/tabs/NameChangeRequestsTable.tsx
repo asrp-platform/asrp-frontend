@@ -70,9 +70,9 @@ const NameChangeRequestsTable = () => {
                 ({
                     ...prev,
                     data: prev?.data.map((row) =>
-                        row.id === selectedRow.id ? { ...row, status: action } : row
+                        row.id === selectedRow.id ? { ...row, status: action } : row,
                     ),
-                }) as IPaginatedBackendResponse<INameChangeRequest>
+                }) as IPaginatedBackendResponse<INameChangeRequest>,
         )
     }
 
@@ -85,14 +85,14 @@ const NameChangeRequestsTable = () => {
             if (data.action === "approve") {
                 await api.patch(
                     getUserNameChangeRequestById(selectedRow.user_id, selectedRow.id),
-                    data
+                    data,
                 )
                 updateStatusInTable(selectedRow, data.action)
             }
             if (data.action === "reject") {
                 await api.patch(
                     getUserNameChangeRequestById(selectedRow.user_id, selectedRow.id),
-                    data
+                    data,
                 )
                 updateStatusInTable(selectedRow, data.action)
             }
@@ -116,7 +116,7 @@ const NameChangeRequestsTable = () => {
                             ordering: ordering.length ? ordering.join(",") : null,
                             ...filters,
                         },
-                    }
+                    },
                 )
                 setTableData(response.data)
             } catch (error) {

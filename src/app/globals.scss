@@ -1,131 +1,113 @@
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont,
-  "SF Pro Text", "SF Pro Display",
-  "Segoe UI",
-  Roboto,
-  "Helvetica Neue",
-  Arial,
-  sans-serif !important;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Text",
+        "SF Pro Display",
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        Arial,
+        sans-serif !important;
 }
 
 html {
-  scrollbar-gutter: stable;
+    scrollbar-gutter: stable;
 }
 
 body {
-  background-color: var(--layout-background-color);
-  overflow-x: hidden;
+    background-color: var(--layout-background-color);
+    overflow-x: hidden;
 }
 
 .tiptap {
-  &:focus {
-    outline: none;
-  }
+    &:focus {
+        outline: none;
+    }
 
-  ul,
-  ol {
-    padding-left: 1.5rem;
-    margin-left: 0;
-  }
+    ul,
+    ol {
+        padding-left: 1.5rem;
+        margin-left: 0;
+    }
 
-  li {
-    padding-left: 0.5rem;
-  }
+    li {
+        padding-left: 0.5rem;
+    }
 }
 
 main {
-  min-height: 70vh;
+    min-height: 70vh;
 }
 
 .button-group {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
 }
 
 .editorMenuButton {
-  padding: 0 6px;
+    padding: 0 6px;
 
-  &:hover {
-    background-color: rgb(220 220 220);
-  }
-
+    &:hover {
+        background-color: rgb(220 220 220);
+    }
 }
 
-
 :root {
-  // Background colors
-  --layout-background-color: #F8FAFC;
-  --widget-background-dark-color: #171717;
-  --background-heading-gradient: linear-gradient(
-                  155deg,
-                  #95344e 0%,
-                  #ae4e5c 50%,
-                  #8b55bd 100%
-  );
-  --background-pink-gradient: linear-gradient(
-                  90deg,
-                  #4b0f7a 0%,
-                  #b12a7d 45%,
-                  #f5b6c1 100%
-  );
+    // Background colors
+    --layout-background-color: #f8fafc;
+    --widget-background-dark-color: #171717;
+    --background-heading-gradient: linear-gradient(155deg, #95344e 0%, #ae4e5c 50%, #8b55bd 100%);
+    --background-pink-gradient: linear-gradient(90deg, #4b0f7a 0%, #b12a7d 45%, #f5b6c1 100%);
 
-  // Colors
-  --text-primary-color-light: #dcdcdc;
-  --text-secondary-color-light: #818181;
-  --text-highlight-main-color-light: #fff;
-  --text-primary-color-dark: #111827;
-  --text-secondary-color-dark: #475569;
-  --text-primary-color-red: #DC2626;
-  --text-secondary-color-red: #FF6467FF;
-  --border-color-light: #e2e8f0;
-  --border-color-red: #FECACA;
-  --red-border: 1px solid #FECACA;
-  --light-border: 1px solid #e2e8f0;
+    // Colors
+    --text-primary-color-light: #dcdcdc;
+    --text-secondary-color-light: #818181;
+    --text-highlight-main-color-light: #fff;
+    --text-primary-color-dark: #111827;
+    --text-secondary-color-dark: #475569;
+    --text-primary-color-red: #dc2626;
+    --text-secondary-color-red: #ff6467ff;
+    --border-color-light: #e2e8f0;
+    --border-color-red: #fecaca;
+    --red-border: 1px solid #fecaca;
+    --light-border: 1px solid #e2e8f0;
 
-  --button-primary-red: #DC2626;
-  --button-primary-red-hover: #B91C1C;
+    --button-primary-red: #dc2626;
+    --button-primary-red-hover: #b91c1c;
 
-  --button-secondary-red-hover: #fef2f2;;
+    --button-secondary-red-hover: #fef2f2;
 
+    --button-primary-light: transparent;
+    --button-primary-light-hover: #f8fafc;
 
-  --button-primary-light: transparent;
-  --button-primary-light-hover: #f8fafc;
+    // paddings
+    --general-vertical-padding: 10px;
+    --general-vertical-blocks-gap: 5vh;
+    --general-container-padding: 10vh 5vw;
 
+    // mobile paddings
+    --mobile-layout-padding-inline: 5vw;
 
-  // paddings
-  --general-vertical-padding: 10px;
-  --general-vertical-blocks-gap: 5vh;
-  --general-container-padding: 10vh 5vw;
+    // Desktop Margins
+    --page-container-horizontal-margin: 13vw;
+    --page-container-vertical-margin: 2vh;
 
+    // Mobile Margins
+    --mobile-container-margin-inline: 10px;
+    --mobile-container-margin-vertical: 10px;
+    --paragraph-line-height: 1.6;
+    --card-box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
 
-  // mobile paddings
-  --mobile-layout-padding-inline: 5vw;
-
-
-  // Desktop Margins
-  --page-container-horizontal-margin: 13vw;
-  --page-container-vertical-margin: 2vh;
-
-  // Mobile Margins
-  --mobile-container-margin-inline: 10px;
-  --mobile-container-margin-vertical: 10px;
-  --paragraph-line-height: 1.6;
-  --card-box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
-
-
-  // Fonts
-  --font-system-sans: system-ui, -apple-system, blinkmacsystemfont,
-    "SF Pro Text", "SF Pro Display",
-    "Segoe UI",
-    roboto,
-    "Helvetica Neue",
-    arial,
-    sans-serif;
-  --main-page-button-font-size: 16px;
-  --main-page-button-font-weight: 600;
-
+    // Fonts
+    --font-system-sans:
+        system-ui, -apple-system, blinkmacsystemfont, "SF Pro Text", "SF Pro Display", "Segoe UI",
+        roboto, "Helvetica Neue", arial, sans-serif;
+    --main-page-button-font-size: 16px;
+    --main-page-button-font-weight: 600;
 }

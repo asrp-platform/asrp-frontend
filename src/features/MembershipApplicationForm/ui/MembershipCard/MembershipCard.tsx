@@ -24,7 +24,7 @@ const MembershipCard = ({ value, title, description, price, disabled }: Membersh
             className={clsx(
                 styles.membershipCardContainer,
                 !disabled && styles.activeMembershipCard,
-                disabled && styles.disabledMembershipCard
+                disabled && styles.disabledMembershipCard,
             )}
             onClick={handleClick}
             role="button"

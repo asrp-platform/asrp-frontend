@@ -1,150 +1,141 @@
 @use "../../../../../../shared/mixins" as m;
 
-
 @mixin input-mixin {
-  border: none;
-  outline: none;
-  background: transparent;
-  width: 100%;
-  color: var(--text-primary-color-red) !important;
-  margin: 0;
-  font-size: 24px;
-  font-weight: bold;
-  white-space: nowrap;
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    color: var(--text-primary-color-red) !important;
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    white-space: nowrap;
 
-  &:focus {
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
+    &:focus {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
 
-  &::placeholder {
-    color: var(--text-secondary-color-dark);
-  }
-
+    &::placeholder {
+        color: var(--text-secondary-color-dark);
+    }
 }
 
 .createCardForm :global(.ant-form-item-has-error .ant-input),
 .createCardForm :global(.ant-form-item-has-error .ant-input-affix-wrapper) {
-  border-color: transparent !important;
-  box-shadow: none !important;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
-
 
 .createCardActive {
-  @include m.director-member-card-mixin;
+    @include m.director-member-card-mixin;
 
-  align-items: center;
+    align-items: center;
 }
-
 
 .createCardForm {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
 }
-
 
 .roleInput {
-  @include input-mixin;
+    @include input-mixin;
 }
-
 
 .nameInput {
-  @include input-mixin;
-  color: var(--text-primary-color-dark) !important;
-  font-size: 18px;
+    @include input-mixin;
+    color: var(--text-primary-color-dark) !important;
+    font-size: 18px;
 }
 
-
 .buttonContainer {
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  gap: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .buttonBase {
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition:
-          background-color 0.15s ease,
-          color 0.15s ease,
-          border-color 0.15s ease,
-          box-shadow 0.15s ease;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 
-
 .submitButton {
-  @extend .buttonBase;
+    @extend .buttonBase;
 
-  color: #fff;
+    color: #fff;
 
-  &:hover {
-    box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
-  }
+    &:hover {
+        box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
+    }
 
-  &:active {
-    background-color: #0f172a;
-    box-shadow: none;
-  }
+    &:active {
+        background-color: #0f172a;
+        box-shadow: none;
+    }
 }
 
 .resetButton {
-  @extend .buttonBase;
+    @extend .buttonBase;
 
-  background-color: transparent;
-  color: var(--text-secondary-color-red);
-  border-color: #fecaca;
+    background-color: transparent;
+    color: var(--text-secondary-color-red);
+    border-color: #fecaca;
 
-  &:hover {
-    background-color: #fee2e2 !important;
-    border-color: #fca5a5 !important;
-    color: var(--text-secondary-color-red) !important;
-  }
+    &:hover {
+        background-color: #fee2e2 !important;
+        border-color: #fca5a5 !important;
+        color: var(--text-secondary-color-red) !important;
+    }
 
-  &:active {
-    background-color: #fecaca !important;
-  }
+    &:active {
+        background-color: #fecaca !important;
+    }
 }
 
-
 .fieldError {
-  margin-top: 4px;
-  font-size: 13px;
-  color: #dc2626; // red-600
+    margin-top: 4px;
+    font-size: 13px;
+    color: #dc2626; // red-600
 }
 
 .formError {
-  margin-bottom: 12px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  background-color: #fee2e2;
-  color: #991b1b;
-  font-size: 14px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: #fee2e2;
+    color: #991b1b;
+    font-size: 14px;
 }
 
 .editorContent {
-  margin-top: 10px;
-  padding: 5px 10px;
-  border: 1px solid var(--border-color-light);
-  border-radius: 10px;
-  color: var(--text-secondary-color-dark);
-  width: 100%;
-  min-height: 250px;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-color-light);
+    border-radius: 10px;
+    color: var(--text-secondary-color-dark);
+    width: 100%;
+    min-height: 250px;
 }

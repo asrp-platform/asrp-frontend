@@ -1,25 +1,21 @@
 @use "../../../../../../shared/mixins" as m;
 
 .boardContainer {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  margin-bottom: var(--mobile-container-margin-vertical);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: var(--mobile-container-margin-vertical);
 
-  @media (min-width: 1200px) {
-    grid-template-columns: 1fr 1fr;
-    padding: 0;
-  }
+    @media (min-width: 1200px) {
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+    }
 }
 
 .loadingContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 40vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh;
 }
-
-
-
-

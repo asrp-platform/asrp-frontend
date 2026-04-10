@@ -24,7 +24,7 @@ export const getUserResidenciesUrl = (user_id: number | string): string =>
 
 export const getUserResidencyByIdUrl = (
     userId: number | string,
-    residencyId: number | string
+    residencyId: number | string,
 ): string => `${getUserUrl(userId)}/residencies/${residencyId}`
 
 export const getUserFellowshipsUrl = (user_id: number | string): string =>
@@ -32,7 +32,7 @@ export const getUserFellowshipsUrl = (user_id: number | string): string =>
 
 export const getUserFellowshipByIdUrl = (
     userId: number | string,
-    residencyId: number | string
+    residencyId: number | string,
 ): string => `${getUserUrl(userId)}/fellowships/${residencyId}`
 
 // Feedback

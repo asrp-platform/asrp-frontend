@@ -4,9 +4,7 @@
 
 For local development NEXT_PUBLIC_API_URL must be provided.
 
-
 ## Deployment
-
 
 ### Build container
 
@@ -20,13 +18,11 @@ docker build --build-arg NEXT_PUBLIC_API_URL=/api -t max31ru12/asrp-prod-fronten
 docker push max31ru12/asrp-prod-frontend:latest
 ```
 
-
 ### Pull container
 
 ```bash
 docker pull max31ru12/asrp-prod-frontend:latest
 ```
-
 
 ### Run container
 

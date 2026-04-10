@@ -7,7 +7,7 @@ import SearchFilterDropdownLayout from "../SearchFilterDropdownLayout/SearchFilt
 export const getInputColumnSearchProps = <TFilters extends Record<string, any>>(
     dataIndex: string,
     filters: TFilters,
-    setFilters: Dispatch<SetStateAction<TFilters>>
+    setFilters: Dispatch<SetStateAction<TFilters>>,
 ) => {
     const filterKey = `${String(dataIndex)}__startswith` as keyof TFilters
     const value = filters[filterKey]

@@ -53,7 +53,7 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
             immediatelyRender: false,
             editable: editable,
         },
-        [content, editable]
+        [content, editable],
     )
 
     const onResetModalCancel = () => {
@@ -91,7 +91,7 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
             }
             const response = await api.patch<IDirectorsBoardMember>(
                 getDirectorsBoardMemberAdminUrl(member.id),
-                data
+                data,
             )
             onSaved(response.data)
             setOpen(false)
@@ -108,7 +108,7 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
         try {
             setIsLoading(true)
             const response = await api.delete<number>(
-                getDirectorsBoardMemberAdminUrl(Number(member.id))
+                getDirectorsBoardMemberAdminUrl(Number(member.id)),
             )
             const deletedCardId = response.data
             onDeleted(deletedCardId)

@@ -9,7 +9,7 @@ import { useRouter } from "next/router"
 const { Title } = Typography
 
 const GuidesListCard = () => {
-    const router = useRouter();
+    const router = useRouter()
 
     const items = [
         "Elevating clinical quality through shared expertise",

@@ -1,27 +1,25 @@
-
-
 @mixin photoOverlayMixin {
-  position: absolute;
-  background: rgb(0 0 0 / 0.45);
-  color: white;
-  font-size: 14px;
-  opacity: 0;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.2s;
+    position: absolute;
+    background: rgb(0 0 0 / 0.45);
+    color: white;
+    font-size: 14px;
+    opacity: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s;
 }
 
 @mixin placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: #9ca3af;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #9ca3af;
 }
 
 :root {
-  --directors-board-image-height: 180px;
-  --directors-board-image-width: 180px;
+    --directors-board-image-height: 180px;
+    --directors-board-image-width: 180px;
 }

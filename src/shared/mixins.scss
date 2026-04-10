@@ -1,124 +1,117 @@
 @mixin card-style() {
-  background-color: white;
-  padding: 20px 16px;
-  border-radius: 25px;
-  border: 1px solid var(--border-color-light);
+    background-color: white;
+    padding: 20px 16px;
+    border-radius: 25px;
+    border: 1px solid var(--border-color-light);
 
-  // box-shadow: var(--card-box-shadow);
+    // box-shadow: var(--card-box-shadow);
 }
 
 @mixin antd-editable-input($height: 40px) {
-  color: #1B1B1B;
-  cursor: default;
+    color: #1b1b1b;
+    cursor: default;
 
-  .ant-select-disabled {
-    cursor: default !important;
-  }
-
+    .ant-select-disabled {
+        cursor: default !important;
+    }
 }
 
 @mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @mixin main-page-card() {
-  padding: 20px 24px;
-  background-color: #fff;
-  border: var(--light-border);
-  border-radius: 20px;
-  box-shadow:
-          0 4px 12px rgb(15 23 42 / 0.06),
-          0 1px 2px rgb(15 23 42 / 0.04);
-  line-height: 1.6;
+    padding: 20px 24px;
+    background-color: #fff;
+    border: var(--light-border);
+    border-radius: 20px;
+    box-shadow:
+        0 4px 12px rgb(15 23 42 / 0.06),
+        0 1px 2px rgb(15 23 42 / 0.04);
+    line-height: 1.6;
 
-  h4 {
-    font-size: 18px;
-  }
+    h4 {
+        font-size: 18px;
+    }
 
-  p {
-    margin-top: 5px;
-    font-size: 16px;
-    font-weight: lighter;
-  }
+    p {
+        margin-top: 5px;
+        font-size: 16px;
+        font-weight: lighter;
+    }
 }
 
 @mixin before-list-point() {
-  display: inline-block;
-  content: "";
-  width: 6px;
-  border-radius: 50%;
-  height: 6px;
-  background-color: var(--text-primary-color-red);
-  margin-right: 10px;
-  margin-bottom: 2px;
+    display: inline-block;
+    content: "";
+    width: 6px;
+    border-radius: 50%;
+    height: 6px;
+    background-color: var(--text-primary-color-red);
+    margin-right: 10px;
+    margin-bottom: 2px;
 }
 
 @mixin heading-card-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 5vh 12vw;
-  background-color: #fff;
-  border: var(--light-border);
-  border-radius: 25px;
-
-  @media (width >= 1200px) {
-    padding: 8vh 12vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh 12vw;
+    background-color: #fff;
+    border: var(--light-border);
     border-radius: 25px;
-    text-align: center;
-  }
 
-  h1 {
-    text-align: center;
-    line-height: 1.4;
-    font-weight: 600;
-    color: var(--text-primary-color-dark);
-  }
+    @media (width >= 1200px) {
+        padding: 8vh 12vw;
+        border-radius: 25px;
+        text-align: center;
+    }
 
-  p {
-    margin-top: 24px;
-    text-align: center;
-    color: var(--text-secondary-color-dark);
-    font-size: 18px;
-    line-height: var(--paragraph-line-height);
-  }
+    h1 {
+        text-align: center;
+        line-height: 1.4;
+        font-weight: 600;
+        color: var(--text-primary-color-dark);
+    }
+
+    p {
+        margin-top: 24px;
+        text-align: center;
+        color: var(--text-secondary-color-dark);
+        font-size: 18px;
+        line-height: var(--paragraph-line-height);
+    }
 }
-
-
-
 
 @mixin director-member-card-mixin {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: var(--paragraph-line-height);
-  color: var(--text-secondary-color-light);
-  gap: 10px;
-  background-color: white;
-  border-radius: 25px;
-  border: 1px solid var(--border-color-light);
-  padding: 20px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: var(--paragraph-line-height);
+    color: var(--text-secondary-color-light);
+    gap: 10px;
+    background-color: white;
+    border-radius: 25px;
+    border: 1px solid var(--border-color-light);
+    padding: 20px 32px;
 }
 
-
-
 @mixin submitButton {
-  border: none;
-  outline: none;
-  background: var(--button-primary-red);
-  color: white;
-  padding: 20px 24px;
-  font-size: 14px;
-  font-weight: 500;
-  transition: 0.3s ease-in-out;
+    border: none;
+    outline: none;
+    background: var(--button-primary-red);
+    color: white;
+    padding: 20px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
 
-
-  &:hover {
-    background: var(--button-primary-red-hover) !important;
-    transform: translateY(-1px) !important;
-    border: none !important;
-  }
+    &:hover {
+        background: var(--button-primary-red-hover) !important;
+        transform: translateY(-1px) !important;
+        border: none !important;
+    }
 }

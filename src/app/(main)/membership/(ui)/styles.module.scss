@@ -1,62 +1,61 @@
 .card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 24px;
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  align-items: flex-start;
-  box-shadow:
-          0 4px 4px rgb(15 23 42 / 0.06),
-          0 1px 2px rgb(15 23 42 / 0.04);;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+    box-shadow:
+        0 4px 4px rgb(15 23 42 / 0.06),
+        0 1px 2px rgb(15 23 42 / 0.04);
 
-  h3 {
-    font-weight: 600;
-  }
+    h3 {
+        font-weight: 600;
+    }
 }
 
 .price {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .secondaryLink {
-  margin-top: auto;
-  background: var(--text-primary-color-red);
-  color: #ffffff;
-  border: none;
-  border-radius: 999px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  width: 100%;
-  transition: 0.3s ease-in-out;
-  font-weight: 600;
-  &:hover {
-    background-color: var(--button-primary-red-hover);
-    transform: translateY(-1px);
-  }
+    margin-top: auto;
+    background: var(--text-primary-color-red);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s ease-in-out;
+    font-weight: 600;
+    &:hover {
+        background-color: var(--button-primary-red-hover);
+        transform: translateY(-1px);
+    }
 }
 
-
 .votingStatus {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 9999px;
 }
 
 .votingStatusRed {
-  color: var(--text-primary-color-red);
-  background-color: rgb(251, 44, 54, 10%);
+    color: var(--text-primary-color-red);
+    background-color: rgb(251, 44, 54, 10%);
 }
 
 .votingStatusBlue {
-  color: rgb(49 65 88);
-  background-color: rgb(249 243 244);
+    color: rgb(49 65 88);
+    background-color: rgb(249 243 244);
 }
 
 .subdescription {
-  margin-bottom: 20px;
-  font-size: 12px;
-  color: var(--text-secondary-color-dark);
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: var(--text-secondary-color-dark);
 }

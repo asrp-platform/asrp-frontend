@@ -13,7 +13,7 @@ export const getSelectTableFilterDropdown = <TFilters extends Record<string, any
     dataIndex: string,
     filters: TFilters,
     setFilters: (_prev: any) => void,
-    options: IOption[]
+    options: IOption[],
 ) => {
     const filterKey = `${String(dataIndex)}` as keyof TFilters
     const value = filters[filterKey]

@@ -1,6 +1,5 @@
 import { type Editor, useEditorState } from "@tiptap/react"
 
-
 import {
     AlignCenter,
     AlignLeft,
@@ -17,16 +16,16 @@ import {
     Redo,
     SeparatorHorizontal,
     CornerDownLeft,
-    Link, Heading4, Heading5,
+    Link,
+    Heading4,
+    Heading5,
 } from "lucide-react"
 import { Button } from "antd"
-
 
 interface IProps {
     editor: Editor
     show?: boolean
 }
-
 
 const EditorMenuBar = ({ editor, show = true }: IProps) => {
     // Read the current editor's state, and re-render the component when it changes
@@ -67,7 +66,6 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
     })
 
     const options = [
-
         {
             icon: <Heading3 width={18} />,
             onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
@@ -185,7 +183,6 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
             disabled: false,
         },
     ]
-
 
     if (!show) {
         return null

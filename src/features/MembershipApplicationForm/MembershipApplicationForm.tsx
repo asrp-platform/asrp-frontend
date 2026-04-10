@@ -113,7 +113,7 @@ const MembershipApplicationForm = () => {
             state: user?.state,
             city: user?.city,
         }),
-        [user]
+        [user],
     )
 
     const [form] = useForm<FieldType>()
@@ -164,7 +164,7 @@ const MembershipApplicationForm = () => {
             if (isAxiosError(error)) {
                 if (error.response?.status === 401) {
                     message.error(
-                        "Your session has expired or you are not authorized. Please sign in and try again."
+                        "Your session has expired or you are not authorized. Please sign in and try again.",
                     )
                     return
                 }

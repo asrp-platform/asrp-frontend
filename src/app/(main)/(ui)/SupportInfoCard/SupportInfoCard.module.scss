@@ -1,23 +1,19 @@
-
-
 .iconContainer {
-  background-color: #eef2ff;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
+    background-color: #eef2ff;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
 
-  svg {
-    width: 32px;
-    height: 32px;
-    color: var(--text-primary-color-red);
-  }
+    svg {
+        width: 32px;
+        height: 32px;
+        color: var(--text-primary-color-red);
+    }
 }
 
 .titleContainer {
-  margin-top: 8px;
+    margin-top: 8px;
 }
-
-

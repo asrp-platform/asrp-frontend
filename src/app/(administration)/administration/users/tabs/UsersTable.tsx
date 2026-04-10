@@ -59,7 +59,7 @@ const UsersTable = () => {
                             ordering: ordering.length ? ordering.join(",") : null,
                             ...filters,
                         },
-                    }
+                    },
                 )
                 setTableData(response.data)
             } catch (error) {
@@ -283,7 +283,7 @@ const UsersTable = () => {
     const handleTableChange = (
         _pagination: TablePaginationConfig,
         _filters: Record<string, FilterValue | null>,
-        sorter: SorterResult<IUser> | SorterResult<IUser>[]
+        sorter: SorterResult<IUser> | SorterResult<IUser>[],
     ) => {
         if (Array.isArray(sorter)) return
 

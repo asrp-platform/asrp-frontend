@@ -1,34 +1,34 @@
 .title {
-  color: var(--text-primary-color-dark);
-  font-weight: 600;
-  font-size: 28px;
+    color: var(--text-primary-color-dark);
+    font-weight: 600;
+    font-size: 28px;
 }
 
 .titleInfo {
-  margin-top: 6px;
-  color: var(--text-secondary-color-dark);
-  font-size: 14px;
+    margin-top: 6px;
+    color: var(--text-secondary-color-dark);
+    font-size: 14px;
 }
 
 .page {
-  min-height: 100vh;
-  background: #f8fafc;
+    min-height: 100vh;
+    background: #f8fafc;
 }
 
 .container {
-  display: flex;
-  margin: 0 auto;
-  padding: 0 16px 64px;
+    display: flex;
+    margin: 0 auto;
+    padding: 0 16px 64px;
 }
 
 .section {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

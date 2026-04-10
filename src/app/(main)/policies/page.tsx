@@ -1,9 +1,8 @@
 "use client"
 
 import { Layout, Typography, Divider, Button } from "antd"
-import {useCookieConsent} from "../../../context/CookieConsentProvider/CookieConsentProvider.tsx";
+import { useCookieConsent } from "../../../context/CookieConsentProvider/CookieConsentProvider.tsx"
 import styles from "./styles.module.scss"
-
 
 const { Title, Paragraph } = Typography
 const { Content } = Layout

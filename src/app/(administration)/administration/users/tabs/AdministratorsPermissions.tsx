@@ -78,7 +78,7 @@ const AdministratorsPermissions = () => {
                             page_size: pageSize,
                             ...filters,
                         },
-                    }
+                    },
                 )
                 setTableData(response.data)
             } catch (error) {

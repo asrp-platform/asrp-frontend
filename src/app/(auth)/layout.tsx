@@ -1,12 +1,7 @@
-import type {ReactNode} from "react";
+import type { ReactNode } from "react"
 
+const Layout = async ({ children }: { children: ReactNode }) => {
+    return <main>{children}</main>
+}
 
-const Layout = async ({children}: {children: ReactNode}) => {
-    return (
-        <main>
-            {children}
-        </main>
-    );
-};
-
-export default Layout;
+export default Layout

@@ -1,15 +1,14 @@
 .logoPlaceholder {
-  color: var(--text-primary-color-red);
-  font-size: 2rem;
-  font-weight: bold;
-  transition: transform 0.25s ease;
-
-  img {
+    color: var(--text-primary-color-red);
+    font-size: 2rem;
+    font-weight: bold;
     transition: transform 0.25s ease;
-  }
 
-  &:hover img {
-    transform: scale(1.05);
-  }
+    img {
+        transition: transform 0.25s ease;
+    }
 
+    &:hover img {
+        transform: scale(1.05);
+    }
 }

@@ -27,7 +27,7 @@ export const setFormFieldsErrors = (error: AxiosError, form: FormInstance) => {
                 backendErrors.map((error) => ({
                     name: error.field,
                     errors: [error.message],
-                }))
+                })),
             )
         }
     }
