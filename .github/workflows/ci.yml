@@ -7,8 +7,8 @@ on:
         branches: [main, develop]
 
 concurrency:
-  group: frontend-ci-${{ github.ref }}
-  cancel-in-progress: true
+    group: frontend-ci-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
     prepare:
@@ -24,8 +24,8 @@ jobs:
                   node-version: 20
                   cache: npm
 
-#            - name: Install dependencies
-#              run: npm install
+            #            - name: Install dependencies
+            #              run: npm install
 
             - name: Install dependencies
               run: npm ci
@@ -46,17 +46,17 @@ jobs:
               run: docker build -t asrp-frontend-test -f ./docker/Dockerfile .
 
     build:
-      runs-on: ubuntu-latest
+        runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v4
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-        - name: Install dependencies
-          run: npm ci
+            - name: Install dependencies
+              run: npm ci
 
-        - name: Build Next.js
-          run: npm run build
+            - name: Build Next.js
+              run: npm run build
 
-        - name: Build Docker image
-          run: docker build -t asrp-frontend-test -f ./docker/Dockerfile .
+            - name: Build Docker image
+              run: docker build -t asrp-frontend-test -f ./docker/Dockerfile .
