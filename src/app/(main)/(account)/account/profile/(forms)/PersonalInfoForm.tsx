@@ -1,23 +1,23 @@
 "use client"
 
 import styles from "../(ui)/styles.module.scss"
-import { Button, Col, Form, type FormProps, Input, Row } from "antd"
+import { Button, Col, Form, type FormProps, Input, message, Row } from "antd"
 import type { IUser } from "../../../../../../entities/User.ts"
 import { useState } from "react"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
 import api from "../../../../../../axios.ts"
-import { getUserUrl } from "../../../../../../shared/backend/restApiUrls.ts"
 import ChangeNameModal from "../(ui)/RequestNameChangeModal.tsx"
+import { CURRENT_USER_URL } from "../../../../../../shared/backend/currentUserUrls.ts"
 
 interface IProps {
     user: IUser
 }
 
 type FieldType = {
-    firstName: string
-    lastName: string
-    middleName?: string
+    firstname: string
+    lastname: string
+    middlename?: string
     suffix?: string
     credentials?: string
     email: string
@@ -34,9 +34,11 @@ const PersonalInfoForm = ({ user }: IProps) => {
     const [nameChangeModalOpen, setNameChangeModalOpen] = useState(false)
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+        const { email, firstname, lastname, middlename, ...updateData } = values
         try {
             setIsLoading(true)
-            await api.put(getUserUrl(user.id), values)
+            await api.patch(CURRENT_USER_URL, updateData)
+            message.success("Successfully updated user data")
         } catch (error) {
             if (isAxiosError(error)) {
                 if (error.status === 422) {

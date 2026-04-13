@@ -1,0 +1,15 @@
+.cardTitle {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mutedText {
+    font-size: 12px;
+    color: #64748b; // slate-500
+}
