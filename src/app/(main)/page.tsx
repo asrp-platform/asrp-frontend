@@ -2,6 +2,7 @@ import styles from "./styles.module.scss"
 
 import ContactForm from "../../features/ContactForm/ContactForm.tsx"
 import Link from "next/link"
+import GuidesListCard from "./(ui)/GuidesListCard/GuidesListCard.tsx"
 
 const MainPage = async () => {
     return (
@@ -86,20 +87,7 @@ const MainPage = async () => {
                                     and scientists.
                                 </p>
                             </div>
-                            <div className={styles.guidesContainer}>
-                                <h3>What guides our work</h3>
-                                <ul>
-                                    <li className={styles.liFirst}>
-                                        Elevating clinical quality through shared expertise.
-                                    </li>
-                                    <li className={styles.liSecond}>
-                                        Championing bilingual education and inclusive mentorship.
-                                    </li>
-                                    <li className={styles.liThird}>
-                                        Advocating for members in national professional forums.
-                                    </li>
-                                </ul>
-                            </div>
+                            <GuidesListCard />
                         </div>
                     </div>
                 </section>

@@ -1,54 +1,59 @@
+@use "../../../../shared/mixins.scss" as m;
+
 .container {
-    padding: 24px;
-    border: 1px solid var(--text-color);
-    border-radius: 12px;
-    box-shadow: var(--card-box-shadow);
-    background-color: #131c2e;
-    transition: 0.4s ease-in-out;
-}
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    padding: 16px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-secondary-color-dark);
+    background-color: rgb(246 246 246);
+    border: 1px solid var(--border-color-light);
+    border-radius: 25px;
 
-.title {
-    font-size: 1.6rem !important;
-    color: white !important;
-}
-
-.button {
-    margin-top: 10px;
-    width: 200px;
-    transition: 0.4s ease-in-out;
-    font-size: 1rem !important;
-    padding: 18px 0;
-
-    &:hover {
-        color: var(--text-primary-color-red) !important;
-        border-color: var(--text-primary-color-red) !important;
-        transform: translateY(-5px) !important;
+    .title {
+        font-size: 28px;
+        color: var(--text-primary-color-dark);
     }
-}
 
-.guidingWorkList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
+    .guidingWorkList {
+        list-style: none;
         display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
-        color: #e6e9f0;
-        font-size: 16px;
-        line-height: 1.6;
-        margin-bottom: 0.75rem;
+        flex-direction: column;
+        gap: 8px;
+        margin: 10px;
 
-        &::before {
-            content: "";
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #34d399; // тот самый голубовато-зелёный акцент
-            border-radius: 50%;
-            margin-top: 7px;
-            flex-shrink: 0;
+        .guidingWorkItem::before {
+            @include m.before-list-point;
+        }
+
+        .guidingWorkItem:first-child::before {
+            background-color: #00d492;
+        }
+
+        .guidingWorkItem:nth-child(2)::before {
+            background-color: #00bcff;
+        }
+    }
+
+    .button {
+        align-self: center;
+        margin-top: auto;
+        padding: 8px 14px;
+        width: 100%;
+        font-weight: 600;
+        color: inherit;
+        border: 1px solid var(--border-color-light);
+        border-radius: 100vw;
+        cursor: pointer;
+        transition: transform 0.25s ease;
+        text-align: center;
+        text-decoration: none;
+
+        &:hover {
+            background-color: rgb(255 255 255 / 0.5);
+            transform: translateY(-1px);
         }
     }
 }
