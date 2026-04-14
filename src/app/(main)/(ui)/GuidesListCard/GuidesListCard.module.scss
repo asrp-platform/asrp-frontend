@@ -1,5 +1,3 @@
-@use "../../../../shared/mixins.scss" as m;
-
 .container {
     display: flex;
     flex-direction: column;
@@ -25,7 +23,14 @@
         margin: 10px;
 
         .guidingWorkItem::before {
-            @include m.before-list-point;
+            display: inline-block;
+            content: "";
+            margin-right: 10px;
+            margin-bottom: 2px;
+            width: 6px;
+            height: 6px;
+            background-color: var(--text-primary-color-red);
+            border-radius: 50%;
         }
 
         .guidingWorkItem:first-child::before {

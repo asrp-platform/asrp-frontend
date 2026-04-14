@@ -43,17 +43,6 @@
     }
 }
 
-@mixin before-list-point() {
-    display: inline-block;
-    content: "";
-    width: 6px;
-    border-radius: 50%;
-    height: 6px;
-    background-color: var(--text-primary-color-red);
-    margin-right: 10px;
-    margin-bottom: 2px;
-}
-
 @mixin heading-card-container {
     display: flex;
     flex-direction: column;
