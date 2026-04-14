@@ -199,60 +199,6 @@
     }
 }
 
-.guidesContainer {
-    color: var(--text-secondary-color-dark);
-    border: 1px solid var(--border-color-light);
-    border-radius: 25px;
-    padding: 16px;
-    line-height: 1.6;
-    font-size: 16px;
-    flex: 3;
-    background-color: rgb(246 246 246);
-
-    h3 {
-        color: var(--text-primary-color-dark);
-    }
-
-    ul {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        margin: 10px;
-        gap: 8px;
-    }
-
-    button {
-        margin-top: 20px;
-        padding: 8px 14px;
-        border-radius: 9999px;
-        border: none;
-        transition: 0.3s ease-in-out;
-        font-weight: bolder;
-
-        &:hover {
-            background-color: #dcdcdc;
-        }
-    }
-}
-
-.liFirst::before {
-    @include m.before-list-point;
-
-    background-color: #00d492;
-}
-
-.liSecond::before {
-    @include m.before-list-point;
-
-    background-color: #00bcff;
-}
-
-.liThird::before {
-    @include m.before-list-point;
-
-    background-color: var(--text-primary-color-red);
-}
-
 .programsContainer {
     display: flex;
     flex-direction: column;

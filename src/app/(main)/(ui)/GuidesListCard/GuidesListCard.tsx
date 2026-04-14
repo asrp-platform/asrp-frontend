@@ -1,35 +1,26 @@
-"use client"
-
-import { Button, Typography } from "antd"
-
 import styles from "./GuidesListCard.module.scss"
+import Link from "next/link"
 
-import { useRouter } from "next/router"
-
-const { Title } = Typography
+const GUIDES_ITEMS = [
+    { id: 1, text: "Elevating clinical quality through shared expertise" },
+    { id: 2, text: "Championing bilingual education and inclusive mentorship" },
+    { id: 3, text: "Advocating for members in national professional forums" },
+]
 
 const GuidesListCard = () => {
-    const router = useRouter()
-
-    const items = [
-        "Elevating clinical quality through shared expertise",
-        "Championing bilingual education and inclusive mentorship",
-        "Advocating for members in national professional forums",
-    ]
-
     return (
         <div className={styles.container}>
-            <Title level={3} className={styles.title}>
-                What guides our work
-            </Title>
+            <h3 className={styles.title}>What guides our work</h3>
             <ul className={styles.guidingWorkList}>
-                {items.map((item) => (
-                    <li key={item}>{item}</li>
+                {GUIDES_ITEMS.map(({ text, id }) => (
+                    <li key={id} className={styles.guidingWorkItem}>
+                        {text}
+                    </li>
                 ))}
             </ul>
-            <Button className={styles.button} onClick={() => router.push("/about")}>
+            <Link type="button" href="/about" className={styles.button}>
                 Learn about ASRP
-            </Button>
+            </Link>
         </div>
     )
 }
