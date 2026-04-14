@@ -18,7 +18,7 @@ const GuidesListCard = () => {
                     </li>
                 ))}
             </ul>
-            <Link type="button" href="/about" className={styles.button}>
+            <Link type="button" href="/about" className={styles.aboutLinkButton}>
                 Learn about ASRP
             </Link>
         </div>

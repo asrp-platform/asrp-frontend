@@ -101,11 +101,12 @@
     cursor: pointer;
     transition: 0.3s ease-in-out;
     text-align: center;
-    text-decoration: none;
+
     &:hover {
         transform: translateY(-1px);
         background: var(--button-primary-red-hover);
     }
+
     &:visited {
         color: #ffffff;
     }
@@ -167,7 +168,6 @@
         border: none;
         transition: 0.3s ease-in-out;
         font-weight: 600;
-        text-decoration: none;
         text-align: center;
         cursor: pointer;
         color: white;

@@ -16,7 +16,6 @@
     }
 
     .guidingWorkList {
-        list-style: none;
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -42,19 +41,17 @@
         }
     }
 
-    .button {
+    .aboutLinkButton {
         align-self: center;
         margin-top: auto;
         padding: 8px 14px;
         width: 100%;
         font-weight: 600;
-        color: inherit;
         border: 1px solid var(--border-color-light);
         border-radius: 100vw;
         cursor: pointer;
         transition: transform 0.25s ease;
         text-align: center;
-        text-decoration: none;
 
         &:hover {
             background-color: rgb(255 255 255 / 0.5);
