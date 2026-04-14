@@ -50,7 +50,6 @@
 }
 
 .headerMenuItem {
-    text-decoration: none;
     color: var(--text-primary-color-light);
     display: inline-block;
     transition: transform 0.25s ease;
@@ -61,6 +60,5 @@
 
     &:visited {
         color: inherit;
-        text-decoration: none;
     }
 }

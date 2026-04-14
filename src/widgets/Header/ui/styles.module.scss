@@ -114,7 +114,6 @@
     }
 
     a {
-        text-decoration: none;
         color: var(--text-primary-color-light);
         display: inline-block; /* важно */
         transition: transform 0.25s ease;
@@ -169,7 +168,6 @@
 
 .sideMenu {
     a {
-        text-decoration: none;
         color: var(--text-primary-color-light);
         display: inline-block; /* важно */
         transition: transform 0.25s ease;
