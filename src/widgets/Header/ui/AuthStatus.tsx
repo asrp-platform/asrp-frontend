@@ -48,6 +48,8 @@ const AuthStatus = () => {
         return <div className={styles.avatarSkeleton} />
     }
 
+    console.log(user)
+
     if (!user) {
         return (
             <div className={styles.userCircleContainer}>
@@ -63,9 +65,7 @@ const AuthStatus = () => {
 
     return (
         <Dropdown menu={{ items }} placement="bottomRight">
-            <div className={styles.userProfileIcon}>
-                <UserAvatar user={user} />
-            </div>
+            <div className={styles.userProfileIcon}>{/* <UserAvatar user={user} /> */}</div>
         </Dropdown>
     )
 }

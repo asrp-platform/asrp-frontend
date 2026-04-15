@@ -85,7 +85,7 @@ const RegisterForm = () => {
             <h2>Name</h2>
             <div className={styles.twoFieldContainer}>
                 <Form.Item<FieldType>
-                    label="Firstname"
+                    label="First name"
                     name="firstname"
                     rules={[{ required: true, message: "Please enter your name" }]}
                 >
@@ -93,7 +93,7 @@ const RegisterForm = () => {
                 </Form.Item>
 
                 <Form.Item<FieldType>
-                    label="Lastname"
+                    label="Last name"
                     name="lastname"
                     rules={[{ required: true, message: "Please enter your lastname" }]}
                 >
@@ -144,30 +144,6 @@ const RegisterForm = () => {
                     rules={[{ required: true, message: "Please select your city" }]}
                 >
                     <Input className={styles.antdInput} />
-                </Form.Item>
-            </div>
-
-            <h2>Professional information</h2>
-
-            <div className={styles.twoFieldContainer}>
-                <Form.Item<FieldType>
-                    label="Institution"
-                    name="institution"
-                    rules={[{ required: true, message: "Please enter your institution" }]}
-                >
-                    <Input className={styles.antdInput} />
-                </Form.Item>
-
-                <Form.Item<FieldType>
-                    label="Role"
-                    name="role"
-                    rules={[{ required: true, message: "Please select your role" }]}
-                >
-                    <Select className={styles.antdInput}>
-                        {Object.values(Role).map((role) => (
-                            <Select.Option value={role}>{role}</Select.Option>
-                        ))}
-                    </Select>
                 </Form.Item>
             </div>
 
