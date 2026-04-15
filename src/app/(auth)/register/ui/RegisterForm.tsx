@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Button, Form, type FormProps, Input, Select } from "antd"
+import { Button, Form, type FormProps, Input } from "antd"
 import { useForm } from "antd/es/form/Form"
 import { isAxiosError } from "axios"
 import useNotification from "antd/es/notification/useNotification"

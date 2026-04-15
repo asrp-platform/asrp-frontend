@@ -48,8 +48,6 @@ const AuthStatus = () => {
         return <div className={styles.avatarSkeleton} />
     }
 
-    console.log(user)
-
     if (!user) {
         return (
             <div className={styles.userCircleContainer}>
