@@ -63,7 +63,9 @@ const AuthStatus = () => {
 
     return (
         <Dropdown menu={{ items }} placement="bottomRight">
-            <div className={styles.userProfileIcon}>{/* <UserAvatar user={user} /> */}</div>
+            <div className={styles.userProfileIcon}>
+                <UserAvatar user={user} />
+            </div>
         </Dropdown>
     )
 }
