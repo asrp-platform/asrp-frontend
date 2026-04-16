@@ -1,8 +1,8 @@
 import styles from "./styles.module.scss"
 import Link from "next/link"
-import Image from "next/image"
 import type { Metadata } from "next"
 import { BYLAWS_URL } from "../../../shared/backend/restApiUrls.ts"
+import SocialNetLinks from "../../../shared/ui/social-net-links/SocialNetLinks.tsx"
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
@@ -67,35 +67,7 @@ const Page = () => {
                             View Our Bylaws
                         </Link>
                         <h3>Our Social Media:</h3>
-                        <div className={styles.socialMediaContainer}>
-                            <div className={styles.mediaLinkContainer}>
-                                <Image
-                                    src="/icons/footer/TelegramLogo.svg"
-                                    alt="TelegramLogo"
-                                    width={16}
-                                    height={16}
-                                />
-                                <Link href="#">Telegram</Link>
-                            </div>
-                            <div className={styles.mediaLinkContainer}>
-                                <Image
-                                    src="/icons/footer/TwitterLogo.svg"
-                                    alt="TelegramLogo"
-                                    width={16}
-                                    height={16}
-                                />
-                                <Link href="#">X</Link>
-                            </div>
-                            <div className={styles.mediaLinkContainer}>
-                                <Image
-                                    src="/icons/footer/FacebookLogo.svg"
-                                    alt="TelegramLogo"
-                                    width={16}
-                                    height={16}
-                                />
-                                <Link href="#">Facebook</Link>
-                            </div>
-                        </div>
+                        <SocialNetLinks withLabels />
                     </div>
                 </div>
             </section>

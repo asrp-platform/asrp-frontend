@@ -96,18 +96,6 @@
     padding: 24px;
 }
 
-.logoContainer {
-    display: flex;
-    align-items: center;
-    padding: var(--general-vertical-padding) 0;
-    gap: 16px;
-
-    a {
-        all: unset;
-        cursor: pointer;
-    }
-}
-
 .sendMessageFormContainer {
     flex: 1;
 }
