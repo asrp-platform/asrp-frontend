@@ -21,8 +21,10 @@ interface IProps {
     setDirectorMembers: (_memberList: IDirectorsBoardMember[]) => void
     draggingCard: IDirectorsBoardMember | null
     setDraggingCard: (_newDragging: IDirectorsBoardMember | null) => void
-    canEdit?: boolean
+    canManageMembers?: boolean
 }
+
+type DetailViewMode = "view" | "edit"
 
 const ViewCard = ({
     member,
@@ -30,12 +32,12 @@ const ViewCard = ({
     setDirectorMembers,
     draggingCard,
     setDraggingCard,
-    canEdit = false,
+    canManageMembers = false,
 }: IProps) => {
     // Used for updating view card after sending patch request via detail view
     const [currentMember, setCurrentMember] = useState<IDirectorsBoardMember>(member)
-    const [detailOpen, setDetailOpen] = useState(false)
-
+    const [isDetailOpen, setIsDetailOpen] = useState(false)
+    const [detailMode, setDetailMode] = useState<DetailViewMode>("view")
     const [isDragOver, setIsDragOver] = useState<boolean>(false)
 
     const previewContent = useMemo(() => {
@@ -45,10 +47,10 @@ const ViewCard = ({
     const cardClasses = useMemo(() => {
         return `
             ${styles.cardContainer}
-            ${canEdit ? styles.draggable : ""}
+            ${canManageMembers ? styles.draggable : ""}
             ${isDragOver ? styles.dragOver : ""}
         `
-    }, [canEdit, isDragOver])
+    }, [canManageMembers, isDragOver])
 
     const editor = useEditor(
         {
@@ -67,7 +69,12 @@ const ViewCard = ({
 
     const onDeleted = (deletedCardId: number) => {
         setDirectorMembers(directorMembers.filter((member) => member.id !== deletedCardId))
-        setDetailOpen(false)
+        setIsDetailOpen(false)
+    }
+
+    const openDetailView = (mode: DetailViewMode) => {
+        setDetailMode(mode)
+        setIsDetailOpen(true)
     }
 
     const dragStartHandler = (member: IDirectorsBoardMember) => {
@@ -124,7 +131,7 @@ const ViewCard = ({
     return (
         <div
             className={cardClasses}
-            draggable={canEdit}
+            draggable={canManageMembers}
             onDragStart={() => dragStartHandler(member)}
             onDragOver={(event) => dragOverHandler(event)}
             onDrop={(event) => dropHandler(event, member)}
@@ -135,16 +142,26 @@ const ViewCard = ({
             <CardPhoto member={currentMember} />
             <h3 className={styles.nameTitle}>{currentMember.name}</h3>
             <EditorContent editor={editor} className={styles.boardEditor} />
-            <Button danger htmlType="button" onClick={() => setDetailOpen(true)}>
-                Read more
-            </Button>
+            <div className={styles.actions}>
+                <Button danger htmlType="button" onClick={() => openDetailView("view")}>
+                    Read more
+                </Button>
+
+                {canManageMembers && (
+                    <Button danger htmlType="button" onClick={() => openDetailView("edit")}>
+                        Edit
+                    </Button>
+                )}
+            </div>
+
             <DetailView
-                open={detailOpen}
-                setOpen={setDetailOpen}
+                open={isDetailOpen}
+                setOpen={setIsDetailOpen}
                 member={currentMember}
                 onSaved={onSaved}
                 onDeleted={onDeleted}
-                canEdit={canEdit}
+                canManageMembers={canManageMembers}
+                mode={detailMode}
             />
         </div>
     )

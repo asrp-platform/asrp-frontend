@@ -23,10 +23,19 @@ interface IProps {
     member: IDirectorsBoardMember
     onSaved: (_updated: IDirectorsBoardMember) => void
     onDeleted: (_deletedCardId: number) => void
-    canEdit: boolean
+    canManageMembers: boolean
+    mode: "view" | "edit"
 }
 
-const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IProps) => {
+const DetailView = ({
+    open,
+    setOpen,
+    member,
+    onSaved,
+    onDeleted,
+    canManageMembers,
+    mode,
+}: IProps) => {
     const [resetModalOpen, setResetModalOpen] = useState(false)
     const [content, setContent] = useState<Content>()
 
@@ -44,7 +53,9 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const editable = canEdit && !isMobile
+    const isEditMode = mode === "edit"
+    // Editing allowed only for users with permissions, explicitly opened in edit mode, and not on mobile.
+    const editable = canManageMembers && isEditMode && !isMobile
 
     const editor = useEditor(
         {
@@ -81,6 +92,8 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
     }
 
     const handleSave = async () => {
+        if (!editable) return
+
         try {
             setIsLoading(true)
             const data = {
@@ -105,6 +118,8 @@ const DetailView = ({ open, setOpen, member, onSaved, onDeleted, canEdit }: IPro
     }
 
     const handleDelete = async () => {
+        if (!editable) return
+
         try {
             setIsLoading(true)
             const response = await api.delete<number>(

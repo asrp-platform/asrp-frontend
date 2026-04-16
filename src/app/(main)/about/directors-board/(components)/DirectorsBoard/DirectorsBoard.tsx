@@ -23,7 +23,7 @@ const DirectorsBoard = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
-    const canEdit = useMemo(() => {
+    const canManageMembers = useMemo(() => {
         return user?.stuff && permissions.includes("director_board.update")
     }, [user?.stuff, permissions])
 
@@ -67,7 +67,7 @@ const DirectorsBoard = () => {
                         setDirectorMembers={setDirectorMembers}
                         draggingCard={draggingCard}
                         setDraggingCard={setDraggingCard}
-                        canEdit={canEdit}
+                        canManageMembers={canManageMembers}
                     />
                 ))}
             {canCreate && <CreateDirectorMemberCard />}
