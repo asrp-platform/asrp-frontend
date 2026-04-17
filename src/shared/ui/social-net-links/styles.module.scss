@@ -1,6 +1,7 @@
 .socialNetLinks {
     display: flex;
     gap: 16px;
+    flex-wrap: wrap;
     padding: var(--general-vertical-padding) 0;
 }
 

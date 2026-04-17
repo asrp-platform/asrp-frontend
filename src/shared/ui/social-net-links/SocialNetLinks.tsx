@@ -2,9 +2,9 @@ import styles from "./styles.module.scss"
 import Link from "next/link"
 import Image from "next/image"
 
-type SocialLinkData = { src: string; href: string; alt: string; label: string; id: number }
+type SocialNetLinkItem = { src: string; href: string; alt: string; label: string; id: number }
 
-const Socials: SocialLinkData[] = [
+const socialLinks: SocialNetLinkItem[] = [
     {
         src: "/icons/footer/TelegramLogo.svg",
         href: "https://t.me/ASRP_pathology",
@@ -26,13 +26,6 @@ const Socials: SocialLinkData[] = [
         label: "Instagram",
         id: 3,
     },
-    {
-        src: "/icons/footer/XLogo.svg",
-        href: "#",
-        alt: "XLogo",
-        label: "X",
-        id: 4,
-    },
 ]
 
 interface SocialNetLinksProps {
@@ -42,7 +35,7 @@ interface SocialNetLinksProps {
 const SocialNetLinks = ({ withLabels }: SocialNetLinksProps) => {
     return (
         <ul className={withLabels ? styles.socialNetLinksWithLabels : styles.socialNetLinks}>
-            {Socials.map((social) => (
+            {socialLinks.map((social) => (
                 <li key={social.id}>
                     <Link className={styles.socialLink} href={social.href} target="_blank">
                         <Image
