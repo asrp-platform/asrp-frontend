@@ -39,7 +39,7 @@ const Page = () => {
                         </div>
                         <div className={styles.followUsContainer}>
                             <h4>Follow us</h4>
-                            <SocialNetLinks className={styles.logoContainer} />
+                            <SocialNetLinks />
                         </div>
                     </div>
                     <div className={styles.sendMessageFormContainer}>

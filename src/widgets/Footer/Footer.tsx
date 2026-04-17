@@ -18,7 +18,7 @@ const Footer = () => {
                         </a>
                     </div>
                     <div>
-                        <SocialNetLinks className={styles.logoContainer} />
+                        <SocialNetLinks />
                     </div>
                 </div>
             </div>

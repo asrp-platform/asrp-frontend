@@ -83,22 +83,6 @@
     }
 }
 
-.logoContainer {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: var(--general-vertical-padding) 0;
-
-    a {
-        all: unset;
-        cursor: pointer;
-    }
-
-    svg {
-        margin-right: 8px;
-    }
-}
-
 .privacyContainer {
     display: flex;
     flex-direction: column;
@@ -115,9 +99,6 @@
         color: var(--text-primary-color-light);
         transition: 0.4s ease-in-out;
         margin-bottom: 4px;
-    }
-
-    a:visited {
     }
 
     a:hover {
