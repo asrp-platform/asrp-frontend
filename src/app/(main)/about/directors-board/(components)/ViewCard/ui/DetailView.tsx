@@ -23,7 +23,7 @@ interface IProps {
     member: IDirectorsBoardMember
     onSaved: (_updated: IDirectorsBoardMember) => void
     onDeleted: (_deletedCardId: number) => void
-    canManageMembers: boolean
+    canManageDirectorMembers: boolean
     mode: "view" | "edit"
 }
 
@@ -33,7 +33,7 @@ const DetailView = ({
     member,
     onSaved,
     onDeleted,
-    canManageMembers,
+    canManageDirectorMembers,
     mode,
 }: IProps) => {
     const [resetModalOpen, setResetModalOpen] = useState(false)
@@ -55,7 +55,7 @@ const DetailView = ({
 
     const isEditMode = mode === "edit"
     // Editing allowed only for users with permissions, explicitly opened in edit mode, and not on mobile.
-    const editable = canManageMembers && isEditMode && !isMobile
+    const editable = canManageDirectorMembers && isEditMode && !isMobile
 
     const editor = useEditor(
         {

@@ -5,6 +5,7 @@ import { useState } from "react"
 
 import { Button } from "antd"
 import { EditorContent, useEditor } from "@tiptap/react"
+import clsx from "clsx"
 
 import CardPhoto from "./ui/CardPhoto.tsx"
 import DetailView from "./ui/DetailView.tsx"
@@ -21,7 +22,7 @@ interface IProps {
     setDirectorMembers: (_memberList: IDirectorsBoardMember[]) => void
     draggingCard: IDirectorsBoardMember | null
     setDraggingCard: (_newDragging: IDirectorsBoardMember | null) => void
-    canManageMembers?: boolean
+    canManageDirectorMembers?: boolean
 }
 
 type DetailViewMode = "view" | "edit"
@@ -32,7 +33,7 @@ const ViewCard = ({
     setDirectorMembers,
     draggingCard,
     setDraggingCard,
-    canManageMembers = false,
+    canManageDirectorMembers = false,
 }: IProps) => {
     // Used for updating view card after sending patch request via detail view
     const [currentMember, setCurrentMember] = useState<IDirectorsBoardMember>(member)
@@ -44,13 +45,15 @@ const ViewCard = ({
         return getPreviewContent(currentMember.content, 3)
     }, [currentMember])
 
-    const cardClasses = useMemo(() => {
-        return `
-            ${styles.cardContainer}
-            ${canManageMembers ? styles.draggable : ""}
-            ${isDragOver ? styles.dragOver : ""}
-        `
-    }, [canManageMembers, isDragOver])
+    const cardClasses = useMemo(
+        () =>
+            clsx(
+                styles.cardContainer,
+                canManageDirectorMembers && styles.draggable,
+                isDragOver && styles.dragOver,
+            ),
+        [canManageDirectorMembers, isDragOver],
+    )
 
     const editor = useEditor(
         {
@@ -131,7 +134,7 @@ const ViewCard = ({
     return (
         <div
             className={cardClasses}
-            draggable={canManageMembers}
+            draggable={canManageDirectorMembers}
             onDragStart={() => dragStartHandler(member)}
             onDragOver={(event) => dragOverHandler(event)}
             onDrop={(event) => dropHandler(event, member)}
@@ -147,7 +150,7 @@ const ViewCard = ({
                     Read more
                 </Button>
 
-                {canManageMembers && (
+                {canManageDirectorMembers && (
                     <Button danger htmlType="button" onClick={() => openDetailView("edit")}>
                         Edit
                     </Button>
@@ -160,7 +163,7 @@ const ViewCard = ({
                 member={currentMember}
                 onSaved={onSaved}
                 onDeleted={onDeleted}
-                canManageMembers={canManageMembers}
+                canManageDirectorMembers={canManageDirectorMembers}
                 mode={detailMode}
             />
         </div>
