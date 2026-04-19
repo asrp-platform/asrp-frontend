@@ -7,6 +7,7 @@ import {
     type SetStateAction,
     useContext,
     useEffect,
+    useLayoutEffect,
     useState,
 } from "react"
 import type { IPermission } from "../entities/Permission.ts"
@@ -31,16 +32,27 @@ export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
     const [permissions, setPermissions] = useState<string[]>([])
     const [isPermissionsLoading, setIsPermissionsLoading] = useState<boolean>(false)
 
+    // Before paint: staff users need permissions for UI that depends on them — avoids one frame
+    // without Edit / admin controls, then a late pop-in when the fetch completes.
+    useLayoutEffect(() => {
+        if (isUserLoading) {
+            return
+        }
+        if (!user || !user.stuff) {
+            setPermissions([])
+            setIsPermissionsLoading(false)
+            return
+        }
+        setIsPermissionsLoading(true)
+    }, [isUserLoading, user])
+
     useEffect(() => {
-        if (isUserLoading || !user) {
+        if (isUserLoading || !user?.stuff) {
             return
         }
-        if (user && !user.stuff) {
-            return
-        }
+
         const fetchUsersPermissions = async () => {
             try {
-                setIsPermissionsLoading(true)
                 const response = await api.get<IPermission[]>(getUserPermissionsStuffUrl(user.id))
                 setPermissions(response.data.map((p) => p.action))
             } catch (error) {
