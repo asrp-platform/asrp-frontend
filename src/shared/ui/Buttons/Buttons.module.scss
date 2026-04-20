@@ -13,3 +13,26 @@
         background: var(--button-primary-red-hover);
     }
 }
+
+.linkButton {
+    padding: 10px;
+    border-radius: 100vw;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+
+    &.warning {
+        background-color: #fef2f2;
+        color: #b91c1c;
+        border: var(--red-border);
+
+        &:hover {
+            background-color: #fee2e2;
+        }
+    }
+}

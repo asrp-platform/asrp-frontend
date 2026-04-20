@@ -7,9 +7,10 @@ import styles from "./Warning.module.scss"
 
 interface IProps {
     children: ReactNode
+    action?: ReactNode
 }
 
-const Warning = ({ children }: IProps) => {
+const Warning = ({ children, action }: IProps) => {
     return (
         <div className={styles.container}>
             <Alert
@@ -19,6 +20,7 @@ const Warning = ({ children }: IProps) => {
                 type="warning"
                 showIcon
                 className={styles.alert}
+                action={action}
             />
         </div>
     )
