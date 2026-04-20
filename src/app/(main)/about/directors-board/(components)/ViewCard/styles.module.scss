@@ -43,6 +43,13 @@
     color: var(--text-primary-color-dark);
 }
 
+.actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 8px;
+}
+
 .contentContainer {
     h1,
     h2,

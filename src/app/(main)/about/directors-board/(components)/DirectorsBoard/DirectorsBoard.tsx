@@ -15,21 +15,23 @@ import { usePermissions } from "../../../../../../context/PermissionsProvider.ts
 import { useIsMobile } from "../../../../../../shared/hooks/useIsMobile.ts"
 
 const DirectorsBoard = () => {
-    const { user } = useAuth()
-    const { permissions } = usePermissions()
+    const { user, isUserLoading } = useAuth()
+    const { permissions, isPermissionsLoading } = usePermissions()
     const isMobile = useIsMobile()
 
     const [directorMembers, setDirectorMembers] = useState<IDirectorsBoardMember[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
-    const canEdit = useMemo(() => {
+    const canManageDirectorMembers = useMemo(() => {
         return user?.stuff && permissions.includes("director_board.update")
     }, [user?.stuff, permissions])
 
     const canCreate = useMemo(() => {
         return user?.stuff && permissions.includes("director_board.create") && !isMobile
     }, [user?.stuff, permissions, isMobile])
+
+    const isAccessContextPending = isUserLoading || (Boolean(user?.stuff) && isPermissionsLoading)
 
     useEffect(() => {
         const fetchDirectorMembers = async () => {
@@ -47,7 +49,7 @@ const DirectorsBoard = () => {
         fetchDirectorMembers()
     }, [])
 
-    if (isLoading) {
+    if (isLoading || isAccessContextPending) {
         return (
             <div className={styles.loadingContainer}>
                 <CircularProgress size={24} />
@@ -67,7 +69,7 @@ const DirectorsBoard = () => {
                         setDirectorMembers={setDirectorMembers}
                         draggingCard={draggingCard}
                         setDraggingCard={setDraggingCard}
-                        canEdit={canEdit}
+                        canManageDirectorMembers={canManageDirectorMembers}
                     />
                 ))}
             {canCreate && <CreateDirectorMemberCard />}
