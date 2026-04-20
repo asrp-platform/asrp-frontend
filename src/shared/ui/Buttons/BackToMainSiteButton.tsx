@@ -15,7 +15,7 @@ const BackToMainSiteButton = ({
 }: BackToMainSiteButtonProps) => {
     return (
         <Link href={href}>
-            <Button type="primary" icon={<ArrowLeftOutlined />} size="large" disabled={false}>
+            <Button type="primary" icon={<ArrowLeftOutlined />} size="large">
                 {text}
             </Button>
         </Link>
