@@ -53,6 +53,10 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
             e.target.value = ""
         }
     }
+    const handlePhotoRemove = () => {
+        setPhotoUrl(null)
+        onPhotoChange?.("")
+    }
 
     return (
         <div className={styles.photoContainer}>
@@ -77,6 +81,16 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
                         <label htmlFor={`photo-${member.id}`} className={styles.photoOverlay}>
                             {isUploading ? "Uploading..." : "Change photo"}
                         </label>
+                        {photoUrl && (
+                            <button
+                                type="button"
+                                className={styles.removePhotoButton}
+                                onClick={handlePhotoRemove}
+                                disabled={isUploading}
+                            >
+                                Remove photo
+                            </button>
+                        )}
                     </>
                 )}
             </div>
