@@ -15,23 +15,21 @@ import { usePermissions } from "../../../../../../context/PermissionsProvider.ts
 import { useIsMobile } from "../../../../../../shared/hooks/useIsMobile.ts"
 
 const DirectorsBoard = () => {
-    const { user, isUserLoading } = useAuth()
-    const { permissions, isPermissionsLoading } = usePermissions()
+    const { user } = useAuth()
+    const { permissions } = usePermissions()
     const isMobile = useIsMobile()
 
     const [directorMembers, setDirectorMembers] = useState<IDirectorsBoardMember[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
-    const canManageDirectorMembers = useMemo(() => {
-        return user?.stuff && permissions.includes("director_board.update")
-    }, [user?.stuff, permissions])
+    const canEdit = useMemo(() => {
+        return user?.admin && permissions.includes("directors_board.update")
+    }, [user?.admin, permissions])
 
     const canCreate = useMemo(() => {
-        return user?.stuff && permissions.includes("director_board.create") && !isMobile
-    }, [user?.stuff, permissions, isMobile])
-
-    const isAccessContextPending = isUserLoading || (Boolean(user?.stuff) && isPermissionsLoading)
+        return user?.admin && permissions.includes("directors_board.create") && !isMobile
+    }, [user?.admin, permissions, isMobile])
 
     useEffect(() => {
         const fetchDirectorMembers = async () => {
@@ -49,7 +47,7 @@ const DirectorsBoard = () => {
         fetchDirectorMembers()
     }, [])
 
-    if (isLoading || isAccessContextPending) {
+    if (isLoading) {
         return (
             <div className={styles.loadingContainer}>
                 <CircularProgress size={24} />
@@ -69,7 +67,7 @@ const DirectorsBoard = () => {
                         setDirectorMembers={setDirectorMembers}
                         draggingCard={draggingCard}
                         setDraggingCard={setDraggingCard}
-                        canManageDirectorMembers={canManageDirectorMembers}
+                        canEdit={canEdit}
                     />
                 ))}
             {canCreate && <CreateDirectorMemberCard />}

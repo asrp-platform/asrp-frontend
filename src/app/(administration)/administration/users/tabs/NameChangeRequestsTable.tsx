@@ -39,7 +39,7 @@ const statusOptions = [
 const NameChangeRequestsTable = () => {
     const { permissions } = usePermissions()
 
-    const canView = permissions.includes("name_change_request.view")
+    const canView = permissions.includes("name_change_requests.view")
     const canUpdate = canView && permissions.includes("name_change_requests.update")
 
     const [isLoading, setIsLoading] = useState(true)

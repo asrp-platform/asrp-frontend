@@ -27,7 +27,7 @@ interface ITableFilters {
     lastname__startswith?: string
     email__startswith?: string
     pending?: boolean
-    stuff?: string
+    admin?: string
 }
 
 const UsersTable = () => {
@@ -225,14 +225,14 @@ const UsersTable = () => {
             key: "city",
         },
         {
-            title: "Stuff",
-            key: "Stuff",
+            title: "Admin",
+            key: "Admin",
             render: (_, record) =>
-                record.stuff ? (
+                record.admin ? (
                     <RoleTag
                         canAssignRole={canRevokeAdminRole}
                         targetUserId={record.id}
-                        role={"stuff"}
+                        role={"admin"}
                     >
                         Admin
                     </RoleTag>
@@ -245,7 +245,7 @@ const UsersTable = () => {
                         Member
                     </RoleTag>
                 ),
-            ...getBooleanColumnSearchProps<ITableFilters>("stuff", filters, setFilters),
+            ...getBooleanColumnSearchProps<ITableFilters>("admin", filters, setFilters),
         },
         {
             title: "Pending",

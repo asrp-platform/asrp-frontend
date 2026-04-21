@@ -10,7 +10,7 @@ import { getStuffUsersUrl } from "../../../../../../../shared/backend/adminApiUr
 interface IProps {
     canAssignRole: boolean
     targetUserId: string | number
-    role: "stuff" | "member"
+    role: "admin" | "member"
     children?: ReactNode
 }
 
@@ -25,7 +25,7 @@ const RoleTag = ({ canAssignRole, targetUserId, role, children }: IProps) => {
     const handleConfirm = async () => {
         try {
             setConfirmLoading(true)
-            await api.patch(getStuffUsersUrl(targetUserId), { stuff: role === "stuff" })
+            await api.patch(getStuffUsersUrl(targetUserId), { stuff: role === "admin" })
         } catch (error) {
             if (isAxiosError(error)) {
                 console.error(error)
@@ -40,7 +40,7 @@ const RoleTag = ({ canAssignRole, targetUserId, role, children }: IProps) => {
 
     return (
         <>
-            <Tag style={styles} onClick={handleClick} color={role === "stuff" ? "volcano" : "blue"}>
+            <Tag style={styles} onClick={handleClick} color={role === "admin" ? "volcano" : "blue"}>
                 {children}
             </Tag>
             <PromoteToAdminModal
