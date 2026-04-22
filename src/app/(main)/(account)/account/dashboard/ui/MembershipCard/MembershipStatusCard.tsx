@@ -1,4 +1,4 @@
-import { useCurrentUserMembershipRequestQuery } from "../../../../../../../shared/hooks/useCurrentUserMembershipRequest.ts"
+import { useCurrentUserMembershipRequestQuery } from "../../../../../../../shared/backend/queries/membership-requests/useCurrentUserMembershipRequestQuery.ts"
 
 import styles from "./MembershipStatusCard.module.scss"
 import PrimaryLinkOutlined from "../../../../../../../shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"

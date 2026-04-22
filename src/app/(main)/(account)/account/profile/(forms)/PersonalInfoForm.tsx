@@ -8,7 +8,7 @@ import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
 import api from "../../../../../../axios.ts"
 import ChangeNameModal from "../(ui)/RequestNameChangeModal.tsx"
-import { CURRENT_USER_URL } from "../../../../../../shared/backend/currentUserUrls.ts"
+import { CURRENT_USER_URL } from "../../../../../../shared/backend/rest-api-urls/currentUserUrls.ts"
 
 interface IProps {
     user: IUser

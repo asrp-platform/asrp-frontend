@@ -1,4 +1,4 @@
-import { REST_API_URL } from "../../axios.ts"
+import { REST_API_URL } from "../../../axios.ts"
 
 export const CURRENT_USER_URL = `${REST_API_URL}/users/current-user`
 

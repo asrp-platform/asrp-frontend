@@ -31,9 +31,9 @@ const menuItems = [
         label: "Users",
     },
     {
-        key: "/administration/memberships",
+        key: "/administration/membership-requests",
         icon: <TeamOutlined />,
-        label: "Memberships",
+        label: "Membership Requests",
     },
     {
         key: "/administration/contact-messages",

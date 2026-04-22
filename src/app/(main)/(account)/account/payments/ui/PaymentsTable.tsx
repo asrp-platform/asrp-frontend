@@ -1,6 +1,6 @@
 "use client"
 
-import { useCurrentUserPaymentQuery } from "../../../../../../shared/hooks/useCurrentUserPaymentQuery.ts"
+import { useCurrentUserPaymentQuery } from "../../../../../../shared/backend/queries/useCurrentUserPaymentQuery.ts"
 import { Table } from "antd"
 
 const PaymentsTable = () => {

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { STUFF_USERS_URL } from "../../../../../shared/backend/adminApiUrls.ts"
+import { ADMIN_USERS_URL } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
 import api from "../../../../../axios.ts"
 import type { IUser } from "../../../../../entities/User.ts"
@@ -51,7 +51,7 @@ const UsersTable = () => {
                 setIsLoading(true)
                 console.log(ordering)
                 const response = await api.get<IPaginatedBackendResponse<IUser>>(
-                    `${STUFF_USERS_URL}`,
+                    `${ADMIN_USERS_URL}`,
                     {
                         params: {
                             page: currentPage,

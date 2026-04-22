@@ -6,7 +6,7 @@ import api from "../../../../../../axios.ts"
 import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx"
 
 import styles from "./styles.module.scss"
-import { DIRECTORS_BOARD_URL } from "../../../../../../shared/backend/restApiUrls.ts"
+import { DIRECTORS_BOARD_URL } from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
 import { useAuth } from "../../../../../../context/AuthProvider.tsx"
 
 import CircularProgress from "@mui/material/CircularProgress"

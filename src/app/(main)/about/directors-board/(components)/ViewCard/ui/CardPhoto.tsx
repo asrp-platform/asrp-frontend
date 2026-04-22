@@ -5,8 +5,8 @@ import styles from "./styles.module.scss"
 import type { IDirectorsBoardMember } from "../../../../../../../entities/DirectorsBoardMember.ts"
 import api from "../../../../../../../axios.ts"
 
-import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "../../../../../../../shared/backend/adminApiUrls.ts"
-import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/restApiUrls.ts"
+import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "../../../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
 
 interface ImagePathResponse {
     path: string

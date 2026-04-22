@@ -9,7 +9,7 @@ import useNotification from "antd/es/notification/useNotification"
 import styles from "../styles.module.scss"
 import { Role } from "../../../../shared/types/types.ts"
 import api from "../../../../axios.ts"
-import { REGISTER_URL } from "../../../../shared/backend/restApiUrls.ts"
+import { REGISTER_URL } from "../../../../shared/backend/rest-api-urls/restApiUrls.ts"
 import type { IBackendErrorResponse } from "../../../../shared/types/interfaces.ts"
 
 type FieldType = {

@@ -3,7 +3,7 @@
 import styles from "./styles.module.scss"
 import ProfileHeaderSection from "../(shared)/ProfileHeaderSection.tsx"
 import UserAvatar from "../../../../../shared/ui/Avatar/UserAvatar.tsx"
-import { useCurrentUserQuery } from "../../../../../shared/hooks/useCurrentUserQuery.ts"
+import { useCurrentUserQuery } from "../../../../../shared/backend/queries/useCurrentUserQuery.ts"
 import Loading from "../../../about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipStatusCard from "./ui/MembershipCard/MembershipStatusCard.tsx"
 import QuickActionsCard from "./ui/QuickActions/QuickActionsCard.tsx"

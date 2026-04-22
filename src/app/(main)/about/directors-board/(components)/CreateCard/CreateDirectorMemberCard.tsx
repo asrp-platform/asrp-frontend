@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button, Form, Input } from "antd"
 
 import type { IValidationError } from "../../../../../../shared/types/interfaces.ts"
-import { DIRECTORS_BOARD_ADMIN_URL } from "../../../../../../shared/backend/adminApiUrls.ts"
+import { DIRECTORS_BOARD_ADMIN_URL } from "../../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import { isAxiosError } from "axios"
 
 import api from "../../../../../../axios.ts"
