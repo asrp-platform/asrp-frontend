@@ -17,53 +17,53 @@
 .linkButton {
     padding: 0.5rem 1rem;
     border-radius: 100vw;
-		line-height: normal;
+    line-height: normal;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.25s ease;
     text-align: center;
 
-		@media (min-width: 1200px) {
-					max-width: 220px;
-				}
-
-    &:hover {
-			color: inherit;
-      transform: translateY(-1px);
+    @media (min-width: 1200px) {
+        max-width: 220px;
     }
 
-		&.main {
-				color: #ffffff;
-				background-color: var(--text-primary-color-red);
+    &:hover {
+        color: inherit;
+        transform: translateY(-1px);
+    }
 
-				&:hover {
-					background-color: var(--button-primary-red-hover);
-				}
-		}
-
-    &.secondary {
-			  color: #b91c1c;
-        background-color: #fef2f2;
+    &.main {
+        color: #ffffff;
+        background-color: var(--text-primary-color-red);
 
         &:hover {
-          background-color: #fee2e2;
+            background-color: var(--button-primary-red-hover);
         }
     }
 
-		&.signup {
-				background-color: #91caff;
+    &.secondary {
+        color: #b91c1c;
+        background-color: #fef2f2;
 
-				&:hover {
-					background-color: #bae0ff;
-				}
-		}
+        &:hover {
+            background-color: #fee2e2;
+        }
+    }
 
-		&.default {
-				color: #333;
-				background-color: transparent;
+    &.signup {
+        background-color: #91caff;
 
-				&:hover {
-						background-color: #f0f0f0;
-				}
-		}
+        &:hover {
+            background-color: #bae0ff;
+        }
+    }
+
+    &.default {
+        color: #333;
+        background-color: transparent;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
 }
