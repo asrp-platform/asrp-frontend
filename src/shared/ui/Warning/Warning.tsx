@@ -7,20 +7,18 @@ import styles from "./Warning.module.scss"
 
 interface IProps {
     children: ReactNode
-    action?: ReactNode
 }
 
-const Warning = ({ children, action }: IProps) => {
+const Warning = ({ children }: IProps) => {
     return (
         <div className={styles.container}>
             <Alert
                 icon={<ExclamationCircleOutlined />}
                 title="Authentication required"
-                description={children}
+                description={<div className={styles.warningContent}>{children}</div>}
                 type="warning"
                 showIcon
                 className={styles.alert}
-                action={action}
             />
         </div>
     )

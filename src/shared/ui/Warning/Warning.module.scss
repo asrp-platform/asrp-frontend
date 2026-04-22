@@ -6,6 +6,8 @@
     border-radius: 12px;
 }
 
-:global(.ant-alert-actions) {
-    align-self: center;
+.warningContent {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
 }

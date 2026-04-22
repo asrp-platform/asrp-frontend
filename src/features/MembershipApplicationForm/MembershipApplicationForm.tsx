@@ -190,17 +190,16 @@ const MembershipApplicationForm = () => {
             initialValues={initialValues}
         >
             {isFormDisabled && (
-                <Warning
-                    action={
-                        <LinkButton href="/login" variant="warning">
-                            Sign Up
-                        </LinkButton>
-                    }
-                >
-                    To complete your membership application, please sign in to your account.
-                    <br />
-                    Once signed in, you’ll be able to fill out the form and proceed with your
-                    application.
+                <Warning>
+                    <p>
+                        To complete your membership application, please sign in to your account.
+                        <br />
+                        Once signed in, you’ll be able to fill out the form and proceed with your
+                        application.
+                    </p>
+                    <LinkButton href="/login" variant="signup">
+                        Sign Up
+                    </LinkButton>
                 </Warning>
             )}
 
