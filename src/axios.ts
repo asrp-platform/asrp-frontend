@@ -4,6 +4,7 @@ import type { IRefreshResponse } from "./shared/types/interfaces.ts"
 const rawApiUrl = process.env.NEXT_PUBLIC_API_URL?.trim()
 
 export const REST_API_URL = rawApiUrl || "http://127.0.0.1:8000/api"
+export const ADMIN_URL = "/admin"
 export const REFRESH_URL = `${REST_API_URL}/auth/refresh`
 
 const api = axios.create({

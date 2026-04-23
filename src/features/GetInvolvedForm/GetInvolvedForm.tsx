@@ -12,7 +12,7 @@ import {
 import styles from "./styles.module.scss"
 import { useState } from "react"
 import api from "../../axios.ts"
-import { CONTACT_MESSAGE_URL } from "../../shared/backend/restApiUrls.ts"
+import { CONTACT_MESSAGE_URL } from "../../shared/backend/rest-api-urls/restApiUrls.ts"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "../../shared/helpers/setFormFieldsErrors.ts"
 import ContactPreferencesSection from "./ui/ContactPreferencesSection.tsx"

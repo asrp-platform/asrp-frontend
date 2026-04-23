@@ -13,7 +13,7 @@ import {
 import type { IPermission } from "../entities/Permission.ts"
 import { useAuth } from "./AuthProvider.tsx"
 import api from "../axios.ts"
-import { getUserPermissionsStuffUrl } from "../shared/backend/adminApiUrls.ts"
+import { getUserPermissionsStuffUrl } from "../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 
 interface IPermissionsContext {
     permissions: string[]
@@ -38,7 +38,7 @@ export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
         if (isUserLoading) {
             return
         }
-        if (!user || !user.stuff) {
+        if (!user || !user.admin) {
             setPermissions([])
             setIsPermissionsLoading(false)
             return
@@ -47,7 +47,7 @@ export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
     }, [isUserLoading, user])
 
     useEffect(() => {
-        if (isUserLoading || !user?.stuff) {
+        if (isUserLoading || !user?.admin) {
             return
         }
 

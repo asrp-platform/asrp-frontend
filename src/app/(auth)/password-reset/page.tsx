@@ -10,7 +10,7 @@ import { useState } from "react"
 import useNotification from "antd/es/notification/useNotification"
 import styles from "./PasswordResetPage.module.scss"
 import api from "../../../axios.ts"
-import { PASSWORD_RESET_URL } from "../../../shared/backend/restApiUrls.ts"
+import { PASSWORD_RESET_URL } from "../../../shared/backend/rest-api-urls/restApiUrls.ts"
 
 const { Title, Paragraph } = Typography
 

@@ -9,7 +9,7 @@ import NotAuthorized from "../../../../shared/ui/NotAuthorized/NotAuthorized.tsx
 import clsx from "clsx"
 import { usePathname } from "next/navigation"
 import Loading from "../../about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { useCurrentUserQuery } from "../../../../shared/hooks/useCurrentUserQuery.ts"
+import { useCurrentUserQuery } from "../../../../shared/backend/queries/useCurrentUserQuery.ts"
 
 interface NavListItem {
     href: string

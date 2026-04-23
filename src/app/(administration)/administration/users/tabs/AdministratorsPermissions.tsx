@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 import {
     getUserPermissionsStuffUrl,
     PERMISSIONS_LIST_URL,
-    STUFF_USERS_URL,
-} from "../../../../../shared/backend/adminApiUrls.ts"
+    ADMIN_USERS_URL,
+} from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
 import api from "../../../../../axios.ts"
 import type { IUser } from "../../../../../entities/User.ts"
@@ -22,7 +22,7 @@ interface ITableFilters {
     firstname__startswith?: string
     lastname__startswith?: string
     email__startswith?: string
-    stuff?: boolean
+    admin?: boolean
 }
 
 const AdministratorsPermissions = () => {
@@ -31,7 +31,7 @@ const AdministratorsPermissions = () => {
     const [tableData, setTableData] = useState<IPaginatedBackendResponse<IUser> | null>(null)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [pageSize] = useState<number>(10)
-    const [filters, setFilters] = useState<ITableFilters>({ stuff: true })
+    const [filters, setFilters] = useState<ITableFilters>({ admin: true })
 
     const [selectedUser, setSelectedUser] = useState<IUser | null>(null)
 
@@ -71,7 +71,7 @@ const AdministratorsPermissions = () => {
             try {
                 setIsLoading(true)
                 const response = await api.get<IPaginatedBackendResponse<IUser>>(
-                    `${STUFF_USERS_URL}`,
+                    `${ADMIN_USERS_URL}`,
                     {
                         params: {
                             page: currentPage,
@@ -156,10 +156,10 @@ const AdministratorsPermissions = () => {
             key: "role",
         },
         {
-            title: "Stuff",
-            key: "Stuff",
+            title: "Admin",
+            key: "admin",
             render: (_, record) =>
-                record.stuff ? <Tag color="volcano">Admin</Tag> : <Tag color="blue">Member</Tag>,
+                record.admin ? <Tag color="volcano">Admin</Tag> : <Tag color="blue">Member</Tag>,
         },
     ]
 

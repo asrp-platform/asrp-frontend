@@ -1,5 +1,5 @@
 // Auth urls
-import { REST_API_URL } from "../../axios.ts"
+import { REST_API_URL } from "../../../axios.ts"
 
 export const AUTH_URL = "/auth"
 export const REGISTER_URL = `${AUTH_URL}/register`

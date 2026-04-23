@@ -9,7 +9,7 @@ import MembershipCard from "./ui/MembershipCard/MembershipCard.tsx"
 import api from "../../axios.ts"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "../../shared/helpers/setFormFieldsErrors.ts"
-import { CURRENT_USER_MEMBERSHIP_URL } from "../../shared/backend/currentUserUrls.ts"
+import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "../../shared/backend/rest-api-urls/currentUserUrls.ts"
 import { useAuth } from "../../context/AuthProvider.tsx"
 import Warning from "../../shared/ui/Warning/Warning.tsx"
 import LinkButton from "../../shared/ui/Buttons/LinkButton.tsx"
@@ -159,7 +159,7 @@ const MembershipApplicationForm = () => {
                 is_agrees_communications: agreements.is_agrees_communications,
             }
 
-            const response = await api.post<string>(CURRENT_USER_MEMBERSHIP_URL, data)
+            const response = await api.post<string>(CURRENT_USER_MEMBERSHIP_REQUEST_URL, data)
             window.location.href = response.data
         } catch (error: unknown) {
             if (isAxiosError(error)) {

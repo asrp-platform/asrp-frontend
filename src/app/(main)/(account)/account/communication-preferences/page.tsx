@@ -5,7 +5,7 @@ import type { ICommunicationPreferences } from "../../../../../entities/User.ts"
 import { useEffect, useState } from "react"
 import CommunicationSwitchCard from "./ui/CommunicationSwitchCard.tsx"
 import Card from "../../../../../widgets/Card/Card.tsx"
-import { getUserUrl } from "../../../../../shared/backend/restApiUrls.ts"
+import { getUserUrl } from "../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
 import { useAuth } from "../../../../../context/AuthProvider.tsx"
 import api from "../../../../../axios.ts"
 

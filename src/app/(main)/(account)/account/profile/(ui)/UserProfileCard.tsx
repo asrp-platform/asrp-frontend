@@ -9,7 +9,7 @@ import PersonalInfoForm from "../(forms)/PersonalInfoForm.tsx"
 import ProfessionalInfoForm from "../(forms)/ProfessionalInfoForm.tsx"
 import UserAvatar from "../../../../../../shared/ui/Avatar/UserAvatar.tsx"
 import api from "../../../../../../axios.ts"
-import { CURRENT_USER_AVATAR_URL } from "../../../../../../shared/backend/currentUserUrls.ts"
+import { CURRENT_USER_AVATAR_URL } from "../../../../../../shared/backend/rest-api-urls/currentUserUrls.ts"
 
 interface IProps {
     user: IUser

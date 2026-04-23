@@ -8,7 +8,7 @@ export interface IUser {
     credentials: string | null
 
     email: string
-    stuff: boolean
+    admin: boolean
     description: string | null
 
     country: string

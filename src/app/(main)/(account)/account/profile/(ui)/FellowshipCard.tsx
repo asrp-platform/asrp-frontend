@@ -11,7 +11,7 @@ import api from "../../../../../../axios"
 import {
     getUserFellowshipsUrl,
     getUserFellowshipByIdUrl,
-} from "../../../../../../shared/backend/restApiUrls"
+} from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
 import { isAxiosError } from "axios"
 
 interface IProps {

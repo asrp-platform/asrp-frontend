@@ -6,13 +6,13 @@ import api from "../../../../../../axios.ts"
 import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx"
 
 import styles from "./styles.module.scss"
-import { DIRECTORS_BOARD_URL } from "../../../../../../shared/backend/restApiUrls.ts"
 import { useAuth } from "../../../../../../context/AuthProvider.tsx"
 
 import CircularProgress from "@mui/material/CircularProgress"
 import ViewCard from "../ViewCard/ViewCard.tsx"
 import { usePermissions } from "../../../../../../context/PermissionsProvider.tsx"
 import { useIsMobile } from "../../../../../../shared/hooks/useIsMobile.ts"
+import { DIRECTORS_BOARD_URL } from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
 
 const DirectorsBoard = () => {
     const { user, isUserLoading } = useAuth()
@@ -24,14 +24,14 @@ const DirectorsBoard = () => {
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
     const canManageDirectorMembers = useMemo(() => {
-        return user?.stuff && permissions.includes("director_board.update")
-    }, [user?.stuff, permissions])
+        return user?.admin && permissions.includes("director_board.update")
+    }, [user?.admin, permissions])
 
     const canCreate = useMemo(() => {
-        return user?.stuff && permissions.includes("director_board.create") && !isMobile
-    }, [user?.stuff, permissions, isMobile])
+        return user?.admin && permissions.includes("director_board.create") && !isMobile
+    }, [user?.admin, permissions, isMobile])
 
-    const isAccessContextPending = isUserLoading || (Boolean(user?.stuff) && isPermissionsLoading)
+    const isAccessContextPending = isUserLoading || (Boolean(user?.admin) && isPermissionsLoading)
 
     useEffect(() => {
         const fetchDirectorMembers = async () => {

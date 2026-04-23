@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
 import api from "../../../../../../axios.ts"
 import type { IUser, IUserProfessionalInformation } from "../../../../../../entities/User.ts"
-import { getUserProfessionalInformationUrl } from "../../../../../../shared/backend/restApiUrls.ts"
+import { getUserProfessionalInformationUrl } from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
 import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
 
 type FieldType = {

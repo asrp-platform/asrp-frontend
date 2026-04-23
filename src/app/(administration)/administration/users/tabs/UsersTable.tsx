@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { STUFF_USERS_URL } from "../../../../../shared/backend/adminApiUrls.ts"
+import { ADMIN_USERS_URL } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
 import api from "../../../../../axios.ts"
 import type { IUser } from "../../../../../entities/User.ts"
@@ -27,7 +27,7 @@ interface ITableFilters {
     lastname__startswith?: string
     email__startswith?: string
     pending?: boolean
-    stuff?: string
+    admin?: string
 }
 
 const UsersTable = () => {
@@ -51,7 +51,7 @@ const UsersTable = () => {
                 setIsLoading(true)
                 console.log(ordering)
                 const response = await api.get<IPaginatedBackendResponse<IUser>>(
-                    `${STUFF_USERS_URL}`,
+                    `${ADMIN_USERS_URL}`,
                     {
                         params: {
                             page: currentPage,
@@ -225,14 +225,14 @@ const UsersTable = () => {
             key: "city",
         },
         {
-            title: "Stuff",
-            key: "Stuff",
+            title: "Admin",
+            key: "Admin",
             render: (_, record) =>
-                record.stuff ? (
+                record.admin ? (
                     <RoleTag
                         canAssignRole={canRevokeAdminRole}
                         targetUserId={record.id}
-                        role={"stuff"}
+                        role={"admin"}
                     >
                         Admin
                     </RoleTag>
@@ -245,7 +245,7 @@ const UsersTable = () => {
                         Member
                     </RoleTag>
                 ),
-            ...getBooleanColumnSearchProps<ITableFilters>("stuff", filters, setFilters),
+            ...getBooleanColumnSearchProps<ITableFilters>("admin", filters, setFilters),
         },
         {
             title: "Pending",

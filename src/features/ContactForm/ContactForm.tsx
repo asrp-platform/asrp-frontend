@@ -11,7 +11,7 @@ import { useState } from "react"
 import { isAxiosError } from "axios"
 
 import api from "../../axios.ts"
-import { CONTACT_MESSAGE_URL } from "../../shared/backend/restApiUrls.ts"
+import { CONTACT_MESSAGE_URL } from "../../shared/backend/rest-api-urls/restApiUrls.ts"
 import type { IBackendErrorResponse } from "../../shared/types/interfaces.ts"
 import { ContactMessageType } from "../../entities/ContactMessage.ts"
 

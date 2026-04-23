@@ -10,7 +10,7 @@ import Loading from "../../../../(main)/about/directors-board/(components)/ViewC
 import {
     getUserNameChangeRequestById,
     NAME_CHANGE_REQUESTS_URL,
-} from "../../../../../shared/backend/adminApiUrls.ts"
+} from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
 import type {
     INameChangeRequest,
@@ -39,7 +39,7 @@ const statusOptions = [
 const NameChangeRequestsTable = () => {
     const { permissions } = usePermissions()
 
-    const canView = permissions.includes("name_change_request.view")
+    const canView = permissions.includes("name_change_requests.view")
     const canUpdate = canView && permissions.includes("name_change_requests.update")
 
     const [isLoading, setIsLoading] = useState(true)

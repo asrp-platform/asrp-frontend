@@ -1,8 +1,8 @@
-import { CURRENT_USER_PAYMENTS_URL } from "../backend/currentUserUrls.ts"
-import type { IPaginatedBackendResponse } from "../types/interfaces.ts"
-import type { IPayment } from "../../entities/Payments.ts"
+import type { IPaginatedBackendResponse } from "../../types/interfaces.ts"
+import type { IPayment } from "../../../entities/Payments.ts"
 import { useQuery } from "@tanstack/react-query"
-import api from "../../axios.ts"
+import api from "../../../axios.ts"
+import { CURRENT_USER_PAYMENTS_URL } from "../rest-api-urls/currentUserUrls.ts"
 
 type CurrentUserPaymentsResponse = IPaginatedBackendResponse<IPayment>
 

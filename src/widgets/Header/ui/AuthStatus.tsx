@@ -19,7 +19,7 @@ const AuthStatus = () => {
     const router = useRouter()
 
     const isAdmin = useMemo(() => {
-        return user?.stuff
+        return user?.admin
     }, [user])
 
     const items: MenuProps["items"] = [

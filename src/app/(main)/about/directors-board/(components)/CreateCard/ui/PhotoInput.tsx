@@ -2,8 +2,8 @@ import { type ChangeEvent } from "react"
 import styles from "./UI.module.scss"
 import api from "../../../../../../../axios.ts"
 import type { ImagePathResponse } from "../../../../../../../shared/types/interfaces.ts"
-import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "../../../../../../../shared/backend/adminApiUrls.ts"
-import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/restApiUrls.ts"
+import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "../../../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import { getDirectorMemberImageUrl } from "../../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
 
 import { Image } from "lucide-react"
 
