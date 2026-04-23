@@ -197,7 +197,7 @@ const MembershipApplicationForm = () => {
                         Once signed in, you’ll be able to fill out the form and proceed with your
                         application.
                     </p>
-                    <LinkButton href="/login" variant="signup">
+                    <LinkButton href="/login" variant="blue">
                         Sign Up
                     </LinkButton>
                 </Warning>

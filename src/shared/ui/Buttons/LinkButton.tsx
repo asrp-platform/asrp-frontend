@@ -6,7 +6,7 @@ import clsx from "clsx"
 interface LinkButtonProps {
     href: string
     children: ReactNode
-    variant?: "secondary" | "signup" | "default"
+    variant?: "secondary" | "blue" | "default"
 }
 
 export default function LinkButton({ href, children, variant }: LinkButtonProps) {

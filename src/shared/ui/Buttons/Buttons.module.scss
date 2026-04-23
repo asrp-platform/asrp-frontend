@@ -24,7 +24,7 @@
     text-align: center;
 
     @media (min-width: 1200px) {
-        max-width: 220px;
+        align-self: flex-start;
     }
 
     &:hover {
@@ -32,38 +32,11 @@
         transform: translateY(-1px);
     }
 
-    &.main {
-        color: #ffffff;
-        background-color: var(--text-primary-color-red);
-
-        &:hover {
-            background-color: var(--button-primary-red-hover);
-        }
-    }
-
-    &.secondary {
-        color: #b91c1c;
-        background-color: #fef2f2;
-
-        &:hover {
-            background-color: #fee2e2;
-        }
-    }
-
-    &.signup {
+    &.blue {
         background-color: #91caff;
 
         &:hover {
             background-color: #bae0ff;
-        }
-    }
-
-    &.default {
-        color: #333;
-        background-color: transparent;
-
-        &:hover {
-            background-color: #f0f0f0;
         }
     }
 }
