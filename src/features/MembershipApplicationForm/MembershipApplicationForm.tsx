@@ -12,6 +12,7 @@ import { setFormFieldsErrors } from "../../shared/helpers/setFormFieldsErrors.ts
 import { CURRENT_USER_MEMBERSHIP_URL } from "../../shared/backend/currentUserUrls.ts"
 import { useAuth } from "../../context/AuthProvider.tsx"
 import Warning from "../../shared/ui/Warning/Warning.tsx"
+import LinkButton from "../../shared/ui/Buttons/LinkButton.tsx"
 
 const credentialsOptions: Credentials[] = [
     "MD",
@@ -190,10 +191,15 @@ const MembershipApplicationForm = () => {
         >
             {isFormDisabled && (
                 <Warning>
-                    To complete your membership application, please sign in to your account.
-                    <br />
-                    Once signed in, you’ll be able to fill out the form and proceed with your
-                    application.
+                    <p>
+                        To complete your membership application, please sign in to your account.
+                        <br />
+                        Once signed in, you’ll be able to fill out the form and proceed with your
+                        application.
+                    </p>
+                    <LinkButton href="/login" variant="blue">
+                        Sign Up
+                    </LinkButton>
                 </Warning>
             )}
 

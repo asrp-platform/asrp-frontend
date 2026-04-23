@@ -15,7 +15,7 @@ const Warning = ({ children }: IProps) => {
             <Alert
                 icon={<ExclamationCircleOutlined />}
                 title="Authentication required"
-                description={children}
+                description={<div className={styles.warningContent}>{children}</div>}
                 type="warning"
                 showIcon
                 className={styles.alert}

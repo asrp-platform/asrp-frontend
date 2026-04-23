@@ -13,3 +13,30 @@
         background: var(--button-primary-red-hover);
     }
 }
+
+.linkButton {
+    padding: 0.5rem 1rem;
+    border-radius: 100vw;
+    line-height: normal;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+
+    @media (min-width: 1200px) {
+        align-self: flex-start;
+    }
+
+    &:hover {
+        color: inherit;
+        transform: translateY(-1px);
+    }
+
+    &.blue {
+        background-color: #91caff;
+
+        &:hover {
+            background-color: #bae0ff;
+        }
+    }
+}

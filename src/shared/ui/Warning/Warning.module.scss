@@ -5,3 +5,9 @@
 .alert {
     border-radius: 12px;
 }
+
+.warningContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
