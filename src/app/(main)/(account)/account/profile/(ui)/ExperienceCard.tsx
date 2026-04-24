@@ -18,6 +18,7 @@ interface IProps {
     title: string
     subtitle: string
     addButtonText: string
+    closeButtonText: string
     deleteEntityLabel: string
     queryScope: "residencies" | "fellowships" | "jobs"
     getCollectionUrl: (_userId: number) => string
@@ -39,6 +40,7 @@ const ExperienceCard = ({
     title,
     subtitle,
     addButtonText,
+    closeButtonText,
     deleteEntityLabel,
     queryScope,
     getCollectionUrl,
@@ -117,8 +119,11 @@ const ExperienceCard = ({
                 )}
             </div>
 
-            <button onClick={() => setIsCreating(true)} className={styles.addResidencyButton}>
-                {addButtonText}
+            <button
+                onClick={() => setIsCreating((prev) => !prev)}
+                className={styles.addResidencyButton}
+            >
+                {isCreating ? closeButtonText : addButtonText}
             </button>
         </Card>
     )

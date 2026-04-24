@@ -16,6 +16,7 @@ const ResidencyCard = ({ user }: IProps) => {
             title="Residency"
             subtitle="If you are a medical student, residency applicant, U.S.-based laboratory professional, or otherwise do not have residency training to report, please enter N/A in the required fields below."
             addButtonText="+ Add residency"
+            closeButtonText="- Add residency"
             deleteEntityLabel="residency"
             queryScope="residencies"
             getCollectionUrl={getUserResidenciesUrl}

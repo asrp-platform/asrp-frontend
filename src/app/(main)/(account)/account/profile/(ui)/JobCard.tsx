@@ -13,6 +13,7 @@ const JobCard = ({ user }: IProps) => {
             title="Job"
             subtitle="Add your current or previous professional position details."
             addButtonText="+ Add job"
+            closeButtonText="- Add job"
             deleteEntityLabel="job"
             queryScope="jobs"
             getCollectionUrl={getUserJobsUrl}

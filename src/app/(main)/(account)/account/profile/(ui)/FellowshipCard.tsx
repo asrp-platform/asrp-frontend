@@ -16,6 +16,7 @@ const FellowshipCard = ({ user }: IProps) => {
             title="Fellowship"
             subtitle="If you have not secured a fellowship or you practice without fellowship training, please enter N/A in the required fields below."
             addButtonText="+ Add fellowship"
+            closeButtonText="- Add fellowship"
             deleteEntityLabel="fellowship"
             queryScope="fellowships"
             getCollectionUrl={getUserFellowshipsUrl}
