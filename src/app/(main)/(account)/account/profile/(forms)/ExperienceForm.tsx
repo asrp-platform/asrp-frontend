@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Flex, Form, Input, Modal, Row } from "antd"
+import { Button, Checkbox, Col, Flex, Form, Input, Modal, Row, Tooltip } from "antd"
 import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
 
@@ -21,6 +21,8 @@ interface IProps {
     onDelete?: () => Promise<void>
     startInEditMode?: boolean
     deleteEntityLabel: string
+    isDeleteDisabled?: boolean
+    deleteDisabledReason?: string
 }
 
 type Mode = "view" | "edit"
@@ -41,6 +43,8 @@ const ExperienceForm = ({
     onDelete,
     startInEditMode = false,
     deleteEntityLabel,
+    isDeleteDisabled = false,
+    deleteDisabledReason,
 }: IProps) => {
     const [form] = Form.useForm<IExperienceFormValues>()
     const [mode, setMode] = useState<Mode>(startInEditMode ? "edit" : "view")
@@ -73,12 +77,14 @@ const ExperienceForm = ({
     }
 
     const handleDeleteConfirm = async () => {
-        if (!onDelete) return
+        if (!onDelete || isDeleteDisabled) return
 
         try {
             setIsLoading(true)
             await onDelete()
             setIsDeleteModalOpen(false)
+        } catch {
+            // Error message is handled in parent mutation callbacks.
         } finally {
             setIsLoading(false)
         }
@@ -156,9 +162,15 @@ const ExperienceForm = ({
                         </Flex>
 
                         {onDelete && (
-                            <Button danger onClick={() => setIsDeleteModalOpen(true)}>
-                                Delete
-                            </Button>
+                            <Tooltip title={isDeleteDisabled ? deleteDisabledReason : undefined}>
+                                <Button
+                                    danger
+                                    disabled={isDeleteDisabled}
+                                    onClick={() => setIsDeleteModalOpen(true)}
+                                >
+                                    Delete
+                                </Button>
+                            </Tooltip>
                         )}
                     </Flex>
                 )}

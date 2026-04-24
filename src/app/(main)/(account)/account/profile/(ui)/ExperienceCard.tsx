@@ -1,5 +1,6 @@
-import { Card, Spin, Typography } from "antd"
+import { Card, message, Spin, Typography } from "antd"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { isAxiosError } from "axios"
 
 import api from "@/axios"
 import type { IUser } from "@/entities/User"
@@ -34,6 +35,14 @@ const getExperienceQueryKey = (userId: number, queryScope: IProps["queryScope"])
 ]
 
 const getExperienceQueriesRoot = (userId: number) => ["profile-experiences", userId]
+
+const getDeleteErrorMessage = (error: unknown, deleteEntityLabel: string) => {
+    if (isAxiosError<{ detail?: string }>(error)) {
+        return error.response?.data?.detail ?? `Failed to delete ${deleteEntityLabel}`
+    }
+
+    return `Failed to delete ${deleteEntityLabel}`
+}
 
 const ExperienceCard = ({
     user,
@@ -85,6 +94,9 @@ const ExperienceCard = ({
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: getExperienceQueriesRoot(user.id) })
         },
+        onError: (error) => {
+            message.error(getDeleteErrorMessage(error, deleteEntityLabel))
+        },
     })
 
     return (
@@ -94,19 +106,27 @@ const ExperienceCard = ({
             <div className={styles.residenciesContainer}>
                 {isLoading && <Spin />}
 
-                {entities.map((entity) => (
-                    <ExperienceForm
-                        key={entity.id}
-                        initialValues={entity}
-                        onSubmit={async (values) => {
-                            await updateMutation.mutateAsync({ id: entity.id, values })
-                        }}
-                        onDelete={async () => {
-                            await deleteMutation.mutateAsync(entity.id)
-                        }}
-                        deleteEntityLabel={deleteEntityLabel}
-                    />
-                ))}
+                {entities.map((entity) => {
+                    const isLastResidency = queryScope === "residencies" && entities.length === 1
+
+                    return (
+                        <ExperienceForm
+                            key={entity.id}
+                            initialValues={entity}
+                            isDeleteDisabled={isLastResidency}
+                            deleteDisabledReason={
+                                isLastResidency ? "At least one residency is required." : undefined
+                            }
+                            onSubmit={async (values) => {
+                                await updateMutation.mutateAsync({ id: entity.id, values })
+                            }}
+                            onDelete={async () => {
+                                await deleteMutation.mutateAsync(entity.id)
+                            }}
+                            deleteEntityLabel={deleteEntityLabel}
+                        />
+                    )
+                })}
 
                 {isCreating && (
                     <ExperienceForm
