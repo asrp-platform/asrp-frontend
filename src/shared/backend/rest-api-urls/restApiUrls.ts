@@ -35,6 +35,11 @@ export const getUserFellowshipByIdUrl = (
     residencyId: number | string,
 ): string => `${getUserUrl(userId)}/fellowships/${residencyId}`
 
+export const getUserJobsUrl = (user_id: number | string): string => `${getUserUrl(user_id)}/jobs`
+
+export const getUserJobByIdUrl = (userId: number | string, jobId: number | string): string =>
+    `${getUserUrl(userId)}/jobs/${jobId}`
+
 // Feedback
 export const CONTACT_MESSAGE_URL = "/contact-messages"
 

@@ -5,6 +5,7 @@ import UserProfileCard from "@/app/(main)/(account)/account/profile/(ui)/UserPro
 import { useAuth } from "@/context/AuthProvider.tsx"
 import ResidencyCard from "@/app/(main)/(account)/account/profile/(ui)/ResidencyCard.tsx"
 import FellowshipCard from "@/app/(main)/(account)/account/profile/(ui)/FellowshipCard.tsx"
+import JobCard from "@/app/(main)/(account)/account/profile/(ui)/JobCard"
 
 export default function ASRPAccountProfilePage() {
     const { user } = useAuth()
@@ -26,6 +27,7 @@ export default function ASRPAccountProfilePage() {
                         </div>
                     </div>
                     <UserProfileCard user={user} />
+                    <JobCard user={user} />
                     <ResidencyCard user={user} />
                     <FellowshipCard user={user} />
                 </section>

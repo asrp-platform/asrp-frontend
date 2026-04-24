@@ -53,6 +53,7 @@ export interface IUserResidency {
     state: string
     country: string
     years_from_to: string
+    current_position?: boolean
     user_id: number
 }
 
@@ -66,10 +67,25 @@ export interface IUserFellowship {
     state: string
     country: string
     years_from_to: string
+    current_position?: boolean
     user_id: number
 }
 
 export type IUserFellowshipFormValues = Omit<IUserFellowship, "id" | "user_id">
+
+export interface IUserJob {
+    id: number
+    institution: string
+    speciality: string
+    city: string
+    state: string
+    country: string
+    years_from_to: string
+    current_position?: boolean
+    user_id: number
+}
+
+export type IUserJobFormValues = Omit<IUserJob, "id" | "user_id">
 
 export interface ICommunicationPreferences {
     membership_account_notifications: boolean
