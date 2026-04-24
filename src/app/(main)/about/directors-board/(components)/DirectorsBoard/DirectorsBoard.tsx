@@ -24,11 +24,11 @@ const DirectorsBoard = () => {
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
     const canManageDirectorMembers = useMemo(() => {
-        return user?.admin && permissions.includes("director_board.update")
+        return user?.admin && permissions.includes("directors_board.update")
     }, [user?.admin, permissions])
 
     const canCreate = useMemo(() => {
-        return user?.admin && permissions.includes("director_board.create") && !isMobile
+        return user?.admin && permissions.includes("directors_board.create") && !isMobile
     }, [user?.admin, permissions, isMobile])
 
     const isAccessContextPending = isUserLoading || (Boolean(user?.admin) && isPermissionsLoading)
