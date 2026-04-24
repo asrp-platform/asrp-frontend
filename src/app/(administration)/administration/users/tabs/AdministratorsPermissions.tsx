@@ -5,18 +5,18 @@ import {
     getUserPermissionsStuffUrl,
     PERMISSIONS_LIST_URL,
     ADMIN_USERS_URL,
-} from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
-import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
-import api from "../../../../../axios.ts"
-import type { IUser } from "../../../../../entities/User.ts"
-import Loading from "../../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+} from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import api from "@/axios.ts"
+import type { IUser } from "@/entities/User.ts"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { Button, Flex, Table, Tag } from "antd"
 import Link from "next/link"
 import type { ColumnsType } from "antd/lib/table"
-import { getInputColumnSearchProps } from "../../../../../widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
-import AdminCard from "./ui/AdminCard.tsx"
-import type { IPermission } from "../../../../../entities/Permission.ts"
-import UserPermissionsCard from "./ui/AdminPermissionsCard.tsx"
+import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
+import AdminCard from "@/app/(administration)/administration/users/tabs/ui/AdminCard.tsx"
+import type { IPermission } from "@/entities/Permission.ts"
+import UserPermissionsCard from "@/app/(administration)/administration/users/tabs/ui/AdminPermissionsCard.tsx"
 
 interface ITableFilters {
     firstname__startswith?: string

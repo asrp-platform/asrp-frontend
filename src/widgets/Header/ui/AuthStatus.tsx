@@ -3,16 +3,16 @@
 import { useRouter } from "next/navigation"
 import { UserCircle } from "lucide-react"
 
-import { useAuth } from "../../../context/AuthProvider.tsx"
+import { useAuth } from "@/context/AuthProvider.tsx"
 import { Dropdown, type MenuProps } from "antd"
 import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons"
 import { useMemo } from "react"
 
-import styles from "./styles.module.scss"
+import styles from "@/widgets/Header/ui/styles.module.scss"
 import Link from "next/link"
-import UserAvatar from "../../../shared/ui/Avatar/UserAvatar.tsx"
-import { handleLogout } from "../helpers/logout.ts"
-import { onUserLoginClick } from "../helpers/login.ts"
+import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
+import { handleLogout } from "@/widgets/Header/helpers/logout.ts"
+import { onUserLoginClick } from "@/widgets/Header/helpers/login.ts"
 
 const AuthStatus = () => {
     const { user, isUserLoading } = useAuth()

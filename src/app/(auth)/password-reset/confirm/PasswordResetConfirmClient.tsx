@@ -3,12 +3,12 @@
 import { Suspense, useEffect, useState } from "react"
 import { Button, Result, Spin, Typography } from "antd"
 
-import styles from "./PasswordResetConfirmPage.module.scss"
-import api from "../../../../axios.ts"
+import styles from "@/app/(auth)/password-reset/confirm/PasswordResetConfirmPage.module.scss"
+import api from "@/axios.ts"
 import { useRouter, useSearchParams } from "next/navigation"
-import { VERIFY_PASSWORD_RESET_TOKEN_URL } from "../../../../shared/backend/rest-api-urls/restApiUrls.ts"
-import ChangePasswordFormReset from "../../../../features/ChangePasswordFormReset/ChangePasswordFormReset.tsx"
-import Loading from "../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import { VERIFY_PASSWORD_RESET_TOKEN_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import ChangePasswordFormReset from "@/features/ChangePasswordFormReset/ChangePasswordFormReset.tsx"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 const { Title, Paragraph } = Typography
 

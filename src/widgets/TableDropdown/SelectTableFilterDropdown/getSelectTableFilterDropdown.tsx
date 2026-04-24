@@ -1,7 +1,7 @@
-import type { NameChangeRequestStatus } from "../../../entities/NameChangeRequest.ts"
+import type { NameChangeRequestStatus } from "@/entities/NameChangeRequest.ts"
 import type { Key } from "react"
 import type { FilterDropdownProps } from "antd/es/table/interface"
-import SearchFilterDropdownLayout from "../SearchFilterDropdownLayout/SearchFilterDropdownLayout.tsx"
+import SearchFilterDropdownLayout from "@/widgets/TableDropdown/SearchFilterDropdownLayout/SearchFilterDropdownLayout.tsx"
 import { Button, Flex, Select } from "antd"
 
 interface IOption {

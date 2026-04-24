@@ -1,8 +1,8 @@
 "use client"
 
 import { Tabs } from "antd"
-import { ContactMessageTable } from "./tabs/ContactMesssageTable.tsx"
-import { ContactMessageType } from "../../../../entities/ContactMessage.ts"
+import { ContactMessageTable } from "@/app/(administration)/administration/contact-messages/tabs/ContactMesssageTable.tsx"
+import { ContactMessageType } from "@/entities/ContactMessage.ts"
 
 const Page = () => {
     const items = [

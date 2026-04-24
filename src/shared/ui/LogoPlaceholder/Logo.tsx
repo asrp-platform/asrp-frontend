@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
-import styles from "./styles.module.scss"
+import styles from "@/shared/ui/LogoPlaceholder/styles.module.scss"
 
 interface IProps {
     clickable?: boolean

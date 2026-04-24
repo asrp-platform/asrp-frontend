@@ -1,4 +1,4 @@
-import styles from "./styles.module.scss"
+import styles from "@/app/(main)/membership/(ui)/styles.module.scss"
 import type { ReactNode } from "react"
 
 interface IProps {

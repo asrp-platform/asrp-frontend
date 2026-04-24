@@ -1,5 +1,5 @@
 import axios from "axios"
-import type { IRefreshResponse } from "./shared/types/interfaces.ts"
+import type { IRefreshResponse } from "@/shared/types/interfaces.ts"
 
 const rawApiUrl = process.env.NEXT_PUBLIC_API_URL?.trim()
 

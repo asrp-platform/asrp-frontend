@@ -1,6 +1,6 @@
 import Link from "next/link"
-import styles from "./styles.module.scss"
-import RegisterForm from "./ui/RegisterForm.tsx"
+import styles from "@/app/(auth)/register/styles.module.scss"
+import RegisterForm from "@/app/(auth)/register/ui/RegisterForm.tsx"
 import type { Metadata } from "next"
 import { LeftOutlined } from "@ant-design/icons"
 import { Typography } from "antd"

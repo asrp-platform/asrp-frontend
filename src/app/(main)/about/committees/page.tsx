@@ -1,6 +1,6 @@
-import styles from "./styles.module.scss"
-import GetInvolvedCommitteesForm from "../../../../features/GetInvolvedCommitteesForm/GetInvolvedCommitteesForm.tsx"
-import PageSection from "../../../../shared/ui/PageSection/PageSection.tsx"
+import styles from "@/app/(main)/about/committees/styles.module.scss"
+import GetInvolvedCommitteesForm from "@/features/GetInvolvedCommitteesForm/GetInvolvedCommitteesForm.tsx"
+import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
 
 export default function ASRPCommitteesPage() {
     return (

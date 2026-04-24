@@ -1,9 +1,6 @@
-import ProfileInfoCard from "../../../../../../../shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
-import styles from "./MembershipRequestCard.module.scss"
-import {
-    type IMembershipRequest,
-    MembershipRequestStatusEnum,
-} from "../../../../../../../entities/Membership.ts"
+import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
+import styles from "@/app/(main)/(account)/account/dashboard/ui/MembershipRequestCard/MembershipRequestCard.module.scss"
+import { type IMembershipRequest, MembershipRequestStatusEnum } from "@/entities/Membership.ts"
 
 type MembershipStatusMeta = {
     label: string

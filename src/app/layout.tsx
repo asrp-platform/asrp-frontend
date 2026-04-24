@@ -1,7 +1,7 @@
-import "./reset.scss"
-import "./globals.scss"
+import "@/app/reset.scss"
+import "@/app/globals.scss"
 import type { ReactNode } from "react"
-import Providers from "../context/providers.tsx"
+import Providers from "@/context/providers.tsx"
 
 export default function RootLayout({
     children,

@@ -1,4 +1,4 @@
-import styles from "./UI.module.scss"
+import styles from "@/app/(main)/about/directors-board/(components)/CreateCard/ui/UI.module.scss"
 import { CirclePlus } from "lucide-react"
 
 interface IProps {

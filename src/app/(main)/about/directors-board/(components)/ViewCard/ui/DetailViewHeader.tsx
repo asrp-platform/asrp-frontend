@@ -1,11 +1,11 @@
 "use client"
 
 import { Form, Input, Typography } from "antd"
-import type { IDirectorsBoardMember } from "../../../../../../../entities/DirectorsBoardMember.ts"
-import styles from "./styles.module.scss"
-import DetailViewTitle from "./DetailViewTitle.tsx"
+import type { IDirectorsBoardMember } from "@/entities/DirectorsBoardMember.ts"
+import styles from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/styles.module.scss"
+import DetailViewTitle from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/DetailViewTitle.tsx"
 import type { ReactNode } from "react"
-import DetailViewEditButtons from "./DetailViewEditButtons.tsx"
+import DetailViewEditButtons from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/DetailViewEditButtons.tsx"
 
 const { Title } = Typography
 

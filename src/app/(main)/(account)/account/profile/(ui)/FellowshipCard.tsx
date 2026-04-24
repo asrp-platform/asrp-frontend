@@ -1,17 +1,13 @@
 import { Card, Typography } from "antd"
-import styles from "./styles.module.scss"
-import FellowshipForm from "../(forms)/FellowhipForm.tsx"
-import type {
-    IUser,
-    IUserFellowship,
-    IUserFellowshipFormValues,
-} from "../../../../../../entities/User"
+import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
+import FellowshipForm from "@/app/(main)/(account)/account/profile/(forms)/FellowhipForm.tsx"
+import type { IUser, IUserFellowship, IUserFellowshipFormValues } from "@/entities/User"
 import { useEffect, useState } from "react"
-import api from "../../../../../../axios"
+import api from "@/axios"
 import {
     getUserFellowshipsUrl,
     getUserFellowshipByIdUrl,
-} from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
+} from "@/shared/backend/rest-api-urls/restApiUrls.ts"
 import { isAxiosError } from "axios"
 
 interface IProps {

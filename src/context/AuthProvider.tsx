@@ -10,9 +10,9 @@ import {
     useEffect,
     useState,
 } from "react"
-import api from "../axios.ts"
-import type { IUser } from "../entities/User.ts"
-import { CURRENT_USER_URL } from "../shared/backend/rest-api-urls/currentUserUrls.ts"
+import api from "@/axios.ts"
+import type { IUser } from "@/entities/User.ts"
+import { CURRENT_USER_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
 
 interface IAuthContext {
     user: IUser | null

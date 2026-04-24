@@ -3,7 +3,7 @@
 import { Button } from "antd"
 import { useRouter } from "next/navigation"
 import { FileUnknownOutlined } from "@ant-design/icons"
-import styles from "./notFound.module.scss"
+import styles from "@/app/notFound.module.scss"
 
 export default function NotFound() {
     const router = useRouter()

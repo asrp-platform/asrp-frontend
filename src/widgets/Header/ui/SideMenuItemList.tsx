@@ -1,7 +1,7 @@
 "use client"
 
-import styles from "./styles.module.scss"
-import { headerMenuItems } from "../headerMenuItems.tsx"
+import styles from "@/widgets/Header/ui/styles.module.scss"
+import { headerMenuItems } from "@/widgets/Header/headerMenuItems.tsx"
 import Link from "next/link"
 import { useState } from "react"
 

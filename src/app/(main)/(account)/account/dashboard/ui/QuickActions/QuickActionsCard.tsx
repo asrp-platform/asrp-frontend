@@ -1,9 +1,9 @@
 "use client"
 
-import styles from "./QuickActionsCard.module.scss"
-import PrimaryLinkOutlined from "../../../../../../../shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
-import SecondaryLinkOutlined from "../../../../../../../shared/ui/Buttons/SecondaryLinkOutilned/SecondaryLinkOutlined.tsx"
-import ProfileInfoCard from "../../../../../../../shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
+import styles from "@/app/(main)/(account)/account/dashboard/ui/QuickActions/QuickActionsCard.module.scss"
+import PrimaryLinkOutlined from "@/shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
+import SecondaryLinkOutlined from "@/shared/ui/Buttons/SecondaryLinkOutilned/SecondaryLinkOutlined.tsx"
+import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
 
 const QuickActionsCard = () => {
     return (

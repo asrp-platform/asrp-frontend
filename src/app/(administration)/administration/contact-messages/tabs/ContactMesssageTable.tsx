@@ -3,13 +3,13 @@
 import { Table, Tag } from "antd"
 import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
-import api from "../../../../../axios.ts"
-import { usePermissions } from "../../../../../context/PermissionsProvider.tsx"
-import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
-import Loading from "../../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { CONTACT_MESSAGES_ADMIN_URL } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
-import { ContactMessageType, type IContactMessage } from "../../../../../entities/ContactMessage.ts"
-import { getInputColumnSearchProps } from "../../../../../widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
+import api from "@/axios.ts"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import { CONTACT_MESSAGES_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import { ContactMessageType, type IContactMessage } from "@/entities/ContactMessage.ts"
+import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
 
 interface ITableFilters {
     name__startswith?: string

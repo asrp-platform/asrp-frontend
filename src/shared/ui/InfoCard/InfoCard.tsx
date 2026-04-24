@@ -1,4 +1,4 @@
-import styles from "./InfoCard.module.scss"
+import styles from "@/shared/ui/InfoCard/InfoCard.module.scss"
 import type { ReactNode } from "react"
 
 interface IProps {

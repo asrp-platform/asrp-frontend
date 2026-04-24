@@ -1,5 +1,5 @@
-import styles from "./styles.module.scss"
-import LoginForm from "./(ui)/LoginForm.tsx"
+import styles from "@/app/(auth)/login/styles.module.scss"
+import LoginForm from "@/app/(auth)/login/(ui)/LoginForm.tsx"
 import type { Metadata } from "next"
 
 // eslint-disable-next-line react-refresh/only-export-components

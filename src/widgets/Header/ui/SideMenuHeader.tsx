@@ -1,7 +1,7 @@
 "use client"
 
-import styles from "./styles.module.scss"
-import Logo from "../../../shared/ui/LogoPlaceholder/Logo.tsx"
+import styles from "@/widgets/Header/ui/styles.module.scss"
+import Logo from "@/shared/ui/LogoPlaceholder/Logo.tsx"
 import { X } from "lucide-react"
 
 interface IProps {

@@ -1,6 +1,6 @@
 import clsx from "clsx"
 
-import styles from "./Buttons.module.scss"
+import styles from "@/shared/ui/Buttons/Buttons.module.scss"
 import type { MouseEventHandler } from "react"
 
 interface IProps {

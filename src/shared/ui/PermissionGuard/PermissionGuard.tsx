@@ -1,7 +1,7 @@
 "use client"
 
 import { type ReactNode } from "react"
-import AccessDenied from "./AccessDenied"
+import AccessDenied from "@/shared/ui/PermissionGuard/AccessDenied"
 
 interface Props {
     allowed: boolean

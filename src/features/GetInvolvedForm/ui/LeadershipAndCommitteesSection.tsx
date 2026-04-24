@@ -1,4 +1,4 @@
-import styles from "./styles.module.scss"
+import styles from "@/features/GetInvolvedForm/ui/styles.module.scss"
 import { Checkbox, type CheckboxChangeEvent } from "antd"
 
 interface IProps {

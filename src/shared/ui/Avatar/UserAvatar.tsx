@@ -1,12 +1,12 @@
 "use client"
 
-import type { IUser } from "../../../entities/User.ts"
-import styles from "./avatar.module.scss"
+import type { IUser } from "@/entities/User.ts"
+import styles from "@/shared/ui/Avatar/avatar.module.scss"
 import { type ChangeEvent, type CSSProperties, useEffect, useState } from "react"
-import api from "../../../axios.ts"
+import api from "@/axios.ts"
 import { message } from "antd"
 import CircularProgress from "@mui/material/CircularProgress"
-import { CURRENT_USER_AVATAR_URL } from "../../backend/rest-api-urls/currentUserUrls.ts"
+import { CURRENT_USER_AVATAR_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
 import { isAxiosError } from "axios"
 
 interface AvatarProps {

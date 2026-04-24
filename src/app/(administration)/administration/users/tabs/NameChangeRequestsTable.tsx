@@ -4,25 +4,22 @@ import { useEffect, useState } from "react"
 import { Table, Tag } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 
-import api from "../../../../../axios.ts"
-import Loading from "../../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import api from "@/axios.ts"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 import {
     getUserNameChangeRequestById,
     NAME_CHANGE_REQUESTS_URL,
-} from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
-import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
-import type {
-    INameChangeRequest,
-    NameChangeRequestStatus,
-} from "../../../../../entities/NameChangeRequest.ts"
+} from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import type { INameChangeRequest, NameChangeRequestStatus } from "@/entities/NameChangeRequest.ts"
 
-import { getSortOrder } from "../../../../../shared/helpers/getSortOrder.ts"
-import { handleTableChange } from "../../../../../shared/helpers/antdTableHelpers.ts"
-import { getSelectTableFilterDropdown } from "../../../../../widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"
-import NameChangeStatusModal from "../../../../../features/NameChangeRequestModal/NameChangeRequestModal.tsx"
-import PermissionGuard from "../../../../../shared/ui/PermissionGuard/PermissionGuard.tsx"
-import { usePermissions } from "../../../../../context/PermissionsProvider.tsx"
+import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"
+import { handleTableChange } from "@/shared/helpers/antdTableHelpers.ts"
+import { getSelectTableFilterDropdown } from "@/widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"
+import NameChangeStatusModal from "@/features/NameChangeRequestModal/NameChangeRequestModal.tsx"
+import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
 
 interface ITableFilters {
     status?: NameChangeRequestStatus

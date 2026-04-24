@@ -3,7 +3,7 @@
 import { type ReactNode } from "react"
 import { Alert } from "antd"
 import { ExclamationCircleOutlined } from "@ant-design/icons"
-import styles from "./Warning.module.scss"
+import styles from "@/shared/ui/Warning/Warning.module.scss"
 
 interface IProps {
     children: ReactNode

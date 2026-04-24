@@ -1,7 +1,7 @@
-import PageTitleCard from "../../../../shared/ui/PageTitleCard/PageTitleCard.tsx"
-import PageSection from "../../../../shared/ui/PageSection/PageSection.tsx"
-import styles from "./styles.module.scss"
-import MembershipApplicationForm from "../../../../features/MembershipApplicationForm/MembershipApplicationForm.tsx"
+import PageTitleCard from "@/shared/ui/PageTitleCard/PageTitleCard.tsx"
+import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
+import styles from "@/app/(main)/membership/become-member/styles.module.scss"
+import MembershipApplicationForm from "@/features/MembershipApplicationForm/MembershipApplicationForm.tsx"
 
 const Page = () => {
     const title = (

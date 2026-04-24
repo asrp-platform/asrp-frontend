@@ -1,17 +1,17 @@
 "use client"
 
 import { Checkbox, Form, type FormProps, Input, Typography } from "antd"
-import styles from "../styles.module.scss"
+import styles from "@/app/(auth)/login/styles.module.scss"
 import Link from "next/link"
-import api from "../../../../axios.ts"
-import type { LoginResponse } from "../types.ts"
-import { LOGIN_URL } from "../../../../shared/backend/rest-api-urls/restApiUrls.ts"
+import api from "@/axios.ts"
+import type { LoginResponse } from "@/app/(auth)/login/types.ts"
+import { LOGIN_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
 import { isAxiosError } from "axios"
 import { useRouter } from "next/navigation"
 import { useForm } from "antd/es/form/Form"
-import { useAuth } from "../../../../context/AuthProvider.tsx"
+import { useAuth } from "@/context/AuthProvider.tsx"
 import useNotification from "antd/es/notification/useNotification"
-import PrimaryButton from "../../../../shared/ui/Buttons/PrimaryButton.tsx"
+import PrimaryButton from "@/shared/ui/Buttons/PrimaryButton.tsx"
 
 type FieldType = {
     email: string

@@ -2,10 +2,10 @@
 
 import { type ReactNode, useState } from "react"
 import { Tag } from "antd"
-import { PromoteToAdminModal } from "../PromoteAdminRoleModal.tsx"
+import { PromoteToAdminModal } from "@/app/(administration)/administration/users/tabs/ui/PromoteAdminRoleModal.tsx"
 import { isAxiosError } from "axios"
-import api from "../../../../../../../axios.ts"
-import { getStuffUsersUrl } from "../../../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import api from "@/axios.ts"
+import { getStuffUsersUrl } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 
 interface IProps {
     canAssignRole: boolean

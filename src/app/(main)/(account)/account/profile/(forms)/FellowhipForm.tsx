@@ -1,8 +1,8 @@
 import { Button, Col, Form, Input, Row, Flex, Modal } from "antd"
 import { useEffect, useState } from "react"
-import type { IUserFellowshipFormValues } from "../../../../../../entities/User"
-import styles from "../(ui)/styles.module.scss"
-import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors"
+import type { IUserFellowshipFormValues } from "@/entities/User"
+import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
 import { isAxiosError } from "axios"
 
 interface IProps {

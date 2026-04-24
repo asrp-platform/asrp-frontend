@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./ProfileInfoCard.module.scss"
+import styles from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.module.scss"
 
 interface IProps {
     children?: React.ReactNode

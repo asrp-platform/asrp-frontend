@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./styles.module.scss"
+import styles from "@/widgets/Header/ui/styles.module.scss"
 
 const BreakLine = () => {
     return <div className={styles.breakLine}></div>

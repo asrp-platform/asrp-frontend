@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./styles.module.scss"
+import styles from "@/context/CookieConsentProvider/CookieBanner/styles.module.scss"
 import { useState } from "react"
 import { Button, Checkbox, Typography } from "antd"
 

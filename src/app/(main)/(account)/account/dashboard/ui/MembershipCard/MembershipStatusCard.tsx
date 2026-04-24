@@ -1,11 +1,11 @@
-import { useCurrentUserMembershipRequestQuery } from "../../../../../../../shared/backend/queries/membership-requests/useCurrentUserMembershipRequestQuery.ts"
+import { useCurrentUserMembershipRequestQuery } from "@/shared/backend/queries/membership-requests/useCurrentUserMembershipRequestQuery.ts"
 
-import styles from "./MembershipStatusCard.module.scss"
-import PrimaryLinkOutlined from "../../../../../../../shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
-import ProfileInfoCard from "../../../../../../../shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
-import MembershipRequestCard from "../MembershipRequestCard/MembershipRequestCard.tsx"
-import Loading from "../../../../../about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import ApplyMembershipCard from "../ApplyMembershipCard/ApplyMembershipCard.tsx"
+import styles from "@/app/(main)/(account)/account/dashboard/ui/MembershipCard/MembershipStatusCard.module.scss"
+import PrimaryLinkOutlined from "@/shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
+import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
+import MembershipRequestCard from "@/app/(main)/(account)/account/dashboard/ui/MembershipRequestCard/MembershipRequestCard.tsx"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import ApplyMembershipCard from "@/app/(main)/(account)/account/dashboard/ui/ApplyMembershipCard/ApplyMembershipCard.tsx"
 
 const MembershipStatusCard = () => {
     const { data: membershipRequest, isLoading: isMembershipRequestLoading } =

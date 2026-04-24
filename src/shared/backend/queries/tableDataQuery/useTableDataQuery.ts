@@ -1,4 +1,4 @@
-import api from "../../../../axios.ts"
+import api from "@/axios.ts"
 import { useQuery } from "@tanstack/react-query"
 import type { QueryKey } from "@tanstack/query-core"
 

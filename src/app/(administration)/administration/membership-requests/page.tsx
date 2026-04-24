@@ -1,7 +1,7 @@
 "use client"
 
-import MembershipRequestsTable from "./ui/MembershipRequestsTable.tsx"
-import { usePermissions } from "../../../../context/PermissionsProvider.tsx"
+import MembershipRequestsTable from "@/app/(administration)/administration/membership-requests/ui/MembershipRequestsTable.tsx"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
 
 const Page = () => {
     const { permissions } = usePermissions()

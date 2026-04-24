@@ -1,5 +1,5 @@
 // Users
-import { ADMIN_URL } from "../../../../axios.ts"
+import { ADMIN_URL } from "@/axios.ts"
 
 export const ADMIN_USERS_URL = `${ADMIN_URL}/users`
 

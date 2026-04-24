@@ -1,15 +1,12 @@
 import { useState } from "react"
-import {
-    type IMembershipRequest,
-    MembershipRequestStatusEnum,
-} from "../../../../../entities/Membership.ts"
-import { useTableDataQuery } from "../../../../../shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "../../../../../shared/backend/rest-api-urls/admin/membershipsUrls.ts"
+import { type IMembershipRequest, MembershipRequestStatusEnum } from "@/entities/Membership.ts"
+import { useTableDataQuery } from "@/shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
+import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/membershipsUrls.ts"
 import { Table, Tag } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
-import Loading from "../../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum

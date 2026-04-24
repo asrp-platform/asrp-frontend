@@ -1,5 +1,5 @@
 import Link from "next/link"
-import styles from "./SecondaryLinkOutlined.module.scss"
+import styles from "@/shared/ui/Buttons/SecondaryLinkOutilned/SecondaryLinkOutlined.module.scss"
 
 interface IProps {
     href: string

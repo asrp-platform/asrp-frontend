@@ -1,13 +1,13 @@
 "use client"
 
 import { Form, Input, Button, message } from "antd"
-import styles from "./styles.module.scss"
+import styles from "@/features/GetInvolvedCommitteesForm/styles.module.scss"
 import { isAxiosError } from "axios"
-import api from "../../axios.ts"
-import { CONTACT_MESSAGE_URL } from "../../shared/backend/rest-api-urls/restApiUrls.ts"
+import api from "@/axios.ts"
+import { CONTACT_MESSAGE_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
 
 import { useState } from "react"
-import { ContactMessageType } from "../../entities/ContactMessage.ts"
+import { ContactMessageType } from "@/entities/ContactMessage.ts"
 
 type GetInvolvedFormValues = {
     name: string

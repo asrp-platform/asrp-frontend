@@ -1,17 +1,13 @@
 import { Card, Typography } from "antd"
-import styles from "./styles.module.scss"
-import ResidencyForm from "../(forms)/ResidencyForm"
-import type {
-    IUser,
-    IUserResidency,
-    IUserResidencyFormValues,
-} from "../../../../../../entities/User"
+import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
+import ResidencyForm from "@/app/(main)/(account)/account/profile/(forms)/ResidencyForm"
+import type { IUser, IUserResidency, IUserResidencyFormValues } from "@/entities/User"
 import { useEffect, useState } from "react"
-import api from "../../../../../../axios"
+import api from "@/axios"
 import {
     getUserResidenciesUrl,
     getUserResidencyByIdUrl,
-} from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
+} from "@/shared/backend/rest-api-urls/restApiUrls.ts"
 import { isAxiosError } from "axios"
 
 interface IProps {

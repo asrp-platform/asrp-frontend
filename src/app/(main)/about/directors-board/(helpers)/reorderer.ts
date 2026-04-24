@@ -1,4 +1,4 @@
-import type { IDirectorsBoardMember } from "../../../../../entities/DirectorsBoardMember.ts"
+import type { IDirectorsBoardMember } from "@/entities/DirectorsBoardMember.ts"
 
 export const reorder = (list: IDirectorsBoardMember[], fromIndex: number, toIndex: number) => {
     const result = [...list]

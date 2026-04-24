@@ -26,7 +26,16 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
 
-        "plugins": [{ "name": "next" }]
+        "plugins": [{ "name": "next" }],
+
+    "paths": {
+      "@/*": ["./src/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@features/*": ["./src/features/*"],
+      "@widgets/*": ["./src/widgets/*"],
+      "@app/*": ["./src/app/*"]
+    }
     },
     "include": [
         "next-env.d.ts",

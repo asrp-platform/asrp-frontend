@@ -2,7 +2,7 @@ import type { Dispatch, Key, SetStateAction } from "react"
 import type { FilterDropdownProps } from "antd/es/table/interface"
 import { Input, Button, Flex } from "antd"
 
-import SearchFilterDropdownLayout from "../SearchFilterDropdownLayout/SearchFilterDropdownLayout"
+import SearchFilterDropdownLayout from "@/widgets/TableDropdown/SearchFilterDropdownLayout/SearchFilterDropdownLayout"
 
 export const getInputColumnSearchProps = <TFilters extends Record<string, any>>(
     dataIndex: string,

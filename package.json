@@ -50,6 +50,7 @@
         "husky": "^9.1.7",
         "prettier": "3.7.4",
         "stylelint-scss": "^7.0.0",
+        "ts-path-alias-fixer": "^1.1.0",
         "typescript": "^5"
     }
 }
