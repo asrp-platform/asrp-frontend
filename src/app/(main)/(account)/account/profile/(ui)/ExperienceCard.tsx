@@ -44,6 +44,18 @@ const getDeleteErrorMessage = (error: unknown, deleteEntityLabel: string) => {
     return `Failed to delete ${deleteEntityLabel}`
 }
 
+const getErrorMessage = (error: unknown, defaultMessage: string): string => {
+    if (isAxiosError<{ detail?: string; message?: string; error?: string }>(error)) {
+        return (
+            error.response?.data?.detail ||
+            error.response?.data?.message ||
+            error.response?.data?.error ||
+            defaultMessage
+        )
+    }
+
+    return defaultMessage
+}
 const ExperienceCard = ({
     user,
     title,
@@ -74,6 +86,14 @@ const ExperienceCard = ({
         onSuccess: async () => {
             setIsCreating(false)
             await queryClient.invalidateQueries({ queryKey: getExperienceQueriesRoot(user.id) })
+            message.success(`Successfully created ${deleteEntityLabel.toLowerCase()}`)
+        },
+        onError: (error) => {
+            const errorMsg = getErrorMessage(
+                error,
+                `Failed to create ${deleteEntityLabel.toLowerCase()}`,
+            )
+            message.error(errorMsg)
         },
     })
 
@@ -84,6 +104,14 @@ const ExperienceCard = ({
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: getExperienceQueriesRoot(user.id) })
+            message.success(`Successfully updated ${deleteEntityLabel.toLowerCase()}`)
+        },
+        onError: (error) => {
+            const errorMsg = getErrorMessage(
+                error,
+                `Failed to update ${deleteEntityLabel.toLowerCase()}`,
+            )
+            message.error(errorMsg)
         },
     })
 
