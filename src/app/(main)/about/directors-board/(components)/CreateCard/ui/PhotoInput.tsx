@@ -3,9 +3,10 @@ import styles from "@/app/(main)/about/directors-board/(components)/CreateCard/u
 import api from "@/axios.ts"
 import type { ImagePathResponse } from "@/shared/types/interfaces.ts"
 import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
-import { getDirectorMemberImageUrl } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
 
 import { Image } from "lucide-react"
+import { isAxiosError } from "axios"
+import { message } from "antd"
 
 interface IProps {
     setUploadedImageUrl: (_photo_url: string | null) => void
@@ -21,15 +22,18 @@ const PhotoInput = ({ setUploadedImageUrl, uploadedImageUrl }: IProps) => {
         formData.append("file", file)
 
         try {
-            const res = await api.post<ImagePathResponse>(
+            const res = await api.put<ImagePathResponse>(
                 DIRECTORS_BOARD_MEMBER_IMAGES_URL,
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } },
             )
-            setUploadedImageUrl(getDirectorMemberImageUrl(res.data.path))
+            setUploadedImageUrl(res.data.path)
         } catch (error) {
-            // TODO: Нормальная обработка ошибок
-            console.error("Image upload failed:", error)
+            if (isAxiosError(error)) {
+                if (error.response?.status === 415) {
+                    message.error("Invalid content type")
+                }
+            }
         } finally {
             e.target.value = ""
         }

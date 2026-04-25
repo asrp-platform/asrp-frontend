@@ -43,9 +43,5 @@ export const getUserJobByIdUrl = (userId: number | string, jobId: number | strin
 // Feedback
 export const CONTACT_MESSAGE_URL = "/contact-messages"
 
-// Directors board / media
-export const getDirectorMemberImageUrl = (imageRelativePath: string) =>
-    `${REST_API_URL}/${imageRelativePath.replace(/^\/+/, "")}`
-
 export const DIRECTORS_BOARD_URL = "/directors-board"
 export const BYLAWS_URL = `${REST_API_URL}/media/bylaws/bylaws.pdf`
