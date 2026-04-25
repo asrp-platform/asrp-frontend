@@ -6,7 +6,8 @@ import type { IDirectorsBoardMember } from "@/entities/DirectorsBoardMember.ts"
 import api from "@/axios.ts"
 
 import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
-import { getDirectorMemberImageUrl } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import { isAxiosError } from "axios"
+import { message } from "antd"
 
 interface ImagePathResponse {
     path: string
@@ -36,18 +37,22 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
         try {
             setIsUploading(true)
 
-            const res = await api.post<ImagePathResponse>(
+            const res = await api.put<ImagePathResponse>(
                 DIRECTORS_BOARD_MEMBER_IMAGES_URL,
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } },
             )
 
-            const newPhotoUrl = getDirectorMemberImageUrl(res.data.path)
+            const newPhotoUrl = res.data.path
 
             setPhotoUrl(newPhotoUrl)
             onPhotoChange?.(newPhotoUrl)
         } catch (error) {
-            console.error("Image upload failed:", error)
+            if (isAxiosError(error)) {
+                if (error.response?.status === 415) {
+                    message.error("Invalid content type")
+                }
+            }
         } finally {
             setIsUploading(false)
             e.target.value = ""
