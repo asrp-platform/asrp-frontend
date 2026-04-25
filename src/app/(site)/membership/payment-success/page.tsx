@@ -1,7 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { ArrowRight, CheckCircle2, Mail, ShieldCheck } from "lucide-react"
-import styles from "./styles.module.scss"
+import styles from "@/app/(site)/membership/payment-success/styles.module.scss"
 
 export const metadata: Metadata = {
     title: "Membership Payment Successful",

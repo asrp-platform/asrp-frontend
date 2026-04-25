@@ -7,14 +7,14 @@ import { Button } from "antd"
 import { EditorContent, useEditor } from "@tiptap/react"
 import clsx from "clsx"
 
-import CardPhoto from "./ui/CardPhoto.tsx"
-import DetailView from "./ui/DetailView.tsx"
-import { detailViewExtensions } from "./helpers/editorExtenstions.tsx"
-import type { IDirectorsBoardMember } from "../../../../../../entities/DirectorsBoardMember.ts"
-import styles from "./styles.module.scss"
-import { getPreviewContent } from "./helpers/getPreviewContent.ts"
-import api from "../../../../../../axios.ts"
-import { DIRECTORS_BOARD_MEMBER_REORDER_URL } from "../../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import CardPhoto from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/CardPhoto.tsx"
+import DetailView from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/DetailView.tsx"
+import { detailViewExtensions } from "@/app/(main)/about/directors-board/(components)/ViewCard/helpers/editorExtenstions.tsx"
+import type { IDirectorsBoardMember } from "@/entities/DirectorsBoardMember.ts"
+import styles from "@/app/(main)/about/directors-board/(components)/ViewCard/styles.module.scss"
+import { getPreviewContent } from "@/app/(main)/about/directors-board/(components)/ViewCard/helpers/getPreviewContent.ts"
+import api from "@/axios.ts"
+import { DIRECTORS_BOARD_MEMBER_REORDER_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 
 interface IProps {
     member: IDirectorsBoardMember

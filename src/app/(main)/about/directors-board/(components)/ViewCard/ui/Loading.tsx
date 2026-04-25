@@ -1,6 +1,6 @@
 import CircularProgress from "@mui/material/CircularProgress"
 
-import styles from "./styles.module.scss"
+import styles from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/styles.module.scss"
 
 const Loading = () => {
     return (

@@ -1,8 +1,8 @@
-import styles from "./styles.module.scss"
+import styles from "@/app/(main)/styles.module.scss"
 
-import ContactForm from "../../features/ContactForm/ContactForm.tsx"
+import ContactForm from "@/features/ContactForm/ContactForm.tsx"
 import Link from "next/link"
-import GuidesListCard from "./(ui)/GuidesListCard/GuidesListCard.tsx"
+import GuidesListCard from "@/app/(main)/(ui)/GuidesListCard/GuidesListCard.tsx"
 
 const MainPage = async () => {
     return (

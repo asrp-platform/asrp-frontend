@@ -1,7 +1,7 @@
 import { Card, Typography, Flex, Space } from "antd"
-import type { IUser } from "../../../../../../entities/User.ts"
+import type { IUser } from "@/entities/User.ts"
 import { UserOutlined } from "@ant-design/icons"
-import UserAvatar from "../../../../../../shared/ui/Avatar/UserAvatar.tsx"
+import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
 
 interface Props {
     user: IUser

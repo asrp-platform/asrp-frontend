@@ -1,6 +1,6 @@
-import styles from "./styles.module.scss"
-import SocialNetLinks from "../../../shared/ui/social-net-links/SocialNetLinks.tsx"
-import ContactForm from "../../../features/ContactForm/ContactForm.tsx"
+import styles from "@/app/(main)/contacts/styles.module.scss"
+import SocialNetLinks from "@/shared/ui/social-net-links/SocialNetLinks.tsx"
+import ContactForm from "@/features/ContactForm/ContactForm.tsx"
 
 const Page = () => {
     return (

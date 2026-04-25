@@ -1,4 +1,4 @@
-import styles from "./NotAuthorized.module.scss"
+import styles from "@/shared/ui/NotAuthorized/NotAuthorized.module.scss"
 import { ShieldAlert } from "lucide-react"
 
 const NotAuthorized = () => {

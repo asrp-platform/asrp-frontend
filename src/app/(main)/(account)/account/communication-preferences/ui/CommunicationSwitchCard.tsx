@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./styles.module.scss"
+import styles from "@/app/(main)/(account)/account/communication-preferences/ui/styles.module.scss"
 import { ConfigProvider, Switch } from "antd"
 
 type SwitchValues =

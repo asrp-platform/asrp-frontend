@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./styles.module.scss"
+import styles from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/styles.module.scss"
 import { Button } from "antd"
 
 interface IProps {

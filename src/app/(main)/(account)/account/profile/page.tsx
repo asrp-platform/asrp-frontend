@@ -1,10 +1,11 @@
 "use client"
 
-import styles from "./styles.module.scss"
-import UserProfileCard from "./(ui)/UserProfileCard.tsx"
-import { useAuth } from "../../../../../context/AuthProvider.tsx"
-import ResidencyCard from "./(ui)/ResidencyCard.tsx"
-import FellowshipCard from "./(ui)/FellowshipCard.tsx"
+import styles from "@/app/(main)/(account)/account/profile/styles.module.scss"
+import UserProfileCard from "@/app/(main)/(account)/account/profile/(ui)/UserProfileCard.tsx"
+import { useAuth } from "@/context/AuthProvider.tsx"
+import ResidencyCard from "@/app/(main)/(account)/account/profile/(ui)/ResidencyCard.tsx"
+import FellowshipCard from "@/app/(main)/(account)/account/profile/(ui)/FellowshipCard.tsx"
+import JobCard from "@/app/(main)/(account)/account/profile/(ui)/JobCard"
 
 export default function ASRPAccountProfilePage() {
     const { user } = useAuth()
@@ -26,6 +27,7 @@ export default function ASRPAccountProfilePage() {
                         </div>
                     </div>
                     <UserProfileCard user={user} />
+                    <JobCard user={user} />
                     <ResidencyCard user={user} />
                     <FellowshipCard user={user} />
                 </section>

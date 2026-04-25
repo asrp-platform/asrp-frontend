@@ -1,6 +1,6 @@
 "use client"
 
-import { BylawsFileCard } from "./ui/Bylaws.tsx"
+import { BylawsFileCard } from "@/app/(administration)/administration/legal-documents/ui/Bylaws.tsx"
 
 const Page = () => {
     return (

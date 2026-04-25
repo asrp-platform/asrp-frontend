@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { type ReactNode } from "react"
-import styles from "./Buttons.module.scss"
+import styles from "@/shared/ui/Buttons/Buttons.module.scss"
 import clsx from "clsx"
 
 interface LinkButtonProps {

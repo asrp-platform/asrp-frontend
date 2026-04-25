@@ -1,4 +1,4 @@
-import styles from "./GuidesListCard.module.scss"
+import styles from "@/app/(main)/(ui)/GuidesListCard/GuidesListCard.module.scss"
 import Link from "next/link"
 
 const GUIDES_ITEMS = [

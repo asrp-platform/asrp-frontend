@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { Card, Button, Upload, Typography, Space, message } from "antd"
 import { UploadOutlined, EyeOutlined } from "@ant-design/icons"
-import { BYLAWS_ADMIN_URL } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
-import api from "../../../../../axios.ts"
+import { BYLAWS_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import api from "@/axios.ts"
 import { isAxiosError } from "axios"
-import { BYLAWS_URL } from "../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
-import Loading from "../../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import { BYLAWS_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 const { Text } = Typography
 

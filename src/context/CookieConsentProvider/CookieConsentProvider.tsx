@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react"
-import CookieBanner from "./CookieBanner/CookieBanner.tsx"
+import CookieBanner from "@/context/CookieConsentProvider/CookieBanner/CookieBanner.tsx"
 
 type CookieConsentContextType = {
     resetConsent: () => void

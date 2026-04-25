@@ -1,7 +1,7 @@
-import InfoCard from "../../../../shared/ui/InfoCard/InfoCard.tsx"
+import InfoCard from "@/shared/ui/InfoCard/InfoCard.tsx"
 import { Typography } from "antd"
 
-import styles from "./SupportInfoCard.module.scss"
+import styles from "@/app/(main)/(ui)/SupportInfoCard/SupportInfoCard.module.scss"
 import type { ReactNode } from "react"
 
 const { Title, Paragraph } = Typography

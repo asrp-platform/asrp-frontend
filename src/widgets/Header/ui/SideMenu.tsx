@@ -3,16 +3,16 @@
 import { useEffect, useState } from "react"
 import { LogOut, Menu, User } from "lucide-react"
 
-import styles from "./styles.module.scss"
-import { useAuth } from "../../../context/AuthProvider.tsx"
-import SideMenuHeader from "./SideMenuHeader.tsx"
-import BreakLine from "./BreakLine.tsx"
-import SideMenuItemList from "./SideMenuItemList.tsx"
-import { handleLogout } from "../helpers/logout.ts"
+import styles from "@/widgets/Header/ui/styles.module.scss"
+import { useAuth } from "@/context/AuthProvider.tsx"
+import SideMenuHeader from "@/widgets/Header/ui/SideMenuHeader.tsx"
+import BreakLine from "@/widgets/Header/ui/BreakLine.tsx"
+import SideMenuItemList from "@/widgets/Header/ui/SideMenuItemList.tsx"
+import { handleLogout } from "@/widgets/Header/helpers/logout.ts"
 import Link from "next/link"
 import { UserOutlined } from "@ant-design/icons"
 import { useRouter } from "next/navigation"
-import { onUserLoginClick } from "../helpers/login.ts"
+import { onUserLoginClick } from "@/widgets/Header/helpers/login.ts"
 
 const SideMenu = () => {
     const { user } = useAuth()

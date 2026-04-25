@@ -1,10 +1,10 @@
 import { Modal, Form, Input, message } from "antd"
-import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
 import { isAxiosError } from "axios"
 import { useState } from "react"
-import Loading from "../../../../about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import api from "../../../../../../axios.ts"
-import { CURRENT_USER_NAME_CHANGE_URL } from "../../../../../../shared/backend/rest-api-urls/currentUserUrls.ts"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import api from "@/axios.ts"
+import { CURRENT_USER_NAME_CHANGE_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
 
 export interface ChangeNameFormValues {
     lastname: string

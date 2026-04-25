@@ -1,13 +1,13 @@
 "use client"
 
-import styles from "./styles.module.scss"
-import ProfileHeaderSection from "../(shared)/ProfileHeaderSection.tsx"
-import UserAvatar from "../../../../../shared/ui/Avatar/UserAvatar.tsx"
-import { useCurrentUserQuery } from "../../../../../shared/backend/queries/useCurrentUserQuery.ts"
-import Loading from "../../../about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import MembershipStatusCard from "./ui/MembershipCard/MembershipStatusCard.tsx"
-import QuickActionsCard from "./ui/QuickActions/QuickActionsCard.tsx"
-import ProfileInfoCard from "../../../../../shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
+import styles from "@/app/(main)/(account)/account/dashboard/styles.module.scss"
+import ProfileHeaderSection from "@/app/(main)/(account)/account/(shared)/ProfileHeaderSection.tsx"
+import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
+import { useCurrentUserQuery } from "@/shared/backend/queries/useCurrentUserQuery.ts"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import MembershipStatusCard from "@/app/(main)/(account)/account/dashboard/ui/MembershipCard/MembershipStatusCard.tsx"
+import QuickActionsCard from "@/app/(main)/(account)/account/dashboard/ui/QuickActions/QuickActionsCard.tsx"
+import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
 
 const Page = () => {
     const { data: user, isLoading: isUserLoading } = useCurrentUserQuery()

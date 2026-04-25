@@ -1,9 +1,9 @@
-import styles from "./Header.module.scss"
-import Logo from "../../shared/ui/LogoPlaceholder/Logo.tsx"
-import AuthStatus from "./ui/AuthStatus.tsx"
+import styles from "@/widgets/Header/Header.module.scss"
+import Logo from "@/shared/ui/LogoPlaceholder/Logo.tsx"
+import AuthStatus from "@/widgets/Header/ui/AuthStatus.tsx"
 
-import { type HeaderMenuItem, headerMenuItems } from "./headerMenuItems.tsx"
-import SideMenu from "./ui/SideMenu.tsx"
+import { type HeaderMenuItem, headerMenuItems } from "@/widgets/Header/headerMenuItems.tsx"
+import SideMenu from "@/widgets/Header/ui/SideMenu.tsx"
 import { Dropdown } from "antd"
 
 const Header = () => {

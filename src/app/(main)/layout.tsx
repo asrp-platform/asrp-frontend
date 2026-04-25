@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
-import Header from "../../widgets/Header/Header.tsx"
-import Footer from "../../widgets/Footer/Footer.tsx"
+import Header from "@/widgets/Header/Header.tsx"
+import Footer from "@/widgets/Footer/Footer.tsx"
 import type { Metadata } from "next"
 
 // eslint-disable-next-line react-refresh/only-export-components

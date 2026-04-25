@@ -3,13 +3,13 @@
 import { useState } from "react"
 import { Button, Card, Divider, Modal, message } from "antd"
 
-import styles from "./styles.module.scss"
-import type { IUser } from "../../../../../../entities/User.ts"
-import PersonalInfoForm from "../(forms)/PersonalInfoForm.tsx"
-import ProfessionalInfoForm from "../(forms)/ProfessionalInfoForm.tsx"
-import UserAvatar from "../../../../../../shared/ui/Avatar/UserAvatar.tsx"
-import api from "../../../../../../axios.ts"
-import { CURRENT_USER_AVATAR_URL } from "../../../../../../shared/backend/rest-api-urls/currentUserUrls.ts"
+import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
+import type { IUser } from "@/entities/User.ts"
+import PersonalInfoForm from "@/app/(main)/(account)/account/profile/(forms)/PersonalInfoForm.tsx"
+import ProfessionalInfoForm from "@/app/(main)/(account)/account/profile/(forms)/ProfessionalInfoForm.tsx"
+import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
+import api from "@/axios.ts"
+import { CURRENT_USER_AVATAR_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
 
 interface IProps {
     user: IUser

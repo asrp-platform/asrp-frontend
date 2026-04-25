@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { ADMIN_USERS_URL } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
-import type { IPaginatedBackendResponse } from "../../../../../shared/types/interfaces.ts"
-import api from "../../../../../axios.ts"
-import type { IUser } from "../../../../../entities/User.ts"
-import Loading from "../../../../(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import { ADMIN_USERS_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import api from "@/axios.ts"
+import type { IUser } from "@/entities/User.ts"
+import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { Button, Input, type InputRef, Table, Tag } from "antd"
 import type {
     FilterDropdownProps,
@@ -14,13 +14,13 @@ import type {
     TablePaginationConfig,
 } from "antd/es/table/interface"
 
-import styles from "../styles.module.scss"
+import styles from "@/app/(administration)/administration/users/styles.module.scss"
 import type { Key } from "react"
 import type { ColumnsType } from "antd/lib/table"
-import { getSortOrder } from "../../../../../shared/helpers/getSortOrder.ts"
-import { getBooleanColumnSearchProps } from "../../../../../widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
-import { usePermissions } from "../../../../../context/PermissionsProvider.tsx"
-import RoleTag from "./ui/tags/RoleTag.tsx"
+import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"
+import { getBooleanColumnSearchProps } from "@/widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import RoleTag from "@/app/(administration)/administration/users/tabs/ui/tags/RoleTag.tsx"
 
 interface ITableFilters {
     firstname__startswith?: string

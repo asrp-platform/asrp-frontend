@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./ContactForm.module.scss"
+import styles from "@/features/ContactForm/ContactForm.module.scss"
 
 import { type FormProps, Input, message, Spin } from "antd"
 import { Form } from "antd"
@@ -10,10 +10,10 @@ import { useForm } from "antd/es/form/Form"
 import { useState } from "react"
 import { isAxiosError } from "axios"
 
-import api from "../../axios.ts"
-import { CONTACT_MESSAGE_URL } from "../../shared/backend/rest-api-urls/restApiUrls.ts"
-import type { IBackendErrorResponse } from "../../shared/types/interfaces.ts"
-import { ContactMessageType } from "../../entities/ContactMessage.ts"
+import api from "@/axios.ts"
+import { CONTACT_MESSAGE_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import type { IBackendErrorResponse } from "@/shared/types/interfaces.ts"
+import { ContactMessageType } from "@/entities/ContactMessage.ts"
 
 interface ContactFormFields {
     name: string

@@ -1,4 +1,4 @@
-import styles from "./styles.module.scss"
+import styles from "@/shared/ui/PageTitleCard/styles.module.scss"
 import type { ReactNode } from "react"
 import clsx from "clsx"
 

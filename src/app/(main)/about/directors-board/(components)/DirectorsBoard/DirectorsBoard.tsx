@@ -1,18 +1,18 @@
 "use client"
 
-import type { IDirectorsBoardMember } from "../../../../../../entities/DirectorsBoardMember.ts"
+import type { IDirectorsBoardMember } from "@/entities/DirectorsBoardMember.ts"
 import { useState, useEffect, useMemo } from "react"
-import api from "../../../../../../axios.ts"
-import CreateDirectorMemberCard from "../CreateCard/CreateDirectorMemberCard.tsx"
+import api from "@/axios.ts"
+import CreateDirectorMemberCard from "@/app/(main)/about/directors-board/(components)/CreateCard/CreateDirectorMemberCard.tsx"
 
-import styles from "./styles.module.scss"
-import { useAuth } from "../../../../../../context/AuthProvider.tsx"
+import styles from "@/app/(main)/about/directors-board/(components)/DirectorsBoard/styles.module.scss"
+import { useAuth } from "@/context/AuthProvider.tsx"
 
 import CircularProgress from "@mui/material/CircularProgress"
-import ViewCard from "../ViewCard/ViewCard.tsx"
-import { usePermissions } from "../../../../../../context/PermissionsProvider.tsx"
-import { useIsMobile } from "../../../../../../shared/hooks/useIsMobile.ts"
-import { DIRECTORS_BOARD_URL } from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
+import ViewCard from "@/app/(main)/about/directors-board/(components)/ViewCard/ViewCard.tsx"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import { useIsMobile } from "@/shared/hooks/useIsMobile.ts"
+import { DIRECTORS_BOARD_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
 
 const DirectorsBoard = () => {
     const { user, isUserLoading } = useAuth()

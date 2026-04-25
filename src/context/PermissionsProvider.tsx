@@ -10,10 +10,10 @@ import {
     useLayoutEffect,
     useState,
 } from "react"
-import type { IPermission } from "../entities/Permission.ts"
-import { useAuth } from "./AuthProvider.tsx"
-import api from "../axios.ts"
-import { getUserPermissionsStuffUrl } from "../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import type { IPermission } from "@/entities/Permission.ts"
+import { useAuth } from "@/context/AuthProvider.tsx"
+import api from "@/axios.ts"
+import { getUserPermissionsStuffUrl } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 
 interface IPermissionsContext {
     permissions: string[]

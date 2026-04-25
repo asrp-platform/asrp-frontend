@@ -1,14 +1,14 @@
 "use client"
 
-import styles from "../(ui)/styles.module.scss"
+import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
 import { Button, Col, Form, type FormProps, Input, message, Row } from "antd"
-import type { IUser } from "../../../../../../entities/User.ts"
+import type { IUser } from "@/entities/User.ts"
 import { useState } from "react"
 import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
-import api from "../../../../../../axios.ts"
-import ChangeNameModal from "../(ui)/RequestNameChangeModal.tsx"
-import { CURRENT_USER_URL } from "../../../../../../shared/backend/rest-api-urls/currentUserUrls.ts"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
+import api from "@/axios.ts"
+import ChangeNameModal from "@/app/(main)/(account)/account/profile/(ui)/RequestNameChangeModal.tsx"
+import { CURRENT_USER_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
 
 interface IProps {
     user: IUser

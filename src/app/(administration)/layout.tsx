@@ -10,8 +10,8 @@ import {
 } from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useMemo, useState } from "react"
-import styles from "./layout.module.scss"
-import BackToMainSiteButton from "../../shared/ui/Buttons/BackToMainSiteButton.tsx"
+import styles from "@/app/(administration)/layout.module.scss"
+import BackToMainSiteButton from "@/shared/ui/Buttons/BackToMainSiteButton.tsx"
 
 const { Header, Sider, Content } = Layout
 

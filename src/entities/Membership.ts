@@ -1,4 +1,4 @@
-import type { IUser } from "./User.ts"
+import type { IUser } from "@/entities/User.ts"
 
 /* eslint-disable */
 

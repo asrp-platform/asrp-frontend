@@ -1,30 +1,52 @@
-import { Button, Col, Form, Input, Row, Flex, Modal } from "antd"
+import { Button, Checkbox, Col, Flex, Form, Input, Modal, Row, Tooltip } from "antd"
 import { useEffect, useState } from "react"
-import type { IUserResidencyFormValues } from "../../../../../../entities/User"
-import styles from "../(ui)/styles.module.scss"
-import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors"
 import { isAxiosError } from "axios"
 
+import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
+
+export interface IExperienceFormValues {
+    institution: string
+    speciality: string
+    city: string
+    state: string
+    country: string
+    years_from_to: string
+    current_position: boolean
+}
+
 interface IProps {
-    initialValues?: IUserResidencyFormValues
-    onSubmit: (_values: IUserResidencyFormValues) => Promise<void>
+    initialValues?: IExperienceFormValues
+    onSubmit: (_values: IExperienceFormValues) => Promise<void>
     onDelete?: () => Promise<void>
     startInEditMode?: boolean
+    deleteEntityLabel: string
+    isDeleteDisabled?: boolean
+    deleteDisabledReason?: string
 }
 
 type Mode = "view" | "edit"
 
-const emptyValues: IUserResidencyFormValues = {
+const emptyValues: IExperienceFormValues = {
     institution: "",
     speciality: "",
     city: "",
     state: "",
     country: "",
     years_from_to: "",
+    current_position: false,
 }
 
-const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = false }: IProps) => {
-    const [form] = Form.useForm<IUserResidencyFormValues>()
+const ExperienceForm = ({
+    initialValues,
+    onSubmit,
+    onDelete,
+    startInEditMode = false,
+    deleteEntityLabel,
+    isDeleteDisabled = false,
+    deleteDisabledReason,
+}: IProps) => {
+    const [form] = Form.useForm<IExperienceFormValues>()
     const [mode, setMode] = useState<Mode>(startInEditMode ? "edit" : "view")
     const [isLoading, setIsLoading] = useState(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -35,7 +57,7 @@ const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = fa
         form.setFieldsValue(initialValues ?? emptyValues)
     }, [initialValues, form])
 
-    const handleFinish = async (values: IUserResidencyFormValues) => {
+    const handleFinish = async (values: IExperienceFormValues) => {
         try {
             setIsLoading(true)
             await onSubmit(values)
@@ -55,12 +77,14 @@ const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = fa
     }
 
     const handleDeleteConfirm = async () => {
-        if (!onDelete) return
+        if (!onDelete || isDeleteDisabled) return
 
         try {
             setIsLoading(true)
             await onDelete()
             setIsDeleteModalOpen(false)
+        } catch {
+            // Error message is handled in parent mutation callbacks.
         } finally {
             setIsLoading(false)
         }
@@ -118,10 +142,14 @@ const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = fa
                             label="Years (from – to)"
                             rules={[{ required: true }]}
                         >
-                            <Input disabled={isView} placeholder="2015–2019" />
+                            <Input disabled={isView} placeholder="2020-2022" />
                         </Form.Item>
                     </Col>
                 </Row>
+
+                <Form.Item name="current_position" valuePropName="checked" style={{ marginTop: 4 }}>
+                    <Checkbox disabled={isView}>Current Position</Checkbox>
+                </Form.Item>
 
                 {!isView && (
                     <Flex justify="space-between">
@@ -134,9 +162,15 @@ const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = fa
                         </Flex>
 
                         {onDelete && (
-                            <Button danger onClick={() => setIsDeleteModalOpen(true)}>
-                                Delete
-                            </Button>
+                            <Tooltip title={isDeleteDisabled ? deleteDisabledReason : undefined}>
+                                <Button
+                                    danger
+                                    disabled={isDeleteDisabled}
+                                    onClick={() => setIsDeleteModalOpen(true)}
+                                >
+                                    Delete
+                                </Button>
+                            </Tooltip>
                         )}
                     </Flex>
                 )}
@@ -152,10 +186,9 @@ const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = fa
                 </Button>
             )}
 
-            {/* 🔥 Delete Modal */}
             <Modal
                 open={isDeleteModalOpen}
-                title="Delete residency?"
+                title={`Delete ${deleteEntityLabel}?`}
                 onCancel={() => setIsDeleteModalOpen(false)}
                 onOk={handleDeleteConfirm}
                 okText="Yes, delete"
@@ -165,10 +198,13 @@ const ResidencyForm = ({ initialValues, onSubmit, onDelete, startInEditMode = fa
                 destroyOnHidden
                 getContainer={false}
             >
-                <p>This action cannot be undone. Are you sure you want to delete this residency?</p>
+                <p>
+                    This action cannot be undone. Are you sure you want to delete this{" "}
+                    {deleteEntityLabel}?
+                </p>
             </Modal>
         </div>
     )
 }
 
-export default ResidencyForm
+export default ExperienceForm

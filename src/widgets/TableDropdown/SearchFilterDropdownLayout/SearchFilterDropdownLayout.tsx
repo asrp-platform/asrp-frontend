@@ -1,4 +1,4 @@
-import styles from "./styles.module.scss"
+import styles from "@/widgets/TableDropdown/SearchFilterDropdownLayout/styles.module.scss"
 import type { ReactNode } from "react"
 
 interface IProps {

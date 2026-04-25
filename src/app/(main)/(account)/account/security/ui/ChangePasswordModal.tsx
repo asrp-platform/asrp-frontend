@@ -2,10 +2,10 @@
 
 import { Modal, Form, Input, message } from "antd"
 import { useState } from "react"
-import api from "../../../../../../axios.ts"
+import api from "@/axios.ts"
 import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
-import { CURRENT_USER_CHANGE_PASSWORD_URL } from "../../../../../../shared/backend/rest-api-urls/currentUserUrls.ts"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { CURRENT_USER_CHANGE_PASSWORD_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
 
 interface Props {
     open: boolean

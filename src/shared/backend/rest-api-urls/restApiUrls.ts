@@ -1,5 +1,5 @@
 // Auth urls
-import { REST_API_URL } from "../../../axios.ts"
+import { REST_API_URL } from "@/axios.ts"
 
 export const AUTH_URL = "/auth"
 export const REGISTER_URL = `${AUTH_URL}/register`
@@ -34,6 +34,11 @@ export const getUserFellowshipByIdUrl = (
     userId: number | string,
     residencyId: number | string,
 ): string => `${getUserUrl(userId)}/fellowships/${residencyId}`
+
+export const getUserJobsUrl = (user_id: number | string): string => `${getUserUrl(user_id)}/jobs`
+
+export const getUserJobByIdUrl = (userId: number | string, jobId: number | string): string =>
+    `${getUserUrl(userId)}/jobs/${jobId}`
 
 // Feedback
 export const CONTACT_MESSAGE_URL = "/contact-messages"

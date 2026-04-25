@@ -1,6 +1,6 @@
 import { Form, Radio } from "antd"
-import type { MembershipKey } from "../../types"
-import styles from "./styles.module.scss"
+import type { MembershipKey } from "@/features/MembershipApplicationForm/types"
+import styles from "@/features/MembershipApplicationForm/ui/MembershipCard/styles.module.scss"
 import clsx from "clsx"
 
 type MembershipCardProps = {

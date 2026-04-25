@@ -1,8 +1,8 @@
-import styles from "./styles.module.scss"
-import MembershipInfoCard from "./(ui)/MembershipInfoCard.tsx"
+import styles from "@/app/(main)/membership/styles.module.scss"
+import MembershipInfoCard from "@/app/(main)/membership/(ui)/MembershipInfoCard.tsx"
 import Image from "next/image"
-import PageTitleCard from "../../../shared/ui/PageTitleCard/PageTitleCard.tsx"
-import PageSection from "../../../shared/ui/PageSection/PageSection.tsx"
+import PageTitleCard from "@/shared/ui/PageTitleCard/PageTitleCard.tsx"
+import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
 import Link from "next/link"
 
 const MembershipPage = () => {

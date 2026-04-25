@@ -1,4 +1,4 @@
-import styles from "../Footer.module.scss"
+import styles from "@/widgets/Footer/Footer.module.scss"
 import Link from "next/link"
 
 const Rights = () => {

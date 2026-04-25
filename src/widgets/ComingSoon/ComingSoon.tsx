@@ -2,7 +2,7 @@
 
 import { SettingOutlined } from "@ant-design/icons"
 import { useRouter } from "next/navigation"
-import styles from "./styles.module.scss"
+import styles from "@/widgets/ComingSoon/styles.module.scss"
 
 interface ComingSoonProps {
     title?: string

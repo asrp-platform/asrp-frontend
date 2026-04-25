@@ -2,11 +2,11 @@
 
 import { useForm } from "antd/es/form/Form"
 import { Button, Form, type FormProps, Input, Spin } from "antd"
-import { CONFIRM_PASSWORD_RESET_URL } from "../../shared/backend/rest-api-urls/restApiUrls.ts"
+import { CONFIRM_PASSWORD_RESET_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
 import { isAxiosError } from "axios"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
-import api from "../../axios.ts"
+import api from "@/axios.ts"
 
 interface FieldType {
     password: string

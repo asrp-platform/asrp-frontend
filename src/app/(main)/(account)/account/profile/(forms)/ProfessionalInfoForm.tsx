@@ -2,13 +2,17 @@
 
 import { Button, Checkbox, Col, Form, type FormProps, Input, Row } from "antd"
 
-import styles from "../(ui)/styles.module.scss"
+import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
 import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
-import api from "../../../../../../axios.ts"
-import type { IUser, IUserProfessionalInformation } from "../../../../../../entities/User.ts"
-import { getUserProfessionalInformationUrl } from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
-import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
+import { getUserProfessionalInformationUrl } from "@/shared/backend/rest-api-urls/restApiUrls"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
+import type { IUser, IUserProfessionalInformation } from "@/entities/User"
+import api from "@/axios"
+// import api from "../../../../../../axios.ts"
+// import type { IUser, IUserProfessionalInformation } from "../../../../../../entities/User.ts"
+// import { getUserProfessionalInformationUrl } from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
+// import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
 
 type FieldType = {
     medical_school: string

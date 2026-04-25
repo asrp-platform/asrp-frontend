@@ -1,5 +1,5 @@
-import styles from "./styles.module.scss"
-import DirectorsBoard from "./(components)/DirectorsBoard/DirectorsBoard.tsx"
+import styles from "@/app/(main)/about/directors-board/styles.module.scss"
+import DirectorsBoard from "@/app/(main)/about/directors-board/(components)/DirectorsBoard/DirectorsBoard.tsx"
 
 const Page = async () => {
     return (

@@ -1,6 +1,6 @@
-import styles from "./styles.module.scss"
-import GetInvolvedForm from "../../../../features/GetInvolvedForm/GetInvolvedForm.tsx"
-import PageSection from "../../../../shared/ui/PageSection/PageSection.tsx"
+import styles from "@/app/(main)/membership/get-involved/styles.module.scss"
+import GetInvolvedForm from "@/features/GetInvolvedForm/GetInvolvedForm.tsx"
+import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
 import clsx from "clsx"
 
 export default function GetInvolvedPage() {

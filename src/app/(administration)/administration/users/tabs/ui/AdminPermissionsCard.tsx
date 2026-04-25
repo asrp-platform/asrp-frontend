@@ -1,10 +1,10 @@
 import { Card, Checkbox, Button, Divider, Row, Col, Typography, Space } from "antd"
 import { SafetyCertificateOutlined } from "@ant-design/icons"
 
-import type { IPermission } from "../../../../../../entities/Permission"
+import type { IPermission } from "@/entities/Permission"
 import type { Dispatch, SetStateAction } from "react"
-import { usePermissions } from "../../../../../../context/PermissionsProvider.tsx"
-import PermissionGuard from "../../../../../../shared/ui/PermissionGuard/PermissionGuard.tsx"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 
 const { Title, Text } = Typography
 

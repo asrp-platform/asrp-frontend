@@ -1,8 +1,8 @@
 import type { FilterDropdownProps } from "antd/es/table/interface"
 import { Button, Radio } from "antd"
 
-import styles from "./styles.module.scss"
-import { getFilteredValue } from "../helpers.ts"
+import styles from "@/widgets/TableDropdown/BooleanTableFilterDropdown/styles.module.scss"
+import { getFilteredValue } from "@/widgets/TableDropdown/helpers.ts"
 
 export const getBooleanColumnSearchProps = <TFilters extends Record<string, any>>(
     dataIndex: string,

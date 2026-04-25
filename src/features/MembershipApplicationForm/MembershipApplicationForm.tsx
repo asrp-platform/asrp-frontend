@@ -2,17 +2,22 @@
 
 import { Button, Checkbox, Form, type FormProps, Input, message, Radio, Select } from "antd"
 import { useForm } from "antd/es/form/Form"
-import styles from "./styles.module.scss"
-import type { FieldType, Credentials, Country, MembershipKey } from "./types"
+import styles from "@/features/MembershipApplicationForm/styles.module.scss"
+import type {
+    FieldType,
+    Credentials,
+    Country,
+    MembershipKey,
+} from "@/features/MembershipApplicationForm/types"
 import { useMemo, useState } from "react"
-import MembershipCard from "./ui/MembershipCard/MembershipCard.tsx"
-import api from "../../axios.ts"
+import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCard/MembershipCard.tsx"
+import api from "@/axios.ts"
 import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "../../shared/helpers/setFormFieldsErrors.ts"
-import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "../../shared/backend/rest-api-urls/currentUserUrls.ts"
-import { useAuth } from "../../context/AuthProvider.tsx"
-import Warning from "../../shared/ui/Warning/Warning.tsx"
-import LinkButton from "../../shared/ui/Buttons/LinkButton.tsx"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
+import { useAuth } from "@/context/AuthProvider.tsx"
+import Warning from "@/shared/ui/Warning/Warning.tsx"
+import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
 
 const credentialsOptions: Credentials[] = [
     "MD",

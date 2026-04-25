@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./styles.module.scss"
+import styles from "@/widgets/Card/styles.module.scss"
 import type { ReactNode } from "react"
 
 interface IProps {

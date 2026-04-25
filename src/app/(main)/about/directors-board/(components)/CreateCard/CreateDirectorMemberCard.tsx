@@ -3,18 +3,18 @@
 import { useState } from "react"
 import { Button, Form, Input } from "antd"
 
-import type { IValidationError } from "../../../../../../shared/types/interfaces.ts"
-import { DIRECTORS_BOARD_ADMIN_URL } from "../../../../../../shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import type { IValidationError } from "@/shared/types/interfaces.ts"
+import { DIRECTORS_BOARD_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import { isAxiosError } from "axios"
 
-import api from "../../../../../../axios.ts"
-import styles from "./styles.module.scss"
-import ResetModal from "../ViewCard/ui/ResetModal.tsx"
-import AddDirectorMember from "./ui/AddDirectorMember.tsx"
+import api from "@/axios.ts"
+import styles from "@/app/(main)/about/directors-board/(components)/CreateCard/styles.module.scss"
+import ResetModal from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/ResetModal.tsx"
+import AddDirectorMember from "@/app/(main)/about/directors-board/(components)/CreateCard/ui/AddDirectorMember.tsx"
 import { EditorContent, useEditor } from "@tiptap/react"
-import { detailViewExtensions } from "../ViewCard/helpers/editorExtenstions.tsx"
-import EditorMenuBar from "../../../../../../widgets/TiptapEditor/EditorMenuBar.tsx"
-import PhotoInput from "./ui/PhotoInput.tsx"
+import { detailViewExtensions } from "@/app/(main)/about/directors-board/(components)/ViewCard/helpers/editorExtenstions.tsx"
+import EditorMenuBar from "@/widgets/TiptapEditor/EditorMenuBar.tsx"
+import PhotoInput from "@/app/(main)/about/directors-board/(components)/CreateCard/ui/PhotoInput.tsx"
 
 const CreateDirectorMemberCard = () => {
     const [form] = Form.useForm()

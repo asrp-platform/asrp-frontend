@@ -1,4 +1,4 @@
-import type { IValidationError } from "../types/interfaces.ts"
+import type { IValidationError } from "@/shared/types/interfaces.ts"
 import type { AxiosError } from "axios"
 import type { FormInstance } from "antd"
 
