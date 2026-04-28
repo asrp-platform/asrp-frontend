@@ -86,7 +86,12 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
             render: (_: any, record: IContactMessage) => (
                 <>
                     <p>{record.message_content?.contact_message}</p>
-                    {!record.answered && <ContactMessageReplyModal messageId={record.id} />}
+                    {!record.answered && (
+                        <ContactMessageReplyModal
+                            onSuccess={() => markAsAnswered(record.id)}
+                            messageId={record.id}
+                        />
+                    )}
                 </>
             ),
         },
@@ -100,6 +105,17 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
 
     if (isDataLoading || !data) {
         return <Loading />
+    }
+
+    const markAsAnswered = (id: number) => {
+        setData((prev) => {
+            if (!prev) return prev
+
+            return {
+                ...prev,
+                data: prev.data.map((msg) => (msg.id === id ? { ...msg, answered: true } : msg)),
+            }
+        })
     }
 
     return (

@@ -13,7 +13,12 @@ interface ReplyFormValues {
     answerMessage: string
 }
 
-const ContactMessageReplyModal = ({ messageId }: { messageId: number }) => {
+interface IProps {
+    messageId: number
+    onSuccess?: () => void
+}
+
+const ContactMessageReplyModal = ({ messageId, onSuccess }: IProps) => {
     const [form] = Form.useForm()
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -29,6 +34,7 @@ const ContactMessageReplyModal = ({ messageId }: { messageId: number }) => {
             message.success("Your reply has been sent successfully.")
             form.resetFields()
             setIsModalOpen(false)
+            onSuccess?.()
         } catch (error) {
             if (isAxiosError(error)) {
                 const errorResponse = error.response?.data as IBackendErrorResponse | undefined
