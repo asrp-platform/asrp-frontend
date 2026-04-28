@@ -86,13 +86,14 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
             render: (_: any, record: IContactMessage) => (
                 <>
                     <p>{record.message_content?.contact_message}</p>
-                    {record.answered && <ContactMessageReplyModal messageId={record.id} />}
+                    {!record.answered && <ContactMessageReplyModal messageId={record.id} />}
                 </>
             ),
         },
         {
             title: "Answered",
-            render: (v: boolean) => (v ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>),
+            render: (_: any, record: IContactMessage) =>
+                record.answered ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>,
         },
         { title: "Created", dataIndex: "created_at" },
     ]
