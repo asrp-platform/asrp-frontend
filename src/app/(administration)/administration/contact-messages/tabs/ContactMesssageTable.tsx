@@ -10,6 +10,7 @@ import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui
 import { CONTACT_MESSAGES_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import { ContactMessageType, type IContactMessage } from "@/entities/ContactMessage.ts"
 import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
+import ContactMessageReplyModal from "../ContactMessageReply/ContactMessageReply"
 
 interface ITableFilters {
     name__startswith?: string
@@ -82,17 +83,39 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
         },
         {
             title: "Message",
-            render: (_: any, record: IContactMessage) => record.message_content?.contact_message,
+            render: (_: any, record: IContactMessage) => (
+                <>
+                    <p>{record.message_content?.contact_message}</p>
+                    {!record.answered && (
+                        <ContactMessageReplyModal
+                            onSuccess={() => markAsAnswered(record.id)}
+                            messageId={record.id}
+                        />
+                    )}
+                </>
+            ),
         },
         {
             title: "Answered",
-            render: (v: boolean) => (v ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>),
+            render: (_: any, record: IContactMessage) =>
+                record.answered ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>,
         },
         { title: "Created", dataIndex: "created_at" },
     ]
 
     if (isDataLoading || !data) {
         return <Loading />
+    }
+
+    const markAsAnswered = (id: number) => {
+        setData((prev) => {
+            if (!prev) return prev
+
+            return {
+                ...prev,
+                data: prev.data.map((msg) => (msg.id === id ? { ...msg, answered: true } : msg)),
+            }
+        })
     }
 
     return (

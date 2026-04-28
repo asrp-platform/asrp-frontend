@@ -35,3 +35,7 @@ export const BYLAWS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/bylaws`
 
 // Feedback
 export const CONTACT_MESSAGES_ADMIN_URL = `${ADMIN_URL}/contact-messages`
+
+//Answer for feedback
+export const getReplyUrl = (messageId: number) =>
+    `${CONTACT_MESSAGES_ADMIN_URL}/${messageId}/answers`
