@@ -1,0 +1,10 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+        gap: 5vh;
+    }
+}
