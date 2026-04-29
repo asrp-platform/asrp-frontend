@@ -1,16 +1,56 @@
-.primaryButton {
+.button {
     border-radius: 999px;
-    background: var(--button-primary-red);
-    color: white;
     font-weight: 600;
     transition: 0.3s ease-in-out;
     padding: 10px 24px;
-    border: none;
     cursor: pointer;
+    align-self: flex-start;
 
-    &:hover {
+    &.primary {
+        background: var(--button-primary-red);
+        color: white;
+        border: none;
+    }
+
+    &.primary:hover {
         transform: translateY(-1px);
         background: var(--button-primary-red-hover);
+    }
+
+    &.secondary {
+        background: transparent;
+        border: var(--red-border);
+        color: var(--button-primary-red);
+    }
+
+    &.secondary:hover {
+        transform: translateY(-1px);
+        background: #fef2f2;
+    }
+
+    .innerContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .loaderSlot {
+        text-align: center;
+        width: 0;
+        opacity: 0;
+        transform: translateX(-6px) scale(0.8);
+        transition:
+            width 0.25s ease,
+            opacity 0.2s ease,
+            margin-right 0.25s ease;
+    }
+
+    .loaderSlot_visible {
+        width: 12px;
+        margin-right: 12px;
+        opacity: 1;
+        transform: translateX(0) scale(1);
     }
 }
 

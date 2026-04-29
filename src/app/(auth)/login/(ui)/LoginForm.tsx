@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "antd/es/form/Form"
 import { useAuth } from "@/context/AuthProvider.tsx"
 import useNotification from "antd/es/notification/useNotification"
-import PrimaryButton from "@/shared/ui/Buttons/PrimaryButton.tsx"
+import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 type FieldType = {
     email: string
@@ -90,7 +90,7 @@ const LoginForm = () => {
                 <Form.Item<FieldType> name="remember_me" valuePropName="checked">
                     <Checkbox checked={false}>Remember me</Checkbox>
                 </Form.Item>
-                <PrimaryButton htmlType="submit" label={"Submit"} />
+                <CustomButton htmlType="submit" children={"Submit"} />
             </div>
         </Form>
     )
