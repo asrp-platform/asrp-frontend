@@ -6,7 +6,6 @@ import TextArea from "antd/es/input/TextArea"
 import api from "../../../../../axios"
 import { getContactMessageReplyUrl } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls"
 import { isAxiosError } from "axios"
-import type { IBackendErrorResponse } from "../../../../../shared/types/interfaces"
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
 
 interface ReplyFormValues {
