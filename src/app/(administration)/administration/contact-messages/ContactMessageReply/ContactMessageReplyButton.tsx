@@ -4,9 +4,10 @@ import { useState } from "react"
 import { Button, Modal, type FormProps, Input, message, Form } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import api from "../../../../../axios"
-import { getReplyUrl } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls"
+import { getContactMessageReplyUrl } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls"
 import { isAxiosError } from "axios"
 import type { IBackendErrorResponse } from "../../../../../shared/types/interfaces"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
 
 interface ReplyFormValues {
     subject: string
@@ -18,16 +19,16 @@ interface IProps {
     onSuccess?: () => void
 }
 
-const ContactMessageReplyModal = ({ messageId, onSuccess }: IProps) => {
+const ContactMessageReplyButton = ({ messageId, onSuccess }: IProps) => {
     const [form] = Form.useForm()
 
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const onFinish: FormProps<ReplyFormValues>["onFinish"] = async (values) => {
         try {
             setIsSubmitting(true)
-            await api.post(getReplyUrl(messageId), {
+            await api.post(getContactMessageReplyUrl(messageId), {
                 subject: values.subject,
                 answer_message: values.answerMessage,
             })
@@ -37,26 +38,7 @@ const ContactMessageReplyModal = ({ messageId, onSuccess }: IProps) => {
             onSuccess?.()
         } catch (error) {
             if (isAxiosError(error)) {
-                const errorResponse = error.response?.data as IBackendErrorResponse | undefined
-
-                if (!errorResponse) {
-                    message.error("An unknown error occurred. Please try again.")
-                    return
-                }
-
-                const errorResponseDetail = errorResponse.detail
-
-                if (error.response?.status === 422) {
-                    if (typeof errorResponseDetail !== "string") {
-                        const fieldErrors = errorResponseDetail.errors.map((error) => ({
-                            name: error.field,
-                            errors: [error.message],
-                        }))
-                        form.setFields(fieldErrors)
-                    }
-                } else if (error.response?.status === 500) {
-                    message.error("Something went wrong. Please try again.")
-                }
+                setFormFieldsErrors(error, form)
             }
         } finally {
             setIsSubmitting(false)
@@ -106,4 +88,4 @@ const ContactMessageReplyModal = ({ messageId, onSuccess }: IProps) => {
     )
 }
 
-export default ContactMessageReplyModal
+export default ContactMessageReplyButton
