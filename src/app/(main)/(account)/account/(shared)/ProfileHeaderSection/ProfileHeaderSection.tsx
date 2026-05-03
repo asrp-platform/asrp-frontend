@@ -1,4 +1,4 @@
-import styles from "@/app/(main)/(account)/account/(shared)/ProfileHeaderSection.module.scss"
+import styles from "@app/(main)/(account)/account/(shared)/ProfileHeaderSection/ProfileHeaderSection.module.scss"
 
 interface IProps {
     title: string

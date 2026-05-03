@@ -10,6 +10,7 @@
     border: var(--red-border);
     color: var(--button-primary-red);
     font-weight: 600;
+    align-self: flex-start;
 
     &:visited {
         text-decoration: none;

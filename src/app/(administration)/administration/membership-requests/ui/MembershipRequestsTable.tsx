@@ -25,7 +25,7 @@ const MembershipRequestsTable = () => {
         IFilters
     >({
         url: MEMBERSHIP_REQUESTS_ADMIN_URL,
-        queryKey: ["membership-requests"],
+        queryKey: ["membership"],
         page,
         pageSize,
         ordering,
