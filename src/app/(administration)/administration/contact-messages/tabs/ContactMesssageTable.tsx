@@ -96,15 +96,7 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
         {
             title: "Message",
             render: (_: any, record: IContactMessage) => (
-                <>
-                    <p>{record.message_content?.contact_message}</p>
-                    {!record.answered && (
-                        <ContactMessageReplyButton
-                            onSuccess={() => markAsAnswered(record.id)}
-                            messageId={record.id}
-                        />
-                    )}
-                </>
+                <p>{record.message_content?.contact_message}</p>
             ),
         },
         {
@@ -113,21 +105,17 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
                 record.answered ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>,
         },
         { title: "Created", dataIndex: "created_at" },
+        {
+            title: "Actions",
+            key: "actions",
+            render: (_: any, record: IContactMessage) => (
+                <ContactMessageReplyButton messageId={record.id} disabled={record.answered} />
+            ),
+        },
     ]
 
     if (isDataLoading) {
         return <Loading />
-    }
-
-    const markAsAnswered = (id: number) => {
-        setData((prev) => {
-            if (!prev) return prev
-
-            return {
-                ...prev,
-                data: prev.data.map((msg) => (msg.id === id ? { ...msg, answered: true } : msg)),
-            }
-        })
     }
 
     return (

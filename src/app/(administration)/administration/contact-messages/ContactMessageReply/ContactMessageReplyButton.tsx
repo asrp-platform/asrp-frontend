@@ -15,10 +15,10 @@ interface ReplyFormValues {
 
 interface IProps {
     messageId: number
-    onSuccess?: () => void
+    disabled?: boolean
 }
 
-const ContactMessageReplyButton = ({ messageId, onSuccess }: IProps) => {
+const ContactMessageReplyButton = ({ messageId, disabled }: IProps) => {
     const [form] = Form.useForm()
 
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -34,7 +34,6 @@ const ContactMessageReplyButton = ({ messageId, onSuccess }: IProps) => {
             message.success("Your reply has been sent successfully.")
             form.resetFields()
             setIsModalOpen(false)
-            onSuccess?.()
         } catch (error) {
             if (isAxiosError(error)) {
                 setFormFieldsErrors(error, form)
@@ -50,7 +49,12 @@ const ContactMessageReplyButton = ({ messageId, onSuccess }: IProps) => {
 
     return (
         <>
-            <Button type="primary" size="small" onClick={handleOpenModal}>
+            <Button
+                type="primary"
+                size="small"
+                onClick={handleOpenModal}
+                disabled={isSubmitting || disabled}
+            >
                 Reply
             </Button>
             <Modal title="Reply text" open={isModalOpen} onCancel={handleCloseModal} footer={null}>
