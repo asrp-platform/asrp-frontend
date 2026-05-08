@@ -7,6 +7,8 @@ import { Table, Tag } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import Link from "next/link"
+import ActionsCell from "@app/(administration)/administration/membership-requests/ui/ActionsCell/ActionsCell.tsx"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum
@@ -55,6 +57,17 @@ const MembershipRequestsTable = () => {
 
     const columns: ColumnsType<IMembershipRequest> = [
         {
+            title: "Actions",
+            key: "actions",
+            width: 200,
+            render: (_: any, record: IMembershipRequest) => {
+                if (record.status === MembershipRequestStatusEnum.PAID) {
+                    return <ActionsCell membershipRequestId={record.id} />
+                }
+                return null
+            },
+        },
+        {
             title: "ID",
             dataIndex: "id",
             key: "id",
@@ -64,18 +77,9 @@ const MembershipRequestsTable = () => {
         {
             title: "User",
             key: "user",
-            render: (_, record) => {
-                if (record.user) {
-                    return `${record.user.firstname} ${record.user.lastname}`.trim()
-                }
-
-                return record.user_id
-            },
-        },
-        {
-            title: "Email",
-            key: "email",
-            render: (_, record) => record.user?.email ?? "—",
+            render: (_, record) => (
+                <Link href={`/users/${record.user?.id}`}>{record.user?.email}</Link>
+            ),
         },
         {
             title: "Membership Type",
