@@ -107,7 +107,7 @@ const ChangeNameModal = ({ open, setNameChangeModalOpen }: IProps) => {
                         >
                             <Input />
                         </Form.Item>
-                        
+
                         <Form.Item label="Middle name" name="middlename">
                             <Input />
                         </Form.Item>

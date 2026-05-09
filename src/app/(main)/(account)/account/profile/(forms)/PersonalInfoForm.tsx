@@ -62,7 +62,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
                 initialValues={{
                     firstname: user.firstname,
                     lastname: user.lastname,
-                    preferredname:user.preferredname,
+                    preferredname: user.preferredname,
                     credentials: user.credentials,
                     middlename: user.middlename,
                     suffix: user.suffix,
@@ -138,7 +138,6 @@ const PersonalInfoForm = ({ user }: IProps) => {
                             <Input />
                         </Form.Item>
                     </Col>
-
                 </Row>
 
                 <div className={styles.personalInfoActions}>
