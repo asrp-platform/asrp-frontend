@@ -97,6 +97,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
                             <Input className={styles.antInputDisabled} disabled />
                         </Form.Item>
                     </Col>
+                    
                     <Col xs={24} md={12}>
                         <Form.Item label="Suffix" name="suffix">
                             <Input />
