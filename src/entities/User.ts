@@ -6,6 +6,7 @@ export interface IUser {
     lastname: string
     suffix: string | null
     credentials: string | null
+    preferredname: string
 
     email: string
     admin: boolean
