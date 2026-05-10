@@ -9,10 +9,6 @@ import { getUserProfessionalInformationUrl } from "@/shared/backend/rest-api-url
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
 import type { IUser, IUserProfessionalInformation } from "@/entities/User"
 import api from "@/axios"
-// import api from "../../../../../../axios.ts"
-// import type { IUser, IUserProfessionalInformation } from "../../../../../../entities/User.ts"
-// import { getUserProfessionalInformationUrl } from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
-// import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
 
 type FieldType = {
     medical_school: string
