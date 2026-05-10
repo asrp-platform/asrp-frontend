@@ -78,11 +78,11 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
         },
         {
             title: "Subject",
-            render: (_: any, record: IContactMessage) => record.message_content?.subject,
+            render: (_: string, record: IContactMessage) => record.message_content?.subject,
         },
         {
             title: "Message",
-            render: (_: any, record: IContactMessage) => record.message_content?.contact_message,
+            render: (_: string, record: IContactMessage) => record.message_content?.contact_message,
         },
         {
             title: "Answered",

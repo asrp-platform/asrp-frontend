@@ -43,7 +43,7 @@ const ChangePasswordModal = ({ open, onClose }: Props) => {
         } catch (error: unknown) {
             if (isAxiosError(error)) {
                 setFormFieldsErrors(error, form)
-            } else if (!("errorFields" in (error as any))) {
+            } else {
                 message.error("Unexpected error occurred")
             }
         } finally {

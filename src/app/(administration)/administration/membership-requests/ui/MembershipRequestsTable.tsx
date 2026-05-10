@@ -60,7 +60,7 @@ const MembershipRequestsTable = () => {
             title: "Actions",
             key: "actions",
             width: 200,
-            render: (_: any, record: IMembershipRequest) => {
+            render: (_: null, record: IMembershipRequest) => {
                 if (record.status === MembershipRequestStatusEnum.PAID) {
                     return <ActionsCell membershipRequestId={record.id} />
                 }
