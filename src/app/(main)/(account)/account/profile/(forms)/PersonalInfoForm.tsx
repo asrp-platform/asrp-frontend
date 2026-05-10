@@ -25,7 +25,7 @@ type FieldType = {
     country: string
     state?: string
     city: string
-    preferredname: string
+    preferred_name: string
 }
 
 const PersonalInfoForm = ({ user }: IProps) => {
@@ -62,7 +62,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
                 initialValues={{
                     firstname: user.firstname,
                     lastname: user.lastname,
-                    preferredname: user.preferredname,
+                    preferred_name: user.preferred_name,
                     credentials: user.credentials,
                     middlename: user.middlename,
                     suffix: user.suffix,
@@ -93,8 +93,8 @@ const PersonalInfoForm = ({ user }: IProps) => {
                     </Col>
 
                     <Col xs={24} md={12}>
-                        <Form.Item label="Preferred name" name="preferred name">
-                            <Input className={styles.antInputDisabled} disabled />
+                        <Form.Item label="Preferred name" name="preferred_name">
+                            <Input />
                         </Form.Item>
                     </Col>
 
