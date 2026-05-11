@@ -35,7 +35,13 @@ const PersonalInfoForm = ({ user }: IProps) => {
     const [nameChangeModalOpen, setNameChangeModalOpen] = useState(false)
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-        const { email, firstname, lastname, middlename, ...updateData } = values
+        const {
+            email: _email,
+            firstname: _firstname,
+            lastname: _lastname,
+            middlename: _middlename,
+            ...updateData
+        } = values
         try {
             setIsLoading(true)
             await api.patch(CURRENT_USER_URL, updateData)
