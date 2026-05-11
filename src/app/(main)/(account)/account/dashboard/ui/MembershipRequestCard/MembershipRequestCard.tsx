@@ -1,6 +1,12 @@
 import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
 import styles from "@/app/(main)/(account)/account/dashboard/ui/MembershipRequestCard/MembershipRequestCard.module.scss"
 import { type IMembershipRequest, MembershipRequestStatusEnum } from "@/entities/Membership.ts"
+import { isAxiosError } from "axios"
+import { message } from "antd"
+import api from "@/axios.ts"
+import { CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL } from "@shared/backend/rest-api-urls/currentUserUrls.ts"
+import { useState } from "react"
+import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 type MembershipStatusMeta = {
     label: string
@@ -33,25 +39,11 @@ const getMembershipStatus = (
                 tone: "danger",
             }
 
-        case MembershipRequestStatusEnum.SUBMITTED:
-            return {
-                label: "Submitted",
-                description: "Your request has been submitted and is under review.",
-                tone: "neutral",
-            }
-
         case MembershipRequestStatusEnum.PAYMENT_PENDING:
             return {
                 label: "Payment pending",
                 description: "We are waiting for your payment confirmation.",
                 tone: "warning",
-            }
-
-        case MembershipRequestStatusEnum.PAYMENT_EXPIRED:
-            return {
-                label: "Payment expired",
-                description: "Your payment session expired. Please try again.",
-                tone: "expired",
             }
 
         case MembershipRequestStatusEnum.PAYMENT_FAILED:
@@ -75,7 +67,28 @@ interface IProps {
 }
 
 const MembershipRequestCard = ({ membershipRequest }: IProps) => {
+    const [isRetrying, setIsRetrying] = useState(false)
+
     const membershipStatus = getMembershipStatus(membershipRequest.status)
+
+    const canRetryPayment = [
+        MembershipRequestStatusEnum.PAYMENT_FAILED,
+        MembershipRequestStatusEnum.PAYMENT_PENDING,
+    ].includes(membershipRequest.status)
+
+    const handleRetryPayment = async () => {
+        try {
+            setIsRetrying(true)
+            const response = await api.post(CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL)
+            window.location.href = response.data
+        } catch (error) {
+            if (isAxiosError(error)) {
+                message.error(error.message)
+            }
+        } finally {
+            setIsRetrying(false)
+        }
+    }
 
     return (
         <ProfileInfoCard>
@@ -91,6 +104,16 @@ const MembershipRequestCard = ({ membershipRequest }: IProps) => {
 
             {membershipStatus.description && (
                 <div className={styles.mutedText}>{membershipStatus.description}</div>
+            )}
+
+            {canRetryPayment && (
+                <CustomButton
+                    variant={"secondary"}
+                    loading={isRetrying}
+                    onClick={handleRetryPayment}
+                >
+                    Retry payment
+                </CustomButton>
             )}
         </ProfileInfoCard>
     )

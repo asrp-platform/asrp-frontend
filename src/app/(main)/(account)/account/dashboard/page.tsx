@@ -1,11 +1,11 @@
 "use client"
 
 import styles from "@/app/(main)/(account)/account/dashboard/styles.module.scss"
-import ProfileHeaderSection from "@/app/(main)/(account)/account/(shared)/ProfileHeaderSection.tsx"
+import ProfileHeaderSection from "@app/(main)/(account)/account/(shared)/ProfileHeaderSection/ProfileHeaderSection.tsx"
 import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
 import { useCurrentUserQuery } from "@/shared/backend/queries/useCurrentUserQuery.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import MembershipStatusCard from "@/app/(main)/(account)/account/dashboard/ui/MembershipCard/MembershipStatusCard.tsx"
+import MembershipStatusCard from "@app/(main)/(account)/account/dashboard/ui/MembershipStatusCard/MembershipStatusCard.tsx"
 import QuickActionsCard from "@/app/(main)/(account)/account/dashboard/ui/QuickActions/QuickActionsCard.tsx"
 import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
 

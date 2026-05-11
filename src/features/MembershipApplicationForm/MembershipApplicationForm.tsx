@@ -173,11 +173,11 @@ const MembershipApplicationForm = () => {
                         "Your session has expired or you are not authorized. Please sign in and try again.",
                     )
                     return
-                }
-
-                if (error.response?.status === 422) {
+                } else if (error.response?.status === 422) {
                     setFormFieldsErrors(error, form)
                     return
+                } else {
+                    message.error(error.message)
                 }
             }
         } finally {
