@@ -138,32 +138,37 @@ const ExperienceCard = ({
                     const isLastResidency = queryScope === "residencies" && entities.length === 1
 
                     return (
-                        <ExperienceForm
-                            key={entity.id}
-                            initialValues={entity}
-                            isDeleteDisabled={isLastResidency}
-                            deleteDisabledReason={
-                                isLastResidency ? "At least one residency is required." : undefined
-                            }
-                            onSubmit={async (values) => {
-                                await updateMutation.mutateAsync({ id: entity.id, values })
-                            }}
-                            onDelete={async () => {
-                                await deleteMutation.mutateAsync(entity.id)
-                            }}
-                            deleteEntityLabel={deleteEntityLabel}
-                        />
+                        <div className={styles.experienceItem} key={entity.id}>
+                            <ExperienceForm
+                                initialValues={entity}
+                                isDeleteDisabled={isLastResidency}
+                                deleteDisabledReason={
+                                    isLastResidency
+                                        ? "At least one residency is required."
+                                        : undefined
+                                }
+                                onSubmit={async (values) => {
+                                    await updateMutation.mutateAsync({ id: entity.id, values })
+                                }}
+                                onDelete={async () => {
+                                    await deleteMutation.mutateAsync(entity.id)
+                                }}
+                                deleteEntityLabel={deleteEntityLabel}
+                            />
+                        </div>
                     )
                 })}
 
                 {isCreating && (
-                    <ExperienceForm
-                        startInEditMode
-                        onSubmit={async (values) => {
-                            await createMutation.mutateAsync(values)
-                        }}
-                        deleteEntityLabel={deleteEntityLabel}
-                    />
+                    <div className={styles.experienceItem}>
+                        <ExperienceForm
+                            startInEditMode
+                            onSubmit={async (values) => {
+                                await createMutation.mutateAsync(values)
+                            }}
+                            deleteEntityLabel={deleteEntityLabel}
+                        />
+                    </div>
                 )}
             </div>
 

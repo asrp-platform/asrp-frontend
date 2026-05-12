@@ -1,0 +1,127 @@
+.payments {
+    width: 100%;
+    min-width: 0;
+}
+
+.tableContainer {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
+
+.paymentsTable {
+    :global(.ant-table) {
+        overflow-wrap: anywhere;
+    }
+
+    :global(.ant-table-cell) {
+        word-break: break-word;
+    }
+}
+
+.mobileList {
+    display: none;
+
+    @media (max-width: 767px) {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+    }
+}
+
+.mobileLoading {
+    display: flex;
+    justify-content: center;
+    padding: 32px 0;
+}
+
+.paymentCard {
+    width: 100%;
+    min-width: 0;
+    padding: 16px;
+    border: var(--light-border);
+    border-radius: 18px;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.paymentCardHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.paymentPurpose {
+    color: var(--text-primary-color-dark);
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.paymentDate {
+    margin-top: 4px;
+    color: var(--text-secondary-color-dark);
+    font-size: 12px;
+}
+
+.paymentStatus {
+    flex-shrink: 0;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: var(--button-primary-light);
+    color: var(--text-primary-color-dark);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: capitalize;
+}
+
+.paymentStatusSuccess {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.paymentStatusPending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.paymentStatusDanger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.paymentStatusRefunded {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+.paymentMeta {
+    display: grid;
+    gap: 10px;
+    margin: 16px 0 0;
+
+    div {
+        min-width: 0;
+    }
+
+    dt {
+        color: var(--text-secondary-color-dark);
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    dd {
+        margin: 4px 0 0;
+        color: var(--text-primary-color-dark);
+        font-size: 13px;
+        overflow-wrap: anywhere;
+    }
+}

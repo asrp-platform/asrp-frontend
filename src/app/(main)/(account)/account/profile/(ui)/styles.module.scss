@@ -1,6 +1,10 @@
 @use "../../../../../../shared/mixins" as m;
 
 .card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     border-radius: 24px;
 }
 
@@ -39,7 +43,13 @@
 
 .personalInfoActions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+
+    @media (min-width: 1200px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .antInputDisabled {
@@ -57,7 +67,12 @@
 .professionalInfoActions {
     margin-top: 10px;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+
+    @media (min-width: 1200px) {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
 }
 
 // Residency
@@ -73,14 +88,25 @@
 .residenciesContainer {
     display: flex;
     flex-direction: column;
-    gap: 16px;
     margin-top: 16px;
+}
+
+.experienceItem + .experienceItem {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(148, 163, 184, 0.35);
 }
 
 .residencyFormContainer {
     border: var(--light-border);
     border-radius: 25px;
     padding: 16px 24px;
+
+    @media (max-width: 767px) {
+        border: none;
+        border-radius: 0;
+        padding: 0;
+    }
 }
 
 .editButton {
