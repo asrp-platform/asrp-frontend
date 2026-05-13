@@ -1,5 +1,5 @@
 .button {
-    border-radius: 999px;
+    border-radius: var(--pill-border-radius);
     font-weight: 600;
     transition: 0.3s ease-in-out;
     padding: 10px 24px;
@@ -25,7 +25,7 @@
 
     &.secondary:hover {
         transform: translateY(-1px);
-        background: #fef2f2;
+        background: var(--surface-danger-hover-color);
     }
 
     .innerContainer {

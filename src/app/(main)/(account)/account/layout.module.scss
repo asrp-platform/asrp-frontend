@@ -20,8 +20,8 @@ $link-hover-background-color: var(--layout-background-color);
 
     @media (min-width: 1200px) {
         padding: 20px 16px;
-        background-color: #fff;
-        border-radius: 24px;
+        background-color: var(--surface-card-color);
+        border-radius: var(--card-border-radius);
         border: var(--light-border);
         display: flex;
         flex-direction: column;

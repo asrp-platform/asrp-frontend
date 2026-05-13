@@ -45,8 +45,8 @@
     min-width: 0;
     padding: 16px;
     border: var(--light-border);
-    border-radius: 18px;
-    background: #fff;
+    border-radius: var(--card-border-radius);
+    background: var(--surface-card-color);
     box-sizing: border-box;
 }
 
@@ -73,7 +73,7 @@
 .paymentStatus {
     flex-shrink: 0;
     padding: 4px 8px;
-    border-radius: 999px;
+    border-radius: var(--pill-border-radius);
     background: var(--button-primary-light);
     color: var(--text-primary-color-dark);
     font-size: 11px;
@@ -83,23 +83,23 @@
 }
 
 .paymentStatusSuccess {
-    background: #dcfce7;
-    color: #166534;
+    background: var(--status-success-background-color);
+    color: var(--status-success-text-color);
 }
 
 .paymentStatusPending {
-    background: #fef3c7;
-    color: #92400e;
+    background: var(--status-warning-background-color);
+    color: var(--status-warning-text-color);
 }
 
 .paymentStatusDanger {
-    background: #fee2e2;
-    color: #991b1b;
+    background: var(--status-danger-background-color);
+    color: var(--status-danger-text-color);
 }
 
 .paymentStatusRefunded {
-    background: #e0f2fe;
-    color: #075985;
+    background: var(--status-info-background-color);
+    color: var(--status-info-text-color);
 }
 
 .paymentMeta {
