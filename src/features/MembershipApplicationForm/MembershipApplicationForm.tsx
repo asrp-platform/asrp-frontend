@@ -15,9 +15,10 @@ import api from "@/axios.ts"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
 import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
-import { useAuth } from "@/context/AuthProvider.tsx"
 import Warning from "@/shared/ui/Warning/Warning.tsx"
 import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 const credentialsOptions: Credentials[] = [
     "MD",
@@ -95,7 +96,7 @@ type AgreementState = {
 }
 
 const MembershipApplicationForm = () => {
-    const { user } = useAuth()
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
 
     const [training, setTraining] = useState<TrainingState>({})
     const [agreements, setAgreements] = useState<AgreementState>({
@@ -104,22 +105,22 @@ const MembershipApplicationForm = () => {
     })
     const [isFormSubmitting, setIsFormSubmitting] = useState(false)
 
-    const isFormDisabled = useMemo(() => !user, [user])
+    const isFormDisabled = useMemo(() => !currentUser, [currentUser])
 
     const initialValues = useMemo(
         () => ({
-            firstname: user?.firstname,
-            lastname: user?.lastname,
-            middlename: user?.middlename,
-            suffix: user?.suffix,
-            credentials: user?.credentials,
-            email: user?.email,
-            phone: user?.phone_number,
-            country: user?.country,
-            state: user?.state,
-            city: user?.city,
+            firstname: currentUser?.firstname,
+            lastname: currentUser?.lastname,
+            middlename: currentUser?.middlename,
+            suffix: currentUser?.suffix,
+            credentials: currentUser?.credentials,
+            email: currentUser?.email,
+            phone: currentUser?.phone_number,
+            country: currentUser?.country,
+            state: currentUser?.state,
+            city: currentUser?.city,
         }),
-        [user],
+        [currentUser],
     )
 
     const [form] = useForm<FieldType>()
@@ -183,6 +184,10 @@ const MembershipApplicationForm = () => {
         } finally {
             setIsFormSubmitting(false)
         }
+    }
+
+    if (isCurrentUserLoading) {
+        return <Loading />
     }
 
     return (

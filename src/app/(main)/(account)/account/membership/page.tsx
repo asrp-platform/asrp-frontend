@@ -7,15 +7,25 @@ import ProfileHeaderSection from "@app/(main)/(account)/account/(shared)/Profile
 import styles from "./styles.module.scss"
 import MembershipCard from "@app/(main)/(account)/account/(shared)/MembershipCard/MembershipCard.tsx"
 import NoMembershipCard from "@app/(main)/(account)/account/membership/(ui)/NoMembershipCard/NoMembershipCard.tsx"
+import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
+import MembershipRequestCard from "@app/(main)/(account)/account/(shared)/MembershipRequestCard/MembershipRequestCard.tsx"
 
 const Page = () => {
     const { data: membership, isLoading: isMembershipLoading } = useCurrentUserMembershipQuery()
 
-    if (isMembershipLoading) {
+    const enableMembershipRequestLoading = !isMembershipLoading && !membership
+
+    const { data: membershipRequest, isLoading: isMembershipRequestLoading } =
+        useCurrentUserMembershipRequestQuery(enableMembershipRequestLoading)
+
+    if (isMembershipLoading || isMembershipRequestLoading) {
         return <Loading />
     }
 
     if (!membership) {
+        if (membershipRequest) {
+            return <MembershipRequestCard membershipRequest={membershipRequest} />
+        }
         return <NoMembershipCard />
     }
 

@@ -1,6 +1,6 @@
-import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
-import styles from "@/app/(main)/(account)/account/dashboard/ui/MembershipRequestCard/MembershipRequestCard.module.scss"
-import { type IMembershipRequest, MembershipRequestStatusEnum } from "@/entities/Membership.ts"
+import ProfileInfoCard from "@shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
+import styles from "@app/(main)/(account)/account/(shared)/MembershipRequestCard/MembershipRequestCard.module.scss"
+import { type IMembershipRequest, MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import { isAxiosError } from "axios"
 import { message } from "antd"
 import api from "@/axios.ts"
@@ -76,6 +76,8 @@ const MembershipRequestCard = ({ membershipRequest }: IProps) => {
         MembershipRequestStatusEnum.PAYMENT_PENDING,
     ].includes(membershipRequest.status)
 
+    const canReapply = membershipRequest.status === MembershipRequestStatusEnum.REJECTED
+
     const handleRetryPayment = async () => {
         try {
             setIsRetrying(true)
@@ -105,6 +107,8 @@ const MembershipRequestCard = ({ membershipRequest }: IProps) => {
             {membershipStatus.description && (
                 <div className={styles.mutedText}>{membershipStatus.description}</div>
             )}
+
+            {canReapply && <CustomButton variant={"secondary"}>Reapply</CustomButton>}
 
             {canRetryPayment && (
                 <CustomButton
