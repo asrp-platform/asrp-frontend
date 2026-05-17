@@ -34,6 +34,10 @@ $desktop-text-font-size: 14px;
     }
 }
 
+.availabilityAlert {
+    margin-bottom: 32px;
+}
+
 .trainingGrid {
     display: grid;
     grid-template-columns: repeat(1, 1fr);

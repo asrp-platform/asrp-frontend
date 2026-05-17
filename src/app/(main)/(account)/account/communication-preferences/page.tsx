@@ -6,8 +6,11 @@ import { useEffect, useState } from "react"
 import CommunicationSwitchCard from "@/app/(main)/(account)/account/communication-preferences/ui/CommunicationSwitchCard.tsx"
 import Card from "@/widgets/Card/Card.tsx"
 import { getUserUrl } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
-import { useAuth } from "@/context/AuthProvider.tsx"
 import api from "@/axios.ts"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { message } from "antd"
+import { isAxiosError } from "axios"
+import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 type ChangablePreferences = Omit<
     ICommunicationPreferences,
@@ -15,8 +18,8 @@ type ChangablePreferences = Omit<
 >
 
 const Page = () => {
-    // TODO: current user url
-    const { user } = useAuth()
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const [isCommunicationPreferencesLoading, setIsCommunicationPreferencesLoading] = useState(true)
 
     const [communicationPreferences, setCommunicationPreferences] = useState<ChangablePreferences>({
         newsletters: false,
@@ -26,11 +29,11 @@ const Page = () => {
     })
 
     const setPreference = async (preferenceKey: string, checked: boolean) => {
-        if (!user) {
+        if (!currentUser) {
             return
         }
         try {
-            await api.patch(`${getUserUrl(user.id)}/communication-preferences`, {
+            await api.patch(`${getUserUrl(currentUser.id)}/communication-preferences`, {
                 [preferenceKey]: checked,
             })
         } catch (error) {
@@ -40,23 +43,32 @@ const Page = () => {
     }
 
     useEffect(() => {
-        if (!user) {
+        if (!currentUser) {
             return
         }
 
         const fetchCommunicationPreferences = async () => {
             try {
+                setIsCommunicationPreferencesLoading(true)
                 const response = await api.get<ChangablePreferences>(
-                    `${getUserUrl(user.id)}/communication-preferences`,
+                    `${getUserUrl(currentUser.id)}/communication-preferences`,
                 )
                 setCommunicationPreferences(response.data)
             } catch (error) {
-                console.error(error)
+                if (isAxiosError(error)) {
+                    message.error(error.message)
+                }
+            } finally {
+                setIsCommunicationPreferencesLoading(false)
             }
         }
 
         fetchCommunicationPreferences()
-    }, [user])
+    }, [currentUser])
+
+    if (isCurrentUserLoading || isCommunicationPreferencesLoading) {
+        return <Loading />
+    }
 
     return (
         <div>

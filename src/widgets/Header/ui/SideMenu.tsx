@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { LogOut, Menu, User } from "lucide-react"
 
 import styles from "@/widgets/Header/ui/styles.module.scss"
-import { useAuth } from "@/context/AuthProvider.tsx"
 import SideMenuHeader from "@/widgets/Header/ui/SideMenuHeader.tsx"
 import BreakLine from "@/widgets/Header/ui/BreakLine.tsx"
 import SideMenuItemList from "@/widgets/Header/ui/SideMenuItemList.tsx"
@@ -13,9 +12,11 @@ import Link from "next/link"
 import { UserOutlined } from "@ant-design/icons"
 import { useRouter } from "next/navigation"
 import { onUserLoginClick } from "@/widgets/Header/helpers/login.ts"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
 const SideMenu = () => {
-    const { user } = useAuth()
+    const { data: currentUser } = useCurrentUserQuery()
+
     const router = useRouter()
 
     const [isOpen, setIsOpen] = useState(false)
@@ -46,7 +47,7 @@ const SideMenu = () => {
                     <SideMenuHeader setIsOpen={setIsOpen} />
                     <BreakLine />
 
-                    {user && (
+                    {currentUser && (
                         <Link href="/account/profile">
                             <div className={styles.userMobileProfileContainer}>
                                 <User className={styles.userMobileProfileIcon} size={18} />
@@ -57,7 +58,7 @@ const SideMenu = () => {
 
                     <SideMenuItemList setIsOpen={setIsOpen} onClick={onClick} />
                     <BreakLine />
-                    {user ? (
+                    {currentUser ? (
                         <div className={styles.authMobileMenuContainer} onClick={handleLogout}>
                             <span className={styles.authMobileMenuIcon}>
                                 <LogOut size={18} />

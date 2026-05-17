@@ -160,7 +160,7 @@ const GetInvolvedForm = () => {
                 </div>
 
                 <div className={styles.intentionGrid}>
-                    <Form.Item label="Current role" name="role">
+                    <Form.Item label="Current role" name="current_role">
                         <Select placeholder="Select your role" options={roleOptions} allowClear />
                     </Form.Item>
 
