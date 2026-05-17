@@ -17,6 +17,9 @@ import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/
 import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
 import { countries, credentialsOptions, referralSourceOptions } from "@shared/options.ts"
 import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
+import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
+import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
+import MembershipApplicationAvailabilityAlert from "@/features/MembershipApplicationForm/ui/MembershipApplicationAvailabilityAlert.tsx"
 
 type TrainingState = {
     isUsBoardCertified?: boolean
@@ -30,6 +33,13 @@ type AgreementState = {
 
 const MembershipApplicationForm = () => {
     const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const isAuthorized = Boolean(currentUser)
+    const { data: currentUserMembership, isLoading: isCurrentUserMembershipLoading } =
+        useCurrentUserMembershipQuery(isAuthorized)
+    const { data: currentUserMembershipRequest, isLoading: isCurrentUserMembershipRequestLoading } =
+        useCurrentUserMembershipRequestQuery(
+            isAuthorized && !isCurrentUserMembershipLoading && !currentUserMembership,
+        )
 
     const [training, setTraining] = useState<TrainingState>({})
     const [agreements, setAgreements] = useState<AgreementState>({
@@ -38,7 +48,11 @@ const MembershipApplicationForm = () => {
     })
     const [isFormSubmitting, setIsFormSubmitting] = useState(false)
 
-    const isFormDisabled = useMemo(() => !currentUser, [currentUser])
+    const isFormDisabled = useMemo(
+        () =>
+            !currentUser || Boolean(currentUserMembership) || Boolean(currentUserMembershipRequest),
+        [currentUser, currentUserMembership, currentUserMembershipRequest],
+    )
 
     const initialValues = useMemo(
         () => ({
@@ -79,6 +93,10 @@ const MembershipApplicationForm = () => {
     }, [training.isUsBoardCertified, training.isUsTrainee])
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+        if (isFormDisabled) {
+            return
+        }
+
         try {
             setIsFormSubmitting(true)
 
@@ -122,7 +140,11 @@ const MembershipApplicationForm = () => {
         }
     }
 
-    if (isCurrentUserLoading) {
+    if (
+        isCurrentUserLoading ||
+        isCurrentUserMembershipLoading ||
+        isCurrentUserMembershipRequestLoading
+    ) {
         return <Loading />
     }
 
@@ -135,7 +157,7 @@ const MembershipApplicationForm = () => {
             disabled={isFormDisabled}
             initialValues={initialValues}
         >
-            {isFormDisabled && (
+            {!currentUser && (
                 <Warning>
                     <p>
                         To complete your membership application, please sign in to your account.
@@ -147,6 +169,15 @@ const MembershipApplicationForm = () => {
                         Sign Up
                     </LinkButton>
                 </Warning>
+            )}
+
+            {currentUser && (currentUserMembership || currentUserMembershipRequest) && (
+                <div className={styles.availabilityAlert}>
+                    <MembershipApplicationAvailabilityAlert
+                        membership={currentUserMembership}
+                        membershipRequest={currentUserMembershipRequest}
+                    />
+                </div>
             )}
 
             <div className={styles.blockInfoContainer}>
