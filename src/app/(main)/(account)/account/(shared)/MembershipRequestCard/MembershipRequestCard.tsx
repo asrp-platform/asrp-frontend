@@ -7,6 +7,8 @@ import api from "@/axios.ts"
 import { CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL } from "@shared/backend/rest-api-urls/currentUserUrls.ts"
 import { useState } from "react"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
+import ReapplyMembershipButton from "@features/ReapplyMembershipButton/ReapplyMembershipButton.tsx"
+import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
 
 type MembershipStatusMeta = {
     label: string
@@ -81,8 +83,10 @@ const MembershipRequestCard = ({ membershipRequest }: IProps) => {
     const handleRetryPayment = async () => {
         try {
             setIsRetrying(true)
-            const response = await api.post(CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL)
-            window.location.href = response.data
+            const response = await api.post<PaymentCheckoutResponse>(
+                CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL,
+            )
+            window.location.href = response.data.checkout_session_url
         } catch (error) {
             if (isAxiosError(error)) {
                 message.error(error.message)
@@ -108,7 +112,7 @@ const MembershipRequestCard = ({ membershipRequest }: IProps) => {
                 <div className={styles.mutedText}>{membershipStatus.description}</div>
             )}
 
-            {canReapply && <CustomButton variant={"secondary"}>Reapply</CustomButton>}
+            {canReapply && <ReapplyMembershipButton />}
 
             {canRetryPayment && (
                 <CustomButton

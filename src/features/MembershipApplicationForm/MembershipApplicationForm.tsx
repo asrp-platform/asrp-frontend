@@ -3,12 +3,7 @@
 import { Button, Checkbox, Form, type FormProps, Input, message, Radio, Select } from "antd"
 import { useForm } from "antd/es/form/Form"
 import styles from "@/features/MembershipApplicationForm/styles.module.scss"
-import type {
-    FieldType,
-    Credentials,
-    Country,
-    MembershipKey,
-} from "@/features/MembershipApplicationForm/types"
+import type { FieldType, MembershipKey } from "@/features/MembershipApplicationForm/types"
 import { useMemo, useState } from "react"
 import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCard/MembershipCard.tsx"
 import api from "@/axios.ts"
@@ -19,71 +14,9 @@ import Warning from "@/shared/ui/Warning/Warning.tsx"
 import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-
-const credentialsOptions: Credentials[] = [
-    "MD",
-    "DO",
-    "MBBS",
-    "DDS",
-    "MLS",
-    "PhD",
-    "MLT",
-    "PA(ASCP)",
-    "MSc",
-    "MBA",
-    "MPH",
-    "Other",
-]
-
-const countries: Country[] = [
-    { code: "US", name: "United States of America" },
-    { code: "CA", name: "Canada" },
-    { code: "GB", name: "United Kingdom" },
-    { code: "DE", name: "Germany" },
-    { code: "FR", name: "France" },
-    { code: "IT", name: "Italy" },
-    { code: "ES", name: "Spain" },
-    { code: "AU", name: "Australia" },
-    { code: "NZ", name: "New Zealand" },
-    { code: "IN", name: "India" },
-    { code: "CN", name: "China" },
-    { code: "JP", name: "Japan" },
-    { code: "KR", name: "South Korea" },
-    { code: "BR", name: "Brazil" },
-    { code: "MX", name: "Mexico" },
-    { code: "UA", name: "Ukraine" },
-    { code: "RU", name: "Russia" },
-    { code: "OTHER", name: "Other" },
-]
-
-const practiceSettingOptions = [
-    { value: "academic", label: "Academic medical center" },
-    { value: "community", label: "Community hospital" },
-    { value: "private_lab", label: "Private laboratory" },
-    { value: "industry", label: "Industry" },
-    { value: "government", label: "Government / military" },
-    { value: "other", label: "Other" },
-]
-
-const jobTitleOptions = [
-    { value: "attending", label: "Attending pathologist" },
-    { value: "fellow", label: "Fellow" },
-    { value: "resident", label: "Resident" },
-    { value: "medical_student", label: "Medical student" },
-    { value: "scientist", label: "Scientist / PhD" },
-    { value: "lab_professional", label: "Laboratory professional" },
-    { value: "other", label: "Other" },
-]
-
-const referralSourceOptions = [
-    { value: "colleague", label: "Colleague" },
-    { value: "friend", label: "Friend" },
-    { value: "social_media", label: "Social media" },
-    { value: "telegram", label: "Telegram" },
-    { value: "conference", label: "Conference / meeting" },
-    { value: "web_search", label: "Web search" },
-    { value: "other", label: "Other" },
-]
+import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
+import { countries, credentialsOptions, referralSourceOptions } from "@shared/options.ts"
+import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
 
 type TrainingState = {
     isUsBoardCertified?: boolean
@@ -165,8 +98,11 @@ const MembershipApplicationForm = () => {
                 is_agrees_communications: agreements.is_agrees_communications,
             }
 
-            const response = await api.post<string>(CURRENT_USER_MEMBERSHIP_REQUEST_URL, data)
-            window.location.href = response.data
+            const response = await api.post<PaymentCheckoutResponse>(
+                CURRENT_USER_MEMBERSHIP_REQUEST_URL,
+                data,
+            )
+            window.location.href = response.data.checkout_session_url
         } catch (error: unknown) {
             if (isAxiosError(error)) {
                 if (error.response?.status === 401) {
@@ -291,42 +227,7 @@ const MembershipApplicationForm = () => {
             </div>
 
             <div className={styles.grid}>
-                <Form.Item
-                    label="Primary institution / affiliation"
-                    name="primary_affiliation"
-                    rules={[{ required: true }]}
-                >
-                    <Input placeholder="e.g. University Hospital, Research Institute" />
-                </Form.Item>
-                <Form.Item label="Job title / role" name="job_title" rules={[{ required: true }]}>
-                    <Select placeholder="Select an option">
-                        {jobTitleOptions.map(({ value, label }) => (
-                            <Select.Option key={value} value={value}>
-                                {label}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    label="Primary practice setting"
-                    name="practice_setting"
-                    rules={[{ required: true }]}
-                >
-                    <Select placeholder="Select an option">
-                        {practiceSettingOptions.map(({ value, label }) => (
-                            <Select.Option key={value} value={value}>
-                                {label}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    label="Subspecialty focus"
-                    name="subspecialty"
-                    rules={[{ required: true }]}
-                >
-                    <Input placeholder="e.g. Hematopathology, Breast, GI, Cytopathology" />
-                </Form.Item>
+                <MembershipApplicationProfessionalInformationFields />
             </div>
 
             <div className={styles.blockInfoContainer}>
