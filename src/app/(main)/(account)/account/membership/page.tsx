@@ -15,12 +15,10 @@ const Page = () => {
     const { data: membershipRequest, isLoading: isMembershipRequestLoading } =
         useCurrentUserMembershipRequestQuery()
 
-    // Show loading while any query is in progress
     if (isMembershipLoading || isMembershipRequestLoading) {
         return <Loading />
     }
 
-    // If the user has an active membership, display it
     if (membership) {
         return (
             <div className={styles.pageContainer}>
@@ -30,7 +28,6 @@ const Page = () => {
         )
     }
 
-    // If there is no active membership but a membership request exists, show its status
     if (!membership && membershipRequest) {
         return (
             <div className={styles.pageContainer}>
@@ -40,7 +37,6 @@ const Page = () => {
         )
     }
 
-    // Fallback – no membership and no request
     return <NoMembershipCard />
 }
 

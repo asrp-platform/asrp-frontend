@@ -106,8 +106,7 @@ const MembershipRequestCard = ({ membershipRequest }: IProps) => {
                 <div className={styles.mutedText}>{membershipStatus.description}</div>
             )}
 
-            {/* Admin comment, displayed only if present */}
-            {membershipRequest.admin_comment && (
+            {membershipRequest.status === MembershipRequestStatusEnum.REJECTED && (
                 <div className={styles.mutedText}>
                     <strong>Admin comment:</strong> {membershipRequest.admin_comment}
                 </div>
