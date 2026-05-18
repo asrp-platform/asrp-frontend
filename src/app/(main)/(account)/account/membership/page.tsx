@@ -8,33 +8,36 @@ import styles from "./styles.module.scss"
 import MembershipCard from "@app/(main)/(account)/account/(shared)/MembershipCard/MembershipCard.tsx"
 import NoMembershipCard from "@app/(main)/(account)/account/membership/(ui)/NoMembershipCard/NoMembershipCard.tsx"
 import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
-import MembershipRequestCard from "@app/(main)/(account)/account/(shared)/MembershipRequestCard/MembershipRequestCard.tsx"
+import MembershipRequestCard from "../(shared)/MembershipRequestCard/MembershipRequestCard"
 
 const Page = () => {
     const { data: membership, isLoading: isMembershipLoading } = useCurrentUserMembershipQuery()
-
-    const enableMembershipRequestLoading = !isMembershipLoading && !membership
-
     const { data: membershipRequest, isLoading: isMembershipRequestLoading } =
-        useCurrentUserMembershipRequestQuery(enableMembershipRequestLoading)
+        useCurrentUserMembershipRequestQuery()
 
     if (isMembershipLoading || isMembershipRequestLoading) {
         return <Loading />
     }
 
-    if (!membership) {
-        if (membershipRequest) {
-            return <MembershipRequestCard membershipRequest={membershipRequest} />
-        }
-        return <NoMembershipCard />
+    if (membership) {
+        return (
+            <div className={styles.pageContainer}>
+                <ProfileHeaderSection title="Membership" subtitle="Manage your ASRP membership." />
+                <MembershipCard membership={membership} variant={"detailed"} />
+            </div>
+        )
     }
 
-    return (
-        <div className={styles.pageContainer}>
-            <ProfileHeaderSection title="Membership" subtitle="Manage your ASRP membership." />
-            <MembershipCard membership={membership} variant={"detailed"} />
-        </div>
-    )
+    if (!membership && membershipRequest) {
+        return (
+            <div className={styles.pageContainer}>
+                <ProfileHeaderSection title="Membership" subtitle="Manage your ASRP membership." />
+                <MembershipRequestCard membershipRequest={membershipRequest} />
+            </div>
+        )
+    }
+
+    return <NoMembershipCard />
 }
 
 export default Page

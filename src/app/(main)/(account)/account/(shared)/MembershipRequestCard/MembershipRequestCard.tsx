@@ -112,6 +112,11 @@ const MembershipRequestCard = ({ membershipRequest }: IProps) => {
                 <div className={styles.mutedText}>{membershipStatus.description}</div>
             )}
 
+            {membershipRequest.status === MembershipRequestStatusEnum.REJECTED && (
+                <div className={styles.mutedText}>
+                    <strong>Admin comment:</strong> {membershipRequest.admin_comment}
+                </div>
+            )}
             {canReapply && <ReapplyMembershipButton />}
 
             {canRetryPayment && (
