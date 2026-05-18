@@ -10,11 +10,12 @@ const fetchCurrentUserMembershipRequest = async () => {
     return response.data
 }
 
-export const useCurrentUserMembershipRequestQuery = () => {
+export const useCurrentUserMembershipRequestQuery = (enabled = true) => {
     return useQuery({
         queryKey: CURRENT_USER_MEMBERSHIP_REQUEST_QUERY_KEY,
         queryFn: fetchCurrentUserMembershipRequest,
         staleTime: 1000 * 60 * 5,
         retry: false,
+        enabled: enabled,
     })
 }

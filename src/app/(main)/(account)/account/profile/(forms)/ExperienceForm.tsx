@@ -94,7 +94,7 @@ const ExperienceForm = ({
         <div className={styles.residencyFormContainer}>
             <Form form={form} layout="vertical" onFinish={handleFinish}>
                 <Row gutter={16}>
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item
                             name="institution"
                             label="Institution"
@@ -104,7 +104,7 @@ const ExperienceForm = ({
                         </Form.Item>
                     </Col>
 
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item
                             name="speciality"
                             label="Speciality"
@@ -116,13 +116,13 @@ const ExperienceForm = ({
                 </Row>
 
                 <Row gutter={16}>
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item name="city" label="City" rules={[{ required: true }]}>
                             <Input disabled={isView} />
                         </Form.Item>
                     </Col>
 
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item name="state" label="State" rules={[{ required: true }]}>
                             <Input disabled={isView} />
                         </Form.Item>
@@ -130,13 +130,13 @@ const ExperienceForm = ({
                 </Row>
 
                 <Row gutter={16}>
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item name="country" label="Country" rules={[{ required: true }]}>
                             <Input disabled={isView} />
                         </Form.Item>
                     </Col>
 
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item
                             name="years_from_to"
                             label="Years (from – to)"

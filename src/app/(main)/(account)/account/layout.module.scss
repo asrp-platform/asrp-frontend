@@ -1,28 +1,52 @@
 $link-hover-background-color: var(--layout-background-color);
 
 .profileLayoutContainer {
-    margin: 5vh 13vw;
-    display: grid;
+    margin: var(--mobile-layout-padding-vertical) var(--mobile-layout-padding-inline);
     gap: 30px;
-    grid-template-columns: 1fr 3.25fr;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     align-items: flex-start;
-}
 
-.accountAside {
-    padding: 20px 16px;
-    background-color: #fff;
-    border-radius: 24px;
-    border: var(--light-border);
-
-    h3 {
-        color: var(--text-secondary-color-dark);
-        font-size: 12px;
-        margin: 0 10px 10px;
+    @media (min-width: 1200px) {
+        margin: 5vh 13vw;
+        display: grid;
+        grid-template-columns: 1fr 3.25fr;
     }
 }
 
-.accountNav {
+.accountAside {
+    display: none;
+
+    @media (min-width: 1200px) {
+        padding: 20px 16px;
+        background-color: var(--surface-card-color);
+        border-radius: var(--card-border-radius);
+        border: var(--light-border);
+        display: flex;
+        flex-direction: column;
+
+        h3 {
+            color: var(--text-secondary-color-dark);
+            font-size: 12px;
+            margin: 0 10px 10px;
+        }
+    }
+}
+
+.mobileAccountNav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    @media (min-width: 1200px) {
+        display: none;
+    }
+}
+
+.mobileAccountNavLink {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
 }
 
 .accountNavList {
@@ -56,6 +80,8 @@ $link-hover-background-color: var(--layout-background-color);
 }
 
 .accountContentSection {
+    width: 100%;
+    min-width: 0;
 }
 
 .container {

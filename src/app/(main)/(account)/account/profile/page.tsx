@@ -2,15 +2,16 @@
 
 import styles from "@/app/(main)/(account)/account/profile/styles.module.scss"
 import UserProfileCard from "@/app/(main)/(account)/account/profile/(ui)/UserProfileCard.tsx"
-import { useAuth } from "@/context/AuthProvider.tsx"
 import ResidencyCard from "@/app/(main)/(account)/account/profile/(ui)/ResidencyCard.tsx"
 import FellowshipCard from "@/app/(main)/(account)/account/profile/(ui)/FellowshipCard.tsx"
 import JobCard from "@/app/(main)/(account)/account/profile/(ui)/JobCard"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 export default function ASRPAccountProfilePage() {
-    const { user } = useAuth()
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
 
-    if (!user) {
+    if (!currentUser) {
         return null
     }
 
@@ -26,10 +27,16 @@ export default function ASRPAccountProfilePage() {
                             </p>
                         </div>
                     </div>
-                    <UserProfileCard user={user} />
-                    <JobCard user={user} />
-                    <ResidencyCard user={user} />
-                    <FellowshipCard user={user} />
+                    {isCurrentUserLoading ? (
+                        <Loading />
+                    ) : (
+                        <div>
+                            <UserProfileCard user={currentUser} />
+                            <JobCard user={currentUser} />
+                            <ResidencyCard user={currentUser} />
+                            <FellowshipCard user={currentUser} />
+                        </div>
+                    )}
                 </section>
             </div>
         </div>

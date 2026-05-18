@@ -11,9 +11,9 @@ import {
     useState,
 } from "react"
 import type { IPermission } from "@/entities/Permission.ts"
-import { useAuth } from "@/context/AuthProvider.tsx"
 import api from "@/axios.ts"
 import { getUserPermissionsStuffUrl } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
 interface IPermissionsContext {
     permissions: string[]
@@ -28,32 +28,34 @@ interface PermissionsProviderProps {
 const PermissionsContext = createContext<IPermissionsContext | null>(null)
 
 export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
-    const { user, isUserLoading } = useAuth()
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
     const [permissions, setPermissions] = useState<string[]>([])
     const [isPermissionsLoading, setIsPermissionsLoading] = useState<boolean>(false)
 
     // Before paint: staff users need permissions for UI that depends on them — avoids one frame
     // without Edit / admin controls, then a late pop-in when the fetch completes.
     useLayoutEffect(() => {
-        if (isUserLoading) {
+        if (isCurrentUserLoading) {
             return
         }
-        if (!user || !user.admin) {
+        if (!currentUser || !currentUser.admin) {
             setPermissions([])
             setIsPermissionsLoading(false)
             return
         }
         setIsPermissionsLoading(true)
-    }, [isUserLoading, user])
+    }, [isCurrentUserLoading, currentUser])
 
     useEffect(() => {
-        if (isUserLoading || !user?.admin) {
+        if (isCurrentUserLoading || !currentUser?.admin) {
             return
         }
 
         const fetchUsersPermissions = async () => {
             try {
-                const response = await api.get<IPermission[]>(getUserPermissionsStuffUrl(user.id))
+                const response = await api.get<IPermission[]>(
+                    getUserPermissionsStuffUrl(currentUser.id),
+                )
                 setPermissions(response.data.map((p) => p.action))
             } catch (error) {
                 console.error(error)
@@ -63,7 +65,7 @@ export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
         }
 
         fetchUsersPermissions()
-    }, [user, isUserLoading])
+    }, [currentUser, isCurrentUserLoading])
 
     return (
         <PermissionsContext.Provider value={{ permissions, setPermissions, isPermissionsLoading }}>

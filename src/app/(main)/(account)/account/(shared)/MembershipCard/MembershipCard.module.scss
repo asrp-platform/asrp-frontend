@@ -1,8 +1,8 @@
 .membershipInfoCard {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 24px;
-    padding: 24px;
+    background-color: var(--surface-card-color);
+    border: var(--light-border);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
 }
 
 .detailedMembershipInfoCard {
@@ -10,7 +10,7 @@
 }
 
 .expiredMembershipInfoCard {
-    background: linear-gradient(180deg, #fff7f7 0%, #ffffff 72%);
+    background: linear-gradient(180deg, #fff7f7 0%, var(--surface-card-color) 72%);
     border-color: #fecaca;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .expiredSecondaryText {
-    color: #991b1b;
+    color: var(--text-danger-color);
 }
 
 .tagRow {
@@ -49,11 +49,11 @@
     width: fit-content;
     padding: 6px 12px;
 
-    border-radius: 999px;
+    border-radius: var(--pill-border-radius);
     border: 1px solid #fecaca;
 
-    background-color: #fee2e2;
-    color: #991b1b;
+    background-color: var(--status-danger-background-color);
+    color: var(--status-danger-text-color);
 
     font-size: 14px;
     font-weight: 700;
@@ -64,7 +64,7 @@
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background-color: #dc2626;
+        background-color: var(--button-primary-red);
         box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.14);
     }
 }
@@ -93,7 +93,7 @@
     margin-top: 24px;
     padding-top: 24px;
 
-    border-top: 1px solid #e2e8f0;
+    border-top: var(--light-border);
 }
 
 .detailItem {
@@ -105,13 +105,13 @@
 .detailLabel {
     font-size: 13px;
     font-weight: 600;
-    color: #64748b;
+    color: var(--text-muted-color-dark);
 }
 
 .detailValue {
     font-size: 15px;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--text-heading-color-dark);
 }
 
 .descriptionBlock {
