@@ -5,18 +5,34 @@ import { MEMBERSHIP_TYPES_URL } from "@shared/backend/rest-api-urls/restApiUrls.
 
 export const MEMBERSHIP_TYPES_QUERY_KEY = ["membership-types"]
 
-const fetchMembershipTypes = async (onlyPurchasable = true) => {
+interface IFilters {
+    is_purchasable?: boolean
+    price_usd__lt?: number
+}
+
+const fetchMembershipTypes = async (filters: IFilters = {}) => {
+    const searchParams = new URLSearchParams()
+
+    Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+            searchParams.append(key, String(value))
+        }
+    })
+
+    const queryString = searchParams.toString()
+
     const response = await api.get<IMembershipType[]>(
-        `${MEMBERSHIP_TYPES_URL}?is_purchasable=${onlyPurchasable}`,
+        queryString ? `${MEMBERSHIP_TYPES_URL}?${queryString}` : MEMBERSHIP_TYPES_URL,
     )
     return response.data
 }
 
-export const useMembershipTypesQuery = (onlyPurchasable = true) => {
+export const useMembershipTypesQuery = (filters: IFilters = {}, enabled = true) => {
     return useQuery({
-        queryKey: MEMBERSHIP_TYPES_QUERY_KEY,
-        queryFn: () => fetchMembershipTypes(onlyPurchasable),
+        queryKey: [...MEMBERSHIP_TYPES_QUERY_KEY, filters],
+        queryFn: () => fetchMembershipTypes(filters),
         staleTime: 1000 * 60 * 5,
         retry: false,
+        enabled: enabled,
     })
 }

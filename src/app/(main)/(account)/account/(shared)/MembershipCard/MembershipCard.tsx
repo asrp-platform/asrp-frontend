@@ -8,6 +8,7 @@ import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.t
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import type { IUserMembership } from "@entities/Membership.ts"
+import DowngradeMembership from "@app/(main)/(account)/account/membership/(ui)/DowngradeMembership/DowngradeMembership.tsx"
 
 interface IProps {
     membership: IUserMembership
@@ -67,6 +68,8 @@ const MembershipCard = ({ membership, variant = "compact", className }: IProps) 
                             View membership
                         </PrimaryLinkOutlined>
                     )}
+
+                    {variant === "detailed" && <DowngradeMembership />}
                 </div>
             </div>
 

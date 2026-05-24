@@ -1,14 +1,15 @@
 import { useState } from "react"
-import { type IMembershipRequest, MembershipRequestStatusEnum } from "@/entities/Membership.ts"
-import { useTableDataQuery } from "@/shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/membershipsUrls.ts"
+import { type IMembershipRequest, MembershipRequestStatusEnum } from "@entities/Membership.ts"
+import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
+import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/rest-api-urls/admin/membershipsAdminUrls.ts"
 import { Table, Tag } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
-import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import Link from "next/link"
-import ActionsCell from "@app/(administration)/administration/membership-requests/ui/ActionsCell/ActionsCell.tsx"
+import ActionsCell from "@app/(administration)/administration/membership/tabs/MembershipRequestsTable/ActionsCell/ActionsCell.tsx"
+import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum
@@ -84,7 +85,12 @@ const MembershipRequestsTable = () => {
         {
             title: "Membership Type",
             key: "membership_type",
-            render: (_, record) => record.membership_type?.name ?? record.membership_type_id,
+            render: (_, record) =>
+                record.membership_type ? (
+                    <MembershipTypeTag type={record.membership_type.type} />
+                ) : (
+                    record.membership_type_id
+                ),
         },
         {
             title: "Status",
