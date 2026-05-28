@@ -7,6 +7,7 @@ import CircularProgress from "@mui/material/CircularProgress"
 interface IProps {
     children: ReactNode | string
     loading?: boolean
+    disabled?: boolean
     className?: string
     onClick?: MouseEventHandler<HTMLButtonElement> | undefined
     htmlType?: "button" | "submit" | "reset"
@@ -16,6 +17,7 @@ interface IProps {
 const CustomButton = ({
     children,
     loading,
+    disabled,
     className,
     onClick,
     htmlType = "button",
@@ -26,6 +28,7 @@ const CustomButton = ({
             className={clsx(styles.button, variant && styles[variant], className)}
             onClick={onClick}
             type={htmlType}
+            disabled={disabled || loading}
         >
             <div className={styles.innerContainer}>
                 <span className={clsx(styles.loaderSlot, loading && styles.loaderSlot_visible)}>

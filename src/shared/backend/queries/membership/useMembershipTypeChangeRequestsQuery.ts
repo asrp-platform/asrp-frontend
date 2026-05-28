@@ -1,4 +1,4 @@
-import type { MembershipTypeChangeRequest } from "@entities/MembershipTypeChangeRequest.ts"
+import type { AdminMembershipTypeChangeRequest } from "@entities/MembershipTypeChangeRequest.ts"
 import { MEMBERSHIP_TYPE_CHANGE_REQUESTS_ADMIN_URL } from "@shared/backend/rest-api-urls/admin/membershipsAdminUrls.ts"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
@@ -25,7 +25,7 @@ export const useMembershipTypeChangeRequestsQuery = ({
     filters = {},
 }: UseMembershipTypeChangeRequestsQueryParams) => {
     return useTableDataQuery<
-        IPaginatedBackendResponse<MembershipTypeChangeRequest>,
+        IPaginatedBackendResponse<AdminMembershipTypeChangeRequest>,
         MembershipTypeChangeRequestsFilters
     >({
         url: MEMBERSHIP_TYPE_CHANGE_REQUESTS_ADMIN_URL,

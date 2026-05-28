@@ -16,4 +16,4 @@ export const CURRENT_USER_PAYMENTS_URL = `${CURRENT_USER_URL}/payments`
 
 export const CURRENT_USER_MEMBERSHIP_URL = `${CURRENT_USER_URL}/membership`
 
-export const CURRENT_USER_MEMBERSHIP_TYPE_CHANGE_REQUEST_URL = `${CURRENT_USER_URL}/membership-type-change-request`
+export const CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL = `${CURRENT_USER_URL}/membership/downgrade-request`

@@ -4,16 +4,23 @@ import { useState } from "react"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useMembershipTypesQuery } from "@shared/backend/queries/membership/useMembershipTypesQuery.ts"
 import api from "@/axios.ts"
-import { CURRENT_USER_MEMBERSHIP_TYPE_CHANGE_REQUEST_URL } from "@shared/backend/rest-api-urls/currentUserUrls.ts"
+import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL } from "@shared/backend/rest-api-urls/currentUserUrls.ts"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { useQueryClient } from "@tanstack/react-query"
+import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_QUERY_KEY } from "@shared/backend/queries/membership/useCurrentUserMembershipDowngradeRequestQuery.ts"
 
 type DowngradeMembershipFormValues = {
-    membership_type_id: number
-    downgrade_reason: string
+    target_membership_type_id: number
+    reason_changing: string
 }
 
-const DowngradeMembership = () => {
+interface DowngradeMembershipProps {
+    disabled?: boolean
+}
+
+const DowngradeMembership = ({ disabled }: DowngradeMembershipProps) => {
+    const queryClient = useQueryClient()
     const [form] = Form.useForm<DowngradeMembershipFormValues>()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -39,12 +46,16 @@ const DowngradeMembership = () => {
 
             setIsSubmitting(true)
 
-            await api.post(CURRENT_USER_MEMBERSHIP_TYPE_CHANGE_REQUEST_URL, {
+            await api.post(CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL, {
                 ...values,
                 upgrade: false,
             })
 
             message.success("Your downgrade request has been submitted for review.")
+
+            await queryClient.invalidateQueries({
+                queryKey: CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_QUERY_KEY,
+            })
 
             form.resetFields()
             setIsModalOpen(false)
@@ -80,7 +91,11 @@ const DowngradeMembership = () => {
 
     return (
         <>
-            <CustomButton variant={"secondary"} onClick={() => setIsModalOpen(true)}>
+            <CustomButton
+                variant={"secondary"}
+                onClick={() => setIsModalOpen(true)}
+                disabled={disabled}
+            >
                 Downgrade membership
             </CustomButton>
             <Modal

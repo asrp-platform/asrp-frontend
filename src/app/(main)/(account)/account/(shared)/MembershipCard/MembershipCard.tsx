@@ -9,6 +9,7 @@ import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import type { IUserMembership } from "@entities/Membership.ts"
 import DowngradeMembership from "@app/(main)/(account)/account/membership/(ui)/DowngradeMembership/DowngradeMembership.tsx"
+import { useCurrentUserMembershipDowngradeRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipDowngradeRequestQuery.ts"
 
 interface IProps {
     membership: IUserMembership
@@ -19,6 +20,17 @@ interface IProps {
 const MembershipCard = ({ membership, variant = "compact", className }: IProps) => {
     const isExpired = !membership.is_active
     const isDetailed = variant === "detailed"
+
+    const { data: typeChangeRequest, isLoading: isTypeChangeRequestLoading } =
+        useCurrentUserMembershipDowngradeRequestQuery()
+
+    const hasPendingTypeChangeRequest = Boolean(typeChangeRequest?.pending)
+    const typeChangeRequestStatus = typeChangeRequest?.pending
+        ? "Pending review"
+        : typeChangeRequest?.approved
+          ? "Approved"
+          : "Rejected"
+    const typeChangeRequestDirection = typeChangeRequest?.upgrade ? "Upgrade" : "Downgrade"
 
     return (
         <ProfileInfoCard
@@ -69,9 +81,56 @@ const MembershipCard = ({ membership, variant = "compact", className }: IProps) 
                         </PrimaryLinkOutlined>
                     )}
 
-                    {variant === "detailed" && <DowngradeMembership />}
+                    {variant === "detailed" && (
+                        <DowngradeMembership
+                            disabled={isTypeChangeRequestLoading || hasPendingTypeChangeRequest}
+                        />
+                    )}
                 </div>
             </div>
+
+            {typeChangeRequest && (
+                <div
+                    className={clsx(
+                        styles.typeChangeRequest,
+                        typeChangeRequest.pending && styles.pendingTypeChangeRequest,
+                        !typeChangeRequest.pending &&
+                            typeChangeRequest.approved &&
+                            styles.approvedTypeChangeRequest,
+                        !typeChangeRequest.pending &&
+                            !typeChangeRequest.approved &&
+                            styles.rejectedTypeChangeRequest,
+                    )}
+                >
+                    <div className={styles.typeChangeRequestHeader}>
+                        <span className={styles.typeChangeRequestTitle}>
+                            {typeChangeRequestDirection} request
+                        </span>
+                        <span className={styles.typeChangeRequestStatus}>
+                            {typeChangeRequestStatus}
+                        </span>
+                    </div>
+
+                    <div className={styles.typeChangeRequestBody}>
+                        <span>Target membership type</span>
+                        <MembershipTypeTag type={typeChangeRequest.target_membership_type.type} />
+                    </div>
+
+                    <p className={styles.typeChangeRequestReason}>
+                        {typeChangeRequest.reason_changing}
+                    </p>
+
+                    <div className={styles.typeChangeRequestMeta}>
+                        <span>
+                            Requested{" "}
+                            {formatDatetime(typeChangeRequest.created_at, ["hour", "minute"])}
+                        </span>
+                        {typeChangeRequest.admin_comment && (
+                            <span>Admin comment: {typeChangeRequest.admin_comment}</span>
+                        )}
+                    </div>
+                </div>
+            )}
 
             {isDetailed && (
                 <div className={styles.details}>

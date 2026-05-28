@@ -4,7 +4,7 @@ import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
 import Link from "next/link"
 
-import type { MembershipTypeChangeRequest } from "@entities/MembershipTypeChangeRequest.ts"
+import type { AdminMembershipTypeChangeRequest } from "@entities/MembershipTypeChangeRequest.ts"
 import {
     type MembershipTypeChangeRequestsFilters,
     useMembershipTypeChangeRequestsQuery,
@@ -28,7 +28,7 @@ const TypeChangeRequestsTable = () => {
         filters,
     })
 
-    const getReviewStatusTag = (record: MembershipTypeChangeRequest) => {
+    const getReviewStatusTag = (record: AdminMembershipTypeChangeRequest) => {
         if (record.pending) {
             return <Tag color="gold">Pending</Tag>
         }
@@ -40,7 +40,7 @@ const TypeChangeRequestsTable = () => {
         return <Tag color="red">Rejected</Tag>
     }
 
-    const columns: ColumnsType<MembershipTypeChangeRequest> = [
+    const columns: ColumnsType<AdminMembershipTypeChangeRequest> = [
         {
             title: "ID",
             dataIndex: "id",
@@ -121,8 +121,8 @@ const TypeChangeRequestsTable = () => {
         pagination: TablePaginationConfig,
         tableFilters: Record<string, FilterValue | null>,
         sorter:
-            | SorterResult<MembershipTypeChangeRequest>
-            | SorterResult<MembershipTypeChangeRequest>[],
+            | SorterResult<AdminMembershipTypeChangeRequest>
+            | SorterResult<AdminMembershipTypeChangeRequest>[],
     ) => {
         setPage(pagination.current ?? 1)
 

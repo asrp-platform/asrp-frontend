@@ -24,11 +24,14 @@ export interface MembershipTypeChangeRequest {
     target_membership_type: MembershipTypeChangeRequestMembershipType
 
     user_membership_id: number
-    user_membership: MembershipTypeChangeRequestUserMembership
 
     upgrade: boolean
     reason_changing: string
     approved: boolean
     admin_comment: string | null
     pending: boolean
+}
+
+export interface AdminMembershipTypeChangeRequest extends MembershipTypeChangeRequest {
+    user_membership: MembershipTypeChangeRequestUserMembership
 }
