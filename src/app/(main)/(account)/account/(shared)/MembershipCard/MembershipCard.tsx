@@ -7,7 +7,7 @@ import PrimaryLinkOutlined from "@/shared/ui/Buttons/PrimaryLinkOutlined/Primary
 import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard.tsx"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
-import type { IUserMembership } from "@entities/Membership.ts"
+import { MembershipTypeEnum, type IUserMembership } from "@entities/Membership.ts"
 import DowngradeMembership from "@app/(main)/(account)/account/membership/(ui)/DowngradeMembership/DowngradeMembership.tsx"
 import { useCurrentUserMembershipDowngradeRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipDowngradeRequestQuery.ts"
 
@@ -20,6 +20,7 @@ interface IProps {
 const MembershipCard = ({ membership, variant = "compact", className }: IProps) => {
     const isExpired = !membership.is_active
     const isDetailed = variant === "detailed"
+    const isPathwayMembership = membership.membership_type.type === MembershipTypeEnum.PATHWAY
 
     const { data: typeChangeRequest, isLoading: isTypeChangeRequestLoading } =
         useCurrentUserMembershipDowngradeRequestQuery()
@@ -83,7 +84,11 @@ const MembershipCard = ({ membership, variant = "compact", className }: IProps) 
 
                     {variant === "detailed" && (
                         <DowngradeMembership
-                            disabled={isTypeChangeRequestLoading || hasPendingTypeChangeRequest}
+                            disabled={
+                                isTypeChangeRequestLoading ||
+                                hasPendingTypeChangeRequest ||
+                                isPathwayMembership
+                            }
                         />
                     )}
                 </div>

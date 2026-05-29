@@ -12,6 +12,7 @@ import {
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
+import ActionsCell from "@app/(administration)/administration/membership/tabs/TypeChangeRequestsTable/ActionsCell/ActionsCell.tsx"
 
 const initialFilters: MembershipTypeChangeRequestsFilters = {}
 
@@ -41,6 +42,18 @@ const TypeChangeRequestsTable = () => {
     }
 
     const columns: ColumnsType<AdminMembershipTypeChangeRequest> = [
+        {
+            title: "Actions",
+            key: "actions",
+            width: 220,
+            render: (_, record) => {
+                if (!record.pending) {
+                    return null
+                }
+
+                return <ActionsCell requestId={record.id} />
+            },
+        },
         {
             title: "ID",
             dataIndex: "id",
@@ -179,7 +192,7 @@ const TypeChangeRequestsTable = () => {
                 total: data?.count ?? 0,
                 onChange: (nextPage) => setPage(nextPage),
             }}
-            scroll={{ x: 1200 }}
+            scroll={{ x: 1400 }}
         />
     )
 }
