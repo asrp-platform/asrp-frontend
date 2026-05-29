@@ -81,7 +81,7 @@ const LoginForm = () => {
             <Typography>
                 <Paragraph>
                     <div className={styles.bottomFormContainer}>
-                        <Link href="/register">Don't have an account?</Link>
+                        <Link href="/registration">Don't have an account?</Link>
                         <Link href="/password-reset">Forgot password?</Link>
                     </div>
                 </Paragraph>
