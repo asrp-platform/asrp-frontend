@@ -69,6 +69,13 @@
         color: var(--text-secondary-color-dark) !important;
         font-size: 16px !important;
     }
+
+    &:has(.registrationSuccessContainer) {
+        @media (width >= 992px) {
+            width: min(90vw, 540px);
+            padding: 32px;
+        }
+    }
 }
 
 .registerForm {
@@ -112,4 +119,21 @@
         background-color: var(--button-primary-red-hover) !important;
         transform: translateY(-1px);
     }
+}
+
+.confirmationMessage {
+    p {
+        margin-bottom: 8px;
+        color: var(--text-secondary-color-dark);
+        line-height: var(--paragraph-line-height);
+    }
+}
+
+.registrationSuccessContainer {
+    width: 100%;
+}
+
+.resendAlert {
+    margin-top: 16px;
+    text-align: left;
 }
