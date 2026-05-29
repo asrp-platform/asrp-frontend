@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Button, Form, type FormProps, Input, Result, Typography } from "antd"
+import { Alert, Button, Form, type FormProps, Input, Result, Typography } from "antd"
 import { LeftOutlined } from "@ant-design/icons"
 import { useForm } from "antd/es/form/Form"
 import { isAxiosError } from "axios"
@@ -14,6 +14,7 @@ import { Role } from "@shared/types/types.ts"
 import api from "@/axios.ts"
 import { REGISTER_URL } from "@shared/backend/rest-api-urls/restApiUrls.ts"
 import type { IBackendErrorResponse } from "@shared/types/interfaces.ts"
+import ResendEmailConfirmationButton from "@features/ResendEmailConfirmation/ResendEmailConfirmationButton.tsx"
 
 const { Paragraph, Text } = Typography
 
@@ -33,6 +34,8 @@ const RegisterForm = () => {
     const router = useRouter()
     const [form] = useForm()
     const [registrationEmail, setRegistrationEmail] = useState<string | null>(null)
+    const [resendMessage, setResendMessage] = useState<string | null>(null)
+    const [resendStatus, setResendStatus] = useState<"success" | "error">("success")
 
     const [notification, contextHolder] = useNotification()
 
@@ -101,9 +104,29 @@ const RegisterForm = () => {
                                 To complete your registration, open the email and follow the
                                 confirmation link.
                             </Paragraph>
+                            {resendMessage && (
+                                <Alert
+                                    type={resendStatus}
+                                    title={resendMessage}
+                                    showIcon
+                                    className={styles.resendAlert}
+                                />
+                            )}
                         </div>
                     }
                     extra={[
+                        <ResendEmailConfirmationButton
+                            key="resend"
+                            email={registrationEmail}
+                            onSuccess={(message) => {
+                                setResendStatus("success")
+                                setResendMessage(message)
+                            }}
+                            onError={(message) => {
+                                setResendStatus("error")
+                                setResendMessage(message)
+                            }}
+                        />,
                         <Button type="primary" key="login" onClick={() => router.push("/login")}>
                             Back to login
                         </Button>,

@@ -19,6 +19,9 @@ const ErrorStatus = ({ message }: IProps) => {
                     title="Email confirmation failed"
                     subTitle={message}
                     extra={[
+                        <PrimaryLinkOutlined href={"/registration/resend-confirmation"}>
+                            Resend confirmation email
+                        </PrimaryLinkOutlined>,
                         <PrimaryLinkOutlined href={"/registration"}>
                             Create an account
                         </PrimaryLinkOutlined>,

@@ -6,6 +6,7 @@ export const REGISTER_URL = `${AUTH_URL}/register`
 export const LOGIN_URL = `${AUTH_URL}/login`
 export const LOGOUT_URL = `${AUTH_URL}/logout`
 export const EMAIL_CONFIRMATIONS_URL = `${AUTH_URL}/email-confirmations`
+export const EMAIL_CONFIRMATION_RESEND_URL = `${AUTH_URL}/email-confirmation-requests`
 
 // Password reset urls
 export const PASSWORD_RESET_URL = `${AUTH_URL}/password-reset`

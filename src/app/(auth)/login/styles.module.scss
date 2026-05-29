@@ -10,7 +10,16 @@
 .bottomFormContainer {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.loginLinksContainer {
     margin-bottom: 30px;
+}
+
+.resendConfirmationLink {
+    display: inline-block;
+    font-size: 14px;
 }
 
 .loginFormContainer {
