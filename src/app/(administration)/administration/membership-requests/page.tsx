@@ -1,16 +1,14 @@
 "use client"
 
 import MembershipRequestsTable from "@/app/(administration)/administration/membership-requests/ui/MembershipRequestsTable.tsx"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 
 const Page = () => {
-    const { permissions } = usePermissions()
-
-    const canView = permissions.includes("memberships.view")
-
-    if (!canView) return <span>Don't have permissions</span>
-
-    return <MembershipRequestsTable />
+    return (
+        <AdminPermissionGuard permission="memberships.view">
+            <MembershipRequestsTable />
+        </AdminPermissionGuard>
+    )
 }
 
 export default Page
