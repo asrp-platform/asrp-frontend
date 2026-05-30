@@ -1,7 +1,7 @@
 "use client"
 
-import MembershipRequestsTable from "@/app/(administration)/administration/membership-requests/ui/MembershipRequestsTable.tsx"
 import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
+import MembershipRequestsTable from "../membership/tabs/MembershipRequestsTable/MembershipRequestsTable"
 
 const Page = () => {
     return (
