@@ -14,7 +14,7 @@ export const useCurrentUserMembershipQuery = (enabled = true) => {
     return useQuery({
         queryKey: CURRENT_USER_MEMBERSHIP_QUERY_KEY,
         queryFn: fetchCurrentUserMembership,
-        staleTime: 1000 * 60 * 5,
+        staleTime: 1000 * 60 * 60,
         retry: true,
         enabled: enabled,
     })
