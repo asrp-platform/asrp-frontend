@@ -86,7 +86,7 @@ const ChangePasswordModal = ({ open, onClose }: Props) => {
                     name="confirm_new_password"
                     dependencies={["new_password"]}
                     rules={[
-                        { required: true, message: "Please confirm password" },
+                        { required: true, message: "Please complete password" },
                         ({ getFieldValue }) => ({
                             validator(_, value) {
                                 if (!value || getFieldValue("new_password") === value) {

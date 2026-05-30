@@ -1,14 +1,5 @@
 import styles from "./MembershipTypeTag.module.scss"
-
-/* eslint-disable */
-// @ts-ignore
-export enum MembershipTypeEnum {
-    ACTIVE = "ACTIVE",
-    TRAINEE = "TRAINEE",
-    AFFILIATE = "AFFILIATE",
-    HONORARY = "HONORARY",
-    PATHWAY = "PATHWAY",
-}
+import { MembershipTypeEnum } from "@entities/Membership.ts"
 
 const membershipLabels: Record<MembershipTypeEnum, string> = {
     [MembershipTypeEnum.ACTIVE]: "Active Member",

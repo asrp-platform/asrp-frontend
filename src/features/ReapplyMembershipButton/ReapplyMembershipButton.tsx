@@ -25,8 +25,9 @@ type ReapplyMembershipFormValues = {
 
 const ReapplyMembershipButton = () => {
     const queryClient = useQueryClient()
-    const { data: membershipTypes, isLoading: isMembershipTypesLoading } =
-        useMembershipTypesQuery(true)
+    const { data: membershipTypes, isLoading: isMembershipTypesLoading } = useMembershipTypesQuery({
+        is_purchasable: true,
+    })
     const { data: currentUserMembershipRequest, isLoading: isCurrentUserMembershipRequestLoading } =
         useCurrentUserMembershipRequestQuery()
     const [isModalOpen, setIsModalOpen] = useState(false)
