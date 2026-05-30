@@ -10,6 +10,8 @@ import clsx from "clsx"
 import { usePathname } from "next/navigation"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { useCurrentUserQuery } from "@/shared/backend/queries/useCurrentUserQuery.ts"
+import PrimaryLinkOutlined from "@shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
+import SecondaryLinkOutlined from "@shared/ui/Buttons/SecondaryLinkOutilned/SecondaryLinkOutlined.tsx"
 
 interface NavListItem {
     href: string
@@ -85,6 +87,30 @@ const Layout = ({ children }: { children: ReactNode }) => {
                     </ul>
                 </nav>
             </aside>
+            <div className={styles.mobileAccountNav}>
+                {navItemsList.map((item: NavListItem) => {
+                    if (item.match.includes(pathname)) {
+                        return (
+                            <PrimaryLinkOutlined
+                                className={styles.mobileAccountNavLink}
+                                key={item.label}
+                                href={item.href}
+                            >
+                                {item.label}
+                            </PrimaryLinkOutlined>
+                        )
+                    }
+                    return (
+                        <SecondaryLinkOutlined
+                            className={styles.mobileAccountNavLink}
+                            key={item.label}
+                            href={item.href}
+                        >
+                            {item.label}
+                        </SecondaryLinkOutlined>
+                    )
+                })}
+            </div>
             <section className={styles.accountContentSection}>{children}</section>
         </div>
     )

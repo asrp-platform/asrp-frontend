@@ -2,7 +2,7 @@
 
 import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
 
-import MembershipRequestCard from "@/app/(main)/(account)/account/dashboard/ui/MembershipRequestCard/MembershipRequestCard.tsx"
+import MembershipRequestCard from "@app/(main)/(account)/account/(shared)/MembershipRequestCard/MembershipRequestCard.tsx"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import ApplyMembershipCard from "@/app/(main)/(account)/account/dashboard/ui/ApplyMembershipCard/ApplyMembershipCard.tsx"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"

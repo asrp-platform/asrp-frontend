@@ -12,8 +12,8 @@ import { ContactMessageType } from "@/entities/ContactMessage.ts"
 type GetInvolvedFormValues = {
     name: string
     email: string
-    affiliation?: string
-    message: string
+    role_affiliation?: string
+    get_involved_message: string
 }
 
 const GetInvolvedCommitteesForm = () => {
@@ -28,8 +28,8 @@ const GetInvolvedCommitteesForm = () => {
                 email: values.email,
                 type: ContactMessageType.GetInvolvedCommittees,
                 message_content: {
-                    role_affiliation: values.affiliation,
-                    get_involved_message: values.message,
+                    role_affiliation: values.role_affiliation,
+                    get_involved_message: values.get_involved_message,
                 },
             }
 

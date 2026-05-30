@@ -66,5 +66,6 @@ export interface IUserMembership {
     membership_type_id: number
     is_active: boolean
 
-    membership_type: Pick<IMembershipType, "id" | "name" | "type">
+    membership_type: IMembershipType
+    // membership_type: Pick<IMembershipType, "id" | "name" | "type">
 }

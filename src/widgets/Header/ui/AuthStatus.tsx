@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation"
 import { UserCircle } from "lucide-react"
 
-import { useAuth } from "@/context/AuthProvider.tsx"
 import { Dropdown, type MenuProps } from "antd"
 import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons"
 import { useMemo } from "react"
@@ -13,14 +12,15 @@ import Link from "next/link"
 import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
 import { handleLogout } from "@/widgets/Header/helpers/logout.ts"
 import { onUserLoginClick } from "@/widgets/Header/helpers/login.ts"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
 const AuthStatus = () => {
-    const { user, isUserLoading } = useAuth()
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
     const router = useRouter()
 
     const isAdmin = useMemo(() => {
-        return user?.admin
-    }, [user])
+        return currentUser?.admin
+    }, [currentUser])
 
     const items: MenuProps["items"] = [
         {
@@ -44,11 +44,11 @@ const AuthStatus = () => {
         },
     ]
 
-    if (isUserLoading) {
+    if (isCurrentUserLoading) {
         return <div className={styles.avatarSkeleton} />
     }
 
-    if (!user) {
+    if (!currentUser) {
         return (
             <div className={styles.userCircleContainer}>
                 <UserCircle
@@ -64,7 +64,7 @@ const AuthStatus = () => {
     return (
         <Dropdown menu={{ items }} placement="bottomRight">
             <div className={styles.userProfileIcon}>
-                <UserAvatar user={user} />
+                <UserAvatar user={currentUser} />
             </div>
         </Dropdown>
     )

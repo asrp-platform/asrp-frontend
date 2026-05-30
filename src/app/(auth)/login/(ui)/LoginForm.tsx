@@ -12,6 +12,7 @@ import { useForm } from "antd/es/form/Form"
 import { useAuth } from "@/context/AuthProvider.tsx"
 import useNotification from "antd/es/notification/useNotification"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
+import { useQueryClient } from "@tanstack/react-query"
 
 type FieldType = {
     email: string
@@ -24,7 +25,10 @@ const { Paragraph } = Typography
 const LoginForm = () => {
     const router = useRouter()
     const [form] = useForm()
+
     const { fetchUser } = useAuth()
+
+    const queryClient = useQueryClient()
 
     const [notification, contextHolder] = useNotification()
 
@@ -43,6 +47,9 @@ const LoginForm = () => {
                 const response = await api.post<LoginResponse>(LOGIN_URL, values)
                 localStorage.setItem("accessToken", response.data.access_token)
                 await fetchUser() // get user after getting the accessToken
+                await queryClient.invalidateQueries({
+                    queryKey: ["current-user"],
+                })
                 router.push("/")
             } catch (error: unknown) {
                 if (isAxiosError(error)) {
@@ -80,9 +87,17 @@ const LoginForm = () => {
             </Form.Item>
             <Typography>
                 <Paragraph>
-                    <div className={styles.bottomFormContainer}>
-                        <Link href="/register">Don't have an account?</Link>
-                        <Link href="/password-reset">Forgot password?</Link>
+                    <div className={styles.loginLinksContainer}>
+                        <div className={styles.bottomFormContainer}>
+                            <Link href="/registration">Don't have an account?</Link>
+                            <Link href="/password-reset">Forgot password?</Link>
+                        </div>
+                        <Link
+                            href="/registration/resend-confirmation"
+                            className={styles.resendConfirmationLink}
+                        >
+                            Didn't receive confirmation email?
+                        </Link>
                     </div>
                 </Paragraph>
             </Typography>
