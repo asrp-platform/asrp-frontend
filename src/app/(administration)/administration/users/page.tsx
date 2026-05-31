@@ -4,23 +4,36 @@ import { Tabs } from "antd"
 import UsersTable from "@/app/(administration)/administration/users/tabs/UsersTable.tsx"
 import NameChangeRequestsTable from "@/app/(administration)/administration/users/tabs/NameChangeRequestsTable.tsx"
 import AdministratorsPermissions from "@/app/(administration)/administration/users/tabs/AdministratorsPermissions.tsx"
+import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 
 const Page = () => {
     const items = [
         {
             label: `Users`,
             key: "users",
-            children: <UsersTable />,
+            children: (
+                <AdminPermissionGuard permission="users.view">
+                    <UsersTable />
+                </AdminPermissionGuard>
+            ),
         },
         {
             label: `Name change requests`,
             key: "name-changes",
-            children: <NameChangeRequestsTable />,
+            children: (
+                <AdminPermissionGuard permission="name_change_requests.view">
+                    <NameChangeRequestsTable />
+                </AdminPermissionGuard>
+            ),
         },
         {
             label: `Administrators & Permissions`,
             key: "administrators-permissions",
-            children: <AdministratorsPermissions />,
+            children: (
+                <AdminPermissionGuard permission="permissions.view">
+                    <AdministratorsPermissions />
+                </AdminPermissionGuard>
+            ),
         },
     ]
 

@@ -3,6 +3,7 @@
 import { Tabs } from "antd"
 import { ContactMessageTable } from "@/app/(administration)/administration/contact-messages/tabs/ContactMesssageTable.tsx"
 import { ContactMessageType } from "@/entities/ContactMessage.ts"
+import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 
 const Page = () => {
     const items = [
@@ -27,7 +28,11 @@ const Page = () => {
         },
     ]
 
-    return <Tabs defaultActiveKey="1" type="card" style={{ marginBottom: 32 }} items={items} />
+    return (
+        <AdminPermissionGuard permission="feedback.view">
+            <Tabs defaultActiveKey="1" type="card" style={{ marginBottom: 32 }} items={items} />
+        </AdminPermissionGuard>
+    )
 }
 
 export default Page
