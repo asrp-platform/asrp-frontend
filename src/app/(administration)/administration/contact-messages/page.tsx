@@ -37,12 +37,16 @@ const Page = () => {
 
     return (
         <AdminPermissionGuard permission="feedback.view">
+<<<<<<< HEAD
             <Tabs
                 defaultActiveKey="contact"
                 type="card"
                 style={{ marginBottom: 32 }}
                 items={items}
             />
+=======
+            <Tabs defaultActiveKey="1" type="card" style={{ marginBottom: 32 }} items={items} />
+>>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33))
         </AdminPermissionGuard>
     )
 }

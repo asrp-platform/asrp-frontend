@@ -5,8 +5,12 @@ import styles from "./ActionsCell.module.scss"
 import { MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import api from "@/axios.ts"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+<<<<<<< HEAD:src/app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/ActionsCell/ActionsCell.tsx
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+=======
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
+>>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33)):src/app/(administration)/administration/membership/tabs/MembershipRequestsTable/ActionsCell/ActionsCell.tsx
 
 type UpdateMembershipRequestPayload = {
     requestId: number | string
@@ -35,6 +39,7 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
     const { data: permissions = [] } = useCurrentUserPermissionsQuery()
 
     const queryClient = useQueryClient()
+<<<<<<< HEAD:src/app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/ActionsCell/ActionsCell.tsx
 
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [adminComment, setAdminComment] = useState("")
@@ -44,6 +49,13 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
     }, [permissions])
 
     const canUpdate = permissionsActions.includes("memberships.update")
+=======
+    const { permissions } = usePermissions()
+    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
+    const [adminComment, setAdminComment] = useState("")
+
+    const canUpdate = permissions.includes("memberships.update")
+>>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33)):src/app/(administration)/administration/membership/tabs/MembershipRequestsTable/ActionsCell/ActionsCell.tsx
 
     const mutation = useMutation({
         mutationFn: updateMembershipRequest,

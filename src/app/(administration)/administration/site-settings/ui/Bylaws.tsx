@@ -6,13 +6,21 @@ import api from "@/axios.ts"
 import { isAxiosError } from "axios"
 import { BYLAWS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+<<<<<<< HEAD:src/app/(administration)/administration/site-settings/ui/Bylaws.tsx
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+=======
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
+>>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33)):src/app/(administration)/administration/legal-documents/ui/Bylaws.tsx
 
 const { Text } = Typography
 
 export const BylawsFileCard = () => {
+<<<<<<< HEAD:src/app/(administration)/administration/site-settings/ui/Bylaws.tsx
     const { data: permissions = [] } = useCurrentUserPermissionsQuery()
 
+=======
+    const { permissions } = usePermissions()
+>>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33)):src/app/(administration)/administration/legal-documents/ui/Bylaws.tsx
     const [isLoading, setIsLoading] = useState(true)
     const [isUploading, setIsUploading] = useState(false)
     const [bylawsUrl, setBylawsUrl] = useState<string | null>(null)
@@ -23,6 +31,9 @@ export const BylawsFileCard = () => {
 
     const canUpdate = permissionsActions.includes("legal_documents.update")
     const canDelete = permissionsActions.includes("legal_documents.delete")
+
+    const canUpdate = permissions.includes("legal_documents.update")
+    const canDelete = permissions.includes("legal_documents.delete")
 
     useEffect(() => {
         const fetchBylaws = async () => {
@@ -117,12 +128,20 @@ export const BylawsFileCard = () => {
                                 }}
                             >
                                 <Button icon={<UploadOutlined />} loading={isUploading}>
+<<<<<<< HEAD:src/app/(administration)/administration/site-settings/ui/Bylaws.tsx
                                     {bylawsUrl ? "Change Bylaws" : "Upload Bylaws"}
+=======
+                                    {bylawsFileExists ? "Change Bylaws" : "Upload Bylaws"}
+>>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33)):src/app/(administration)/administration/legal-documents/ui/Bylaws.tsx
                                 </Button>
                             </Upload>
                         )}
 
+<<<<<<< HEAD:src/app/(administration)/administration/site-settings/ui/Bylaws.tsx
                         {bylawsUrl && canDelete && (
+=======
+                        {bylawsFileExists && canDelete && (
+>>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33)):src/app/(administration)/administration/legal-documents/ui/Bylaws.tsx
                             <Button danger onClick={deleteBylaws}>
                                 Delete
                             </Button>
