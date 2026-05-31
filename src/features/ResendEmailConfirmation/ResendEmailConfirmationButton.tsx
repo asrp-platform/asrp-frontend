@@ -5,7 +5,7 @@ import { isAxiosError } from "axios"
 import { useEffect, useState } from "react"
 
 import api from "@/axios.ts"
-import { EMAIL_CONFIRMATION_RESEND_URL } from "@shared/backend/rest-api-urls/restApiUrls.ts"
+import { EMAIL_CONFIRMATION_RESEND_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 interface IProps {
     email: string

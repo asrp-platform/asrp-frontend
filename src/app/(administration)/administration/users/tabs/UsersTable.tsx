@@ -1,18 +1,13 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { ADMIN_USERS_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import { ADMIN_USERS_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import api from "@/axios.ts"
 import type { IUser } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { Button, Input, type InputRef, Table, Tag } from "antd"
-import type {
-    FilterDropdownProps,
-    FilterValue,
-    SorterResult,
-    TablePaginationConfig,
-} from "antd/es/table/interface"
+import type { FilterDropdownProps } from "antd/es/table/interface"
 
 import styles from "@/app/(administration)/administration/users/styles.module.scss"
 import type { Key } from "react"
@@ -21,6 +16,7 @@ import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"
 import { getBooleanColumnSearchProps } from "@/widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
 import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import RoleTag from "@/app/(administration)/administration/users/tabs/ui/tags/RoleTag.tsx"
+import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -280,31 +276,6 @@ const UsersTable = () => {
         },
     ]
 
-    const handleTableChange = (
-        _pagination: TablePaginationConfig,
-        _filters: Record<string, FilterValue | null>,
-        sorter: SorterResult<IUser> | SorterResult<IUser>[],
-    ) => {
-        if (Array.isArray(sorter)) return
-
-        const field = sorter.field as string | undefined
-        const order = sorter.order
-
-        if (!field) {
-            setOrdering([])
-            return
-        }
-
-        if (order === "ascend") {
-            setOrdering([field])
-        } else if (order === "descend") {
-            setOrdering([`-${field}`])
-        } else {
-            // сортировка сброшена (кликнули 3-й раз)
-            setOrdering([])
-        }
-    }
-
     if (isLoading || !tableData) {
         return <Loading />
     }
@@ -321,7 +292,9 @@ const UsersTable = () => {
                     onChange: (page) => setCurrentPage(page),
                 }}
                 rowKey="id"
-                onChange={handleTableChange}
+                onChange={(pagination, filters, sorter) =>
+                    handleTableChange(pagination, filters, sorter, setOrdering)
+                }
                 scroll={{ x: 1 }}
             />
             {/*<PromoteToAdminModal />*/}

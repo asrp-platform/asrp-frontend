@@ -59,13 +59,13 @@ export interface IUserMembership {
     id: number | string
     created_at: string
     updated_at: string
-
     expires_at: string
-    user_id: number
     membership_request_id: number
-    membership_type_id: number
     is_active: boolean
 
+    membership_type_id: number
     membership_type: IMembershipType
-    // membership_type: Pick<IMembershipType, "id" | "name" | "type">
+
+    user_id: number
+    user: Pick<IUser, "id" | "email">
 }

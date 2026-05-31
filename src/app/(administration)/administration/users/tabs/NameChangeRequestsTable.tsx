@@ -10,7 +10,7 @@ import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui
 import {
     getUserNameChangeRequestById,
     NAME_CHANGE_REQUESTS_URL,
-} from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+} from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import type { INameChangeRequest, NameChangeRequestStatus } from "@/entities/NameChangeRequest.ts"
 

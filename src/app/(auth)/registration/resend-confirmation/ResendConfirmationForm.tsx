@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 import api from "@/axios.ts"
-import { EMAIL_CONFIRMATION_RESEND_URL } from "@shared/backend/rest-api-urls/restApiUrls.ts"
+import { EMAIL_CONFIRMATION_RESEND_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import styles from "@app/(auth)/registration/resend-confirmation/ResendConfirmationPage.module.scss"
 
 const { Paragraph, Title } = Typography

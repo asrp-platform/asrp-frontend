@@ -1,7 +1,7 @@
 import api from "@/axios.ts"
 import type { IMembershipType } from "@/entities/Membership.ts"
 import { useQuery } from "@tanstack/react-query"
-import { MEMBERSHIP_TYPES_URL } from "@shared/backend/rest-api-urls/restApiUrls.ts"
+import { MEMBERSHIP_TYPES_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 export const MEMBERSHIP_TYPES_QUERY_KEY = ["membership-types"]
 

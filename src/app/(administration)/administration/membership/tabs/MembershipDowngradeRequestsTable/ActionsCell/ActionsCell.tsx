@@ -3,7 +3,7 @@ import { Alert, Button, Input, Modal, message } from "antd"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import api from "@/axios.ts"
-import { getMembershipDowngradeRequestByIdUrl } from "@shared/backend/rest-api-urls/admin/membershipsAdminUrls.ts"
+import { getMembershipDowngradeRequestByIdUrl } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 import { MEMBERSHIP_TYPE_CHANGE_REQUESTS_QUERY_KEY } from "@shared/backend/queries/membership/useMembershipTypeChangeRequestsQuery.ts"
 
 import styles from "./ActionsCell.module.scss"

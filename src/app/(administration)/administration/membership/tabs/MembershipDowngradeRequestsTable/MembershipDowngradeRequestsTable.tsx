@@ -12,11 +12,11 @@ import {
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
-import ActionsCell from "@app/(administration)/administration/membership/tabs/TypeChangeRequestsTable/ActionsCell/ActionsCell.tsx"
+import ActionsCell from "@app/(administration)/administration/membership/tabs/MembershipDowngradeRequestsTable/ActionsCell/ActionsCell.tsx"
 
 const initialFilters: MembershipTypeChangeRequestsFilters = {}
 
-const TypeChangeRequestsTable = () => {
+const MembershipDowngradeRequestsTable = () => {
     const [page, setPage] = useState<number>(1)
     const [ordering, setOrdering] = useState<string[]>([])
     const [filters, setFilters] = useState<MembershipTypeChangeRequestsFilters>(initialFilters)
@@ -197,4 +197,4 @@ const TypeChangeRequestsTable = () => {
     )
 }
 
-export default TypeChangeRequestsTable
+export default MembershipDowngradeRequestsTable

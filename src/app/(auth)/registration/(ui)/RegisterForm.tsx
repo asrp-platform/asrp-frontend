@@ -12,7 +12,7 @@ import { useState } from "react"
 import styles from "@app/(auth)/registration/styles.module.scss"
 import { Role } from "@shared/types/types.ts"
 import api from "@/axios.ts"
-import { REGISTER_URL } from "@shared/backend/rest-api-urls/restApiUrls.ts"
+import { REGISTER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import type { IBackendErrorResponse } from "@shared/types/interfaces.ts"
 import ResendEmailConfirmationButton from "@features/ResendEmailConfirmation/ResendEmailConfirmationButton.tsx"
 

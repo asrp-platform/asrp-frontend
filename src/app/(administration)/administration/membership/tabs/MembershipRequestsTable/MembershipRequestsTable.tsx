@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { type IMembershipRequest, MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/rest-api-urls/admin/membershipsAdminUrls.ts"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 import { Table, Tag } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
@@ -23,10 +22,7 @@ const MembershipRequestsTable = () => {
     const [filters, setFilters] = useState<IFilters>(initialFilters)
     const pageSize = 25
 
-    const { data, isLoading } = useTableDataQuery<
-        IPaginatedBackendResponse<IMembershipRequest>,
-        IFilters
-    >({
+    const { data, isLoading } = useTableDataQuery<IMembershipRequest, IFilters>({
         url: MEMBERSHIP_REQUESTS_ADMIN_URL,
         queryKey: ["membership"],
         page,
