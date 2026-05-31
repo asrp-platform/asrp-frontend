@@ -6,6 +6,7 @@ import { MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import api from "@/axios.ts"
 import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/rest-api-urls/admin/membershipsAdminUrls.ts"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
 
 type UpdateMembershipRequestPayload = {
     requestId: number | string
@@ -32,8 +33,11 @@ interface IProps {
 
 const ActionsCell = ({ membershipRequestId }: IProps) => {
     const queryClient = useQueryClient()
+    const { permissions } = usePermissions()
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [adminComment, setAdminComment] = useState("")
+
+    const canUpdate = permissions.includes("memberships.update")
 
     const mutation = useMutation({
         mutationFn: updateMembershipRequest,
@@ -72,6 +76,10 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
             requestId: membershipRequestId,
             adminComment: adminComment.trim(),
         })
+    }
+
+    if (!canUpdate) {
+        return null
     }
 
     return (
