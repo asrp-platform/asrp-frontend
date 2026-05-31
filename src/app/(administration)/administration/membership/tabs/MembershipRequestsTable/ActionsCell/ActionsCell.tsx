@@ -43,7 +43,7 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
         mutationFn: updateMembershipRequest,
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ["membership"],
+                queryKey: ["membership-requests"],
             })
             setIsRejectModalOpen(false)
             setAdminComment("")

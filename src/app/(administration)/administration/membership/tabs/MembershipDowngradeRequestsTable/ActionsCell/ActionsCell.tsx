@@ -4,7 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import api from "@/axios.ts"
 import { getMembershipDowngradeRequestByIdUrl } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
-import { MEMBERSHIP_TYPE_CHANGE_REQUESTS_QUERY_KEY } from "@shared/backend/queries/membership/useMembershipTypeChangeRequestsQuery.ts"
 
 import styles from "./ActionsCell.module.scss"
 
@@ -40,7 +39,7 @@ const ActionsCell = ({ requestId }: IProps) => {
         mutationFn: reviewMembershipTypeChangeRequest,
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
-                queryKey: MEMBERSHIP_TYPE_CHANGE_REQUESTS_QUERY_KEY,
+                queryKey: ["membership-downgrade-requests"],
             })
             setIsRejectModalOpen(false)
             setAdminComment("")
@@ -115,7 +114,7 @@ const ActionsCell = ({ requestId }: IProps) => {
                 <Alert
                     type="warning"
                     showIcon
-                    message="The request will be rejected."
+                    title="The request will be rejected."
                     description="Add an admin comment so the member can understand the reason."
                 />
                 <Input.TextArea

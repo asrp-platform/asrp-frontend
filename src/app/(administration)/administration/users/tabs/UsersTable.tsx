@@ -251,15 +251,6 @@ const UsersTable = () => {
                 value ? <Tag color="gold">Yes</Tag> : <Tag color="green">No</Tag>,
             ...getBooleanColumnSearchProps<ITableFilters>("pending", filters, setFilters),
         },
-
-        {
-            title: "Email Confirmed",
-            dataIndex: "email_confirmed",
-            key: "email_confirmed",
-            render: (value: boolean) =>
-                value ? <Tag color="green">Confirmed</Tag> : <Tag color="red">Not Confirmed</Tag>,
-            ...getBooleanColumnSearchProps<ITableFilters>("email_confirmed", filters, setFilters),
-        },
         {
             title: "Created At",
             dataIndex: "created_at",

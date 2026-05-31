@@ -47,5 +47,6 @@ export const useTableDataQuery = <T, F extends TableFilters<F> = Record<string, 
         queryKey: [...queryKey, page, pageSize, ordering, { filters: filters ?? {} }],
         queryFn: () => fetchData<T, F>({ url, page, pageSize, filters, ordering }),
         placeholderData: (prev) => prev,
+        staleTime: 1000 * 60 * 10,
     })
 }

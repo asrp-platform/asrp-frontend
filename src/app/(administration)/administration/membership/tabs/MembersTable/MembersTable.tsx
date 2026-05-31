@@ -4,6 +4,8 @@ import { useState } from "react"
 import { type IUserMembership } from "@entities/Membership.ts"
 import { Table } from "antd"
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
+import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
+import BooleanTag from "@shared/ui/Tags/BooleanTag/BooleanTag.tsx"
 
 interface IFilters {
     user_id: string
@@ -33,21 +35,26 @@ const MembersTable = () => {
             title: "ID",
             dataIndex: "id",
             key: "id",
+            width: 80,
         },
         {
             title: "User email",
             dataIndex: ["user", "email"],
             key: "user_email",
-        },
-        {
-            title: "Expires at",
-            dataIndex: "expires_at",
-            key: "expires_at",
+            width: 250,
         },
         {
             title: "Is active",
             dataIndex: "is_active",
             key: "is_active",
+            width: 100,
+            render: (value: boolean) => <BooleanTag value={value} />,
+        },
+        {
+            title: "Expires at",
+            dataIndex: "expires_at",
+            key: "expires_at",
+            render: (value: string) => <span>{formatDatetime(value)}</span>,
         },
     ]
 
@@ -67,7 +74,6 @@ const MembersTable = () => {
                     total: data?.count ?? 0,
                     onChange: (nextPage) => setPage(nextPage),
                 }}
-                scroll={{ x: 1600 }}
             />
         </div>
     )
