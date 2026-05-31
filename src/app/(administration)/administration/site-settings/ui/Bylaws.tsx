@@ -24,6 +24,7 @@ export const BylawsFileCard = () => {
     const canUpdate = permissionsActions.includes("legal_documents.update")
     const canDelete = permissionsActions.includes("legal_documents.delete")
 
+
     useEffect(() => {
         const fetchBylaws = async () => {
             try {
