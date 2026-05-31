@@ -1,17 +1,17 @@
 "use client"
 
 import { message, Table, Tag } from "antd"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
 import api from "@/axios.ts"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { CONTACT_MESSAGES_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { CONTACT_MESSAGES_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import { ContactMessageType, type IContactMessage } from "@/entities/ContactMessage.ts"
 import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
 import ContactMessageReplyButton from "../ContactMessageReply/ContactMessageReplyButton"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
-import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 interface ITableFilters {
     name__startswith?: string
@@ -31,21 +31,16 @@ const initialData: IPaginatedBackendResponse<IContactMessage> = {
 }
 
 export const ContactMessageTable = ({ contactMessageType }: IProps) => {
-    const { data: permissions = [], isLoading: isPermissionsLoading } =
-        useCurrentUserPermissionsQuery()
+    const { permissions, isPermissionsLoading } = usePermissions()
+
+    const canView = permissions.includes("feedback.view")
+    const canUpdate = canView && permissions.includes("feedback.update")
 
     const [isDataLoading, setIsDataLoading] = useState<boolean>(true)
     const [data, setData] = useState<IPaginatedBackendResponse<IContactMessage>>(initialData)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [pageSize] = useState<number>(10)
     const [filters, setFilters] = useState<ITableFilters>({ type: contactMessageType })
-
-    const permissionsActions = useMemo(() => {
-        return permissions.map((p) => p.action)
-    }, [permissions])
-
-    const canView = permissionsActions.includes("feedback.view")
-    const canUpdate = canView && permissionsActions.includes("feedback.update")
 
     useEffect(() => {
         const fetchData = async () => {

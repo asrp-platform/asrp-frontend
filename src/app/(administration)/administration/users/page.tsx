@@ -1,10 +1,10 @@
 "use client"
 
 import { Tabs } from "antd"
+import UsersTable from "@/app/(administration)/administration/users/tabs/UsersTable.tsx"
+import NameChangeRequestsTable from "@/app/(administration)/administration/users/tabs/NameChangeRequestsTable.tsx"
+import AdministratorsPermissions from "@/app/(administration)/administration/users/tabs/AdministratorsPermissions.tsx"
 import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
-import UsersTable from "@app/(administration)/administration/users/(tabs)/UsersTable.tsx"
-import NameChangeRequestsTable from "@app/(administration)/administration/users/(tabs)/NameChangeRequestsTable.tsx"
-import AdministratorsPermissions from "@app/(administration)/administration/users/(tabs)/AdministratorsPermissions.tsx"
 
 const Page = () => {
     const items = [
@@ -12,7 +12,7 @@ const Page = () => {
             label: `Users`,
             key: "users",
             children: (
-                <AdminPermissionGuard permission="admin.view">
+                <AdminPermissionGuard permission="users.view">
                     <UsersTable />
                 </AdminPermissionGuard>
             ),
