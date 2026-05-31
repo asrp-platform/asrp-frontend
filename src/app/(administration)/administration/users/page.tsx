@@ -11,7 +11,11 @@ const Page = () => {
         {
             label: `Users`,
             key: "users",
-            children: <UsersTable />,
+            children: (
+                <AdminPermissionGuard permission="users.view">
+                    <UsersTable />
+                </AdminPermissionGuard>
+            ),
         },
         {
             label: `Name change requests`,
