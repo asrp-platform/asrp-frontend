@@ -1,11 +1,6 @@
 "use client"
 
 import { type ReactNode } from "react"
-<<<<<<< HEAD
-import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
-import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
-=======
 import { useCurrentUserQuery } from "@/shared/backend/queries/useCurrentUserQuery.ts"
 import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"

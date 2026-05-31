@@ -18,15 +18,7 @@ const Page = () => {
         {
             label: `Users`,
             key: "users",
-            children: (
-<<<<<<< HEAD
-                <AdminPermissionGuard permission="admin.view">
-=======
-                <AdminPermissionGuard permission="users.view">
->>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33))
-                    <UsersTable />
-                </AdminPermissionGuard>
-            ),
+            children: <UsersTable />,
         },
         {
             label: `Name change requests`,
