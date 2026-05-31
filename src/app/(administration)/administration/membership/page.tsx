@@ -1,9 +1,9 @@
 "use client"
 
-import MembershipRequestsTable from "@app/(administration)/administration/membership/tabs/MembershipRequestsTable/MembershipRequestsTable.tsx"
+import MembershipRequestsTable from "@app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/MembershipRequestsTable.tsx"
 import { Tabs } from "antd"
-import MembershipDowngradeRequestsTable from "@app/(administration)/administration/membership/tabs/MembershipDowngradeRequestsTable/MembershipDowngradeRequestsTable.tsx"
-import MembersTable from "@app/(administration)/administration/membership/tabs/MembersTable/MembersTable.tsx"
+import MembershipDowngradeRequestsTable from "@app/(administration)/administration/membership/(tabs)/MembershipDowngradeRequestsTable/MembershipDowngradeRequestsTable.tsx"
+import MembersTable from "@app/(administration)/administration/membership/(tabs)/MembersTable/MembersTable.tsx"
 import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 
 const items = [

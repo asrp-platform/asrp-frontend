@@ -8,7 +8,7 @@ import type { AdminMembershipDowngradeRequest } from "@entities/MembershipDowngr
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
-import ActionsCell from "@app/(administration)/administration/membership/tabs/MembershipDowngradeRequestsTable/ActionsCell/ActionsCell.tsx"
+import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipDowngradeRequestsTable/ActionsCell/ActionsCell.tsx"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import { MEMBERSHIP_DOWNGRADE_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 
