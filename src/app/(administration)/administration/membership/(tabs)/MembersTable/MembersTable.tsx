@@ -3,9 +3,11 @@ import { MEMBERS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/memberships
 import { useState } from "react"
 import { type IUserMembership } from "@entities/Membership.ts"
 import { Table } from "antd"
+import type { ColumnsType } from "antd/lib/table"
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
-import BooleanTag from "@shared/ui/Tags/BooleanTag/BooleanTag.tsx"
+import ManageUserMembership from "@app/(administration)/administration/membership/(tabs)/MembersTable/ManageUserMembership/ManageUserMembership.tsx"
+import MembershipStatusTag from "@app/(administration)/administration/membership/(tabs)/MembersTable/MembershipStatusTag.tsx"
 
 interface IFilters {
     user_id: string
@@ -30,7 +32,7 @@ const MembersTable = () => {
         filters,
     })
 
-    const columns = [
+    const columns: ColumnsType<IUserMembership> = [
         {
             title: "ID",
             dataIndex: "id",
@@ -44,17 +46,21 @@ const MembersTable = () => {
             width: 250,
         },
         {
-            title: "Is active",
-            dataIndex: "is_active",
-            key: "is_active",
-            width: 100,
-            render: (value: boolean) => <BooleanTag value={value} />,
+            title: "Status",
+            key: "status",
+            width: 140,
+            render: (_, record) => <MembershipStatusTag membership={record} />,
         },
         {
             title: "Expires at",
             dataIndex: "expires_at",
             key: "expires_at",
             render: (value: string) => <span>{formatDatetime(value)}</span>,
+        },
+        {
+            title: "Actions",
+            key: "actions",
+            render: (_, record) => <ManageUserMembership userMembership={record} />,
         },
     ]
 

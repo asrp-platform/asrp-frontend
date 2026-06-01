@@ -2,6 +2,7 @@ import api from "@/axios.ts"
 import type { IPermission } from "@entities/Permission.ts"
 import { getUserPermissionsStuffUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import { useQuery } from "@tanstack/react-query"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
 export const CURRENT_USER_PERMISSIONS_QUERY_KEY = ["current-user-permissions"]
 
@@ -12,15 +13,24 @@ const fetchCurrentUserPermissions = async (currentUserId: string | number) => {
     return response.data
 }
 
-export const useCurrentUserPermissionsQuery = (
-    currentUserId: string | number | undefined,
-    enabled = false,
-) => {
-    return useQuery({
+export const useCurrentUserPermissionsQuery = () => {
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const isAdmin = Boolean(currentUser?.admin)
+    const currentUserId = currentUser?.id
+
+    const permissionsQuery = useQuery({
         queryKey: [...CURRENT_USER_PERMISSIONS_QUERY_KEY, currentUserId],
         queryFn: () => fetchCurrentUserPermissions(currentUserId as string | number),
         staleTime: CURRENT_USER_PERMISSIONS_LIFETIME,
         retry: false,
-        enabled: enabled && currentUserId != null,
+        enabled: isAdmin && currentUserId != null,
     })
+
+    return {
+        ...permissionsQuery,
+        currentUser,
+        isAdmin,
+        isCurrentUserLoading,
+        isLoading: isCurrentUserLoading || (isAdmin && permissionsQuery.isLoading),
+    }
 }
