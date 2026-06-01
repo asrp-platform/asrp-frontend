@@ -45,3 +45,4 @@ export const CONTACT_MESSAGE_URL = "/contact-messages"
 
 export const DIRECTORS_BOARD_URL = "/directors-board"
 export const BYLAWS_URL = `${REST_API_URL}/media/bylaws/bylaws.pdf`
+export const SPONSORS_URL = `${REST_API_URL}/legal-documents/sponsors`
