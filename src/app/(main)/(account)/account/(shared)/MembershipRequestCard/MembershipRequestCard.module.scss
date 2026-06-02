@@ -1,0 +1,71 @@
+.statusRow {
+    display: flex;
+    align-items: center;
+}
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: var(--pill-border-radius);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    border: 1px solid transparent;
+}
+
+.statusBadge_success {
+    color: var(--status-success-text-color);
+    background: var(--status-success-background-color);
+    border-color: #bbf7d0;
+}
+
+.statusBadge_approved {
+    color: #0f766e;
+    background: #ccfbf1;
+    border-color: #99f6e4;
+}
+
+.statusBadge_danger {
+    color: var(--status-danger-text-color);
+    background: var(--status-danger-background-color);
+    border-color: #fecaca;
+}
+
+.statusBadge_neutral {
+    color: #374151;
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+}
+
+.statusBadge_warning {
+    color: var(--status-warning-text-color);
+    background: var(--status-warning-background-color);
+    border-color: #fde68a;
+}
+
+.statusBadge_expired {
+    color: #7c2d12;
+    background: #ffedd5;
+    border-color: #fdba74;
+}
+
+.primaryText {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary-color-dark);
+}
+
+.secondaryText {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.mutedText {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #6b7280;
+}

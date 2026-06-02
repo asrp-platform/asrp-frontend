@@ -9,10 +9,6 @@ import { getUserProfessionalInformationUrl } from "@/shared/backend/rest-api-url
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
 import type { IUser, IUserProfessionalInformation } from "@/entities/User"
 import api from "@/axios"
-// import api from "../../../../../../axios.ts"
-// import type { IUser, IUserProfessionalInformation } from "../../../../../../entities/User.ts"
-// import { getUserProfessionalInformationUrl } from "../../../../../../shared/backend/rest-api-urls/restApiUrls.ts"
-// import { setFormFieldsErrors } from "../../../../../../shared/helpers/setFormFieldsErrors.ts"
 
 type FieldType = {
     medical_school: string
@@ -78,12 +74,12 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
                 onFinish={onFinish}
             >
                 <Row gutter={16}>
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item name="medical_school" label="Medical school" required>
                             <Input />
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item
                             name="medical_school_country"
                             label="Country of medical school"
@@ -94,7 +90,7 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
                     </Col>
                 </Row>
                 <Row gutter={16}>
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Form.Item name="years_from_to" label="Years (from – to)" required>
                             <Input />
                         </Form.Item>

@@ -25,6 +25,7 @@ type FieldType = {
     country: string
     state?: string
     city: string
+    preferred_name: string
 }
 
 const PersonalInfoForm = ({ user }: IProps) => {
@@ -34,7 +35,13 @@ const PersonalInfoForm = ({ user }: IProps) => {
     const [nameChangeModalOpen, setNameChangeModalOpen] = useState(false)
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-        const { email, firstname, lastname, middlename, ...updateData } = values
+        const {
+            email: _email,
+            firstname: _firstname,
+            lastname: _lastname,
+            middlename: _middlename,
+            ...updateData
+        } = values
         try {
             setIsLoading(true)
             await api.patch(CURRENT_USER_URL, updateData)
@@ -61,6 +68,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
                 initialValues={{
                     firstname: user.firstname,
                     lastname: user.lastname,
+                    preferred_name: user.preferred_name,
                     credentials: user.credentials,
                     middlename: user.middlename,
                     suffix: user.suffix,
@@ -87,6 +95,12 @@ const PersonalInfoForm = ({ user }: IProps) => {
                     <Col xs={24} md={12}>
                         <Form.Item label="Middle name" name="middlename">
                             <Input className={styles.antInputDisabled} disabled />
+                        </Form.Item>
+                    </Col>
+
+                    <Col xs={24} md={12}>
+                        <Form.Item label="Preferred name" name="preferred_name">
+                            <Input />
                         </Form.Item>
                     </Col>
 

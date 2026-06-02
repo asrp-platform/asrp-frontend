@@ -43,7 +43,7 @@ const ChangePasswordModal = ({ open, onClose }: Props) => {
         } catch (error: unknown) {
             if (isAxiosError(error)) {
                 setFormFieldsErrors(error, form)
-            } else if (!("errorFields" in (error as any))) {
+            } else {
                 message.error("Unexpected error occurred")
             }
         } finally {
@@ -86,7 +86,7 @@ const ChangePasswordModal = ({ open, onClose }: Props) => {
                     name="confirm_new_password"
                     dependencies={["new_password"]}
                     rules={[
-                        { required: true, message: "Please confirm password" },
+                        { required: true, message: "Please complete password" },
                         ({ getFieldValue }) => ({
                             validator(_, value) {
                                 if (!value || getFieldValue("new_password") === value) {

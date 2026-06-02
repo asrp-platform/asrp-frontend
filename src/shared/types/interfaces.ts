@@ -31,3 +31,7 @@ export interface IValidationError {
     field: string
     message: string
 }
+
+export interface PaymentCheckoutResponse {
+    checkout_session_url: string
+}

@@ -3,86 +3,23 @@
 import { Button, Checkbox, Form, type FormProps, Input, message, Radio, Select } from "antd"
 import { useForm } from "antd/es/form/Form"
 import styles from "@/features/MembershipApplicationForm/styles.module.scss"
-import type {
-    FieldType,
-    Credentials,
-    Country,
-    MembershipKey,
-} from "@/features/MembershipApplicationForm/types"
+import type { FieldType, MembershipKey } from "@/features/MembershipApplicationForm/types"
 import { useMemo, useState } from "react"
 import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCard/MembershipCard.tsx"
 import api from "@/axios.ts"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
 import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
-import { useAuth } from "@/context/AuthProvider.tsx"
 import Warning from "@/shared/ui/Warning/Warning.tsx"
 import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
-
-const credentialsOptions: Credentials[] = [
-    "MD",
-    "DO",
-    "MBBS",
-    "DDS",
-    "MLS",
-    "PhD",
-    "MLT",
-    "PA(ASCP)",
-    "MSc",
-    "MBA",
-    "MPH",
-    "Other",
-]
-
-const countries: Country[] = [
-    { code: "US", name: "United States of America" },
-    { code: "CA", name: "Canada" },
-    { code: "GB", name: "United Kingdom" },
-    { code: "DE", name: "Germany" },
-    { code: "FR", name: "France" },
-    { code: "IT", name: "Italy" },
-    { code: "ES", name: "Spain" },
-    { code: "AU", name: "Australia" },
-    { code: "NZ", name: "New Zealand" },
-    { code: "IN", name: "India" },
-    { code: "CN", name: "China" },
-    { code: "JP", name: "Japan" },
-    { code: "KR", name: "South Korea" },
-    { code: "BR", name: "Brazil" },
-    { code: "MX", name: "Mexico" },
-    { code: "UA", name: "Ukraine" },
-    { code: "RU", name: "Russia" },
-    { code: "OTHER", name: "Other" },
-]
-
-const practiceSettingOptions = [
-    { value: "academic", label: "Academic medical center" },
-    { value: "community", label: "Community hospital" },
-    { value: "private_lab", label: "Private laboratory" },
-    { value: "industry", label: "Industry" },
-    { value: "government", label: "Government / military" },
-    { value: "other", label: "Other" },
-]
-
-const jobTitleOptions = [
-    { value: "attending", label: "Attending pathologist" },
-    { value: "fellow", label: "Fellow" },
-    { value: "resident", label: "Resident" },
-    { value: "medical_student", label: "Medical student" },
-    { value: "scientist", label: "Scientist / PhD" },
-    { value: "lab_professional", label: "Laboratory professional" },
-    { value: "other", label: "Other" },
-]
-
-const referralSourceOptions = [
-    { value: "colleague", label: "Colleague" },
-    { value: "friend", label: "Friend" },
-    { value: "social_media", label: "Social media" },
-    { value: "telegram", label: "Telegram" },
-    { value: "conference", label: "Conference / meeting" },
-    { value: "web_search", label: "Web search" },
-    { value: "other", label: "Other" },
-]
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
+import { countries, credentialsOptions, referralSourceOptions } from "@shared/options.ts"
+import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
+import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
+import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
+import MembershipApplicationAvailabilityAlert from "@/features/MembershipApplicationForm/ui/MembershipApplicationAvailabilityAlert.tsx"
 
 type TrainingState = {
     isUsBoardCertified?: boolean
@@ -95,7 +32,14 @@ type AgreementState = {
 }
 
 const MembershipApplicationForm = () => {
-    const { user } = useAuth()
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const isAuthorized = Boolean(currentUser)
+    const { data: currentUserMembership, isLoading: isCurrentUserMembershipLoading } =
+        useCurrentUserMembershipQuery(isAuthorized)
+    const { data: currentUserMembershipRequest, isLoading: isCurrentUserMembershipRequestLoading } =
+        useCurrentUserMembershipRequestQuery(
+            isAuthorized && !isCurrentUserMembershipLoading && !currentUserMembership,
+        )
 
     const [training, setTraining] = useState<TrainingState>({})
     const [agreements, setAgreements] = useState<AgreementState>({
@@ -104,22 +48,26 @@ const MembershipApplicationForm = () => {
     })
     const [isFormSubmitting, setIsFormSubmitting] = useState(false)
 
-    const isFormDisabled = useMemo(() => !user, [user])
+    const isFormDisabled = useMemo(
+        () =>
+            !currentUser || Boolean(currentUserMembership) || Boolean(currentUserMembershipRequest),
+        [currentUser, currentUserMembership, currentUserMembershipRequest],
+    )
 
     const initialValues = useMemo(
         () => ({
-            firstname: user?.firstname,
-            lastname: user?.lastname,
-            middlename: user?.middlename,
-            suffix: user?.suffix,
-            credentials: user?.credentials,
-            email: user?.email,
-            phone: user?.phone_number,
-            country: user?.country,
-            state: user?.state,
-            city: user?.city,
+            firstname: currentUser?.firstname,
+            lastname: currentUser?.lastname,
+            middlename: currentUser?.middlename,
+            suffix: currentUser?.suffix,
+            credentials: currentUser?.credentials,
+            email: currentUser?.email,
+            phone: currentUser?.phone_number,
+            country: currentUser?.country,
+            state: currentUser?.state,
+            city: currentUser?.city,
         }),
-        [user],
+        [currentUser],
     )
 
     const [form] = useForm<FieldType>()
@@ -145,6 +93,10 @@ const MembershipApplicationForm = () => {
     }, [training.isUsBoardCertified, training.isUsTrainee])
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+        if (isFormDisabled) {
+            return
+        }
+
         try {
             setIsFormSubmitting(true)
 
@@ -164,8 +116,11 @@ const MembershipApplicationForm = () => {
                 is_agrees_communications: agreements.is_agrees_communications,
             }
 
-            const response = await api.post<string>(CURRENT_USER_MEMBERSHIP_REQUEST_URL, data)
-            window.location.href = response.data
+            const response = await api.post<PaymentCheckoutResponse>(
+                CURRENT_USER_MEMBERSHIP_REQUEST_URL,
+                data,
+            )
+            window.location.href = response.data.checkout_session_url
         } catch (error: unknown) {
             if (isAxiosError(error)) {
                 if (error.response?.status === 401) {
@@ -173,16 +128,24 @@ const MembershipApplicationForm = () => {
                         "Your session has expired or you are not authorized. Please sign in and try again.",
                     )
                     return
-                }
-
-                if (error.response?.status === 422) {
+                } else if (error.response?.status === 422) {
                     setFormFieldsErrors(error, form)
                     return
+                } else {
+                    message.error(error.message)
                 }
             }
         } finally {
             setIsFormSubmitting(false)
         }
+    }
+
+    if (
+        isCurrentUserLoading ||
+        isCurrentUserMembershipLoading ||
+        isCurrentUserMembershipRequestLoading
+    ) {
+        return <Loading />
     }
 
     return (
@@ -194,7 +157,7 @@ const MembershipApplicationForm = () => {
             disabled={isFormDisabled}
             initialValues={initialValues}
         >
-            {isFormDisabled && (
+            {!currentUser && (
                 <Warning>
                     <p>
                         To complete your membership application, please sign in to your account.
@@ -206,6 +169,15 @@ const MembershipApplicationForm = () => {
                         Sign Up
                     </LinkButton>
                 </Warning>
+            )}
+
+            {currentUser && (currentUserMembership || currentUserMembershipRequest) && (
+                <div className={styles.availabilityAlert}>
+                    <MembershipApplicationAvailabilityAlert
+                        membership={currentUserMembership}
+                        membershipRequest={currentUserMembershipRequest}
+                    />
+                </div>
             )}
 
             <div className={styles.blockInfoContainer}>
@@ -286,42 +258,7 @@ const MembershipApplicationForm = () => {
             </div>
 
             <div className={styles.grid}>
-                <Form.Item
-                    label="Primary institution / affiliation"
-                    name="primary_affiliation"
-                    rules={[{ required: true }]}
-                >
-                    <Input placeholder="e.g. University Hospital, Research Institute" />
-                </Form.Item>
-                <Form.Item label="Job title / role" name="job_title" rules={[{ required: true }]}>
-                    <Select placeholder="Select an option">
-                        {jobTitleOptions.map(({ value, label }) => (
-                            <Select.Option key={value} value={value}>
-                                {label}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    label="Primary practice setting"
-                    name="practice_setting"
-                    rules={[{ required: true }]}
-                >
-                    <Select placeholder="Select an option">
-                        {practiceSettingOptions.map(({ value, label }) => (
-                            <Select.Option key={value} value={value}>
-                                {label}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    label="Subspecialty focus"
-                    name="subspecialty"
-                    rules={[{ required: true }]}
-                >
-                    <Input placeholder="e.g. Hematopathology, Breast, GI, Cytopathology" />
-                </Form.Item>
+                <MembershipApplicationProfessionalInformationFields />
             </div>
 
             <div className={styles.blockInfoContainer}>

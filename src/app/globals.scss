@@ -59,6 +59,10 @@ main {
 :root {
     // Background colors
     --layout-background-color: #f8fafc;
+    --surface-card-color: #fff;
+    --surface-muted-color: #f1f5f9;
+    --surface-danger-color: #fee2e2;
+    --surface-danger-hover-color: #fef2f2;
     --widget-background-dark-color: #171717;
     --background-heading-gradient: linear-gradient(155deg, #95344e 0%, #ae4e5c 50%, #8b55bd 100%);
     --background-pink-gradient: linear-gradient(90deg, #4b0f7a 0%, #b12a7d 45%, #f5b6c1 100%);
@@ -68,9 +72,12 @@ main {
     --text-secondary-color-light: #818181;
     --text-highlight-main-color-light: #fff;
     --text-primary-color-dark: #111827;
+    --text-heading-color-dark: #0f172a;
+    --text-muted-color-dark: #64748b;
     --text-secondary-color-dark: #475569;
     --text-primary-color-red: #dc2626;
     --text-secondary-color-red: #ff6467ff;
+    --text-danger-color: #991b1b;
     --border-color-light: #e2e8f0;
     --border-color-red: #fecaca;
     --red-border: 1px solid #fecaca;
@@ -84,6 +91,16 @@ main {
     --button-primary-light: transparent;
     --button-primary-light-hover: #f8fafc;
 
+    // Status colors
+    --status-success-background-color: #dcfce7;
+    --status-success-text-color: #166534;
+    --status-warning-background-color: #fef3c7;
+    --status-warning-text-color: #92400e;
+    --status-danger-background-color: #fee2e2;
+    --status-danger-text-color: #991b1b;
+    --status-info-background-color: #e0f2fe;
+    --status-info-text-color: #075985;
+
     // paddings
     --general-vertical-padding: 10px;
     --general-vertical-blocks-gap: 5vh;
@@ -91,6 +108,7 @@ main {
 
     // mobile paddings
     --mobile-layout-padding-inline: 5vw;
+    --mobile-layout-padding-vertical: 2vh;
 
     // Desktop Margins
     --page-container-horizontal-margin: 13vw;
@@ -100,6 +118,9 @@ main {
     --mobile-container-margin-inline: 10px;
     --mobile-container-margin-vertical: 10px;
     --paragraph-line-height: 1.6;
+    --card-padding: 24px;
+    --card-border-radius: 24px;
+    --pill-border-radius: 999px;
     --card-box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
 
     // Fonts

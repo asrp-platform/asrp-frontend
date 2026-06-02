@@ -4,21 +4,26 @@ import { UploadOutlined, EyeOutlined } from "@ant-design/icons"
 import { BYLAWS_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
 import api from "@/axios.ts"
 import { isAxiosError } from "axios"
-import { BYLAWS_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import { BYLAWS_API_URL, BYLAWS_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
 
 const { Text } = Typography
 
 export const BylawsFileCard = () => {
+    const { permissions } = usePermissions()
     const [isLoading, setIsLoading] = useState(true)
     const [isUploading, setIsUploading] = useState(false)
     const [bylawsFileExists, setBylawsFileExists] = useState<boolean>(false)
+
+    const canUpdate = permissions.includes("legal_documents.update")
+    const canDelete = permissions.includes("legal_documents.delete")
 
     useEffect(() => {
         const fetchBylaws = async () => {
             try {
                 setIsLoading(true)
-                const result = await api.get(BYLAWS_URL)
+                const result = await api.get(BYLAWS_API_URL)
                 console.log(result)
                 setBylawsFileExists(result.data)
             } catch (error) {
@@ -99,20 +104,22 @@ export const BylawsFileCard = () => {
                             </Button>
                         )}
 
-                        <Upload
-                            accept="application/pdf"
-                            showUploadList={false}
-                            beforeUpload={(file) => {
-                                uploadBylaws(file)
-                                return false
-                            }}
-                        >
-                            <Button icon={<UploadOutlined />} loading={isUploading}>
-                                {bylawsFileExists ? "Change Bylaws" : "Upload Bylaws"}
-                            </Button>
-                        </Upload>
+                        {canUpdate && (
+                            <Upload
+                                accept="application/pdf"
+                                showUploadList={false}
+                                beforeUpload={(file) => {
+                                    uploadBylaws(file)
+                                    return false
+                                }}
+                            >
+                                <Button icon={<UploadOutlined />} loading={isUploading}>
+                                    {bylawsFileExists ? "Change Bylaws" : "Upload Bylaws"}
+                                </Button>
+                            </Upload>
+                        )}
 
-                        {bylawsFileExists && (
+                        {bylawsFileExists && canDelete && (
                             <Button danger onClick={deleteBylaws}>
                                 Delete
                             </Button>

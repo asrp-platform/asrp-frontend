@@ -5,11 +5,15 @@ export const AUTH_URL = "/auth"
 export const REGISTER_URL = `${AUTH_URL}/register`
 export const LOGIN_URL = `${AUTH_URL}/login`
 export const LOGOUT_URL = `${AUTH_URL}/logout`
+export const EMAIL_CONFIRMATIONS_URL = `${AUTH_URL}/email-confirmations`
+export const EMAIL_CONFIRMATION_RESEND_URL = `${AUTH_URL}/email-confirmation-requests`
 
 // Password reset urls
 export const PASSWORD_RESET_URL = `${AUTH_URL}/password-reset`
 export const VERIFY_PASSWORD_RESET_TOKEN_URL = `${PASSWORD_RESET_URL}/verify`
 export const CONFIRM_PASSWORD_RESET_URL = `${PASSWORD_RESET_URL}/confirm`
+
+export const MEMBERSHIP_TYPES_URL = `/membership-types`
 
 // Users urls
 export const USERS_URL = "/users"
@@ -48,3 +52,4 @@ export const DIRECTORS_BOARD_URL = "/directors-board"
 export const BYLAWS_API_URL = "/media/bylaws/bylaws.pdf"
 export const BYLAWS_URL = `${REST_API_URL}${BYLAWS_API_URL}`
 export const SPONSORS_URL = `${REST_API_URL}/legal-documents/sponsors`
+

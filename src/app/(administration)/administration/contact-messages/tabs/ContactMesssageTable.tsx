@@ -11,6 +11,7 @@ import { CONTACT_MESSAGES_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin
 import { ContactMessageType, type IContactMessage } from "@/entities/ContactMessage.ts"
 import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
 import ContactMessageReplyButton from "../ContactMessageReply/ContactMessageReplyButton"
+import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 
 interface ITableFilters {
     name__startswith?: string
@@ -30,9 +31,10 @@ const initialData: IPaginatedBackendResponse<IContactMessage> = {
 }
 
 export const ContactMessageTable = ({ contactMessageType }: IProps) => {
-    const { permissions } = usePermissions()
+    const { permissions, isPermissionsLoading } = usePermissions()
 
     const canView = permissions.includes("feedback.view")
+    const canUpdate = canView && permissions.includes("feedback.update")
 
     const [isDataLoading, setIsDataLoading] = useState<boolean>(true)
     const [data, setData] = useState<IPaginatedBackendResponse<IContactMessage>>(initialData)
@@ -91,28 +93,37 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
         },
         {
             title: "Subject",
-            render: (_: any, record: IContactMessage) => record.message_content?.subject,
+            render: (_: string, record: IContactMessage) => record.message_content?.subject,
         },
         {
             title: "Message",
-            render: (_: any, record: IContactMessage) => (
-                <p>{record.message_content?.contact_message}</p>
-            ),
+            render: (_: string, record: IContactMessage) => record.message_content?.contact_message,
         },
         {
             title: "Answered",
-            render: (_: any, record: IContactMessage) =>
+            render: (_: unknown, record: IContactMessage) =>
                 record.answered ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>,
         },
         { title: "Created", dataIndex: "created_at" },
         {
             title: "Actions",
             key: "actions",
-            render: (_: any, record: IContactMessage) => (
-                <ContactMessageReplyButton messageId={record.id} disabled={record.answered} />
+            render: (_: unknown, record: IContactMessage) => (
+                <ContactMessageReplyButton
+                    messageId={record.id}
+                    disabled={record.answered || !canUpdate}
+                />
             ),
         },
     ]
+
+    if (isPermissionsLoading) {
+        return <Loading />
+    }
+
+    if (!canView) {
+        return <PermissionGuard allowed={false} />
+    }
 
     if (isDataLoading) {
         return <Loading />

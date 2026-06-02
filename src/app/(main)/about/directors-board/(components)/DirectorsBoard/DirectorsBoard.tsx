@@ -6,16 +6,16 @@ import api from "@/axios.ts"
 import CreateDirectorMemberCard from "@/app/(main)/about/directors-board/(components)/CreateCard/CreateDirectorMemberCard.tsx"
 
 import styles from "@/app/(main)/about/directors-board/(components)/DirectorsBoard/styles.module.scss"
-import { useAuth } from "@/context/AuthProvider.tsx"
 
 import CircularProgress from "@mui/material/CircularProgress"
 import ViewCard from "@/app/(main)/about/directors-board/(components)/ViewCard/ViewCard.tsx"
 import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import { useIsMobile } from "@/shared/hooks/useIsMobile.ts"
 import { DIRECTORS_BOARD_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
 const DirectorsBoard = () => {
-    const { user, isUserLoading } = useAuth()
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
     const { permissions, isPermissionsLoading } = usePermissions()
     const isMobile = useIsMobile()
 
@@ -24,14 +24,15 @@ const DirectorsBoard = () => {
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
     const canManageDirectorMembers = useMemo(() => {
-        return user?.admin && permissions.includes("directors_board.update")
-    }, [user?.admin, permissions])
+        return currentUser?.admin && permissions.includes("directors_board.update")
+    }, [currentUser?.admin, permissions])
 
     const canCreate = useMemo(() => {
-        return user?.admin && permissions.includes("directors_board.create") && !isMobile
-    }, [user?.admin, permissions, isMobile])
+        return currentUser?.admin && permissions.includes("directors_board.create") && !isMobile
+    }, [currentUser?.admin, permissions, isMobile])
 
-    const isAccessContextPending = isUserLoading || (Boolean(user?.admin) && isPermissionsLoading)
+    const isAccessContextPending =
+        isCurrentUserLoading || (Boolean(currentUser?.admin) && isPermissionsLoading)
 
     useEffect(() => {
         const fetchDirectorMembers = async () => {

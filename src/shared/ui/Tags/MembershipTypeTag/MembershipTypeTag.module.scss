@@ -1,0 +1,56 @@
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    width: fit-content;
+    padding: 6px 12px;
+
+    border-radius: 999px;
+    border: 1px solid transparent;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+
+    white-space: nowrap;
+
+    &::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 16%, transparent);
+    }
+}
+
+.active {
+    color: #116149;
+    background: #e8f7f1;
+    border-color: #b8e5d4;
+}
+
+.trainee {
+    color: #7a4b00;
+    background: #fff4dc;
+    border-color: #f3d69a;
+}
+
+.affiliate {
+    color: #3157a4;
+    background: #edf3ff;
+    border-color: #c6d8ff;
+}
+
+.honorary {
+    color: #7b3fa1;
+    background: #f7edff;
+    border-color: #dfc0f2;
+}
+
+.pathway {
+    color: #9a3412;
+    background: #fff1eb;
+    border-color: #f7c8b5;
+}
