@@ -1,0 +1,36 @@
+.alert {
+    border-radius: var(--card-border-radius);
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    max-width: 720px;
+
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+.compactDescription {
+    gap: 8px;
+
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    margin-top: 4px;
+}
