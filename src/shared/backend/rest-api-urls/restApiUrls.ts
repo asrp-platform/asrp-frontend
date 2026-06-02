@@ -52,4 +52,3 @@ export const DIRECTORS_BOARD_URL = "/directors-board"
 export const BYLAWS_API_URL = "/media/bylaws/bylaws.pdf"
 export const BYLAWS_URL = `${REST_API_URL}${BYLAWS_API_URL}`
 export const SPONSORS_URL = `${REST_API_URL}/legal-documents/sponsors`
-

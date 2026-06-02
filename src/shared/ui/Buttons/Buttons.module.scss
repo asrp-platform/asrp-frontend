@@ -82,14 +82,14 @@
         transform: translateY(-1px);
     }
 
-		&.red {
-			color: #ffffff;
-			background-color: #e7000b;
+    &.red {
+        color: #ffffff;
+        background-color: #e7000b;
 
-			&:hover {
-				background-color: #c10007;
-			}
-		}
+        &:hover {
+            background-color: #c10007;
+        }
+    }
 
     &.blue {
         background-color: #91caff;
@@ -99,12 +99,12 @@
         }
     }
 
-		&.default {
-			border-width: 1px;
-			border-style: solid;
+    &.default {
+        border-width: 1px;
+        border-style: solid;
 
-			&:hover {
-				backdrop-filter: contrast(0.8);
-			}
-		}
+        &:hover {
+            backdrop-filter: contrast(0.8);
+        }
+    }
 }
