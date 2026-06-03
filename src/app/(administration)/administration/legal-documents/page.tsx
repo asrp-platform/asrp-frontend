@@ -1,7 +1,7 @@
 "use client"
 
-import { BylawsFileCard } from "@/app/(administration)/administration/legal-documents/ui/Bylaws.tsx"
 import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
+import { BylawsFileCard } from "../site-settings/ui/Bylaws"
 
 const Page = () => {
     return (
