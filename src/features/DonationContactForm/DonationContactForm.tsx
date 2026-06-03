@@ -22,7 +22,6 @@ interface DonationFormFields {
     support_area: string
 }
 
-//обновить после выяснения корректных values
 const options = [
     { value: "individual", label: "Individual donation" },
     { value: "monthly", label: "Monthly supporter" },
@@ -85,6 +84,7 @@ const DonationContactForm = () => {
                     className={styles.contactForm}
                 >
                     <Form.Item
+                        label="Name"
                         name="name"
                         rules={[{ required: true, message: "Please enter your name!" }]}
                     >
@@ -92,17 +92,18 @@ const DonationContactForm = () => {
                     </Form.Item>
 
                     <Form.Item
+                        label="Email"
                         name="email"
                         rules={[{ required: true, message: "Please enter your email!" }]}
                     >
                         <Input placeholder="Email address *" />
                     </Form.Item>
 
-                    <Form.Item name="organization">
+                    <Form.Item label="Organization" name="organization">
                         <Input placeholder="Organization" />
                     </Form.Item>
 
-                    <Form.Item name="type_of_donation">
+                    <Form.Item label="Type of donation" name="type_of_donation">
                         <Select
                             defaultValue="individual"
                             options={options}
@@ -111,6 +112,7 @@ const DonationContactForm = () => {
                     </Form.Item>
 
                     <Form.Item
+                        label="What would you like to support?"
                         name="support_area"
                         rules={[
                             {

@@ -1,8 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
+import Link from "next/link"
 import styles from "../(ui)/SponsorsList.module.scss"
 import { SPONSORS_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import SponsorsListSkeleton from "./SponsorsListSkeleton"
 
 interface Sponsor {
     id: number
@@ -14,51 +17,34 @@ interface Sponsor {
     logo_url: string
 }
 
+const fetchSponsors = async (): Promise<Sponsor[]> => {
+    const response = await axios.get<Sponsor[]>(SPONSORS_URL)
+    return response.data
+}
+
 const SponsorsList = () => {
-    const [sponsors, setSponsors] = useState<Sponsor[]>([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(false)
+    const {
+        data: sponsors,
+        isLoading,
+        isError,
+    } = useQuery({
+        queryKey: ["sponsors"],
+        queryFn: fetchSponsors,
+        staleTime: 1000 * 60 * 5,
+        retry: false,
+    })
 
-    useEffect(() => {
-        const controller = new AbortController()
-
-        const fetchSponsors = async () => {
-            try {
-                const res = await fetch(SPONSORS_URL, {
-                    signal: controller.signal,
-                })
-                if (!res.ok) throw new Error(`HTTP ${res.status}`)
-                const data: Sponsor[] = await res.json()
-                setSponsors(data)
-            } catch (err) {
-                if ((err as Error).name !== "AbortError") setError(true)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchSponsors()
-
-        return () => controller.abort()
-    }, [])
-
-    if (loading) {
-        return (
-            <ul className={styles.sponsorsList}>
-                {Array.from({ length: 3 }).map((_, i) => (
-                    <li key={i} className={styles.sponsorItemSkeleton} aria-hidden />
-                ))}
-            </ul>
-        )
+    if (isLoading) {
+        return <SponsorsListSkeleton />
     }
 
-    if (error || sponsors.length === 0) return null
+    if (isError || !sponsors || sponsors.length === 0) return null
 
     return (
         <ul className={styles.sponsorsList}>
             {sponsors.map((sponsor) => (
                 <li key={sponsor.id} className={styles.sponsorItem}>
-                    <a
+                    <Link
                         href={sponsor.link}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -70,7 +56,7 @@ const SponsorsList = () => {
                             alt={sponsor.name}
                             className={styles.sponsorLogo}
                         />
-                    </a>
+                    </Link>
                 </li>
             ))}
         </ul>
