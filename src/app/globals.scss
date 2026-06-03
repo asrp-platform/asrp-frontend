@@ -15,13 +15,11 @@
 html {
     scrollbar-gutter: stable;
     scroll-behavior: smooth;
-    overflow-y: scroll;
-    width: 100% !important;
 }
+
 body {
     background-color: var(--layout-background-color);
     overflow-x: hidden;
-    width: 100% !important;
 }
 
 .tiptap {
