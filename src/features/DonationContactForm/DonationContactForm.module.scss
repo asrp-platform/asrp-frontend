@@ -1,0 +1,59 @@
+.contactFormContainer {
+    padding: 24px;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    box-shadow:
+        0 0 #0000,
+        0 0 #0000,
+        0 0 #0000,
+        0 1px 3px 0 #0000001a,
+        0 1px 2px -1px #0000001a;
+
+    h3 {
+        margin-bottom: 16px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .contactForm {
+        & > div {
+            margin-bottom: 12px;
+        }
+
+        input {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+
+        .submitButtonContainer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 9999px;
+            background-color: var(--button-primary-red);
+            color: white;
+            border: var(--red-border);
+            font-size: 12px;
+            font-weight: 600 !important;
+            transition: 0.3s ease-in-out;
+
+            &:hover {
+                background-color: var(--button-primary-red-hover);
+                transform: translateY(-1px);
+                cursor: pointer;
+            }
+        }
+
+        .formDisclaimer {
+            font-size: 11px;
+            color: #62748e;
+        }
+    }
+}

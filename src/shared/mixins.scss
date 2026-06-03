@@ -3,8 +3,6 @@
     padding: 20px 16px;
     border-radius: var(--card-border-radius);
     border: var(--light-border);
-
-    // box-shadow: var(--card-box-shadow);
 }
 
 @mixin antd-editable-input($height: 40px) {
