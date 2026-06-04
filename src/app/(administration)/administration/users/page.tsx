@@ -12,7 +12,7 @@ const Page = () => {
             label: `Users`,
             key: "users",
             children: (
-                <AdminPermissionGuard permission="users.view">
+                <AdminPermissionGuard permission="admin.view">
                     <UsersTable />
                 </AdminPermissionGuard>
             ),
