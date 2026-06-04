@@ -1,17 +1,10 @@
 "use client"
 
 import { Tabs } from "antd"
-<<<<<<< HEAD
 import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 import UsersTable from "@app/(administration)/administration/users/(tabs)/UsersTable.tsx"
 import NameChangeRequestsTable from "@app/(administration)/administration/users/(tabs)/NameChangeRequestsTable.tsx"
 import AdministratorsPermissions from "@app/(administration)/administration/users/(tabs)/AdministratorsPermissions.tsx"
-=======
-import UsersTable from "@/app/(administration)/administration/users/tabs/UsersTable.tsx"
-import NameChangeRequestsTable from "@/app/(administration)/administration/users/tabs/NameChangeRequestsTable.tsx"
-import AdministratorsPermissions from "@/app/(administration)/administration/users/tabs/AdministratorsPermissions.tsx"
-import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
->>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33))
 
 const Page = () => {
     const items = [
