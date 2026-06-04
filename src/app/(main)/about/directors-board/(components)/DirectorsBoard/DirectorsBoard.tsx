@@ -11,7 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress"
 import ViewCard from "@/app/(main)/about/directors-board/(components)/ViewCard/ViewCard.tsx"
 import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import { useIsMobile } from "@/shared/hooks/useIsMobile.ts"
-import { DIRECTORS_BOARD_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import { DIRECTORS_BOARD_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
 const DirectorsBoard = () => {

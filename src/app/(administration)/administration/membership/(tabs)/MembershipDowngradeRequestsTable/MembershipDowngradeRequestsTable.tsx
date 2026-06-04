@@ -4,32 +4,41 @@ import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
 import Link from "next/link"
 
-import type { AdminMembershipTypeChangeRequest } from "@entities/MembershipTypeChangeRequest.ts"
-import {
-    type MembershipTypeChangeRequestsFilters,
-    useMembershipTypeChangeRequestsQuery,
-} from "@shared/backend/queries/membership/useMembershipTypeChangeRequestsQuery.ts"
+import type { AdminMembershipDowngradeRequest } from "@entities/MembershipDowngradeRequest.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
-import ActionsCell from "@app/(administration)/administration/membership/tabs/TypeChangeRequestsTable/ActionsCell/ActionsCell.tsx"
+import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipDowngradeRequestsTable/ActionsCell/ActionsCell.tsx"
+import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
+import { MEMBERSHIP_DOWNGRADE_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+
+interface MembershipTypeChangeRequestsFilters {
+    pending?: boolean
+    approved?: boolean
+    upgrade?: boolean
+}
 
 const initialFilters: MembershipTypeChangeRequestsFilters = {}
 
-const TypeChangeRequestsTable = () => {
+const MembershipDowngradeRequestsTable = () => {
     const [page, setPage] = useState<number>(1)
     const [ordering, setOrdering] = useState<string[]>([])
     const [filters, setFilters] = useState<MembershipTypeChangeRequestsFilters>(initialFilters)
     const pageSize = 25
 
-    const { data, isLoading } = useMembershipTypeChangeRequestsQuery({
+    const { data, isLoading } = useTableDataQuery<
+        AdminMembershipDowngradeRequest,
+        MembershipTypeChangeRequestsFilters
+    >({
+        url: MEMBERSHIP_DOWNGRADE_REQUESTS_ADMIN_URL,
+        queryKey: ["membership-downgrade-requests"],
         page,
         pageSize,
         ordering,
         filters,
     })
 
-    const getReviewStatusTag = (record: AdminMembershipTypeChangeRequest) => {
+    const getReviewStatusTag = (record: AdminMembershipDowngradeRequest) => {
         if (record.pending) {
             return <Tag color="gold">Pending</Tag>
         }
@@ -41,7 +50,7 @@ const TypeChangeRequestsTable = () => {
         return <Tag color="red">Rejected</Tag>
     }
 
-    const columns: ColumnsType<AdminMembershipTypeChangeRequest> = [
+    const columns: ColumnsType<AdminMembershipDowngradeRequest> = [
         {
             title: "Actions",
             key: "actions",
@@ -134,8 +143,8 @@ const TypeChangeRequestsTable = () => {
         pagination: TablePaginationConfig,
         tableFilters: Record<string, FilterValue | null>,
         sorter:
-            | SorterResult<AdminMembershipTypeChangeRequest>
-            | SorterResult<AdminMembershipTypeChangeRequest>[],
+            | SorterResult<AdminMembershipDowngradeRequest>
+            | SorterResult<AdminMembershipDowngradeRequest>[],
     ) => {
         setPage(pagination.current ?? 1)
 
@@ -197,4 +206,4 @@ const TypeChangeRequestsTable = () => {
     )
 }
 
-export default TypeChangeRequestsTable
+export default MembershipDowngradeRequestsTable

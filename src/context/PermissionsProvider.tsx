@@ -12,7 +12,7 @@ import {
 } from "react"
 import type { IPermission } from "@/entities/Permission.ts"
 import api from "@/axios.ts"
-import { getUserPermissionsStuffUrl } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import { getUserPermissionsStuffUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
 interface IPermissionsContext {

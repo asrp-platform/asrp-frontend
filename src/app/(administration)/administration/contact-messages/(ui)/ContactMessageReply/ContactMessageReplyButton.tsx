@@ -3,10 +3,10 @@
 import { useState } from "react"
 import { Button, Modal, type FormProps, Input, message, Form } from "antd"
 import TextArea from "antd/es/input/TextArea"
-import api from "../../../../../axios"
-import { getContactMessageReplyUrl } from "../../../../../shared/backend/rest-api-urls/admin/adminApiUrls"
+import api from "../../../../../../axios.ts"
+import { getContactMessageReplyUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
+import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
 
 interface ReplyFormValues {
     subject: string

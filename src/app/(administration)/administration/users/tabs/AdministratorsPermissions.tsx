@@ -5,7 +5,7 @@ import {
     getUserPermissionsStuffUrl,
     PERMISSIONS_LIST_URL,
     ADMIN_USERS_URL,
-} from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+} from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import api from "@/axios.ts"
 import type { IUser } from "@/entities/User.ts"

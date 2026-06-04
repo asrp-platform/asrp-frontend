@@ -1,6 +1,6 @@
 import type { IUser } from "@/entities/User"
 import ExperienceCard from "@/app/(main)/(account)/account/profile/(ui)/ExperienceCard"
-import { getUserJobByIdUrl, getUserJobsUrl } from "@/shared/backend/rest-api-urls/restApiUrls"
+import { getUserJobByIdUrl, getUserJobsUrl } from "@shared/backend/restApiUrls/restApiUrls"
 
 interface IProps {
     user: IUser

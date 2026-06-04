@@ -10,6 +10,8 @@ import NoMembershipCard from "@app/(main)/(account)/account/membership/(ui)/NoMe
 import MembershipRequestCard from "@app/(main)/(account)/account/(shared)/MembershipRequestCard/MembershipRequestCard.tsx"
 
 import styles from "./styles.module.scss"
+import MembershipTerminated from "@app/(main)/(account)/account/membership/(ui)/MembershipRestrictionStatus/MembershipTerminated.tsx"
+import MembershipSuspended from "@app/(main)/(account)/account/membership/(ui)/MembershipRestrictionStatus/MembershipSuspended.tsx"
 
 const Page = () => {
     const { data: membership, isLoading: isMembershipLoading } = useCurrentUserMembershipQuery()
@@ -26,7 +28,13 @@ const Page = () => {
     let content
 
     if (membership) {
-        content = <MembershipCard membership={membership} variant="detailed" />
+        if (membership.terminated) {
+            content = <MembershipTerminated membership={membership} />
+        } else if (membership.is_suspended) {
+            content = <MembershipSuspended membership={membership} />
+        } else {
+            content = <MembershipCard membership={membership} variant="detailed" />
+        }
     } else if (membershipRequest) {
         content = <MembershipRequestCard membershipRequest={membershipRequest} />
     } else {

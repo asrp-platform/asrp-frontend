@@ -2,7 +2,7 @@ import styles from "@/app/(main)/about/styles.module.scss"
 import Link from "next/link"
 import type { Metadata } from "next"
 import SocialNetLinks from "@/shared/ui/social-net-links/SocialNetLinks.tsx"
-import { BYLAWS_URL } from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+import { BYLAWS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {

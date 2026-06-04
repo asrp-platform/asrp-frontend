@@ -1,15 +1,15 @@
 import { useState } from "react"
 import { type IMembershipRequest, MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/rest-api-urls/admin/membershipsAdminUrls.ts"
-import { Table, Tag } from "antd"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { Table } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import Link from "next/link"
-import ActionsCell from "@app/(administration)/administration/membership/tabs/MembershipRequestsTable/ActionsCell/ActionsCell.tsx"
+import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/ActionsCell/ActionsCell.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
+import MembershipRequestStatusTag from "@shared/ui/Tags/MembershipRequestStatusTag/MembershipRequestStatusTag.tsx"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum
@@ -23,38 +23,14 @@ const MembershipRequestsTable = () => {
     const [filters, setFilters] = useState<IFilters>(initialFilters)
     const pageSize = 25
 
-    const { data, isLoading } = useTableDataQuery<
-        IPaginatedBackendResponse<IMembershipRequest>,
-        IFilters
-    >({
+    const { data, isLoading } = useTableDataQuery<IMembershipRequest, IFilters>({
         url: MEMBERSHIP_REQUESTS_ADMIN_URL,
-        queryKey: ["membership"],
+        queryKey: ["membership-requests"],
         page,
         pageSize,
         ordering,
         filters,
     })
-
-    const getStatusTag = (status: MembershipRequestStatusEnum) => {
-        switch (status) {
-            case MembershipRequestStatusEnum.APPROVED:
-                return <Tag color="green">Approved</Tag>
-            case MembershipRequestStatusEnum.REJECTED:
-                return <Tag color="red">Rejected</Tag>
-            case MembershipRequestStatusEnum.PAID:
-                return <Tag color="blue">Paid</Tag>
-            case MembershipRequestStatusEnum.PAYMENT_PENDING:
-                return <Tag color="gold">Payment pending</Tag>
-            case MembershipRequestStatusEnum.PAYMENT_FAILED:
-                return <Tag color="red">Payment failed</Tag>
-            case MembershipRequestStatusEnum.PAYMENT_EXPIRED:
-                return <Tag color="volcano">Payment expired</Tag>
-            case MembershipRequestStatusEnum.SUBMITTED:
-                return <Tag color="default">Submitted</Tag>
-            default:
-                return <Tag>{status}</Tag>
-        }
-    }
 
     const columns: ColumnsType<IMembershipRequest> = [
         {
@@ -107,7 +83,9 @@ const MembershipRequestsTable = () => {
                 { text: "Payment failed", value: MembershipRequestStatusEnum.PAYMENT_FAILED },
                 { text: "Payment expired", value: MembershipRequestStatusEnum.PAYMENT_EXPIRED },
             ],
-            render: (value: MembershipRequestStatusEnum) => getStatusTag(value),
+            render: (value: MembershipRequestStatusEnum) => (
+                <MembershipRequestStatusTag status={value} />
+            ),
         },
         {
             title: "Primary Affiliation",
