@@ -10,7 +10,11 @@ import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermi
 import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 =======
 import { usePermissions } from "@/context/PermissionsProvider.tsx"
+<<<<<<< HEAD
 >>>>>>> 1da83e1 (Feature: add AdminPermissionGuard component (#33)):src/app/(administration)/administration/membership/tabs/MembershipRequestsTable/ActionsCell/ActionsCell.tsx
+=======
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+>>>>>>> 502baf8 (Feature: Membership renewal, suspension, termination (#38))
 
 type UpdateMembershipRequestPayload = {
     requestId: number | string
