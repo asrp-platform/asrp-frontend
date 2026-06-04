@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { type IMembershipRequest, MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 import { Table } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
@@ -9,7 +10,6 @@ import Link from "next/link"
 import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/ActionsCell/ActionsCell.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import MembershipRequestStatusTag from "@shared/ui/Tags/MembershipRequestStatusTag/MembershipRequestStatusTag.tsx"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum
@@ -55,7 +55,7 @@ const MembershipRequestsTable = () => {
             title: "User",
             key: "user",
             render: (_, record) => (
-                <Link href={`/administration/users/${record.id}`}>{record.user?.email}</Link>
+                <Link href={`/users/${record.user?.id}`}>{record.user?.email}</Link>
             ),
         },
         {
@@ -117,13 +117,6 @@ const MembershipRequestsTable = () => {
             key: "reviewed_at",
             sorter: true,
             render: (value: string | null) => (value ? new Date(value).toLocaleString() : "—"),
-        },
-        {
-            title: "Admin Comment",
-            dataIndex: "admin_comment",
-            key: "admin_comment",
-            ellipsis: true,
-            render: (value: string | null) => value ?? "—",
         },
         {
             title: "Created At",

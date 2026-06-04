@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ADMIN_USERS_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import api from "@/axios.ts"
@@ -14,27 +14,20 @@ import type { Key } from "react"
 import type { ColumnsType } from "antd/lib/table"
 import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"
 import { getBooleanColumnSearchProps } from "@/widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import RoleTag from "@/app/(administration)/administration/users/tabs/ui/tags/RoleTag.tsx"
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
-import RoleTag from "./ui/tags/RoleTag"
-import Link from "next/link"
-import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
-import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 interface ITableFilters {
     firstname__startswith?: string
     lastname__startswith?: string
     email__startswith?: string
     pending?: boolean
-    banned?: boolean
     admin?: string
 }
 
 const UsersTable = () => {
-    const { data: permissions = [] } = useCurrentUserPermissionsQuery()
-
-    const permissionsActions = useMemo(() => {
-        return permissions.map((p) => p.action)
-    }, [permissions])
+    const { permissions } = usePermissions()
 
     const [isLoading, setIsLoading] = useState(true)
     const [tableData, setTableData] = useState<IPaginatedBackendResponse<IUser> | null>()
@@ -45,28 +38,14 @@ const UsersTable = () => {
     const [ordering, setOrdering] = useState<string[]>([])
     const searchInput = useRef<InputRef>(null)
 
-    const canPromoteAdminRole = permissionsActions.includes("admin.create")
-    const canRevokeAdminRole = permissionsActions.includes("admin.delete")
-
-    const updateUserAdminRole = (targetUserId: string | number, isAdmin: boolean) => {
-        setTableData((current) => {
-            if (!current) {
-                return current
-            }
-
-            return {
-                ...current,
-                data: current.data.map((user) =>
-                    user.id === Number(targetUserId) ? { ...user, admin: isAdmin } : user,
-                ),
-            }
-        })
-    }
+    const canPromoteAdminRole = permissions.includes("admin.create")
+    const canRevokeAdminRole = permissions.includes("admin.delete")
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 setIsLoading(true)
+                console.log(ordering)
                 const response = await api.get<IPaginatedBackendResponse<IUser>>(
                     `${ADMIN_USERS_URL}`,
                     {
@@ -80,7 +59,7 @@ const UsersTable = () => {
                 )
                 setTableData(response.data)
             } catch (error) {
-                handleStatusError(error)
+                console.error(error)
             } finally {
                 setIsLoading(false)
             }
@@ -202,9 +181,6 @@ const UsersTable = () => {
             dataIndex: "email",
             key: "email",
             ...getColumnSearchProps("email"),
-            render: (value: string, record: IUser) => (
-                <Link href={`/administration/users/${record.id}`}>{value}</Link>
-            ),
         },
         {
             title: "Phone",
@@ -253,7 +229,6 @@ const UsersTable = () => {
                         canAssignRole={canRevokeAdminRole}
                         targetUserId={record.id}
                         role={"admin"}
-                        onRoleChanged={updateUserAdminRole}
                     >
                         Admin
                     </RoleTag>
@@ -262,7 +237,6 @@ const UsersTable = () => {
                         canAssignRole={canPromoteAdminRole}
                         targetUserId={record.id}
                         role={"member"}
-                        onRoleChanged={updateUserAdminRole}
                     >
                         Member
                     </RoleTag>
@@ -276,20 +250,6 @@ const UsersTable = () => {
             render: (value: boolean) =>
                 value ? <Tag color="gold">Yes</Tag> : <Tag color="green">No</Tag>,
             ...getBooleanColumnSearchProps<ITableFilters>("pending", filters, setFilters),
-        },
-        {
-            title: "Banned",
-            dataIndex: "banned",
-            key: "banned",
-            render: (value: boolean | undefined, record) =>
-                value ? (
-                    <Tag color="red" title={record.ban_reason ?? undefined}>
-                        Yes
-                    </Tag>
-                ) : (
-                    <Tag color="green">No</Tag>
-                ),
-            ...getBooleanColumnSearchProps<ITableFilters>("banned", filters, setFilters),
         },
         {
             title: "Created At",
@@ -314,7 +274,6 @@ const UsersTable = () => {
     return (
         <>
             <Table
-                tableLayout="auto"
                 dataSource={tableData.data}
                 columns={columns}
                 pagination={{
@@ -324,12 +283,12 @@ const UsersTable = () => {
                     onChange: (page) => setCurrentPage(page),
                 }}
                 rowKey="id"
-                rowClassName={(record) => (record.banned ? styles.bannedUserRow : "")}
                 onChange={(pagination, filters, sorter) =>
                     handleTableChange(pagination, filters, sorter, setOrdering)
                 }
-                scroll={{ x: "max-content" }}
+                scroll={{ x: 1 }}
             />
+            {/*<PromoteToAdminModal />*/}
         </>
     )
 }

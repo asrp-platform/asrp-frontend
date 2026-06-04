@@ -6,12 +6,9 @@ import MembershipRequestCard from "@app/(main)/(account)/account/(shared)/Member
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import ApplyMembershipCard from "@/app/(main)/(account)/account/dashboard/ui/ApplyMembershipCard/ApplyMembershipCard.tsx"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
-import MembershipStatus from "@app/(main)/(account)/account/membership/(ui)/MembershipStatus/MembershipStatus.tsx"
-import {
-    AccountMembershipStatus,
-    resolveAccountMembershipStatus,
-} from "@app/(main)/(account)/account/(shared)/membershipStatus.ts"
-import type { ReactNode } from "react"
+import MembershipCard from "@app/(main)/(account)/account/(shared)/MembershipCard/MembershipCard.tsx"
+import MembershipTerminated from "@app/(main)/(account)/account/membership/(ui)/MembershipRestrictionStatus/MembershipTerminated.tsx"
+import MembershipSuspended from "@app/(main)/(account)/account/membership/(ui)/MembershipRestrictionStatus/MembershipSuspended.tsx"
 
 const MembershipStatusCard = () => {
     const { data: membershipRequest, isLoading: isMembershipRequestLoading } =
@@ -23,25 +20,23 @@ const MembershipStatusCard = () => {
         return <Loading />
     }
 
-    const membershipStatus = resolveAccountMembershipStatus({ membership, membershipRequest })
+    if (membership) {
+        if (membership.terminated) {
+            return <MembershipTerminated membership={membership} variant="compact" />
+        }
 
-    const renderers: Record<AccountMembershipStatus, () => ReactNode> = {
-        [AccountMembershipStatus.NONE]: () => <ApplyMembershipCard />,
-        [AccountMembershipStatus.REQUEST_PENDING]: () => (
-            <MembershipRequestCard membershipRequest={membershipStatus.membershipRequest!} />
-        ),
-        [AccountMembershipStatus.REQUEST_REJECTED]: () => (
-            <MembershipRequestCard membershipRequest={membershipStatus.membershipRequest!} />
-        ),
-        [AccountMembershipStatus.ACTIVE]: () => (
-            <MembershipStatus membership={membershipStatus.membership!} />
-        ),
-        [AccountMembershipStatus.EXPIRED]: () => (
-            <MembershipStatus membership={membershipStatus.membership!} />
-        ),
+        if (membership.is_suspended) {
+            return <MembershipSuspended membership={membership} variant="compact" />
+        }
+
+        return <MembershipCard membership={membership} variant={"compact"} />
     }
 
-    return renderers[membershipStatus.status]()
+    if (!membership && membershipRequest) {
+        return <MembershipRequestCard membershipRequest={membershipRequest} />
+    }
+
+    return <ApplyMembershipCard />
 }
 
 export default MembershipStatusCard
