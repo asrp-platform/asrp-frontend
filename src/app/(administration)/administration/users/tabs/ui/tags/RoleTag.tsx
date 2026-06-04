@@ -5,7 +5,7 @@ import { Tag } from "antd"
 import { PromoteToAdminModal } from "@/app/(administration)/administration/users/tabs/ui/PromoteAdminRoleModal.tsx"
 import { isAxiosError } from "axios"
 import api from "@/axios.ts"
-import { getStuffUsersUrl } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import { getStuffUsersUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 
 interface IProps {
     canAssignRole: boolean

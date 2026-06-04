@@ -1,10 +1,14 @@
 import api from "@/axios.ts"
 import { useQuery } from "@tanstack/react-query"
-import type { QueryKey } from "@tanstack/query-core"
+import type { QueryKey } from "@tanstack/react-query"
+import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
 
-type TableFilters = Record<string, any | string | number | boolean | null | undefined>
+type TableFilterValue = string | number | boolean | null | undefined
+type TableFilters<Filters> = {
+    [Key in keyof Filters]: TableFilterValue
+}
 
-interface TableQueryParams<Filters extends TableFilters> {
+interface TableQueryParams<Filters extends TableFilters<Filters>> {
     url: string
     queryKey: QueryKey
     page: number
@@ -13,14 +17,14 @@ interface TableQueryParams<Filters extends TableFilters> {
     filters?: Filters
 }
 
-const fetchData = async <Response, Filters extends TableFilters>({
+const fetchData = async <T, F extends TableFilters<F>>({
     url,
     page,
     pageSize,
     filters,
     ordering = [],
-}: Omit<TableQueryParams<Filters>, "queryKey">) => {
-    const response = await api.get<Response>(url, {
+}: Omit<TableQueryParams<F>, "queryKey">): Promise<IPaginatedBackendResponse<T>> => {
+    const response = await api.get<IPaginatedBackendResponse<T>>(url, {
         params: {
             page: page,
             page_size: pageSize,
@@ -31,17 +35,18 @@ const fetchData = async <Response, Filters extends TableFilters>({
     return response.data
 }
 
-export const useTableDataQuery = <Response, Filters extends TableFilters = TableFilters>({
+export const useTableDataQuery = <T, F extends TableFilters<F> = Record<string, TableFilterValue>>({
     url,
     queryKey,
     page,
     pageSize,
     ordering = [],
     filters,
-}: TableQueryParams<Filters>) => {
-    return useQuery<Response>({
-        queryKey: [...queryKey, { page, pageSize, ordering, filters: filters ?? {} }],
-        queryFn: () => fetchData<Response, Filters>({ url, page, pageSize, filters, ordering }),
+}: TableQueryParams<F>) => {
+    return useQuery<IPaginatedBackendResponse<T>>({
+        queryKey: [...queryKey, page, pageSize, ordering, { filters: filters ?? {} }],
+        queryFn: () => fetchData<T, F>({ url, page, pageSize, filters, ordering }),
         placeholderData: (prev) => prev,
+        staleTime: 1000 * 60 * 10,
     })
 }

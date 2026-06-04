@@ -4,7 +4,7 @@ import { type IMembershipRequest, MembershipRequestStatusEnum } from "@entities/
 import { isAxiosError } from "axios"
 import { message } from "antd"
 import api from "@/axios.ts"
-import { CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL } from "@shared/backend/rest-api-urls/currentUserUrls.ts"
+import { CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
 import { useState } from "react"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import ReapplyMembershipButton from "@features/ReapplyMembershipButton/ReapplyMembershipButton.tsx"

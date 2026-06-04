@@ -7,6 +7,8 @@ import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui
 import ApplyMembershipCard from "@/app/(main)/(account)/account/dashboard/ui/ApplyMembershipCard/ApplyMembershipCard.tsx"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import MembershipCard from "@app/(main)/(account)/account/(shared)/MembershipCard/MembershipCard.tsx"
+import MembershipTerminated from "@app/(main)/(account)/account/membership/(ui)/MembershipRestrictionStatus/MembershipTerminated.tsx"
+import MembershipSuspended from "@app/(main)/(account)/account/membership/(ui)/MembershipRestrictionStatus/MembershipSuspended.tsx"
 
 const MembershipStatusCard = () => {
     const { data: membershipRequest, isLoading: isMembershipRequestLoading } =
@@ -19,6 +21,14 @@ const MembershipStatusCard = () => {
     }
 
     if (membership) {
+        if (membership.terminated) {
+            return <MembershipTerminated membership={membership} variant="compact" />
+        }
+
+        if (membership.is_suspended) {
+            return <MembershipSuspended membership={membership} variant="compact" />
+        }
+
         return <MembershipCard membership={membership} variant={"compact"} />
     }
 

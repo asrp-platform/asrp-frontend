@@ -11,7 +11,7 @@ import { detailViewExtensions } from "@/app/(main)/about/directors-board/(compon
 import EditorMenuBar from "@/widgets/TiptapEditor/EditorMenuBar.tsx"
 import { isAxiosError } from "axios"
 import api from "@/axios.ts"
-import { getDirectorsBoardMemberAdminUrl } from "@/shared/backend/rest-api-urls/admin/adminApiUrls.ts"
+import { getDirectorsBoardMemberAdminUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import CardPhoto from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/CardPhoto.tsx"
 import DetailViewHeader from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/DetailViewHeader.tsx"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"

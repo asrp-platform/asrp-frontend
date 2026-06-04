@@ -1,22 +1,15 @@
 import api from "@/axios.ts"
 import type { IUser } from "@/entities/User.ts"
 import { useQuery } from "@tanstack/react-query"
-import { CURRENT_USER_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
+import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
 
 export const CURRENT_USER_QUERY_KEY = ["current-user"]
 
-const CURRENT_USER_LIFETIME = 1000 * 60 * 5
+const CURRENT_USER_LIFETIME = 1000 * 60 * 60
 
 const fetchCurrentUser = async () => {
-    try {
-        const response = await api.get<IUser>(CURRENT_USER_URL, { withCredentials: true })
-        return response.data
-    } catch (error: any) {
-        if (error?.response?.status === 401) {
-            return null
-        }
-        throw error
-    }
+    const response = await api.get<IUser>(CURRENT_USER_URL, { withCredentials: true })
+    return response.data
 }
 
 export const useCurrentUserQuery = () => {

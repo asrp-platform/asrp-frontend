@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 import api from "@/axios.ts"
-import { EMAIL_CONFIRMATIONS_URL } from "@shared/backend/rest-api-urls/restApiUrls.ts"
+import { EMAIL_CONFIRMATIONS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import styles from "@app/(auth)/registration/complete/EmailConfirmationPage.module.scss"
 import LoadingStatus from "@app/(auth)/registration/complete/(ui)/LoadingStatus.tsx"
 import ErrorStatus from "@app/(auth)/registration/complete/(ui)/ErrorStatus.tsx"

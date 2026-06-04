@@ -1,5 +1,5 @@
 import api from "@/axios.ts"
-import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
+import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
 import type { IMembershipRequest } from "@/entities/Membership.ts"
 import { useQuery } from "@tanstack/react-query"
 

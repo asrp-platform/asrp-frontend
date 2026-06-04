@@ -2,7 +2,7 @@ import type { IUser } from "@/entities/User"
 import {
     getUserResidenciesUrl,
     getUserResidencyByIdUrl,
-} from "@/shared/backend/rest-api-urls/restApiUrls.ts"
+} from "@shared/backend/restApiUrls/restApiUrls.ts"
 import ExperienceCard from "@/app/(main)/(account)/account/profile/(ui)/ExperienceCard"
 
 interface IProps {

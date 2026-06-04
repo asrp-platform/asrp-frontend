@@ -7,7 +7,7 @@ export interface MembershipTypeChangeRequestMembershipType {
     type: MembershipTypeEnum
 }
 
-export interface MembershipTypeChangeRequestUserMembership {
+export interface IMembershipDowngradeRequestBoundedUserMembership {
     is_active: boolean
     user_id: number
     user: Pick<IUser, "id" | "email">
@@ -15,7 +15,7 @@ export interface MembershipTypeChangeRequestUserMembership {
     membership_type: MembershipTypeChangeRequestMembershipType
 }
 
-export interface MembershipTypeChangeRequest {
+export interface MembershipDowngradeRequest {
     id: number
     created_at: string
     updated_at: string
@@ -32,6 +32,6 @@ export interface MembershipTypeChangeRequest {
     pending: boolean
 }
 
-export interface AdminMembershipTypeChangeRequest extends MembershipTypeChangeRequest {
-    user_membership: MembershipTypeChangeRequestUserMembership
+export interface AdminMembershipDowngradeRequest extends MembershipDowngradeRequest {
+    user_membership: IMembershipDowngradeRequestBoundedUserMembership
 }

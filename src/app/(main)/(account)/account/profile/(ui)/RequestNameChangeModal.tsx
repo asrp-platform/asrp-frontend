@@ -4,7 +4,7 @@ import { isAxiosError } from "axios"
 import { useState } from "react"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import api from "@/axios.ts"
-import { CURRENT_USER_NAME_CHANGE_URL } from "@/shared/backend/rest-api-urls/currentUserUrls.ts"
+import { CURRENT_USER_NAME_CHANGE_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
 
 export interface ChangeNameFormValues {
     lastname: string

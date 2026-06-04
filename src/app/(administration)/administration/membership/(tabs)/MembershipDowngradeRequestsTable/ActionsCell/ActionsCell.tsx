@@ -1,26 +1,25 @@
 import { useState } from "react"
-import { Alert, Button, Input, Modal } from "antd"
+import { Alert, Button, Input, Modal, message } from "antd"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+
+import api from "@/axios.ts"
+import { getMembershipDowngradeRequestByIdUrl } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 
 import styles from "./ActionsCell.module.scss"
-import { MembershipRequestStatusEnum } from "@entities/Membership.ts"
-import api from "@/axios.ts"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/rest-api-urls/admin/membershipsAdminUrls.ts"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
 
-type UpdateMembershipRequestPayload = {
+type ReviewMembershipTypeChangeRequestPayload = {
     requestId: number | string
-    status: MembershipRequestStatusEnum.APPROVED | MembershipRequestStatusEnum.REJECTED
+    action: "approve" | "reject"
     adminComment?: string
 }
 
-const updateMembershipRequest = async ({
+const reviewMembershipTypeChangeRequest = async ({
     requestId,
-    status,
+    action,
     adminComment,
-}: UpdateMembershipRequestPayload) => {
-    const response = await api.patch(`${MEMBERSHIP_REQUESTS_ADMIN_URL}/${requestId}`, {
-        status,
+}: ReviewMembershipTypeChangeRequestPayload) => {
+    const response = await api.patch(getMembershipDowngradeRequestByIdUrl(requestId), {
+        action,
         admin_comment: adminComment,
     })
 
@@ -28,65 +27,61 @@ const updateMembershipRequest = async ({
 }
 
 interface IProps {
-    membershipRequestId: number | string
+    requestId: number | string
 }
 
-const ActionsCell = ({ membershipRequestId }: IProps) => {
+const ActionsCell = ({ requestId }: IProps) => {
     const queryClient = useQueryClient()
-    const { permissions } = usePermissions()
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [adminComment, setAdminComment] = useState("")
 
-    const canUpdate = permissions.includes("memberships.update")
-
     const mutation = useMutation({
-        mutationFn: updateMembershipRequest,
-        onSuccess: () => {
+        mutationFn: reviewMembershipTypeChangeRequest,
+        onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
-                queryKey: ["membership"],
+                queryKey: ["membership-downgrade-requests"],
             })
             setIsRejectModalOpen(false)
             setAdminComment("")
+            message.success(
+                variables.action === "approve"
+                    ? "Membership type change request approved."
+                    : "Membership type change request rejected.",
+            )
+        },
+        onError: () => {
+            message.error("Could not review membership type change request.")
         },
     })
 
     const handleApprove = () => {
         Modal.confirm({
-            title: "Approve membership request?",
-            content:
-                "This action will approve the membership request and notify the system that the request has been reviewed.",
+            title: "Approve membership type change request?",
+            content: "This action will approve the requested membership type change.",
             okText: "Approve",
             cancelText: "Cancel",
             onOk: () => {
                 mutation.mutate({
-                    status: MembershipRequestStatusEnum.APPROVED,
-                    requestId: membershipRequestId,
+                    requestId,
+                    action: "approve",
                 })
             },
         })
     }
 
-    const handleReject = () => {
-        setIsRejectModalOpen(true)
-    }
-
     const handleRejectConfirm = () => {
         mutation.mutate({
-            status: MembershipRequestStatusEnum.REJECTED,
-            requestId: membershipRequestId,
+            requestId,
+            action: "reject",
             adminComment: adminComment.trim(),
         })
-    }
-
-    if (!canUpdate) {
-        return null
     }
 
     return (
         <div className={styles.actionsCellContainer}>
             <Button
-                color={"green"}
-                variant={"filled"}
+                color="green"
+                variant="filled"
                 loading={mutation.isPending}
                 disabled={mutation.isPending}
                 onClick={handleApprove}
@@ -94,20 +89,20 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
                 Approve
             </Button>
             <Button
-                color={"red"}
-                variant={"filled"}
+                color="red"
+                variant="filled"
                 loading={mutation.isPending}
                 disabled={mutation.isPending}
-                onClick={handleReject}
+                onClick={() => setIsRejectModalOpen(true)}
             >
                 Reject
             </Button>
 
             <Modal
-                title={"Reject membership request?"}
+                title="Reject membership type change request?"
                 open={isRejectModalOpen}
-                okText={"Reject"}
-                cancelText={"Cancel"}
+                okText="Reject"
+                cancelText="Cancel"
                 okButtonProps={{
                     danger: true,
                     loading: mutation.isPending,
@@ -117,17 +112,17 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
                 onCancel={() => setIsRejectModalOpen(false)}
             >
                 <Alert
-                    type={"warning"}
+                    type="warning"
                     showIcon
-                    message={"The request will be rejected."}
-                    description={"Add an admin comment so the applicant can understand the reason."}
+                    title="The request will be rejected."
+                    description="Add an admin comment so the member can understand the reason."
                 />
                 <Input.TextArea
                     value={adminComment}
                     rows={4}
                     maxLength={500}
                     showCount
-                    placeholder={"Admin comment"}
+                    placeholder="Admin comment"
                     onChange={(event) => setAdminComment(event.target.value)}
                     className={styles.adminCommentTextarea}
                 />

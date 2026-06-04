@@ -5,7 +5,9 @@ import styles from "./ActionsCell.module.scss"
 import { MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import api from "@/axios.ts"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/membershipsAdminUrls"
+import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+
 
 type UpdateMembershipRequestPayload = {
     requestId: number | string
@@ -32,14 +34,17 @@ interface IProps {
 
 const ActionsCell = ({ membershipRequestId }: IProps) => {
     const queryClient = useQueryClient()
+    const { permissions } = usePermissions()
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [adminComment, setAdminComment] = useState("")
+
+    const canUpdate = permissions.includes("memberships.update")
 
     const mutation = useMutation({
         mutationFn: updateMembershipRequest,
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ["membership"],
+                queryKey: ["membership-requests"],
             })
             setIsRejectModalOpen(false)
             setAdminComment("")
@@ -72,6 +77,10 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
             requestId: membershipRequestId,
             adminComment: adminComment.trim(),
         })
+    }
+
+    if (!canUpdate) {
+        return null
     }
 
     return (
@@ -111,7 +120,7 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
                 <Alert
                     type={"warning"}
                     showIcon
-                    message={"The request will be rejected."}
+                    title={"The request will be rejected."}
                     description={"Add an admin comment so the applicant can understand the reason."}
                 />
                 <Input.TextArea
