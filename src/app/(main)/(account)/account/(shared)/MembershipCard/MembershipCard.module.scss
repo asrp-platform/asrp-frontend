@@ -22,23 +22,17 @@
     gap: 24px;
 }
 
-.secondaryText {
-    margin-bottom: 14px;
-
-    font-size: 18px;
-    font-weight: 700;
-    color: #1e293b;
+.contentInnerContainer {
+    width: 100%;
 }
 
 .expiredSecondaryText {
     color: var(--text-danger-color);
 }
 
-.tagRow {
+.membershipOverviewTitle {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .expiredTag {
