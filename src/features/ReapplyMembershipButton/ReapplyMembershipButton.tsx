@@ -110,7 +110,7 @@ const ReapplyMembershipButton = () => {
 
     return (
         <>
-            <CustomButton onClick={() => setIsModalOpen(true)} variant={"secondary"}>
+            <CustomButton onClick={() => setIsModalOpen(true)} variant={"primary"}>
                 Reapply
             </CustomButton>
             <Modal

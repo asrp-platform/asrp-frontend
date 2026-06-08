@@ -118,28 +118,16 @@ const MembershipCard = ({ membership, variant = "compact", className }: IProps) 
                     </div>
 
                     <div className={styles.detailItem}>
-                        <span className={styles.detailLabel}>Expiration date</span>
+                        <span className={styles.detailLabel}>Valid through</span>
                         <span className={styles.detailValue}>
                             {formatDatetime(membership.expires_at, ["hour", "minute"])}
                         </span>
                     </div>
 
                     <div className={styles.detailItem}>
-                        <span className={styles.detailLabel}>Membership ID</span>
-                        <span className={styles.detailValue}>#{membership.id}</span>
-                    </div>
-
-                    <div className={styles.detailItem}>
-                        <span className={styles.detailLabel}>Created date</span>
+                        <span className={styles.detailLabel}>Member since</span>
                         <span className={styles.detailValue}>
                             {formatDatetime(membership.created_at, ["hour", "minute"])}
-                        </span>
-                    </div>
-
-                    <div className={styles.detailItem}>
-                        <span className={styles.detailLabel}>Last updated</span>
-                        <span className={styles.detailValue}>
-                            {formatDatetime(membership.updated_at, ["hour", "minute"])}
                         </span>
                     </div>
                 </div>

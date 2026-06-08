@@ -3,6 +3,7 @@ import PrimaryLinkOutlined from "@shared/ui/Buttons/PrimaryLinkOutlined/PrimaryL
 import DowngradeMembership from "@app/(main)/(account)/account/membership/(ui)/DowngradeMembership/DowngradeMembership.tsx"
 
 import styles from "./QuickActions.module.scss"
+import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 interface QuickActionsProps {
     variant: "active" | "expired"
@@ -19,6 +20,7 @@ const QuickActions = ({ variant }: QuickActionsProps) => {
                     Renew membership
                 </PrimaryLinkOutlined>
                 {!isExpired && <DowngradeMembership />}
+                <CustomButton variant={"secondary"}>Download confirmation</CustomButton>
             </div>
         </ProfileInfoCard>
     )
