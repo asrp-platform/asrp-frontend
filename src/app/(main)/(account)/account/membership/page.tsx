@@ -16,6 +16,7 @@ import {
     resolveAccountMembershipStatus,
 } from "@app/(main)/(account)/account/(shared)/membershipStatus.ts"
 import type { ReactNode } from "react"
+import MembershipBenefits from "@app/(main)/(account)/account/membership/(ui)/MembershipBenefits/MembershipBenefits.tsx"
 
 const Page = () => {
     const { data: membership, isLoading: isMembershipLoading } = useCurrentUserMembershipQuery()
@@ -42,6 +43,7 @@ const Page = () => {
         [AccountMembershipStatus.ACTIVE]: () => (
             <>
                 <MembershipCard membership={membershipStatus.membership!} variant="detailed" />
+                <MembershipBenefits />
                 <QuickActions variant="active" />
             </>
         ),
