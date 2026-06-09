@@ -119,6 +119,13 @@ const MembershipRequestsTable = () => {
             render: (value: string | null) => (value ? new Date(value).toLocaleString() : "—"),
         },
         {
+            title: "Admin Comment",
+            dataIndex: "admin_comment",
+            key: "admin_comment",
+            ellipsis: true,
+            render: (value: string | null) => value ?? "—",
+        },
+        {
             title: "Created At",
             dataIndex: "created_at",
             key: "created_at",
