@@ -5,15 +5,15 @@ import styles from "@/app/(site)/membership/payment-success/styles.module.scss"
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
-    title: "Membership Payment Successful",
-    description: "Your ASRP membership payment was completed successfully.",
+    title: "Membership Renewal Successful",
+    description: "Your ASRP membership renewal payment was completed successfully.",
     robots: {
         index: false,
         follow: false,
     },
 }
 
-const MembershipPaymentSuccessPage = () => {
+const MembershipRenewalSuccessPage = () => {
     return (
         <main>
             <div className={styles.page}>
@@ -24,32 +24,32 @@ const MembershipPaymentSuccessPage = () => {
 
                     <div className={styles.badge}>
                         <ShieldCheck size={16} />
-                        <span>Payment confirmed</span>
+                        <span>Renewal confirmed</span>
                     </div>
 
-                    <h1>Thank you for joining ASRP</h1>
+                    <h1>Your ASRP membership has been renewed</h1>
 
                     <p>
-                        Your membership payment was successfully processed. Your application is now
-                        with the ASRP team for review and activation.
+                        Your renewal payment was successfully processed. Thank you for continuing to
+                        support the ASRP community.
                     </p>
                 </section>
 
                 <section className={styles.details}>
                     <div className={styles.infoGrid}>
                         <div className={styles.infoCard}>
-                            <h2>What happens next</h2>
+                            <h2>What changed</h2>
                             <p>
-                                We will review your membership information and contact you if any
-                                additional details are needed. You will receive updates by email.
+                                Your membership renewal has been recorded. Your active membership
+                                access will continue according to the updated membership term.
                             </p>
                         </div>
 
                         <div className={styles.infoCard}>
                             <h2>Need support?</h2>
                             <p>
-                                If you have questions about your payment or membership status,
-                                please contact the ASRP team.
+                                If you have questions about your renewal, payment, or membership
+                                dates, please contact the ASRP team.
                             </p>
 
                             <a href="mailto:admin@asrpath.org" className={styles.emailLink}>
@@ -61,8 +61,8 @@ const MembershipPaymentSuccessPage = () => {
 
                     <div className={styles.note}>
                         <p>
-                            Member-only features may become available after your membership is
-                            reviewed and activated.
+                            You can review your current membership details from your account
+                            membership page.
                         </p>
                     </div>
 
@@ -85,4 +85,4 @@ const MembershipPaymentSuccessPage = () => {
     )
 }
 
-export default MembershipPaymentSuccessPage
+export default MembershipRenewalSuccessPage
