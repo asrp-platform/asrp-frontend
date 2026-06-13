@@ -92,7 +92,7 @@ const DowngradeMembership = ({ disabled }: DowngradeMembershipProps) => {
     return (
         <>
             <CustomButton
-                variant={"secondary"}
+                variant={"primary"}
                 onClick={() => setIsModalOpen(true)}
                 disabled={disabled}
             >

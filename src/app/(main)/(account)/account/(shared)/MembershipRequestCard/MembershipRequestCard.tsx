@@ -120,11 +120,7 @@ const MembershipRequestCard = ({ membershipRequest }: IProps) => {
             {canReapply && <ReapplyMembershipButton />}
 
             {canRetryPayment && (
-                <CustomButton
-                    variant={"secondary"}
-                    loading={isRetrying}
-                    onClick={handleRetryPayment}
-                >
+                <CustomButton variant={"primary"} loading={isRetrying} onClick={handleRetryPayment}>
                     Retry payment
                 </CustomButton>
             )}
