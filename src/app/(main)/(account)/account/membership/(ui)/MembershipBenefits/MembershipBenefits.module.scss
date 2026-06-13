@@ -1,0 +1,16 @@
+.benefitsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    li {
+        position: relative;
+        padding-left: 16px;
+    }
+
+    li::before {
+        content: "-";
+        position: absolute;
+        left: 0;
+    }
+}

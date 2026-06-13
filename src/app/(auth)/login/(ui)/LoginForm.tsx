@@ -105,7 +105,7 @@ const LoginForm = () => {
                 <Form.Item<FieldType> name="remember_me" valuePropName="checked">
                     <Checkbox checked={false}>Remember me</Checkbox>
                 </Form.Item>
-                <CustomButton htmlType="submit" children={"Submit"} />
+                <CustomButton variant={"primary-filled"} htmlType="submit" children={"Submit"} />
             </div>
         </Form>
     )
