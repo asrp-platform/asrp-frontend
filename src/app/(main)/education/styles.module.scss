@@ -1,0 +1,639 @@
+@use "../../../shared/mixins" as m;
+
+.pageContainer {
+    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+    }
+}
+
+/* ==================== HERO SECTION ==================== */
+.heroContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 40px 24px;
+    background: linear-gradient(
+        135deg,
+        rgb(75 15 122 / 0.9) 0%,
+        rgb(177 42 125 / 0.85) 50%,
+        rgb(245 182 193 / 0.8) 100%
+    );
+    border-radius: 32px;
+    backdrop-filter: blur(10px);
+
+    @media (min-width: 1200px) {
+        grid-template-columns: 1fr 380px;
+        padding: 60px 48px;
+        align-items: start;
+    }
+}
+
+.heroContent {
+    color: #fff;
+
+    .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 16px;
+
+        a {
+            color: rgb(255 255 255 / 0.8);
+            text-decoration: none;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        .breadcrumbSeparator {
+            color: rgb(255 255 255 / 0.6);
+        }
+    }
+
+    h1 {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        line-height: 1.2;
+
+        @media (min-width: 1200px) {
+            font-size: 52px;
+        }
+    }
+
+    .heroDescription {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 16px;
+        color: rgb(255 255 255 / 0.9);
+
+        &:last-of-type {
+            margin-bottom: 32px;
+        }
+    }
+}
+
+.heroButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .browseCatalogButton {
+        padding: 14px 28px;
+        background-color: #dc2626;
+        color: #fff;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+
+        &:hover {
+            background-color: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgb(220 38 38 / 0.3);
+        }
+    }
+
+    .caseOfMonthButton {
+        padding: 14px 28px;
+        background: rgb(255 255 255 / 0.1);
+        color: #fff;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid rgb(255 255 255 / 0.3);
+        backdrop-filter: blur(10px);
+
+        &:hover {
+            background: rgb(255 255 255 / 0.2);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+.tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .tag {
+        padding: 6px 14px;
+        background: rgb(255 255 255 / 0.15);
+        border-radius: 999px;
+        font-size: 13px;
+        color: #fff;
+        border: 1px solid rgb(255 255 255 / 0.2);
+    }
+}
+
+/* ==================== ACCESS SIDEBAR ==================== */
+.accessSidebar {
+    background: rgb(0 0 0 / 0.3);
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(10px);
+
+    h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .accessCard {
+        padding: 16px;
+        background: rgb(255 255 255 / 0.1);
+        border-radius: 16px;
+        margin-bottom: 12px;
+        border: 1px solid rgb(255 255 255 / 0.1);
+
+        .accessCardHeader {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+
+            .accessIcon {
+                font-size: 16px;
+            }
+
+            .accessLabel {
+                font-size: 14px;
+                font-weight: 600;
+                color: #fff;
+            }
+        }
+
+        p {
+            font-size: 14px;
+            color: rgb(255 255 255 / 0.8);
+            line-height: 1.5;
+            margin: 0;
+        }
+    }
+
+    .sidebarButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+
+        .loginButton {
+            padding: 12px 20px;
+            background: transparent;
+            color: #fff;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgb(255 255 255 / 0.3);
+
+            &:hover {
+                background: rgb(255 255 255 / 0.1);
+            }
+        }
+
+        .joinButton {
+            padding: 12px 20px;
+            background-color: #dc2626;
+            color: #fff;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+
+            &:hover {
+                background-color: #b91c1c;
+                transform: translateY(-2px);
+            }
+        }
+    }
+}
+
+/* ==================== CATALOG SECTION ==================== */
+.catalogSection {
+    margin-top: 60px;
+
+    .catalogHeader {
+        margin-bottom: 40px;
+
+        .catalogLabel {
+            color: var(--text-primary-color-red);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-primary-color-dark);
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-secondary-color-dark);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+    }
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.resourceCard {
+    background: #fff;
+    border-radius: 24px;
+    padding: 28px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 260px;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgb(0 0 0 / 0.1);
+        border-color: #fecaca;
+    }
+
+    .cardHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+
+        .cardBadge {
+            padding: 4px 10px;
+            background: #fef3c782;
+            color: #92400e;
+            border: 1px solid #92410e35;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &::before {
+                content: "🔒";
+                font-size: 11px;
+            }
+        }
+
+        .cardBadgePublic {
+            padding: 4px 10px;
+            background: #dcfce73c;
+            color: #166534;
+            border: 1px solid #16653430;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &::before {
+                content: "🌐";
+                font-size: 11px;
+            }
+        }
+
+        .cardBadgePractice {
+            padding: 4px 10px;
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #16653425;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &::before {
+                content: "🧠";
+                font-size: 11px;
+            }
+        }
+
+        .cardMeta {
+            font-size: 12px;
+            color: var(--text-muted-color-dark);
+        }
+    }
+
+    h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary-color-dark);
+        margin-bottom: 12px;
+    }
+
+    p {
+        font-size: 14px;
+        color: var(--text-secondary-color-dark);
+        line-height: 1.6;
+        flex-grow: 1;
+        margin-bottom: 20px;
+    }
+
+    .cardLink {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary-color-red);
+        text-decoration: none;
+        transition: color 0.2s ease;
+        align-self: flex-start;
+
+        &:hover {
+            color: var(--button-primary-red-hover);
+        }
+    }
+}
+
+/* ==================== CASE OF THE MONTH SECTION ==================== */
+.caseOfMonthSection {
+    margin-top: 60px;
+
+    .caseOfMonthHeader {
+        margin-bottom: 32px;
+
+        .featuredLabel {
+            color: var(--text-primary-color-red);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary-color-dark);
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-secondary-color-dark);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+    }
+}
+
+.caseOfMonthCard {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
+
+    p {
+        font-size: 15px;
+        color: var(--text-secondary-color-dark);
+        line-height: 1.7;
+        margin-bottom: 16px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    .caseOfMonthButtons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 24px 0;
+
+        .viewCasesButton {
+            padding: 12px 24px;
+            background-color: #dc2626;
+            color: #fff;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+
+            &:hover {
+                background-color: #b91c1c;
+                transform: translateY(-2px);
+            }
+        }
+
+        .submitCaseButton {
+            padding: 12px 24px;
+            background: #fff;
+            color: var(--text-primary-color-dark);
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+
+            &:hover {
+                background: #f8fafc;
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    .submissionNote {
+        font-size: 14px;
+        color: var(--text-muted-color-dark);
+
+        a {
+            color: var(--text-primary-color-red);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+/* ==================== MEMBER LIBRARY SECTION ==================== */
+.memberLibrarySection {
+    margin-top: 60px;
+
+    .memberLibraryHeader {
+        margin-bottom: 32px;
+
+        .memberOnlyLabel {
+            color: var(--text-primary-color-red);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary-color-dark);
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-secondary-color-dark);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+    }
+}
+
+.libraryCardsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.libraryCard {
+    background: #fff;
+    border-radius: 24px;
+    padding: 32px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgb(0 0 0 / 0.1);
+    }
+
+    .libraryCardHeader {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+
+        .libraryIcon {
+            font-size: 20px;
+        }
+
+        .libraryBadge {
+            padding: 4px 12px;
+            background: #fef3c782;
+            color: #92400e;
+            border: 1px solid #92410e30;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+
+            &::before {
+                content: "🔒";
+                margin-right: 5px;
+                font-size: 11px;
+            }
+        }
+
+        .libraryBadgeExternal {
+            padding: 4px 12px;
+            background: #fef3c782;
+            color: #92400e;
+            border: 1px solid #92410e35;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+
+            &::before {
+                content: "🔒";
+                margin-right: 5px;
+                font-size: 11px;
+            }
+        }
+
+        .libraryBadgeSuggest {
+            padding: 4px 12px;
+            background: #e2ebf732;
+            border: 1px solid #1e40af13;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+
+            &::before {
+                content: "✅";
+                margin-right: 5px;
+                font-size: 11px;
+            }
+        }
+    }
+
+    h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary-color-dark);
+        margin-bottom: 12px;
+    }
+
+    p {
+        font-size: 14px;
+        color: var(--text-secondary-color-dark);
+        line-height: 1.6;
+        flex-grow: 1;
+        margin-bottom: 0;
+    }
+
+    .libraryCardLink {
+        margin-top: 16px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary-color-red);
+        text-decoration: none;
+        transition: color 0.2s ease;
+        align-self: flex-start;
+
+        &:hover {
+            color: var(--button-primary-red-hover);
+        }
+    }
+}
