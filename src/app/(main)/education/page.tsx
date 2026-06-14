@@ -89,7 +89,7 @@ const Page = () => {
                             </p>
                         </div>
                         <div className={styles.sidebarButtons}>
-                            <Link href="/auth/login" className={styles.loginButton}>
+                            <Link href="/login" className={styles.loginButton}>
                                 Log in
                             </Link>
                             <Link href="/membership/become-member" className={styles.joinButton}>
@@ -123,7 +123,7 @@ const Page = () => {
                                 Curated internal & external video content focused on diagnostic
                                 practice and real-world lab workflows.
                             </p>
-                            <Link href="/education/videos" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -141,7 +141,7 @@ const Page = () => {
                                 Structured learning modules: objectives, key slides, self-checks,
                                 and takeaways.
                             </p>
-                            <Link href="/education/modules" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -157,7 +157,7 @@ const Page = () => {
                                 Interesting, challenging cases with high-quality images, key
                                 differentials, and practical workup pearls.
                             </p>
-                            <Link href="/education/case-of-month" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -173,7 +173,7 @@ const Page = () => {
                                 High-yield practice questions organized by Anatomic Pathology (AP)
                                 and Clinical Pathology (CP).
                             </p>
-                            <Link href="/education/board-questions" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -189,7 +189,7 @@ const Page = () => {
                                 Videos and guides on career strategy, communication, leadership
                                 skills, and professional growth.
                             </p>
-                            <Link href="/education/career-development" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -205,7 +205,7 @@ const Page = () => {
                                 Guides and videos for trainees: rotations, sign-out habits,
                                 evaluation success, and wellness.
                             </p>
-                            <Link href="/education/resident-resources" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -221,7 +221,7 @@ const Page = () => {
                                 Step-by-step resources for applicants: CV, interviews,
                                 observerships, and U.S. pathway guidance.
                             </p>
-                            <Link href="/education/applicant-resources" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -237,7 +237,7 @@ const Page = () => {
                                 Printable quick-reference tools for daily sign-out and laboratory
                                 workflows.
                             </p>
-                            <Link href="/education/wallhangers" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -253,7 +253,7 @@ const Page = () => {
                                 Practical guidance about life in the U.S., legal/immigration
                                 recommendations, and helpful extras.
                             </p>
-                            <Link href="/education/miscellaneous" className={styles.cardLink}>
+                            <Link href="#" className={styles.cardLink}>
                                 Open →
                             </Link>
                         </div>
@@ -289,22 +289,16 @@ const Page = () => {
                             want to refresh or expand their diagnostic skills.
                         </p>
                         <div className={styles.caseOfMonthButtons}>
-                            <Link
-                                href="/education/case-of-month"
-                                className={styles.viewCasesButton}
-                            >
+                            <Link href="#" className={styles.viewCasesButton}>
                                 View cases
                             </Link>
-                            <Link
-                                href="mailto:admin@asrpath.org?subject=Case of the Month: Submission"
-                                className={styles.submitCaseButton}
-                            >
+                            <Link href="#" className={styles.submitCaseButton}>
                                 Submit a case
                             </Link>
                         </div>
                         <p className={styles.submissionNote}>
                             Want your case considered for publication? Email your draft to{" "}
-                            <a href="mailto:admin@asrpath.org">admin@asrpath.org</a> and include{" "}
+                            <a href="#">admin@asrpath.org</a> and include{" "}
                             <strong>"Case of the Month: Submission"</strong> in the subject line.
                         </p>
                     </div>
@@ -326,7 +320,6 @@ const Page = () => {
                         {/* Internal Library */}
                         <div className={styles.libraryCard}>
                             <div className={styles.libraryCardHeader}>
-                                {/* <span className={styles.libraryIcon}>🔒</span> */}
                                 <span className={styles.libraryBadge}>Internal</span>
                             </div>
                             <h3>Internal Library</h3>
@@ -339,7 +332,6 @@ const Page = () => {
                         {/* External Channels */}
                         <div className={styles.libraryCard}>
                             <div className={styles.libraryCardHeader}>
-                                {/* <span className={styles.libraryIcon}>🔒</span> */}
                                 <span className={styles.libraryBadgeExternal}>External</span>
                             </div>
                             <h3>External Channels</h3>
@@ -349,7 +341,6 @@ const Page = () => {
                         {/* Suggest */}
                         <div className={styles.libraryCard}>
                             <div className={styles.libraryCardHeader}>
-                                {/* <span className={styles.libraryIcon}>✅</span> */}
                                 <span className={styles.libraryBadgeSuggest}>Suggest</span>
                             </div>
                             <h3>Recommend a Resource</h3>
@@ -357,10 +348,7 @@ const Page = () => {
                                 Members can propose external videos/channels to be reviewed and
                                 added to the curated list.
                             </p>
-                            <Link
-                                href="/education/videos/suggest"
-                                className={styles.libraryCardLink}
-                            >
+                            <Link href="#" className={styles.libraryCardLink}>
                                 Send a suggestion →
                             </Link>
                         </div>
