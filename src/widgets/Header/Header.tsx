@@ -1,3 +1,5 @@
+"use client"
+
 import styles from "@/widgets/Header/Header.module.scss"
 import Logo from "@/shared/ui/LogoPlaceholder/Logo.tsx"
 import AuthStatus from "@/widgets/Header/ui/AuthStatus.tsx"
@@ -28,7 +30,9 @@ const Header = () => {
                                         })),
                                     }}
                                 >
-                                    <span className={styles.headerMenuItem}>{item.label}</span>
+                                    <button type="button" className={styles.headerMenuButton}>
+                                        {item.label}
+                                    </button>
                                 </Dropdown>
                             )
                         }

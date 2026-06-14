@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.activeStatus,
+.expiredStatus {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.activeStatus {
+    font-size: 16px;
+    color: var(--text-secondary-color-dark);
+}
+
+.expiredStatus {
+    color: var(--status-danger-text-color);
+}
+
+.description {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary-color-dark);
+}
+
+.expiredCard {
+    background: var(--status-danger-background-color);
+}
