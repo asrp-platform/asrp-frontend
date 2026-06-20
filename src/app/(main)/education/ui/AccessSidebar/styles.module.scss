@@ -1,0 +1,86 @@
+.accessSidebar {
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(10px);
+
+    h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .accessCard {
+        padding: 16px;
+        background: rgb(255 255 255 / 0.1);
+        border-radius: 16px;
+        margin-bottom: 12px;
+        border: 1px solid rgb(255 255 255 / 0.1);
+
+        .accessCardHeader {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+
+            .accessIcon {
+                font-size: 16px;
+            }
+
+            .accessLabel {
+                font-size: 14px;
+                font-weight: 600;
+                color: #fff;
+            }
+        }
+
+        p {
+            font-size: 14px;
+            color: rgb(255 255 255 / 0.8);
+            line-height: 1.5;
+            margin: 0;
+        }
+    }
+
+    .sidebarButtons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+
+        .loginButton {
+            padding: 12px 16px;
+            background: transparent;
+            color: #fff;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgb(255 255 255 / 0.3);
+
+            &:hover {
+                background: rgb(255 255 255 / 0.1);
+            }
+        }
+
+        .joinButton {
+            padding: 12px 16px;
+            background-color: #dc2626;
+            color: #fff;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+
+            &:hover {
+                background-color: #b91c1c;
+                transform: translateY(-2px);
+            }
+        }
+    }
+}
