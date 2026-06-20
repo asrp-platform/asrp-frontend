@@ -1,0 +1,131 @@
+.pageContainer {
+    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+    }
+}
+
+.heroContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 40px 24px;
+    background:
+        radial-gradient(circle at top center, rgba(132, 61, 74, 0.65), transparent 70%),
+        radial-gradient(circle at bottom center, rgba(84, 58, 140, 0.5), transparent 70%), #0b0910;
+    border-radius: 32px;
+    backdrop-filter: blur(10px);
+
+    @media (min-width: 1200px) {
+        grid-template-columns: 1fr 380px;
+        padding: 60px 48px;
+        align-items: start;
+    }
+}
+
+.heroContent {
+    color: #fff;
+
+    .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 16px;
+
+        a {
+            color: rgb(255 255 255 / 0.8);
+            text-decoration: none;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        .breadcrumbSeparator {
+            color: rgb(255 255 255 / 0.6);
+        }
+    }
+
+    h1 {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        line-height: 1.2;
+
+        @media (min-width: 1200px) {
+            font-size: 52px;
+        }
+    }
+
+    .heroDescription {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 16px;
+        color: rgb(255 255 255 / 0.9);
+
+        &:last-of-type {
+            margin-bottom: 32px;
+        }
+    }
+}
+
+.heroButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .browseCatalogButton {
+        padding: 14px 28px;
+        background-color: #dc2626;
+        color: #fff;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+
+        &:hover {
+            background-color: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgb(220 38 38 / 0.3);
+        }
+    }
+
+    .caseOfMonthButton {
+        padding: 14px 28px;
+        background: rgb(255 255 255 / 0.1);
+        color: #fff;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid rgb(255 255 255 / 0.3);
+        backdrop-filter: blur(10px);
+
+        &:hover {
+            background: rgb(255 255 255 / 0.2);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+.tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .tag {
+        padding: 6px 14px;
+        background: rgb(255 255 255 / 0.15);
+        border-radius: 999px;
+        font-size: 13px;
+        color: #fff;
+        border: 1px solid rgb(255 255 255 / 0.2);
+    }
+}
