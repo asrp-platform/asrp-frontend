@@ -15,8 +15,8 @@ import type { ColumnsType } from "antd/lib/table"
 import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"
 import { getBooleanColumnSearchProps } from "@/widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
 import { usePermissions } from "@/context/PermissionsProvider.tsx"
-import RoleTag from "@/app/(administration)/administration/users/tabs/ui/tags/RoleTag.tsx"
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
+import RoleTag from "./ui/tags/RoleTag"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -274,6 +274,7 @@ const UsersTable = () => {
     return (
         <>
             <Table
+                tableLayout="auto"
                 dataSource={tableData.data}
                 columns={columns}
                 pagination={{
@@ -286,9 +287,8 @@ const UsersTable = () => {
                 onChange={(pagination, filters, sorter) =>
                     handleTableChange(pagination, filters, sorter, setOrdering)
                 }
-                scroll={{ x: 1 }}
+                scroll={{ x: "max-content" }}
             />
-            {/*<PromoteToAdminModal />*/}
         </>
     )
 }

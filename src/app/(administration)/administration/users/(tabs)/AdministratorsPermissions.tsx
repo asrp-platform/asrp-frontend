@@ -14,9 +14,9 @@ import { Button, Flex, Table, Tag } from "antd"
 import Link from "next/link"
 import type { ColumnsType } from "antd/lib/table"
 import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
-import AdminCard from "@/app/(administration)/administration/users/tabs/ui/AdminCard.tsx"
 import type { IPermission } from "@/entities/Permission.ts"
-import UserPermissionsCard from "@/app/(administration)/administration/users/tabs/ui/AdminPermissionsCard.tsx"
+import AdminCard from "@app/(administration)/administration/users/(tabs)/ui/AdminCard.tsx"
+import UserPermissionsCard from "@app/(administration)/administration/users/(tabs)/ui/AdminPermissionsCard.tsx"
 
 interface ITableFilters {
     firstname__startswith?: string
