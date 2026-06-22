@@ -68,7 +68,7 @@ const UserDataCard = ({ userId }: IProps) => {
     return (
         // TODO: permissions="users.view"
         <AdminPermissionGuard permission="admin.view">
-            <Card title="User profile" variant="outlined">
+            <Card>
                 <Flex justify={"space-between"}>
                     <MainInformation user={user} />
                     <UserActions />
