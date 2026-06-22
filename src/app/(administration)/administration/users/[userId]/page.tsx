@@ -1,7 +1,7 @@
 "use client"
 
 import { useParams } from "next/navigation"
-import UserDataCard from "@app/(administration)/administration/users/[userId]/(ui)/UserDataCard/UserDataCard.tsx"
+import UserDataCard from "@app/(administration)/administration/users/[userId]/(ui)/UserDataCard.tsx"
 
 const Page = () => {
     const { userId } = useParams<{ userId: string }>()
