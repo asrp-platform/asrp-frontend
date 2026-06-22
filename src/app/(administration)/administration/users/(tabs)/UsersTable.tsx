@@ -6,7 +6,7 @@ import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import api from "@/axios.ts"
 import type { IUser } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { Button, Input, type InputRef, Table, Tag } from "antd"
+import { Button, Input, type InputRef, message, Table, Tag } from "antd"
 import type { FilterDropdownProps } from "antd/es/table/interface"
 
 import styles from "@/app/(administration)/administration/users/styles.module.scss"
@@ -17,6 +17,8 @@ import { getBooleanColumnSearchProps } from "@/widgets/TableDropdown/BooleanTabl
 import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 import RoleTag from "./ui/tags/RoleTag"
+import Link from "next/link"
+import { isAxiosError } from "axios"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -45,7 +47,6 @@ const UsersTable = () => {
         const fetchUsers = async () => {
             try {
                 setIsLoading(true)
-                console.log(ordering)
                 const response = await api.get<IPaginatedBackendResponse<IUser>>(
                     `${ADMIN_USERS_URL}`,
                     {
@@ -59,7 +60,35 @@ const UsersTable = () => {
                 )
                 setTableData(response.data)
             } catch (error) {
-                console.error(error)
+                if (!isAxiosError(error)) {
+                    message.error("Unexpected error/ Please try again later.")
+                    return
+                }
+
+                if (error.response === undefined) {
+                    message.error("Network error/ Check your internet connection and try again.")
+                    return
+                }
+                const { status, data } = error.response
+
+                switch (status) {
+                    case 400:
+                        message.error(data.detail ?? "Invalid request parameters.")
+                        break
+                    case 401:
+                        message.error("Your session has expired. Please sign in again.")
+                        break
+
+                    case 403:
+                        message.error("You do not have permission to view users.")
+                        break
+                    default:
+                        message.error(
+                            data.detail ??
+                                data.message ??
+                                "Something went wrong. Please try again later.",
+                        )
+                }
             } finally {
                 setIsLoading(false)
             }
@@ -181,6 +210,9 @@ const UsersTable = () => {
             dataIndex: "email",
             key: "email",
             ...getColumnSearchProps("email"),
+            render: (value: string, record: IUser) => (
+                <Link href={`/administration/users/${record.id}`}>{value}</Link>
+            ),
         },
         {
             title: "Phone",

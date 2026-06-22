@@ -47,15 +47,21 @@ const menuItems = [
     },
 ]
 
+const menuKeys = menuItems.map((item) => item.key).sort((a, b) => b.length - a.length)
+
 const AdminLayout = ({ children }: IProps) => {
     const router = useRouter()
     const pathname = usePathname()
     const [collapsed, setCollapsed] = useState(false)
 
     const selectedKey = useMemo(() => {
-        const match = menuItems.find((item) => pathname === item.key)
-        return match ? match.key : "/administration"
+        return (
+            menuKeys.find((key) => pathname === key || pathname.startsWith(`${key}/`)) ??
+            "/administration"
+        )
     }, [pathname])
+
+    const selectedKeys = useMemo(() => [selectedKey], [selectedKey])
 
     return (
         <Layout className={styles.layout}>
@@ -67,7 +73,7 @@ const AdminLayout = ({ children }: IProps) => {
                 <Menu
                     theme="dark"
                     mode="inline"
-                    selectedKeys={[selectedKey]}
+                    selectedKeys={selectedKeys}
                     items={menuItems}
                     onClick={({ key }) => router.push(key)}
                 />
