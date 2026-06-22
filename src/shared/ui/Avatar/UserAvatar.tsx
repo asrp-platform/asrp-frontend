@@ -2,12 +2,15 @@
 
 import type { IUser } from "@/entities/User.ts"
 import styles from "@/shared/ui/Avatar/avatar.module.scss"
-import { type ChangeEvent, type CSSProperties, useEffect, useState } from "react"
+import { type ChangeEvent, useEffect, useId, useState } from "react"
 import api from "@/axios.ts"
 import { message } from "antd"
 import CircularProgress from "@mui/material/CircularProgress"
 import { CURRENT_USER_AVATAR_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
 import { isAxiosError } from "axios"
+import UserAvatarView from "@/shared/ui/Avatar/UserAvatarView.tsx"
+import { CURRENT_USER_QUERY_KEY } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { useQueryClient } from "@tanstack/react-query"
 
 interface AvatarProps {
     user: IUser
@@ -18,8 +21,14 @@ interface AvatarProps {
 const MAX_FILE_SIZE_MB = 5
 
 const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
-    const [avatarPath, setAvatarPath] = useState<string | null>(null)
+    const avatarInputId = useId()
+    const queryClient = useQueryClient()
+    const [avatarUrl, setAvatarUrl] = useState<string | null>(user.avatar_url)
     const [isUploading, setIsUploading] = useState(false)
+
+    useEffect(() => {
+        setAvatarUrl(user.avatar_url)
+    }, [user.avatar_url])
 
     const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -41,11 +50,14 @@ const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
         try {
             setIsUploading(true)
 
-            const res = await api.put(CURRENT_USER_AVATAR_URL, formData, {
+            const res = await api.put<string>(CURRENT_USER_AVATAR_URL, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
 
-            setAvatarPath(res.data)
+            setAvatarUrl(res.data)
+            queryClient.setQueryData<IUser | undefined>(CURRENT_USER_QUERY_KEY, (currentUser) =>
+                currentUser ? { ...currentUser, avatar_url: res.data } : currentUser,
+            )
 
             message.success("Avatar updated successfully")
         } catch (error: unknown) {
@@ -61,29 +73,9 @@ const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
         }
     }
 
-    const avatarStyles: CSSProperties = size ? { width: size, height: size } : {}
-
-    useEffect(() => {
-        const getAvatarUrl = async () => {
-            try {
-                const response = await api.get(CURRENT_USER_AVATAR_URL)
-                setAvatarPath(response.data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getAvatarUrl()
-    }, [])
-
     return (
-        <div className={styles.avatarWrapper} style={avatarStyles}>
-            {avatarPath ? (
-                <img src={avatarPath} alt="avatar" className={styles.avatarImage} />
-            ) : (
-                <div className={styles.avatarFallback}>
-                    {user.firstname[0]} {user.lastname[0]}
-                </div>
-            )}
+        <div className={styles.editableAvatarWrapper}>
+            <UserAvatarView user={user} avatarUrl={avatarUrl} size={size} />
 
             {editable && (
                 <>
@@ -97,12 +89,12 @@ const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
                         <input
                             type="file"
                             accept="image/*"
-                            id="avatar-input"
+                            id={avatarInputId}
                             className={styles.avatarInput}
                             onChange={handleFileChange}
                             disabled={isUploading}
                         />
-                        <label htmlFor="avatar-input" className={styles.avatarLabel}>
+                        <label htmlFor={avatarInputId} className={styles.avatarLabel}>
                             Change
                         </label>
                     </div>

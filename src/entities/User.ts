@@ -24,10 +24,10 @@ export interface IUser {
     role: string
 
     avatar_path: string | null
+    avatar_url: string | null
     phone_number: string | null
 
     pending: boolean
-    email_confirmed: boolean
 
     created_at: string
     last_password_change: string | null

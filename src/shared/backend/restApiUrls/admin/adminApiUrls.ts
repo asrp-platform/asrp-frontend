@@ -3,7 +3,7 @@ import { ADMIN_URL } from "@/axios.ts"
 
 export const ADMIN_USERS_URL = `${ADMIN_URL}/users`
 
-export const getStuffUsersUrl = (userId: string | number) => `${ADMIN_USERS_URL}/${userId}`
+export const getAdminUsersUrl = (userId: string | number) => `${ADMIN_USERS_URL}/${userId}`
 
 export const getUserPermissionsStuffUrl = (userId: string | number) =>
     `${ADMIN_USERS_URL}/${userId}/permissions`
