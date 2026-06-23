@@ -33,6 +33,11 @@ export const LEGAL_DOCUMENTS_ADMIN_URL = `${ADMIN_URL}/legal-documents`
 // "http://localhost:8000/api/admin/legal-documents/bylaws"
 export const BYLAWS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/bylaws`
 
+export const SPONSORS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/sponsors`
+export const SPONSORS_LOGOS_ADMIN_URL = `${SPONSORS_ADMIN_URL}/logos`
+export const getSponsorAdminUrl = (sponsorId: number | string) =>
+    `${SPONSORS_ADMIN_URL}/${sponsorId}`
+
 // Feedback
 export const CONTACT_MESSAGES_ADMIN_URL = `${ADMIN_URL}/contact-messages`
 

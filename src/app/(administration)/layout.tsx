@@ -6,7 +6,7 @@ import {
     TeamOutlined,
     MailOutlined,
     DashboardOutlined,
-    FileTextOutlined,
+    SettingOutlined,
 } from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useMemo, useState } from "react"
@@ -41,9 +41,9 @@ const menuItems = [
         label: "Contact Messages",
     },
     {
-        key: "/administration/legal-documents",
-        icon: <FileTextOutlined />,
-        label: "Legal Documents",
+        key: "/administration/site-settings",
+        icon: <SettingOutlined />,
+        label: "Site Settings",
     },
 ]
 
