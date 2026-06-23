@@ -1,4 +1,4 @@
-import { Card, Checkbox, Button, Divider, Row, Col, Typography, Space } from "antd"
+import { Card, Checkbox, Button, Divider, Row, Typography, Space, Flex } from "antd"
 import { SafetyCertificateOutlined } from "@ant-design/icons"
 
 import type { IPermission } from "@/entities/Permission"
@@ -8,6 +8,8 @@ import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 
 const { Title, Text } = Typography
 
+type PermissionsByGroup = Record<string, IPermission[]>
+
 interface Props {
     allPermissions: IPermission[]
     selectedUserPermissions: IPermission[]
@@ -15,6 +17,23 @@ interface Props {
     setCheckedPermissions: Dispatch<SetStateAction<number[]>>
     loading: boolean
     onSave: () => void
+    isPermissionsUpdating: boolean
+}
+
+function groupPermissions(permissions: IPermission[]) {
+    return permissions.reduce<PermissionsByGroup>((acc, permission) => {
+        const [group, action] = permission.action.split(".")
+
+        if (!group || !action) return acc
+
+        if (!acc[group]) {
+            acc[group] = []
+        }
+
+        acc[group].push(permission)
+
+        return acc
+    }, {})
 }
 
 const UserPermissionsCard = ({
@@ -24,6 +43,7 @@ const UserPermissionsCard = ({
     setCheckedPermissions,
     loading,
     onSave,
+    isPermissionsUpdating,
 }: Props) => {
     const { permissions } = usePermissions()
 
@@ -46,60 +66,74 @@ const UserPermissionsCard = ({
         setCheckedPermissions([])
     }
 
+    const groupedPermissions = groupPermissions(allPermissions)
+
+    console.log(Object.entries(groupedPermissions))
+
     return (
-        <Card
-            loading={loading}
-            title={
-                <Space>
-                    <SafetyCertificateOutlined />
-                    <Title level={5} style={{ margin: 0 }}>
-                        Permissions
-                    </Title>
-                </Space>
-            }
-            extra={
-                canUpdate && (
+        <PermissionGuard allowed={canView}>
+            <Card
+                loading={loading}
+                title={
                     <Space>
-                        <Button size="small" onClick={selectAll}>
-                            Select all
-                        </Button>
-                        <Button size="small" onClick={clearAll}>
-                            Clear
+                        <SafetyCertificateOutlined />
+                        <Title level={5} style={{ margin: 0 }}>
+                            Permissions
+                        </Title>
+                    </Space>
+                }
+                extra={
+                    canUpdate && (
+                        <Space>
+                            <Button size="small" onClick={selectAll}>
+                                Select all
+                            </Button>
+                            <Button size="small" onClick={clearAll}>
+                                Clear
+                            </Button>
+                        </Space>
+                    )
+                }
+            >
+                <Text type="secondary">Manage administrative permissions for this user.</Text>
+
+                <Divider />
+
+                <Row gutter={[16, 12]}>
+                    {Object.entries(groupedPermissions).map(([group, currentGroupPermissions]) => {
+                        return (
+                            <Flex key={group} vertical gap={10}>
+                                <h4>
+                                    {group
+                                        .replace(/_/g, " ")
+                                        .replace(/\b\w/g, (char) => char.toUpperCase())}
+                                </h4>
+                                {currentGroupPermissions.map((p) => (
+                                    <Checkbox
+                                        key={p.id}
+                                        disabled={!canUpdate}
+                                        checked={checkedPermissions.includes(p.id)}
+                                        onChange={(e) => handleChange(p.id, e.target.checked)}
+                                    >
+                                        {p.name}
+                                    </Checkbox>
+                                ))}
+                            </Flex>
+                        )
+                    })}
+                </Row>
+
+                <Divider />
+
+                {canUpdate && (
+                    <Space style={{ width: "100%", justifyContent: "flex-end" }}>
+                        <Button loading={isPermissionsUpdating} type="primary" onClick={onSave}>
+                            Save permissions
                         </Button>
                     </Space>
-                )
-            }
-        >
-            <Text type="secondary">Manage administrative permissions for this user.</Text>
-
-            <Divider />
-
-            <PermissionGuard allowed={canView}>
-                <Row gutter={[16, 12]}>
-                    {allPermissions.map((permission) => (
-                        <Col xs={24} sm={12} md={8} lg={6} key={permission.id}>
-                            <Checkbox
-                                disabled={!canUpdate}
-                                checked={checkedPermissions.includes(permission.id)}
-                                onChange={(e) => handleChange(permission.id, e.target.checked)}
-                            >
-                                {permission.name}
-                            </Checkbox>
-                        </Col>
-                    ))}
-                </Row>
-            </PermissionGuard>
-
-            <Divider />
-
-            {canUpdate && (
-                <Space style={{ width: "100%", justifyContent: "flex-end" }}>
-                    <Button type="primary" onClick={onSave}>
-                        Save permissions
-                    </Button>
-                </Space>
-            )}
-        </Card>
+                )}
+            </Card>
+        </PermissionGuard>
     )
 }
 

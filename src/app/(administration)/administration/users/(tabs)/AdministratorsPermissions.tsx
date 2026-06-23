@@ -1,22 +1,25 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
-    getUserPermissionsStuffUrl,
+    getUserPermissionsAdminUrl,
     PERMISSIONS_LIST_URL,
     ADMIN_USERS_URL,
 } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
-import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import api from "@/axios.ts"
 import type { IUser } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { Button, Flex, Table, Tag } from "antd"
+import { Button, Flex, message, Table, Tag } from "antd"
 import Link from "next/link"
 import type { ColumnsType } from "antd/lib/table"
 import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
 import type { IPermission } from "@/entities/Permission.ts"
 import AdminCard from "@app/(administration)/administration/users/(tabs)/ui/AdminCard.tsx"
 import UserPermissionsCard from "@app/(administration)/administration/users/(tabs)/ui/AdminPermissionsCard.tsx"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -26,83 +29,67 @@ interface ITableFilters {
 }
 
 const AdministratorsPermissions = () => {
-    const [isLoading, setIsLoading] = useState(true)
+    const { data: currentUserPermissions = [], isLoading: isCurrentUserPermissionsLoading } =
+        useCurrentUserPermissionsQuery()
 
-    const [tableData, setTableData] = useState<IPaginatedBackendResponse<IUser> | null>(null)
-    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [page, setPage] = useState<number>(1)
     const [pageSize] = useState<number>(10)
+    const [ordering] = useState<string[]>([])
     const [filters, setFilters] = useState<ITableFilters>({ admin: true })
 
     const [selectedUser, setSelectedUser] = useState<IUser | null>(null)
 
-    const [allPermissions, setAllPermissions] = useState<IPermission[]>([])
     const [selectedUserPermissions, setSelectedUserPermissions] = useState<IPermission[]>([])
     const [checkedPermissions, setCheckedPermissions] = useState<number[]>([])
-    const [permissionsLoading, setPermissionsLoading] = useState(false)
+
+    const canManagePermissions = currentUserPermissions
+        .map((p) => p.action)
+        .includes("permissions.update")
+
+    const { data: allPermissions = [], isLoading: isPermissionsLoading } = useQuery({
+        queryKey: ["all-permissions-list"],
+        queryFn: async () => {
+            const result = await api.get<IPermission[]>(PERMISSIONS_LIST_URL)
+            return result.data
+        },
+    })
+
+    const { data: tableData, isLoading: isTableDataLoading } = useTableDataQuery<
+        IUser,
+        ITableFilters
+    >({
+        url: ADMIN_USERS_URL,
+        queryKey: ["permissions"],
+        page,
+        pageSize,
+        ordering,
+        filters,
+    })
 
     const fetchPermissions = async (user: IUser) => {
         try {
-            setPermissionsLoading(true)
-
-            const response = await api.get<IPermission[]>(getUserPermissionsStuffUrl(user.id))
-
+            const response = await api.get<IPermission[]>(getUserPermissionsAdminUrl(user.id))
             setSelectedUserPermissions(response.data)
-
             setCheckedPermissions(response.data.map((p) => p.id))
         } catch (error) {
-            console.error(error)
-        } finally {
-            setPermissionsLoading(false)
+            handleStatusError(error, {
+                404: "User with provided ID not found",
+            })
         }
     }
 
-    const updatePermissions = async () => {
-        if (!selectedUser) return
-
-        try {
-            await api.put(getUserPermissionsStuffUrl(selectedUser.id), checkedPermissions)
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                setIsLoading(true)
-                const response = await api.get<IPaginatedBackendResponse<IUser>>(
-                    `${ADMIN_USERS_URL}`,
-                    {
-                        params: {
-                            page: currentPage,
-                            page_size: pageSize,
-                            ...filters,
-                        },
-                    },
-                )
-                setTableData(response.data)
-            } catch (error) {
-                console.error(error)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-
-        fetchUsers()
-    }, [setTableData, pageSize, currentPage, filters])
-
-    useEffect(() => {
-        const fetchAllPermissions = async () => {
-            try {
-                const res = await api.get<IPermission[]>(PERMISSIONS_LIST_URL)
-                setAllPermissions(res.data)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        fetchAllPermissions()
-    }, [])
+    const { mutate: updatePermissions, isPending } = useMutation({
+        mutationFn: async () => {
+            if (!selectedUser) return
+            await api.put(getUserPermissionsAdminUrl(selectedUser.id), checkedPermissions)
+        },
+        onSuccess: () => message.success("Permissions updated successfully."),
+        onError: (error) => {
+            handleStatusError(error, {
+                404: "User with provided ID not found",
+            })
+        },
+    })
 
     const columns: ColumnsType<IUser> = [
         {
@@ -110,16 +97,20 @@ const AdministratorsPermissions = () => {
             dataIndex: "id",
             key: "manage_column",
             width: 80,
-            render: (_, record) => (
-                <Button
-                    onClick={() => {
-                        setSelectedUser(record)
-                        fetchPermissions(record)
-                    }}
-                >
-                    Manage
-                </Button>
-            ),
+            render: (_, record) => {
+                if (isCurrentUserPermissionsLoading) return
+                return (
+                    <Button
+                        disabled={!canManagePermissions}
+                        onClick={() => {
+                            setSelectedUser(record)
+                            fetchPermissions(record)
+                        }}
+                    >
+                        Manage
+                    </Button>
+                )
+            },
         },
         {
             title: "Firstname",
@@ -163,7 +154,7 @@ const AdministratorsPermissions = () => {
         },
     ]
 
-    if (isLoading || !tableData) {
+    if (isTableDataLoading || !tableData) {
         return <Loading />
     }
 
@@ -173,10 +164,10 @@ const AdministratorsPermissions = () => {
                 dataSource={tableData.data}
                 columns={columns}
                 pagination={{
-                    current: currentPage,
+                    current: page,
                     pageSize: pageSize,
                     total: tableData?.count,
-                    onChange: (page) => setCurrentPage(page),
+                    onChange: (page) => setPage(page),
                 }}
                 rowKey="id"
             />
@@ -188,8 +179,9 @@ const AdministratorsPermissions = () => {
                         selectedUserPermissions={selectedUserPermissions}
                         checkedPermissions={checkedPermissions}
                         setCheckedPermissions={setCheckedPermissions}
-                        loading={permissionsLoading}
+                        loading={isPermissionsLoading}
                         onSave={updatePermissions}
+                        isPermissionsUpdating={isPending}
                     />
                 </Flex>
             )}

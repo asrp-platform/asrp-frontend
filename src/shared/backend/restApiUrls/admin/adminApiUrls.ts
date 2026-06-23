@@ -5,7 +5,7 @@ export const ADMIN_USERS_URL = `${ADMIN_URL}/users`
 
 export const getAdminUsersUrl = (userId: string | number) => `${ADMIN_USERS_URL}/${userId}`
 
-export const getUserPermissionsStuffUrl = (userId: string | number) =>
+export const getUserPermissionsAdminUrl = (userId: string | number) =>
     `${ADMIN_USERS_URL}/${userId}/permissions`
 
 export const NAME_CHANGE_REQUESTS_URL = `${ADMIN_USERS_URL}/name-change-requests`

@@ -36,14 +36,6 @@ const AdminCard = ({ user }: Props) => {
                 <Text>
                     <b>Email:</b> {user.email}
                 </Text>
-
-                <Text>
-                    <b>Role:</b> {user.role}
-                </Text>
-
-                <Text>
-                    <b>Institution:</b> {user.institution}
-                </Text>
             </Flex>
         </Card>
     )
