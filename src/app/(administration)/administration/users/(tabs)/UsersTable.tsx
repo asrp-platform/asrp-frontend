@@ -43,6 +43,21 @@ const UsersTable = () => {
     const canPromoteAdminRole = permissions.includes("admin.create")
     const canRevokeAdminRole = permissions.includes("admin.delete")
 
+    const updateUserAdminRole = (targetUserId: string | number, isAdmin: boolean) => {
+        setTableData((current) => {
+            if (!current) {
+                return current
+            }
+
+            return {
+                ...current,
+                data: current.data.map((user) =>
+                    user.id === Number(targetUserId) ? { ...user, admin: isAdmin } : user,
+                ),
+            }
+        })
+    }
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -233,6 +248,7 @@ const UsersTable = () => {
                         canAssignRole={canRevokeAdminRole}
                         targetUserId={record.id}
                         role={"admin"}
+                        onRoleChanged={updateUserAdminRole}
                     >
                         Admin
                     </RoleTag>
@@ -241,6 +257,7 @@ const UsersTable = () => {
                         canAssignRole={canPromoteAdminRole}
                         targetUserId={record.id}
                         role={"member"}
+                        onRoleChanged={updateUserAdminRole}
                     >
                         Member
                     </RoleTag>
