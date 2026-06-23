@@ -9,8 +9,15 @@
 }
 
 .content {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     max-width: 500px;
+
+    a {
+        align-self: center;
+    }
 }
 
 .icon {
