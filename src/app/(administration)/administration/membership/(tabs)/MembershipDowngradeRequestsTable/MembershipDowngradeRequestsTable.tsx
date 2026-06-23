@@ -74,7 +74,7 @@ const MembershipDowngradeRequestsTable = () => {
             title: "User",
             key: "user",
             render: (_, record) => (
-                <Link href={`/users/${record.user_membership.user.id}`}>
+                <Link href={`/administration/users/${record.id}`}>
                     {record.user_membership.user.email}
                 </Link>
             ),

@@ -136,8 +136,8 @@ const AdministratorsPermissions = () => {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            render: (text, record: IUser) => (
-                <Link href={`/users/${record.id}/profile`}>{text}</Link>
+            render: (value, record: IUser) => (
+                <Link href={`/administration/users/${record.id}`}>{value}</Link>
             ),
             ...getInputColumnSearchProps("email", filters, setFilters),
         },
