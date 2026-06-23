@@ -1,6 +1,6 @@
 "use client"
 
-import { Checkbox, Form, type FormProps, Input, Typography } from "antd"
+import { Checkbox, Form, type FormProps, Input, message, Typography } from "antd"
 import styles from "@/app/(auth)/login/styles.module.scss"
 import Link from "next/link"
 import api from "@/axios.ts"
@@ -13,6 +13,8 @@ import { useAuth } from "@/context/AuthProvider.tsx"
 import useNotification from "antd/es/notification/useNotification"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import { useQueryClient } from "@tanstack/react-query"
+import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { useState } from "react"
 
 type FieldType = {
     email: string
@@ -26,10 +28,11 @@ const LoginForm = () => {
     const router = useRouter()
     const [form] = useForm()
 
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
     const { fetchUser } = useAuth()
 
     const queryClient = useQueryClient()
-
     const [notification, contextHolder] = useNotification()
 
     const openNotification = (pauseOnHover: boolean) => {
@@ -41,31 +44,40 @@ const LoginForm = () => {
         })
     }
 
-    const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-        const loginUser = async () => {
-            try {
-                const response = await api.post<LoginResponse>(LOGIN_URL, values)
-                localStorage.setItem("accessToken", response.data.access_token)
-                await fetchUser() // get user after getting the accessToken
-                await queryClient.invalidateQueries({
-                    queryKey: ["current-user"],
-                })
-                router.push("/")
-            } catch (error: unknown) {
-                if (isAxiosError(error)) {
-                    if (error.response?.status === 401) {
-                        form.setFields([
-                            { name: "email", errors: ["Wrong credentials"] },
-                            { name: "password", errors: ["Wrong credentials"] },
-                        ])
-                    } else {
-                        openNotification(false)
-                    }
-                }
+    const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+        try {
+            setIsLoading(true)
+            const response = await api.post<LoginResponse>(LOGIN_URL, values)
+            localStorage.setItem("accessToken", response.data.access_token)
+            await fetchUser() // get user after getting the accessToken
+            await queryClient.invalidateQueries({
+                queryKey: ["current-user"],
+            })
+            router.push("/")
+        } catch (error: unknown) {
+            if (!isAxiosError(error)) {
+                message.error("Unexpected error. Please try again later.")
+                return
             }
-        }
 
-        loginUser()
+            if (error.response === undefined) {
+                message.error("Network error. Check your internet connection and try again.")
+                return
+            }
+
+            if (error.response.status === 401) {
+                form.setFields([
+                    { name: "email", errors: ["Wrong credentials"] },
+                    { name: "password", errors: ["Wrong credentials"] },
+                ])
+            } else if (error.response.status === 422) {
+                setFormFieldsErrors(error, form)
+            } else {
+                openNotification(false)
+            }
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -105,7 +117,12 @@ const LoginForm = () => {
                 <Form.Item<FieldType> name="remember_me" valuePropName="checked">
                     <Checkbox checked={false}>Remember me</Checkbox>
                 </Form.Item>
-                <CustomButton variant={"primary-filled"} htmlType="submit" children={"Submit"} />
+                <CustomButton
+                    loading={isLoading}
+                    variant={"primary-filled"}
+                    htmlType="submit"
+                    children={"Submit"}
+                />
             </div>
         </Form>
     )
