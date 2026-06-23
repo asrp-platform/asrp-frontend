@@ -1,10 +1,11 @@
-import { Card, Checkbox, Button, Divider, Row, Typography, Space, Flex } from "antd"
-import { SafetyCertificateOutlined } from "@ant-design/icons"
+import { Card, Checkbox, Button, Typography, Space, Flex, Tag } from "antd"
+import { SafetyCertificateOutlined, CheckCircleOutlined } from "@ant-design/icons"
 
 import type { IPermission } from "@/entities/Permission"
 import type { Dispatch, SetStateAction } from "react"
 import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
+import styles from "./AdminCards.module.scss"
 
 const { Title, Text } = Typography
 
@@ -12,7 +13,6 @@ type PermissionsByGroup = Record<string, IPermission[]>
 
 interface Props {
     allPermissions: IPermission[]
-    selectedUserPermissions: IPermission[]
     checkedPermissions: number[]
     setCheckedPermissions: Dispatch<SetStateAction<number[]>>
     loading: boolean
@@ -36,9 +36,12 @@ function groupPermissions(permissions: IPermission[]) {
     }, {})
 }
 
+function formatPermissionGroup(group: string) {
+    return group.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())
+}
+
 const UserPermissionsCard = ({
     allPermissions,
-    selectedUserPermissions,
     checkedPermissions,
     setCheckedPermissions,
     loading,
@@ -59,7 +62,7 @@ const UserPermissionsCard = ({
     }
 
     const selectAll = () => {
-        setCheckedPermissions(selectedUserPermissions.map((p) => p.id))
+        setCheckedPermissions(allPermissions.map((p) => p.id))
     }
 
     const clearAll = () => {
@@ -67,70 +70,91 @@ const UserPermissionsCard = ({
     }
 
     const groupedPermissions = groupPermissions(allPermissions)
-
-    console.log(Object.entries(groupedPermissions))
+    const selectedPermissionsCount = checkedPermissions.length
+    const totalPermissionsCount = allPermissions.length
 
     return (
         <PermissionGuard allowed={canView}>
             <Card
+                className={styles.permissionsCard}
                 loading={loading}
                 title={
-                    <Space>
-                        <SafetyCertificateOutlined />
-                        <Title level={5} style={{ margin: 0 }}>
-                            Permissions
-                        </Title>
+                    <Space size={10}>
+                        <span className={styles.titleIcon}>
+                            <SafetyCertificateOutlined />
+                        </span>
+                        <Flex vertical gap={0}>
+                            <Title level={5} className={styles.cardTitle}>
+                                Permissions
+                            </Title>
+                            <Text className={styles.titleHint}>Administrative access control</Text>
+                        </Flex>
                     </Space>
                 }
                 extra={
                     canUpdate && (
-                        <Space>
-                            <Button size="small" onClick={selectAll}>
-                                Select all
-                            </Button>
+                        <Space wrap>
                             <Button size="small" onClick={clearAll}>
                                 Clear
+                            </Button>
+                            <Button size="small" type="primary" ghost onClick={selectAll}>
+                                Select all
                             </Button>
                         </Space>
                     )
                 }
             >
-                <Text type="secondary">Manage administrative permissions for this user.</Text>
+                <div className={styles.permissionsSummary}>
+                    <div>
+                        <Text className={styles.summaryLabel}>Selected permissions</Text>
+                        <div className={styles.summaryValue}>
+                            {selectedPermissionsCount}
+                            <span> / {totalPermissionsCount}</span>
+                        </div>
+                    </div>
+                    <Tag className={styles.summaryTag} icon={<CheckCircleOutlined />}>
+                        {Object.keys(groupedPermissions).length} groups
+                    </Tag>
+                </div>
 
-                <Divider />
-
-                <Row gutter={[16, 12]}>
+                <div className={styles.permissionGroups}>
                     {Object.entries(groupedPermissions).map(([group, currentGroupPermissions]) => {
                         return (
-                            <Flex key={group} vertical gap={10}>
-                                <h4>
-                                    {group
-                                        .replace(/_/g, " ")
-                                        .replace(/\b\w/g, (char) => char.toUpperCase())}
-                                </h4>
-                                {currentGroupPermissions.map((p) => (
-                                    <Checkbox
-                                        key={p.id}
-                                        disabled={!canUpdate}
-                                        checked={checkedPermissions.includes(p.id)}
-                                        onChange={(e) => handleChange(p.id, e.target.checked)}
-                                    >
-                                        {p.name}
-                                    </Checkbox>
-                                ))}
-                            </Flex>
+                            <section key={group} className={styles.permissionGroup}>
+                                <div className={styles.permissionGroupHeader}>
+                                    <Text strong>{formatPermissionGroup(group)}</Text>
+                                    <Tag className={styles.permissionCountTag}>
+                                        {currentGroupPermissions.length}
+                                    </Tag>
+                                </div>
+
+                                <Flex vertical gap={8}>
+                                    {currentGroupPermissions.map((p) => (
+                                        <Checkbox
+                                            key={p.id}
+                                            className={styles.permissionCheckbox}
+                                            disabled={!canUpdate}
+                                            checked={checkedPermissions.includes(p.id)}
+                                            onChange={(e) => handleChange(p.id, e.target.checked)}
+                                        >
+                                            <span className={styles.permissionName}>{p.name}</span>
+                                            <span className={styles.permissionAction}>
+                                                {p.action}
+                                            </span>
+                                        </Checkbox>
+                                    ))}
+                                </Flex>
+                            </section>
                         )
                     })}
-                </Row>
-
-                <Divider />
+                </div>
 
                 {canUpdate && (
-                    <Space style={{ width: "100%", justifyContent: "flex-end" }}>
+                    <div className={styles.permissionsFooter}>
                         <Button loading={isPermissionsUpdating} type="primary" onClick={onSave}>
                             Save permissions
                         </Button>
-                    </Space>
+                    </div>
                 )}
             </Card>
         </PermissionGuard>

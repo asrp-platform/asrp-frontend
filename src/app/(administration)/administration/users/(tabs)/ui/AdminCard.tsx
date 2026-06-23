@@ -1,7 +1,7 @@
-import { Card, Typography, Flex, Space } from "antd"
+import { Card, Typography, Flex, Space, Tag, Avatar } from "antd"
 import type { IUser } from "@/entities/User.ts"
-import { UserOutlined } from "@ant-design/icons"
-import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
+import { IdcardOutlined, MailOutlined, UserOutlined } from "@ant-design/icons"
+import styles from "./AdminCards.module.scss"
 
 interface Props {
     user: IUser
@@ -9,33 +9,64 @@ interface Props {
 
 const { Title, Text } = Typography
 
+const getInitials = (user: IUser) => {
+    return `${user.firstname[0] ?? ""}${user.lastname[0] ?? ""}`.toUpperCase()
+}
+
 const AdminCard = ({ user }: Props) => {
     return (
         <Card
-            style={{ minWidth: 320 }}
+            className={styles.adminCard}
             title={
-                <Space>
-                    <UserOutlined />
-                    <Title level={5} style={{ margin: 0 }}>
+                <Space size={10}>
+                    <span className={styles.titleIcon}>
+                        <UserOutlined />
+                    </span>
+                    <Title level={5} className={styles.cardTitle}>
                         User
                     </Title>
                 </Space>
             }
         >
-            <Flex vertical gap={8}>
-                <UserAvatar user={user} size={120} />
+            <Flex vertical gap={16} align="center">
+                <div className={styles.avatarFrame}>
+                    <Avatar
+                        className={styles.adminAvatar}
+                        size={80}
+                        src={user.avatar_url ?? undefined}
+                        icon={!user.avatar_url ? <UserOutlined /> : undefined}
+                    >
+                        {!user.avatar_url && getInitials(user)}
+                    </Avatar>
+                </div>
 
-                <Text>
-                    <b>ID:</b> {user.id}
-                </Text>
+                <Flex vertical gap={6} align="center" className={styles.userHeading}>
+                    <Title level={4} className={styles.userName}>
+                        {user.firstname} {user.lastname}
+                    </Title>
+                    <Space size={6} wrap>
+                        <Tag color={user.admin ? "volcano" : "blue"}>
+                            {user.admin ? "Admin" : "Member"}
+                        </Tag>
+                        {user.role && <Tag>{user.role}</Tag>}
+                    </Space>
+                </Flex>
 
-                <Text>
-                    <b>Name:</b> {user.firstname} {user.lastname}
-                </Text>
+                <div className={styles.userMetaList}>
+                    <div className={styles.userMetaItem}>
+                        <IdcardOutlined />
+                        <Text type="secondary">ID</Text>
+                        <Text strong>{user.id}</Text>
+                    </div>
 
-                <Text>
-                    <b>Email:</b> {user.email}
-                </Text>
+                    <div className={styles.userMetaItem}>
+                        <MailOutlined />
+                        <Text type="secondary">Email</Text>
+                        <Text strong copyable className={styles.emailText}>
+                            {user.email}
+                        </Text>
+                    </div>
+                </div>
             </Flex>
         </Card>
     )

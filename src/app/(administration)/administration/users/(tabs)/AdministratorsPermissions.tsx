@@ -9,17 +9,19 @@ import {
 import api from "@/axios.ts"
 import type { IUser } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { Button, Flex, message, Table, Tag } from "antd"
+import { Button, Card, Flex, message, Table, Tag } from "antd"
 import Link from "next/link"
 import type { ColumnsType } from "antd/lib/table"
 import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
 import type { IPermission } from "@/entities/Permission.ts"
 import AdminCard from "@app/(administration)/administration/users/(tabs)/ui/AdminCard.tsx"
 import UserPermissionsCard from "@app/(administration)/administration/users/(tabs)/ui/AdminPermissionsCard.tsx"
+import styles from "@app/(administration)/administration/users/(tabs)/ui/AdminCards.module.scss"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
+import { CloseOutlined } from "@ant-design/icons"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -39,7 +41,6 @@ const AdministratorsPermissions = () => {
 
     const [selectedUser, setSelectedUser] = useState<IUser | null>(null)
 
-    const [selectedUserPermissions, setSelectedUserPermissions] = useState<IPermission[]>([])
     const [checkedPermissions, setCheckedPermissions] = useState<number[]>([])
 
     const canManagePermissions = currentUserPermissions
@@ -69,7 +70,6 @@ const AdministratorsPermissions = () => {
     const fetchPermissions = async (user: IUser) => {
         try {
             const response = await api.get<IPermission[]>(getUserPermissionsAdminUrl(user.id))
-            setSelectedUserPermissions(response.data)
             setCheckedPermissions(response.data.map((p) => p.id))
         } catch (error) {
             handleStatusError(error, {
@@ -172,18 +172,28 @@ const AdministratorsPermissions = () => {
                 rowKey="id"
             />
             {selectedUser && (
-                <Flex gap={20} align="start">
-                    <AdminCard user={selectedUser} />
-                    <UserPermissionsCard
-                        allPermissions={allPermissions}
-                        selectedUserPermissions={selectedUserPermissions}
-                        checkedPermissions={checkedPermissions}
-                        setCheckedPermissions={setCheckedPermissions}
-                        loading={isPermissionsLoading}
-                        onSave={updatePermissions}
-                        isPermissionsUpdating={isPending}
-                    />
-                </Flex>
+                <Card
+                    extra={
+                        <Button
+                            type="text"
+                            icon={<CloseOutlined />}
+                            onClick={() => setSelectedUser(null)}
+                            aria-label="Close permissions card"
+                        />
+                    }
+                >
+                    <Flex gap={20} align="start" wrap className={styles.adminPermissionsPanel}>
+                        <AdminCard user={selectedUser} />
+                        <UserPermissionsCard
+                            allPermissions={allPermissions}
+                            checkedPermissions={checkedPermissions}
+                            setCheckedPermissions={setCheckedPermissions}
+                            loading={isPermissionsLoading}
+                            onSave={updatePermissions}
+                            isPermissionsUpdating={isPending}
+                        />
+                    </Flex>
+                </Card>
             )}
         </>
     )
