@@ -4,8 +4,8 @@ import { Alert, Button, Input, Modal } from "antd"
 import styles from "./ActionsCell.module.scss"
 import { MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import api from "@/axios.ts"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/rest-api-urls/admin/membershipsUrls.ts"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@/shared/backend/rest-api-urls/admin/membershipsAdminUrls"
 
 type UpdateMembershipRequestPayload = {
     requestId: number | string
