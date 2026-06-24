@@ -5,9 +5,8 @@ import styles from "./ActionsCell.module.scss"
 import { MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import api from "@/axios.ts"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
-
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 
 type UpdateMembershipRequestPayload = {
     requestId: number | string
