@@ -1,18 +1,21 @@
 # syntax=docker/dockerfile:1.7
 
-# ---------- deps ----------
-FROM node:20-alpine AS deps
+FROM node:20-bookworm-slim AS base
+
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
+
+# ---------- dependencies ----------
+FROM base AS deps
 
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --prefer-offline --no-audit --no-fund
+
+RUN --mount=type=cache,id=asrp-frontend-npm-cache,target=/root/.npm \
+    npm ci --prefer-offline --no-audit --no-fund
 
 
 # ---------- build ----------
-FROM node:20-alpine AS builder
-WORKDIR /app
+FROM base AS builder
 
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
@@ -23,14 +26,13 @@ COPY . .
 RUN npm run build
 
 
-# ---------- runtime ----------
-FROM node:20-alpine AS runner
+# ---------- production ----------
+FROM node:20-bookworm-slim AS runner
+
 WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-
-RUN apk add --no-cache libc6-compat
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
