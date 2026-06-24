@@ -44,3 +44,5 @@ export const CONTACT_MESSAGES_ADMIN_URL = `${ADMIN_URL}/contact-messages`
 //Answer for feedback
 export const getContactMessageReplyUrl = (messageId: number) =>
     `${CONTACT_MESSAGES_ADMIN_URL}/${messageId}/answers`
+
+export const HEAR_ABOUT_STATISTICS_ADMIN_URL = `${ADMIN_URL}/feedback-additional-info/hear-about-stats`
