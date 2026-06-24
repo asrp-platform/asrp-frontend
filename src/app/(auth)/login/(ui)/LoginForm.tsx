@@ -9,7 +9,6 @@ import { LOGIN_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { isAxiosError } from "axios"
 import { useRouter } from "next/navigation"
 import { useForm } from "antd/es/form/Form"
-import { useAuth } from "@/context/AuthProvider.tsx"
 import useNotification from "antd/es/notification/useNotification"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import { useQueryClient } from "@tanstack/react-query"
@@ -30,8 +29,6 @@ const LoginForm = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const { fetchUser } = useAuth()
-
     const queryClient = useQueryClient()
     const [notification, contextHolder] = useNotification()
 
@@ -49,7 +46,6 @@ const LoginForm = () => {
             setIsLoading(true)
             const response = await api.post<LoginResponse>(LOGIN_URL, values)
             localStorage.setItem("accessToken", response.data.access_token)
-            await fetchUser() // get user after getting the accessToken
             await queryClient.invalidateQueries({
                 queryKey: ["current-user"],
             })
