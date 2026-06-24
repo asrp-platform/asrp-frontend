@@ -22,9 +22,12 @@ const Header = () => {
                                         items: item.children.map((item: HeaderMenuItem) => ({
                                             key: item.key,
                                             label: (
-                                                <a className={styles.headerMenuItem} href={item.to}>
+                                                <Link
+                                                    className={styles.headerMenuItem}
+                                                    href={item.to}
+                                                >
                                                     {item.label}
-                                                </a>
+                                                </Link>
                                             ),
                                         })),
                                     }}

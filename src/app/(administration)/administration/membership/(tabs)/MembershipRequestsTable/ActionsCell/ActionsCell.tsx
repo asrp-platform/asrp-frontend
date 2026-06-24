@@ -1,12 +1,12 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Alert, Button, Input, Modal } from "antd"
 
 import styles from "./ActionsCell.module.scss"
 import { MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import api from "@/axios.ts"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 type UpdateMembershipRequestPayload = {
     requestId: number | string
@@ -32,12 +32,18 @@ interface IProps {
 }
 
 const ActionsCell = ({ membershipRequestId }: IProps) => {
+    const { data: permissions = [] } = useCurrentUserPermissionsQuery()
+
     const queryClient = useQueryClient()
-    const { permissions } = usePermissions()
+
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [adminComment, setAdminComment] = useState("")
 
-    const canUpdate = permissions.includes("memberships.update")
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
+
+    const canUpdate = permissionsActions.includes("memberships.update")
 
     const mutation = useMutation({
         mutationFn: updateMembershipRequest,

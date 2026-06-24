@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { ADMIN_USERS_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import api from "@/axios.ts"
@@ -14,11 +14,11 @@ import type { Key } from "react"
 import type { ColumnsType } from "antd/lib/table"
 import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"
 import { getBooleanColumnSearchProps } from "@/widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 import RoleTag from "./ui/tags/RoleTag"
 import Link from "next/link"
 import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -29,7 +29,11 @@ interface ITableFilters {
 }
 
 const UsersTable = () => {
-    const { permissions } = usePermissions()
+    const { data: permissions = [] } = useCurrentUserPermissionsQuery()
+
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
 
     const [isLoading, setIsLoading] = useState(true)
     const [tableData, setTableData] = useState<IPaginatedBackendResponse<IUser> | null>()
@@ -40,8 +44,8 @@ const UsersTable = () => {
     const [ordering, setOrdering] = useState<string[]>([])
     const searchInput = useRef<InputRef>(null)
 
-    const canPromoteAdminRole = permissions.includes("admin.create")
-    const canRevokeAdminRole = permissions.includes("admin.delete")
+    const canPromoteAdminRole = permissionsActions.includes("admin.create")
+    const canRevokeAdminRole = permissionsActions.includes("admin.delete")
 
     const updateUserAdminRole = (targetUserId: string | number, isAdmin: boolean) => {
         setTableData((current) => {

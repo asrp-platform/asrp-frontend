@@ -9,27 +9,34 @@ import styles from "@/app/(main)/about/directors-board/(components)/DirectorsBoa
 
 import CircularProgress from "@mui/material/CircularProgress"
 import ViewCard from "@/app/(main)/about/directors-board/(components)/ViewCard/ViewCard.tsx"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import { useIsMobile } from "@/shared/hooks/useIsMobile.ts"
 import { DIRECTORS_BOARD_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 const DirectorsBoard = () => {
     const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
-    const { permissions, isPermissionsLoading } = usePermissions()
+    const { data: permissions = [], isLoading: isPermissionsLoading } =
+        useCurrentUserPermissionsQuery()
     const isMobile = useIsMobile()
 
     const [directorMembers, setDirectorMembers] = useState<IDirectorsBoardMember[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [draggingCard, setDraggingCard] = useState<IDirectorsBoardMember | null>(null)
 
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
+
     const canManageDirectorMembers = useMemo(() => {
-        return currentUser?.admin && permissions.includes("directors_board.update")
-    }, [currentUser?.admin, permissions])
+        return currentUser?.admin && permissionsActions.includes("directors_board.update")
+    }, [currentUser?.admin, permissionsActions])
 
     const canCreate = useMemo(() => {
-        return currentUser?.admin && permissions.includes("directors_board.create") && !isMobile
-    }, [currentUser?.admin, permissions, isMobile])
+        return (
+            currentUser?.admin && permissionsActions.includes("directors_board.create") && !isMobile
+        )
+    }, [currentUser?.admin, permissionsActions, isMobile])
 
     const isAccessContextPending =
         isCurrentUserLoading || (Boolean(currentUser?.admin) && isPermissionsLoading)

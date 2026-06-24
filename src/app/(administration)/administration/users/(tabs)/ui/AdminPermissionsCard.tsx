@@ -2,10 +2,10 @@ import { Card, Checkbox, Button, Typography, Space, Flex, Tag } from "antd"
 import { SafetyCertificateOutlined, CheckCircleOutlined } from "@ant-design/icons"
 
 import type { IPermission } from "@/entities/Permission"
-import type { Dispatch, SetStateAction } from "react"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import { type Dispatch, type SetStateAction, useMemo } from "react"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 import styles from "./AdminCards.module.scss"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 const { Title, Text } = Typography
 
@@ -48,10 +48,14 @@ const UserPermissionsCard = ({
     onSave,
     isPermissionsUpdating,
 }: Props) => {
-    const { permissions } = usePermissions()
+    const { data: permissions = [] } = useCurrentUserPermissionsQuery()
 
-    const canView = permissions.includes("permissions.view")
-    const canUpdate = permissions.includes("permissions.update")
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
+
+    const canView = permissionsActions.includes("permissions.view")
+    const canUpdate = permissionsActions.includes("permissions.update")
 
     const handleChange = (id: number, checked: boolean) => {
         if (checked) {

@@ -1,5 +1,7 @@
 import styles from "@/shared/ui/NotAuthorized/NotAuthorized.module.scss"
 import { ShieldAlert } from "lucide-react"
+import PrimaryLinkOutlined from "@shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
+import SecondaryLinkOutlined from "@shared/ui/Buttons/SecondaryLinkOutilned/SecondaryLinkOutlined.tsx"
 
 const NotAuthorized = () => {
     return (
@@ -14,12 +16,8 @@ const NotAuthorized = () => {
             </p>
 
             <div className={styles.actions}>
-                <a href="/login" className={styles.primaryLink}>
-                    Sign in
-                </a>
-                <a href="/" className={styles.secondaryLink}>
-                    Go to homepage
-                </a>
+                <PrimaryLinkOutlined href="/login">Sign in</PrimaryLinkOutlined>
+                <SecondaryLinkOutlined href="/signup">Go to homepage</SecondaryLinkOutlined>
             </div>
 
             <p className={styles.helperText}>

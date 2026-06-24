@@ -1,7 +1,6 @@
 import { Card, Space, message } from "antd"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
 
 import {
@@ -14,18 +13,26 @@ import {
 import SponsorCreateForm from "./SponsorCreateForm"
 import SponsorsTable from "./SponsorsTable"
 import type { SponsorFormValues } from "./types"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import { useMemo } from "react"
 
 const SponsorsManagement = () => {
-    const { permissions } = usePermissions()
     const queryClient = useQueryClient()
 
-    const canCreate = permissions.includes("legal_documents.create")
-    const canDelete = permissions.includes("legal_documents.delete")
+    const { data: permissions = [], isLoading: isPermissionsLoading } =
+        useCurrentUserPermissionsQuery()
 
     const sponsorsQuery = useQuery({
         queryKey: SPONSORS_QUERY_KEY,
         queryFn: fetchSponsors,
     })
+
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
+
+    const canCreate = permissionsActions.includes("legal_documents.create")
+    const canDelete = permissionsActions.includes("legal_documents.delete")
 
     const createMutation = useMutation({
         mutationFn: async ({
@@ -98,7 +105,7 @@ const SponsorsManagement = () => {
 
                 <SponsorsTable
                     sponsors={sponsorsQuery.data ?? []}
-                    isLoading={sponsorsQuery.isLoading}
+                    isLoading={sponsorsQuery.isLoading || isPermissionsLoading}
                     canDelete={canDelete}
                     deletingSponsorId={
                         deleteMutation.isPending ? deleteMutation.variables : undefined

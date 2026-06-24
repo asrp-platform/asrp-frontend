@@ -3,6 +3,7 @@
 import styles from "@/context/CookieConsentProvider/CookieBanner/styles.module.scss"
 import { useState } from "react"
 import { Button, Checkbox, Typography } from "antd"
+import Link from "next/link"
 
 const { Title, Paragraph, Text } = Typography
 
@@ -72,7 +73,7 @@ const CookieBanner = ({ onClose }: IProps) => {
                     <Paragraph>
                         We use cookies to improve user experience. Choose what cookies you allow us
                         to use. You can read more about our Cookie Policy in our{" "}
-                        <a href="/policies">Privacy policy</a>.
+                        <Link href="/policies">Privacy policy</Link>.
                     </Paragraph>
                 </div>
                 <div className={styles.footer}>
