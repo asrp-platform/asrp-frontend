@@ -52,3 +52,15 @@
     justify-content: flex-end;
     gap: 10px;
 }
+
+.bannedUserRow {
+    :global(.ant-table-cell) {
+        background-color: #fff3f3;
+    }
+
+    &:hover {
+        :global(.ant-table-cell) {
+            background-color: #ffe1de !important;
+        }
+    }
+}

@@ -28,6 +28,8 @@ export interface IUser {
     phone_number: string | null
 
     pending: boolean
+    banned: boolean
+    ban_reason: string | null
 
     created_at: string
     last_password_change: string | null

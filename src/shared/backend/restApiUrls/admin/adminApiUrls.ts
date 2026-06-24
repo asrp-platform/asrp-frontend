@@ -8,6 +8,8 @@ export const getAdminUsersUrl = (userId: string | number) => `${ADMIN_USERS_URL}
 export const getUserPermissionsAdminUrl = (userId: string | number) =>
     `${ADMIN_USERS_URL}/${userId}/permissions`
 
+export const getUserBanAdminUrl = (userId: string | number) => `${ADMIN_USERS_URL}/${userId}/ban`
+
 export const NAME_CHANGE_REQUESTS_URL = `${ADMIN_USERS_URL}/name-change-requests`
 
 export const getUserNameChangeRequestById = (userId: number | string, requestId: number | string) =>

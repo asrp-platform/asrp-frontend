@@ -44,6 +44,7 @@ const MainInformation = ({ user }: IProps) => {
 
                 <Space wrap>
                     {user.admin && <Tag color="purple">Administrator</Tag>}
+                    {user.banned && <Tag color="red">Banned</Tag>}
 
                     {user.pending ? (
                         <Tag color="orange">Registration incomplete</Tag>

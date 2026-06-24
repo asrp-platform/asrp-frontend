@@ -25,6 +25,7 @@ interface ITableFilters {
     lastname__startswith?: string
     email__startswith?: string
     pending?: boolean
+    banned?: boolean
     admin?: string
 }
 
@@ -277,6 +278,20 @@ const UsersTable = () => {
             ...getBooleanColumnSearchProps<ITableFilters>("pending", filters, setFilters),
         },
         {
+            title: "Banned",
+            dataIndex: "banned",
+            key: "banned",
+            render: (value: boolean | undefined, record) =>
+                value ? (
+                    <Tag color="red" title={record.ban_reason ?? undefined}>
+                        Yes
+                    </Tag>
+                ) : (
+                    <Tag color="green">No</Tag>
+                ),
+            ...getBooleanColumnSearchProps<ITableFilters>("banned", filters, setFilters),
+        },
+        {
             title: "Created At",
             dataIndex: "created_at",
             key: "created_at",
@@ -309,6 +324,7 @@ const UsersTable = () => {
                     onChange: (page) => setCurrentPage(page),
                 }}
                 rowKey="id"
+                rowClassName={(record) => (record.banned ? styles.bannedUserRow : "")}
                 onChange={(pagination, filters, sorter) =>
                     handleTableChange(pagination, filters, sorter, setOrdering)
                 }

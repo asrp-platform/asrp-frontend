@@ -71,7 +71,7 @@ const UserDataCard = ({ userId }: IProps) => {
             <Card>
                 <Flex justify={"space-between"}>
                     <MainInformation user={user} />
-                    <UserActions />
+                    <UserActions user={user} />
                 </Flex>
                 <Divider />
 
