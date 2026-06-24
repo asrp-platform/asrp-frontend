@@ -55,7 +55,7 @@ const MembershipRequestsTable = () => {
             title: "User",
             key: "user",
             render: (_, record) => (
-                <Link href={`/users/${record.user?.id}`}>{record.user?.email}</Link>
+                <Link href={`/administration/users/${record.id}`}>{record.user?.email}</Link>
             ),
         },
         {

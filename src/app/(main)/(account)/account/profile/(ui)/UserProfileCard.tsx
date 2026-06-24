@@ -10,6 +10,8 @@ import ProfessionalInfoForm from "@/app/(main)/(account)/account/profile/(forms)
 import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
 import api from "@/axios.ts"
 import { CURRENT_USER_AVATAR_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
+import { CURRENT_USER_QUERY_KEY } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { useQueryClient } from "@tanstack/react-query"
 
 interface IProps {
     user: IUser
@@ -18,12 +20,16 @@ interface IProps {
 const UserProfileCard = ({ user }: IProps) => {
     const [isDeletingAvatar, setIsDeletingAvatar] = useState(false)
     const [messageApi, contextHolder] = message.useMessage()
+    const queryClient = useQueryClient()
 
     const deleteAvatar = async () => {
         setIsDeletingAvatar(true)
 
         try {
             await api.delete(CURRENT_USER_AVATAR_URL)
+            queryClient.setQueryData<IUser | undefined>(CURRENT_USER_QUERY_KEY, (currentUser) =>
+                currentUser ? { ...currentUser, avatar_url: null } : currentUser,
+            )
             messageApi.success("Avatar deleted successfully")
         } catch (error) {
             console.error(error)
@@ -57,7 +63,7 @@ const UserProfileCard = ({ user }: IProps) => {
                 <div className={styles.avatarContainer}>
                     <div className={styles.avatarInnerContainer}>
                         <UserAvatar user={user} editable size={120} />
-                        {user.avatar_path && (
+                        {user.avatar_url && (
                             <Button
                                 danger
                                 loading={isDeletingAvatar}

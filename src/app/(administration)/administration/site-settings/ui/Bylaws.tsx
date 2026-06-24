@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Card, Button, Upload, Typography, Space, message } from "antd"
 import { UploadOutlined, EyeOutlined } from "@ant-design/icons"
 import { BYLAWS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
@@ -6,18 +6,23 @@ import api from "@/axios.ts"
 import { isAxiosError } from "axios"
 import { BYLAWS_API_URL, BYLAWS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 const { Text } = Typography
 
 export const BylawsFileCard = () => {
-    const { permissions } = usePermissions()
+    const { data: permissions = [] } = useCurrentUserPermissionsQuery()
+
     const [isLoading, setIsLoading] = useState(true)
     const [isUploading, setIsUploading] = useState(false)
     const [bylawsFileExists, setBylawsFileExists] = useState<boolean>(false)
 
-    const canUpdate = permissions.includes("legal_documents.update")
-    const canDelete = permissions.includes("legal_documents.delete")
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
+
+    const canUpdate = permissionsActions.includes("legal_documents.update")
+    const canDelete = permissionsActions.includes("legal_documents.delete")
 
     useEffect(() => {
         const fetchBylaws = async () => {
