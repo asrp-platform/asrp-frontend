@@ -5,6 +5,7 @@ import AuthStatus from "@/widgets/Header/ui/AuthStatus.tsx"
 import { type HeaderMenuItem, headerMenuItems } from "@/widgets/Header/headerMenuItems.tsx"
 import SideMenu from "@/widgets/Header/ui/SideMenu.tsx"
 import { Dropdown } from "antd"
+import Link from "next/link"
 
 const Header = () => {
     return (
@@ -21,23 +22,28 @@ const Header = () => {
                                         items: item.children.map((item: HeaderMenuItem) => ({
                                             key: item.key,
                                             label: (
-                                                <a className={styles.headerMenuItem} href={item.to}>
+                                                <Link
+                                                    className={styles.headerMenuItem}
+                                                    href={item.to}
+                                                >
                                                     {item.label}
-                                                </a>
+                                                </Link>
                                             ),
                                         })),
                                     }}
                                 >
-                                    <span className={styles.headerMenuItem}>{item.label}</span>
+                                    <button type="button" className={styles.headerMenuButton}>
+                                        {item.label}
+                                    </button>
                                 </Dropdown>
                             )
                         }
 
                         return (
                             <div key={item.key}>
-                                <a className={styles.headerMenuItem} href={item.to}>
+                                <Link className={styles.headerMenuItem} href={item.to}>
                                     {item.label}
-                                </a>
+                                </Link>
                             </div>
                         )
                     })}

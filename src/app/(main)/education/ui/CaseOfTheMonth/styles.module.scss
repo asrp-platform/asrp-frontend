@@ -1,0 +1,112 @@
+.pageContainer {
+    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+    }
+}
+
+.caseOfMonthSection {
+    margin-top: 60px;
+
+    .caseOfMonthHeader {
+        margin-bottom: 32px;
+
+        .featuredLabel {
+            color: var(--text-primary-color-red);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary-color-dark);
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-secondary-color-dark);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+    }
+}
+
+.caseOfMonthCard {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
+
+    p {
+        font-size: 15px;
+        color: var(--text-secondary-color-dark);
+        line-height: 1.7;
+        margin-bottom: 16px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    .caseOfMonthButtons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 24px 0;
+
+        .viewCasesButton {
+            padding: 12px 16px;
+            background-color: #dc2626;
+            color: #fff;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+
+            &:hover {
+                background-color: #b91c1c;
+                transform: translateY(-2px);
+            }
+        }
+
+        .submitCaseButton {
+            padding: 12px 16px;
+            background: #fff;
+            color: var(--text-primary-color-dark);
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+
+            &:hover {
+                background: #f8fafc;
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    .submissionNote {
+        font-size: 14px;
+        color: var(--text-muted-color-dark);
+
+        a {
+            color: var(--text-primary-color-red);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

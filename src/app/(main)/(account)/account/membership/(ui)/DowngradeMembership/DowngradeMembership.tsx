@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useMembershipTypesQuery } from "@shared/backend/queries/membership/useMembershipTypesQuery.ts"
 import api from "@/axios.ts"
-import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL } from "@shared/backend/rest-api-urls/currentUserUrls.ts"
+import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
 import { useQueryClient } from "@tanstack/react-query"
@@ -92,7 +92,7 @@ const DowngradeMembership = ({ disabled }: DowngradeMembershipProps) => {
     return (
         <>
             <CustomButton
-                variant={"secondary"}
+                variant={"primary"}
                 onClick={() => setIsModalOpen(true)}
                 disabled={disabled}
             >

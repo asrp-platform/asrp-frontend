@@ -14,8 +14,6 @@ interface IProps {
 const Logo = ({ clickable = true, width = 48, height = 48 }: IProps) => {
     const router = useRouter()
 
-    // const isMobile = useIsMobile()
-
     const handleLogoClick = () => {
         if (window.location.pathname === "/") {
             window.location.reload()
@@ -27,21 +25,6 @@ const Logo = ({ clickable = true, width = 48, height = 48 }: IProps) => {
     return (
         <div className={styles.logoPlaceholder} onClick={clickable ? handleLogoClick : undefined}>
             <Image height={height} width={width} src="/logo/png/LogoLightVertical.png" alt="logo" />
-            {/*{isMobile ? (*/}
-            {/*    <Image*/}
-            {/*        height={height}*/}
-            {/*        width={width}*/}
-            {/*        src="/logo/png/LogoLightHorizontal.png"*/}
-            {/*        alt="logo"*/}
-            {/*    />*/}
-            {/*) : (*/}
-            {/*    <Image*/}
-            {/*        width={width}*/}
-            {/*        height={height}*/}
-            {/*        src="/logo/png/LogoLightVertical.png"*/}
-            {/*        alt="logo"*/}
-            {/*    />*/}
-            {/*)}*/}
         </div>
     )
 }

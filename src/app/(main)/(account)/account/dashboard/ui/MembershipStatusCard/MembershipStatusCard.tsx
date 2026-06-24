@@ -6,7 +6,12 @@ import MembershipRequestCard from "@app/(main)/(account)/account/(shared)/Member
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import ApplyMembershipCard from "@/app/(main)/(account)/account/dashboard/ui/ApplyMembershipCard/ApplyMembershipCard.tsx"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
-import MembershipCard from "@app/(main)/(account)/account/(shared)/MembershipCard/MembershipCard.tsx"
+import MembershipStatus from "@app/(main)/(account)/account/membership/(ui)/MembershipStatus/MembershipStatus.tsx"
+import {
+    AccountMembershipStatus,
+    resolveAccountMembershipStatus,
+} from "@app/(main)/(account)/account/(shared)/membershipStatus.ts"
+import type { ReactNode } from "react"
 
 const MembershipStatusCard = () => {
     const { data: membershipRequest, isLoading: isMembershipRequestLoading } =
@@ -18,15 +23,25 @@ const MembershipStatusCard = () => {
         return <Loading />
     }
 
-    if (membership) {
-        return <MembershipCard membership={membership} variant={"compact"} />
+    const membershipStatus = resolveAccountMembershipStatus({ membership, membershipRequest })
+
+    const renderers: Record<AccountMembershipStatus, () => ReactNode> = {
+        [AccountMembershipStatus.NONE]: () => <ApplyMembershipCard />,
+        [AccountMembershipStatus.REQUEST_PENDING]: () => (
+            <MembershipRequestCard membershipRequest={membershipStatus.membershipRequest!} />
+        ),
+        [AccountMembershipStatus.REQUEST_REJECTED]: () => (
+            <MembershipRequestCard membershipRequest={membershipStatus.membershipRequest!} />
+        ),
+        [AccountMembershipStatus.ACTIVE]: () => (
+            <MembershipStatus membership={membershipStatus.membership!} />
+        ),
+        [AccountMembershipStatus.EXPIRED]: () => (
+            <MembershipStatus membership={membershipStatus.membership!} />
+        ),
     }
 
-    if (!membership && membershipRequest) {
-        return <MembershipRequestCard membershipRequest={membershipRequest} />
-    }
-
-    return <ApplyMembershipCard />
+    return renderers[membershipStatus.status]()
 }
 
 export default MembershipStatusCard

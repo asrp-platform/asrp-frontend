@@ -62,3 +62,11 @@
         color: inherit;
     }
 }
+
+.headerMenuButton {
+    @extend .headerMenuItem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: inherit;
+}

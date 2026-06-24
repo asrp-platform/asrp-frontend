@@ -1,47 +1,50 @@
+@use "../../../../shared/mixins" as m;
+
 .page {
-    min-height: 100vh;
-    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 45%, #f1f5f9 100%);
-    padding: 64px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.container {
-    width: 100%;
-    max-width: 900px;
-}
-
-.card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 32px;
-    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
-    padding: 48px;
-}
-
-.header {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    gap: var(--general-vertical-blocks-gap);
+    min-height: 70vh;
+    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+    color: var(--text-primary-color-dark);
+
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+    }
+}
+
+.hero {
+    @include m.heading-card-container;
+    background: var(--background-heading-gradient);
+    color: var(--text-primary-color-light);
+
+    h1 {
+        color: var(--text-highlight-main-color-light);
+        font-size: 2.25rem;
+    }
+
+    p {
+        max-width: 720px;
+        color: var(--text-primary-color-light);
+    }
 }
 
 .iconWrapper {
-    width: 80px;
-    height: 80px;
-    border-radius: 999px;
-    background: #dcfce7;
+    width: 76px;
+    height: 76px;
+    border-radius: var(--pill-border-radius);
+    background: rgb(255 255 255 / 0.16);
+    border: 1px solid rgb(255 255 255 / 0.32);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .icon {
-    width: 44px;
-    height: 44px;
-    color: #16a34a;
+    width: 42px;
+    height: 42px;
+    color: var(--text-highlight-main-color-light);
 }
 
 .badge {
@@ -49,61 +52,50 @@
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    border-radius: 999px;
-    border: 1px solid #bbf7d0;
-    background: #f0fdf4;
-    color: #15803d;
+    border-radius: var(--pill-border-radius);
+    border: 1px solid rgb(255 255 255 / 0.36);
+    background: rgb(255 255 255 / 0.14);
+    color: var(--text-highlight-main-color-light);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 16px;
 }
 
-.title {
-    margin: 0;
-    color: #0f172a;
-    font-size: 40px;
-    line-height: 1.15;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-}
-
-.description {
-    max-width: 700px;
-    margin: 20px 0 0;
-    color: #475569;
-    font-size: 18px;
-    line-height: 1.7;
+.details {
+    @include m.main-page-card;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .infoGrid {
-    margin-top: 40px;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
+
+    @media (min-width: 900px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .infoCard {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 24px;
+    background: var(--surface-muted-color);
+    border: var(--light-border);
+    border-radius: var(--card-border-radius);
     padding: 24px;
-}
 
-.infoTitle {
-    margin: 0;
-    color: #64748b;
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.4;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
+    h2 {
+        margin: 0;
+        color: var(--text-primary-color-dark);
+        font-size: 20px;
+        font-weight: 600;
+    }
 
-.infoText {
-    margin: 14px 0 0;
-    color: #334155;
-    font-size: 15px;
-    line-height: 1.7;
+    p {
+        margin-top: 10px;
+        color: var(--text-secondary-color-dark);
+        font-size: 16px;
+        line-height: var(--paragraph-line-height);
+    }
 }
 
 .emailLink {
@@ -111,57 +103,52 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #0369a1;
+    color: var(--text-primary-color-red);
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: 0.3s ease-in-out;
 
     &:hover {
-        color: #075985;
+        color: var(--button-primary-red-hover);
+        transform: translateY(-1px);
     }
 }
 
 .note {
-    margin-top: 32px;
     padding: 20px 24px;
-    border: 1px solid #dbeafe;
-    border-radius: 24px;
-    background: #f0f9ff;
+    border: var(--red-border);
+    border-radius: var(--card-border-radius);
+    background: var(--surface-danger-hover-color);
 
     p {
         margin: 0;
-        color: #334155;
-        font-size: 15px;
-        line-height: 1.7;
+        color: var(--text-secondary-color-dark);
+        font-size: 16px;
+        line-height: var(--paragraph-line-height);
     }
 }
 
 .actions {
-    margin-top: 32px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
 .primaryButton,
 .secondaryButton {
-    min-height: 48px;
-    padding: 0 24px;
-    border-radius: 18px;
+    min-height: 44px;
+    padding: 0 20px;
+    border-radius: var(--pill-border-radius);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+    transition: 0.3s ease-in-out;
 
     &:hover {
         transform: translateY(-1px);
@@ -169,51 +156,41 @@
 }
 
 .primaryButton {
-    background: #0f172a;
-    color: #ffffff;
-    border: 1px solid #0f172a;
+    background: var(--button-primary-red);
+    color: var(--text-highlight-main-color-light);
+    border: 1px solid var(--button-primary-red);
+
+    &:visited {
+        color: var(--text-highlight-main-color-light);
+    }
 
     &:hover {
-        background: #1e293b;
-        border-color: #1e293b;
+        background: var(--button-primary-red-hover);
+        border-color: var(--button-primary-red-hover);
     }
 }
 
 .secondaryButton {
-    background: #ffffff;
-    color: #334155;
-    border: 1px solid #cbd5e1;
+    background: var(--button-primary-light);
+    color: var(--text-primary-color-dark);
+    border: var(--light-border);
 
     &:hover {
-        background: #f8fafc;
-        border-color: #94a3b8;
+        color: var(--text-secondary-color-dark);
+        background: var(--button-primary-light-hover);
     }
 }
 
 @media (max-width: 768px) {
-    .page {
-        padding: 32px 16px;
-    }
-
-    .card {
-        padding: 32px 20px;
-        border-radius: 24px;
-    }
-
-    .title {
-        font-size: 30px;
-    }
-
-    .description {
-        font-size: 16px;
-    }
-
-    .infoGrid {
-        grid-template-columns: 1fr;
+    .hero {
+        h1 {
+            font-size: 30px;
+        }
     }
 
     .actions {
         flex-direction: column;
+        align-items: stretch;
     }
 
     .primaryButton,

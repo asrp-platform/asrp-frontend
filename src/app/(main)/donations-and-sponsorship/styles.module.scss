@@ -1,0 +1,379 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+        gap: 5vh;
+    }
+}
+
+.heroSection {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    padding: 3rem 1.5rem;
+    background-color: #171717;
+    border-radius: 1.5rem;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(circle at top, #fb7185 0, transparent 60%),
+            radial-gradient(circle at bottom, #8b5cf6 0, transparent 55%);
+        opacity: 45%;
+    }
+}
+
+.heroWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+
+        & > :first-child {
+            flex: 1;
+            min-width: 0;
+        }
+    }
+}
+
+.heroTitle {
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    color: #ffa2a2;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+}
+
+.heroSubtitle {
+    margin-bottom: 1.5rem;
+    font-size: 30px;
+    line-height: 36px;
+    font-weight: 500;
+    color: #fcf9fa;
+}
+
+.heroDescription {
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+    line-height: 20px;
+    color: #e2e8f0;
+}
+
+.heroButtons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+    line-height: 20px;
+    color: #e2e8f0;
+
+    & a {
+        color: #e2e8f0;
+        border-color: #cad5e2;
+    }
+}
+
+.heroDisclaimer {
+    font-size: 12px;
+    line-height: 16px;
+    color: #cad5e2;
+}
+
+.sponsorsSection {
+    padding: 24px;
+    background-color: #0a0a0a66;
+    border-radius: 24px;
+
+    @media (min-width: 768px) {
+        align-self: center;
+        width: clamp(240px, 31.25vw, 390px);
+        height: fit-content;
+    }
+}
+
+.sponsorsTitle {
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    color: #fcf9fa;
+}
+
+/* ─── Shared section layout ─────────────────────────────── */
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    border: none;
+}
+
+.sectionIntro {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Section label (red/green uppercase above heading) */
+.sectionLabel {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    color: #e7000b;
+}
+
+.sectionLabelGreen {
+    composes: sectionLabel;
+    color: #00bc7d;
+}
+
+/* Section heading */
+.sectionHeading {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+    color: #0f172b;
+}
+
+/* Section body text */
+.sectionBody {
+    font-size: 14px;
+    line-height: 20px;
+    color: #45556c;
+}
+
+/* ─── Shared bullet list ────────────────────────────────── */
+
+.bulletList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #314158;
+}
+
+.bulletItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+
+    &::before {
+        content: "";
+        margin-top: 4px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        background-color: #fb2c36;
+    }
+}
+
+.bulletItemGreen {
+    composes: bulletItem;
+
+    &::before {
+        background-color: #00bc7d;
+    }
+}
+
+/* ─── Shared card ───────────────────────────────────────── */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    box-shadow:
+        0 1px 3px 0 #0000001a,
+        0 1px 2px -1px #0000001a;
+}
+
+.cardElevated {
+    composes: card;
+    gap: 16px;
+    padding: 40px 24px;
+}
+
+.cardMuted {
+    composes: card;
+    gap: 4px;
+    padding: 20px;
+    background-color: #f8fafc;
+}
+
+.cardTitle {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 600;
+    color: #0f172b;
+}
+
+.cardSubtitle {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    color: #0f172b;
+}
+
+.cardBody {
+    font-size: 12px;
+    line-height: 16px;
+    color: #45556c;
+}
+
+/* ─── Shared card grid ──────────────────────────────────── */
+
+.cardGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
+}
+
+/* ─── Impact section ────────────────────────────────────── */
+
+.impactSection {
+    composes: section;
+}
+
+/* ─── Donate section ────────────────────────────────────── */
+
+.donateSection {
+    composes: section;
+}
+
+.donateActionButton {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 20px;
+
+    & a {
+        padding: 10px 20px;
+        width: fit-content;
+    }
+
+    & span {
+        font-size: 11px;
+        line-height: 16px;
+        color: #314158;
+    }
+}
+
+/* ─── Corporate section ─────────────────────────────────── */
+
+.corporateSection {
+    composes: section;
+}
+
+.corporateCardContentWrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.corporateCardLink {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.corporateOptionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
+}
+
+/* ─── FAQ section ───────────────────────────────────────── */
+
+.faqSection {
+    composes: section;
+}
+
+.faqList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: 768px) {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.faqQuestion {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    color: #0f172b;
+}
+
+.faqAnswer {
+    font-size: 12px;
+    line-height: 16px;
+    color: #45556c;
+}
+
+/* ─── Contact section ───────────────────────────────────── */
+
+.contactSection {
+    composes: section;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
+}
+
+.contactList {
+    composes: card;
+    gap: 16px;
+}
+
+.contactItem {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &:first-child {
+        border-bottom: 1px solid #f9f3f4;
+        padding-bottom: 8px;
+    }
+
+    & h4 {
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 600;
+        color: #314158;
+    }
+
+    & p {
+        font-size: 12px;
+        line-height: 16px;
+        color: #314158;
+    }
+}

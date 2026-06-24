@@ -10,7 +10,7 @@ import {
 } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
 import { isAxiosError } from "axios"
 import api from "@/axios.ts"
-import { CURRENT_USER_MEMBERSHIP_REQUEST_REAPPLIES_URL } from "@shared/backend/rest-api-urls/currentUserUrls.ts"
+import { CURRENT_USER_MEMBERSHIP_REQUEST_REAPPLIES_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
 import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
 import { useQueryClient } from "@tanstack/react-query"
 import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
@@ -110,7 +110,7 @@ const ReapplyMembershipButton = () => {
 
     return (
         <>
-            <CustomButton onClick={() => setIsModalOpen(true)} variant={"secondary"}>
+            <CustomButton onClick={() => setIsModalOpen(true)} variant={"primary"}>
                 Reapply
             </CustomButton>
             <Modal

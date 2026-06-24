@@ -1,0 +1,245 @@
+.cardTitle {
+    margin: 0 !important;
+}
+
+.titleIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #fff1f0;
+    color: #cf1322;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminPermissionsPanel {
+    width: 100%;
+}
+
+.titleHint {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.25;
+}
+
+.adminCard {
+    min-width: 300px;
+    width: 320px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 28px rgb(15 23 42 / 0.06);
+
+    :global(.ant-card-head) {
+        background: linear-gradient(180deg, #fff7ed 0%, #fff 100%);
+        border-bottom-color: #fed7aa;
+    }
+}
+
+.avatarFrame {
+    padding: 6px;
+    border-radius: 50%;
+    background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(135deg, #dc2626, #f97316, #2563eb) border-box;
+    border: 2px solid transparent;
+    box-shadow: 0 10px 24px rgb(15 23 42 / 0.12);
+}
+
+.adminAvatar {
+    display: block;
+    background: #e2e8f0;
+
+    :global(img) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.userHeading {
+    width: 100%;
+    text-align: center;
+}
+
+.userName {
+    margin: 0 !important;
+    color: #0f172a !important;
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+    overflow-wrap: anywhere;
+}
+
+.userMetaList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.userMetaItem {
+    display: grid;
+    grid-template-columns: 18px minmax(44px, 64px) minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 8px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+
+    > span:first-child {
+        color: #dc2626;
+    }
+}
+
+.emailText {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.permissionsCard {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 28px rgb(15 23 42 / 0.06);
+
+    :global(.ant-card-head) {
+        background: linear-gradient(180deg, #eff6ff 0%, #fff 100%);
+        border-bottom-color: #bfdbfe;
+    }
+}
+
+.permissionsSummary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    border: 1px solid #dbeafe;
+    border-radius: 8px;
+    background: #f8fbff;
+}
+
+.summaryLabel {
+    display: block;
+    color: #64748b;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.summaryValue {
+    color: #0f172a;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+
+    span {
+        color: #64748b;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+.summaryTag {
+    margin: 0;
+    border-color: #bfdbfe;
+    color: #1d4ed8;
+    background: #eff6ff;
+}
+
+.permissionGroups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.permissionGroup {
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.permissionGroupHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.permissionCountTag {
+    margin: 0;
+    color: #475569;
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.permissionCheckbox {
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 10px;
+    margin-inline-start: 0 !important;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: #f8fafc;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+
+    &:hover {
+        border-color: #bfdbfe;
+        background: #eff6ff;
+    }
+
+    :global(.ant-checkbox + span) {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding-inline-start: 10px;
+    }
+}
+
+.permissionName {
+    color: #0f172a;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.permissionAction {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.permissionsFooter {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 900px) {
+    .adminCard {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .permissionsSummary {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .permissionGroups {
+        grid-template-columns: 1fr;
+    }
+}

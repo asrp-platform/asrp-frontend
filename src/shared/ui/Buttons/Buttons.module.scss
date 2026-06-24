@@ -6,26 +6,38 @@
     cursor: pointer;
     align-self: flex-start;
 
-    &.primary {
+    &.primary-filled {
         background: var(--button-primary-red);
         color: white;
         border: none;
     }
 
-    &.primary:hover {
+    &.primary-filled:hover {
         transform: translateY(-1px);
         background: var(--button-primary-red-hover);
     }
 
-    &.secondary {
+    &.primary {
         background: transparent;
         border: var(--red-border);
         color: var(--button-primary-red);
     }
 
-    &.secondary:hover {
+    &.primary:hover {
         transform: translateY(-1px);
         background: var(--surface-danger-hover-color);
+    }
+
+    &.secondary {
+        border: 1px solid #cbd5f5;
+        background: var(--button-primary-light);
+        color: var(--text-primary-color-dark);
+    }
+
+    &.secondary:hover {
+        color: var(--text-secondary-color-dark);
+        transform: translateY(-1px);
+        background: var(--button-primary-light-hover);
     }
 
     &:disabled {
@@ -82,11 +94,29 @@
         transform: translateY(-1px);
     }
 
+    &.red {
+        color: #ffffff;
+        background-color: #e7000b;
+
+        &:hover {
+            background-color: #c10007;
+        }
+    }
+
     &.blue {
         background-color: #91caff;
 
         &:hover {
             background-color: #bae0ff;
+        }
+    }
+
+    &.default {
+        border-width: 1px;
+        border-style: solid;
+
+        &:hover {
+            backdrop-filter: contrast(0.8);
         }
     }
 }

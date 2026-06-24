@@ -10,6 +10,13 @@ import NoMembershipCard from "@app/(main)/(account)/account/membership/(ui)/NoMe
 import MembershipRequestCard from "@app/(main)/(account)/account/(shared)/MembershipRequestCard/MembershipRequestCard.tsx"
 
 import styles from "./styles.module.scss"
+import QuickActions from "@app/(main)/(account)/account/membership/(ui)/QuickActions/QuickActions.tsx"
+import {
+    AccountMembershipStatus,
+    resolveAccountMembershipStatus,
+} from "@app/(main)/(account)/account/(shared)/membershipStatus.ts"
+import type { ReactNode } from "react"
+import MembershipBenefits from "@app/(main)/(account)/account/membership/(ui)/MembershipBenefits/MembershipBenefits.tsx"
 
 const Page = () => {
     const { data: membership, isLoading: isMembershipLoading } = useCurrentUserMembershipQuery()
@@ -23,20 +30,35 @@ const Page = () => {
         return <Loading />
     }
 
-    let content
+    const membershipStatus = resolveAccountMembershipStatus({ membership, membershipRequest })
 
-    if (membership) {
-        content = <MembershipCard membership={membership} variant="detailed" />
-    } else if (membershipRequest) {
-        content = <MembershipRequestCard membershipRequest={membershipRequest} />
-    } else {
-        content = <NoMembershipCard />
+    const renderers: Record<AccountMembershipStatus, () => ReactNode> = {
+        [AccountMembershipStatus.NONE]: () => <NoMembershipCard />,
+        [AccountMembershipStatus.REQUEST_PENDING]: () => (
+            <MembershipRequestCard membershipRequest={membershipStatus.membershipRequest!} />
+        ),
+        [AccountMembershipStatus.REQUEST_REJECTED]: () => (
+            <MembershipRequestCard membershipRequest={membershipStatus.membershipRequest!} />
+        ),
+        [AccountMembershipStatus.ACTIVE]: () => (
+            <>
+                <MembershipCard membership={membershipStatus.membership!} variant="detailed" />
+                <MembershipBenefits />
+                <QuickActions variant="active" />
+            </>
+        ),
+        [AccountMembershipStatus.EXPIRED]: () => (
+            <>
+                <MembershipCard membership={membershipStatus.membership!} variant="detailed" />
+                <QuickActions variant="expired" />
+            </>
+        ),
     }
 
     return (
         <div className={styles.pageContainer}>
             <ProfileHeaderSection title="Membership" subtitle="Manage your ASRP membership." />
-            {content}
+            {renderers[membershipStatus.status]()}
         </div>
     )
 }

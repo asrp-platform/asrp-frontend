@@ -12,9 +12,10 @@ import { useState } from "react"
 import styles from "@app/(auth)/registration/styles.module.scss"
 import { Role } from "@shared/types/types.ts"
 import api from "@/axios.ts"
-import { REGISTER_URL } from "@shared/backend/rest-api-urls/restApiUrls.ts"
+import { REGISTER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import type { IBackendErrorResponse } from "@shared/types/interfaces.ts"
 import ResendEmailConfirmationButton from "@features/ResendEmailConfirmation/ResendEmailConfirmationButton.tsx"
+import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 const { Paragraph, Text } = Typography
 
@@ -73,10 +74,19 @@ const RegisterForm = () => {
                         }
                     } else if (error.response?.status === 422) {
                         if (typeof errorResponseDetail !== "string") {
-                            const fieldErrors = errorResponseDetail.errors.map((error) => ({
-                                name: error.field,
-                                errors: [error.message],
-                            }))
+                            const fieldErrors = errorResponseDetail.errors.flatMap((error) => {
+                                if (
+                                    error.field === "" &&
+                                    error.message === "Passwords do not match"
+                                ) {
+                                    return [
+                                        { name: "password", errors: [error.message] },
+                                        { name: "repeat_password", errors: [error.message] },
+                                    ]
+                                }
+
+                                return [{ name: error.field, errors: [error.message] }]
+                            })
                             form.setFields(fieldErrors)
                         }
                     } else {
@@ -197,7 +207,19 @@ const RegisterForm = () => {
                     <Form.Item<FieldType>
                         label="Repeat password"
                         name="repeat_password"
-                        rules={[{ required: true, message: "Please repeat your password" }]}
+                        dependencies={["password"]}
+                        rules={[
+                            { required: true, message: "Please repeat your password" },
+                            ({ getFieldValue }) => ({
+                                validator(_, value: string | undefined) {
+                                    if (!value || getFieldValue("password") === value) {
+                                        return Promise.resolve()
+                                    }
+
+                                    return Promise.reject(new Error("Passwords do not match"))
+                                },
+                            }),
+                        ]}
                     >
                         <Input.Password className={styles.antdInput} />
                     </Form.Item>
@@ -222,9 +244,9 @@ const RegisterForm = () => {
                 </div>
 
                 <div className={styles.submitButtonContainer}>
-                    <Button type="primary" htmlType="submit" className={styles.submitButton}>
+                    <CustomButton variant="primary-filled" htmlType="submit">
                         Submit
-                    </Button>
+                    </CustomButton>
                 </div>
             </Form>
         </>

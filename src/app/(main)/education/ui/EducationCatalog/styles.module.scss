@@ -1,0 +1,52 @@
+.pageContainer {
+    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+    }
+}
+
+.catalogSection {
+    margin-top: 60px;
+
+    .catalogHeader {
+        margin-bottom: 40px;
+
+        .catalogLabel {
+            color: var(--text-primary-color-red);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-primary-color-dark);
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-secondary-color-dark);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+    }
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
