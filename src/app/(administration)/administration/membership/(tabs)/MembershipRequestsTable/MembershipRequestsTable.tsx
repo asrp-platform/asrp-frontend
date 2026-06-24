@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { type IMembershipRequest, MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 import { Table } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
@@ -10,6 +9,7 @@ import Link from "next/link"
 import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/ActionsCell/ActionsCell.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import MembershipRequestStatusTag from "@shared/ui/Tags/MembershipRequestStatusTag/MembershipRequestStatusTag.tsx"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum
