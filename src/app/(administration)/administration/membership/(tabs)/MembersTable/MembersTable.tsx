@@ -10,11 +10,11 @@ import ManageUserMembership from "@app/(administration)/administration/membershi
 import MembershipStatusTag from "@app/(administration)/administration/membership/(tabs)/MembersTable/MembershipStatusTag.tsx"
 
 interface IFilters {
-    user_id: string
+    user_id: string | null
 }
 
 const initialFilters: IFilters = {
-    user_id: "",
+    user_id: null,
 }
 
 const MembersTable = () => {

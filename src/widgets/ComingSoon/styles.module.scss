@@ -1,7 +1,7 @@
 @use "../../shared/mixins" as m;
 
 .wrapper {
-    min-height: 60vh;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,8 +9,15 @@
 }
 
 .content {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     max-width: 500px;
+
+    a {
+        align-self: center;
+    }
 }
 
 .icon {

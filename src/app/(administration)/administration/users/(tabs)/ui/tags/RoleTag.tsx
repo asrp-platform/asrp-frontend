@@ -1,22 +1,24 @@
 "use client"
 
 import { type ReactNode, useState } from "react"
-import { Tag } from "antd"
-import { PromoteToAdminModal } from "@/app/(administration)/administration/users/tabs/ui/PromoteAdminRoleModal.tsx"
+import { message, Tag } from "antd"
 import { isAxiosError } from "axios"
 import api from "@/axios.ts"
-import { getStuffUsersUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { getAdminUsersUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { PromoteToAdminModal } from "@app/(administration)/administration/users/(tabs)/ui/PromoteAdminRoleModal.tsx"
 
 interface IProps {
     canAssignRole: boolean
     targetUserId: string | number
     role: "admin" | "member"
+    onRoleChanged?: (_targetUserId: string | number, _isAdmin: boolean) => void
     children?: ReactNode
 }
 
-const RoleTag = ({ canAssignRole, targetUserId, role, children }: IProps) => {
+const RoleTag = ({ canAssignRole, targetUserId, role, onRoleChanged, children }: IProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [confirmLoading, setConfirmLoading] = useState(false)
+    const nextIsAdmin = role === "member"
 
     const _handleClick = () => {
         setIsModalOpen(true)
@@ -25,11 +27,17 @@ const RoleTag = ({ canAssignRole, targetUserId, role, children }: IProps) => {
     const handleConfirm = async () => {
         try {
             setConfirmLoading(true)
-            await api.patch(getStuffUsersUrl(targetUserId), { stuff: role === "admin" })
+            await api.patch(getAdminUsersUrl(targetUserId), { admin: nextIsAdmin })
+            onRoleChanged?.(targetUserId, nextIsAdmin)
+            setIsModalOpen(false)
+            message.success(
+                nextIsAdmin ? "Administrator role assigned" : "Administrator role removed",
+            )
         } catch (error) {
             if (isAxiosError(error)) {
                 console.error(error)
             }
+            message.error("Failed to update administrator role")
         } finally {
             setConfirmLoading(false)
         }
@@ -45,7 +53,7 @@ const RoleTag = ({ canAssignRole, targetUserId, role, children }: IProps) => {
             </Tag>
             <PromoteToAdminModal
                 open={isModalOpen}
-                action={role === "member" ? "assign" : "remove"}
+                action={nextIsAdmin ? "assign" : "remove"}
                 onConfirm={handleConfirm}
                 onCancel={() => setIsModalOpen(false)}
                 confirmLoading={confirmLoading}
