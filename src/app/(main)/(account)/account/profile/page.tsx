@@ -30,7 +30,7 @@ export default function ASRPAccountProfilePage() {
                     {isCurrentUserLoading ? (
                         <Loading />
                     ) : (
-                        <div>
+                        <div className={styles.cardsContainer}>
                             <UserProfileCard user={currentUser} />
                             <JobCard user={currentUser} />
                             <ResidencyCard user={currentUser} />

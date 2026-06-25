@@ -2,7 +2,7 @@ import styles from "./MembershipTypeTag.module.scss"
 import { MembershipTypeEnum } from "@entities/Membership.ts"
 
 const membershipLabels: Record<MembershipTypeEnum, string> = {
-    [MembershipTypeEnum.ACTIVE]: "Active Member",
+    [MembershipTypeEnum.ACTIVE]: "Full Member", // Changed FULL member
     [MembershipTypeEnum.TRAINEE]: "Trainee",
     [MembershipTypeEnum.AFFILIATE]: "Affiliate",
     [MembershipTypeEnum.HONORARY]: "Honorary",

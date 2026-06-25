@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Alert, Button, Input, Modal, message } from "antd"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
@@ -6,6 +6,7 @@ import api from "@/axios.ts"
 import { getMembershipDowngradeRequestByIdUrl } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
 
 import styles from "./ActionsCell.module.scss"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 type ReviewMembershipTypeChangeRequestPayload = {
     requestId: number | string
@@ -32,8 +33,15 @@ interface IProps {
 
 const ActionsCell = ({ requestId }: IProps) => {
     const queryClient = useQueryClient()
+    const { data: permissions = [] } = useCurrentUserPermissionsQuery()
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [adminComment, setAdminComment] = useState("")
+
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
+
+    const canUpdate = permissionsActions.includes("memberships.update")
 
     const mutation = useMutation({
         mutationFn: reviewMembershipTypeChangeRequest,
@@ -75,6 +83,10 @@ const ActionsCell = ({ requestId }: IProps) => {
             action: "reject",
             adminComment: adminComment.trim(),
         })
+    }
+
+    if (!canUpdate) {
+        return null
     }
 
     return (

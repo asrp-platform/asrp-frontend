@@ -103,7 +103,7 @@ const MembershipPage = () => {
 
                     <div className={styles.cardsGrid}>
                         <MembershipInfoCard
-                            title="Active Member"
+                            title="Full Member"
                             info="Any legally qualified Russian-speaking specialist (MD, DO, MBBS, PhD, or equivalent) who is actively practicing pathology in the United States."
                             votingStatus="Voting Member"
                             votingColor="red"
