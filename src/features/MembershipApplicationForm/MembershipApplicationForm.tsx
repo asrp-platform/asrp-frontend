@@ -320,7 +320,7 @@ const MembershipApplicationForm = () => {
                     <div className={styles.membershipCardsGrid}>
                         <MembershipCard
                             value="ACTIVE"
-                            title="Active member"
+                            title="Full member"
                             description="Board-certified or board-eligible pathologists actively practicing in the United States."
                             price="$120/year"
                             disabled={!allowedMemberships.includes("ACTIVE")}
