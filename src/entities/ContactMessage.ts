@@ -4,6 +4,7 @@ export enum ContactMessageType {
     Contact = "CONTACT",
     GetInvolved = "GET_INVOLVED",
     GetInvolvedCommittees = "GET_INVOLVED_COMMITTEES",
+    DonationSponsorship = "DONATION_SPONSORSHIP",
 }
 
 interface ContactMessageContent {

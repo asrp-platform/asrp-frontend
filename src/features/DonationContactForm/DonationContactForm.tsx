@@ -11,22 +11,23 @@ import { useState } from "react"
 import { isAxiosError } from "axios"
 
 import api from "@/axios.ts"
-
-// 👉 дефолтный URL (потом заменю)
-const DEFAULT_FORM_URL = "/api/contact"
+import { ContactMessageType } from "@/entities/ContactMessage.ts"
+import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { CONTACT_MESSAGE_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 interface DonationFormFields {
     name: string
     email: string
     organization?: string
+    donation_type: string
     support_area: string
 }
 
 const options = [
-    { value: "individual", label: "Individual donation" },
-    { value: "monthly", label: "Monthly supporter" },
-    { value: "corporate", label: "Corporate sponsorship" },
-    { value: "custom", label: "Custom donation" },
+    { value: "Individual donation", label: "Individual donation" },
+    { value: "Monthly supporter", label: "Monthly supporter" },
+    { value: "Corporation sponsorship", label: "Corporate sponsorship" },
+    { value: "Custom", label: "Custom donation" },
 ]
 
 const DonationContactForm = () => {
@@ -38,27 +39,24 @@ const DonationContactForm = () => {
             try {
                 setLoading(true)
 
-                await api.post(DEFAULT_FORM_URL, {
+                await api.post(CONTACT_MESSAGE_URL, {
                     name: values.name,
                     email: values.email,
-                    organization: values.organization,
-                    support_area: values.support_area,
+                    type: ContactMessageType.DonationSponsorship,
+                    message_content: {
+                        organization: values.organization,
+                        donation_type: values.donation_type,
+                        message: values.support_area,
+                    },
                 })
 
                 message.success("Your message has been sent successfully.")
                 form.resetFields()
             } catch (error) {
                 if (isAxiosError(error)) {
-                    if (error.response?.status === 422) {
-                        const data = error.response.data
-                        if (data?.detail && Array.isArray(data.detail.errors)) {
-                            const fieldErrors = data.detail.errors.map((err: any) => ({
-                                name: err.field,
-                                errors: [err.message],
-                            }))
-                            form.setFields(fieldErrors)
-                        }
-                    } else {
+                    setFormFieldsErrors(error, form)
+
+                    if (error.response?.status !== 422) {
                         message.error("Something went wrong. Please try again.")
                     }
                 }
@@ -86,7 +84,10 @@ const DonationContactForm = () => {
                     <Form.Item
                         label="Name"
                         name="name"
-                        rules={[{ required: true, message: "Please enter your name!" }]}
+                        rules={[
+                            { required: true, message: "Please enter your name!" },
+                            { min: 2, message: "Name must be at least 2 characters." },
+                        ]}
                     >
                         <Input placeholder="Your name *" />
                     </Form.Item>
@@ -94,21 +95,29 @@ const DonationContactForm = () => {
                     <Form.Item
                         label="Email"
                         name="email"
-                        rules={[{ required: true, message: "Please enter your email!" }]}
+                        rules={[
+                            { required: true, message: "Please enter your email!" },
+                            { type: "email", message: "Please enter a valid email address." },
+                        ]}
                     >
                         <Input placeholder="Email address *" />
                     </Form.Item>
 
-                    <Form.Item label="Organization" name="organization">
+                    <Form.Item
+                        label="Organization"
+                        name="organization"
+                        rules={[{ min: 2, message: "Organization must be at least 2 characters." }]}
+                    >
                         <Input placeholder="Organization" />
                     </Form.Item>
 
-                    <Form.Item label="Type of donation" name="type_of_donation">
-                        <Select
-                            defaultValue="individual"
-                            options={options}
-                            style={{ overflow: "visible" }}
-                        />
+                    <Form.Item
+                        label="Type of donation"
+                        name="donation_type"
+                        initialValue="Individual donation"
+                        rules={[{ required: true, message: "Please select a donation type." }]}
+                    >
+                        <Select options={options} style={{ overflow: "visible" }} />
                     </Form.Item>
 
                     <Form.Item
@@ -119,6 +128,7 @@ const DonationContactForm = () => {
                                 required: true,
                                 message: "Please tell us what you would like to support!",
                             },
+                            { min: 10, message: "Message must be at least 10 characters." },
                         ]}
                     >
                         <TextArea placeholder="What would you like to support? (education, mentorship, access, community)" />
