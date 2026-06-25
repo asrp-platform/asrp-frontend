@@ -4,7 +4,7 @@ import { UploadOutlined, EyeOutlined } from "@ant-design/icons"
 import { BYLAWS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import api from "@/axios.ts"
 import { isAxiosError } from "axios"
-import { BYLAWS_API_URL, BYLAWS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import { BYLAWS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
@@ -15,7 +15,7 @@ export const BylawsFileCard = () => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [isUploading, setIsUploading] = useState(false)
-    const [bylawsFileExists, setBylawsFileExists] = useState<boolean>(false)
+    const [bylawsUrl, setBylawsUrl] = useState<string | null>(null)
 
     const permissionsActions = useMemo(() => {
         return permissions.map((p) => p.action)
@@ -28,13 +28,12 @@ export const BylawsFileCard = () => {
         const fetchBylaws = async () => {
             try {
                 setIsLoading(true)
-                const result = await api.get(BYLAWS_API_URL)
-                console.log(result)
-                setBylawsFileExists(result.data)
+                const result = await api.get(BYLAWS_URL)
+                setBylawsUrl(result.data.url)
             } catch (error) {
                 if (isAxiosError(error)) {
                     if (error.status === 404) {
-                        setBylawsFileExists(false)
+                        setBylawsUrl(null)
                     } else {
                         message.error(error.message)
                     }
@@ -49,8 +48,8 @@ export const BylawsFileCard = () => {
     const deleteBylaws = async () => {
         try {
             setIsLoading(true)
-            const result = await api.delete(BYLAWS_ADMIN_URL)
-            setBylawsFileExists(result.data)
+            await api.delete(BYLAWS_ADMIN_URL)
+            setBylawsUrl(null)
         } catch (error) {
             if (isAxiosError(error)) {
                 message.error(error.message)
@@ -67,13 +66,12 @@ export const BylawsFileCard = () => {
             const formData = new FormData()
             formData.append("file", file)
 
-            await api.put(BYLAWS_ADMIN_URL, formData, {
+            const response = await api.put(BYLAWS_ADMIN_URL, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             })
-
-            setBylawsFileExists(true)
+            setBylawsUrl(response.data.url)
         } catch (error) {
             if (isAxiosError(error)) {
                 message.error(error.message)
@@ -91,7 +89,7 @@ export const BylawsFileCard = () => {
         <Card title="Bylaws">
             <Space orientation="vertical" size="middle" style={{ width: "100%" }}>
                 <>
-                    {bylawsFileExists ? (
+                    {bylawsUrl ? (
                         <Text type="success">Bylaws exists</Text>
                     ) : (
                         <Text type="danger">Bylaws doesn't exists</Text>
@@ -100,10 +98,10 @@ export const BylawsFileCard = () => {
                     <Text type="success"></Text>
 
                     <Space>
-                        {bylawsFileExists && (
+                        {bylawsUrl && (
                             <Button
                                 icon={<EyeOutlined />}
-                                onClick={() => window.open(BYLAWS_URL, "_blank")}
+                                onClick={() => window.open(bylawsUrl, "_blank")}
                             >
                                 Open
                             </Button>
@@ -119,12 +117,12 @@ export const BylawsFileCard = () => {
                                 }}
                             >
                                 <Button icon={<UploadOutlined />} loading={isUploading}>
-                                    {bylawsFileExists ? "Change Bylaws" : "Upload Bylaws"}
+                                    {bylawsUrl ? "Change Bylaws" : "Upload Bylaws"}
                                 </Button>
                             </Upload>
                         )}
 
-                        {bylawsFileExists && canDelete && (
+                        {bylawsUrl && canDelete && (
                             <Button danger onClick={deleteBylaws}>
                                 Delete
                             </Button>
