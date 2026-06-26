@@ -130,7 +130,7 @@ const MembershipPage = () => {
                         />
 
                         <MembershipInfoCard
-                            title="Affiliate Member"
+                            title="Honarary Member"
                             info="Individuals recognized for exceptional service to the field of pathology or outstanding contributions to the Society."
                             votingStatus="Non-voting"
                             votingColor="blue"
@@ -140,7 +140,7 @@ const MembershipPage = () => {
                             icon={
                                 <Image
                                     src="/icons/honorary.svg"
-                                    alt="HonarayMember"
+                                    alt="HonararyMember"
                                     width={12}
                                     height={12}
                                 />
