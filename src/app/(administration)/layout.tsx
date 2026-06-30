@@ -6,7 +6,7 @@ import {
     TeamOutlined,
     MailOutlined,
     DashboardOutlined,
-    FileTextOutlined,
+    SettingOutlined,
 } from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useMemo, useState } from "react"
@@ -41,11 +41,13 @@ const menuItems = [
         label: "Contact Messages",
     },
     {
-        key: "/administration/legal-documents",
-        icon: <FileTextOutlined />,
-        label: "Legal Documents",
+        key: "/administration/site-settings",
+        icon: <SettingOutlined />,
+        label: "Site Settings",
     },
 ]
+
+const menuKeys = menuItems.map((item) => item.key).sort((a, b) => b.length - a.length)
 
 const AdminLayout = ({ children }: IProps) => {
     const router = useRouter()
@@ -53,9 +55,13 @@ const AdminLayout = ({ children }: IProps) => {
     const [collapsed, setCollapsed] = useState(false)
 
     const selectedKey = useMemo(() => {
-        const match = menuItems.find((item) => pathname === item.key)
-        return match ? match.key : "/administration"
+        return (
+            menuKeys.find((key) => pathname === key || pathname.startsWith(`${key}/`)) ??
+            "/administration"
+        )
     }, [pathname])
+
+    const selectedKeys = useMemo(() => [selectedKey], [selectedKey])
 
     return (
         <Layout className={styles.layout}>
@@ -67,7 +73,7 @@ const AdminLayout = ({ children }: IProps) => {
                 <Menu
                     theme="dark"
                     mode="inline"
-                    selectedKeys={[selectedKey]}
+                    selectedKeys={selectedKeys}
                     items={menuItems}
                     onClick={({ key }) => router.push(key)}
                 />

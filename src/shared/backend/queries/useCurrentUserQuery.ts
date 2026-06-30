@@ -18,5 +18,6 @@ export const useCurrentUserQuery = () => {
         queryFn: fetchCurrentUser,
         staleTime: CURRENT_USER_LIFETIME,
         retry: false,
+        refetchOnMount: false,
     })
 }

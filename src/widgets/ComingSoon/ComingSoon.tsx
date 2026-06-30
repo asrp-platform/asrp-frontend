@@ -1,8 +1,6 @@
-"use client"
-
 import { SettingOutlined } from "@ant-design/icons"
-import { useRouter } from "next/navigation"
 import styles from "@/widgets/ComingSoon/styles.module.scss"
+import PrimaryLinkOutlined from "@shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
 
 interface ComingSoonProps {
     title?: string
@@ -15,8 +13,6 @@ const ComingSoon = ({
     description = "This page is currently under development.",
     showBackButton = false,
 }: ComingSoonProps) => {
-    const router = useRouter()
-
     return (
         <div className={styles.wrapper}>
             <div className={styles.content}>
@@ -25,11 +21,7 @@ const ComingSoon = ({
                 <h1 className={styles.title}>{title}</h1>
                 <p className={styles.description}>{description}</p>
 
-                {showBackButton && (
-                    <button className={styles.backButton} onClick={() => router.back()}>
-                        Go Back
-                    </button>
-                )}
+                {showBackButton && <PrimaryLinkOutlined href={"/"}>Go back</PrimaryLinkOutlined>}
             </div>
         </div>
     )

@@ -1,19 +1,14 @@
-/* ─── Page ─────────────────────────────────────────────── */
-
 .pageContainer {
     display: flex;
     flex-direction: column;
-    gap: 64px;
-    padding: 2rem 1rem 4rem;
-    max-width: 1152px;
+    gap: 32px;
+    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
 
     @media (min-width: 1200px) {
-        margin: 0 auto;
+        margin: 48px var(--page-container-horizontal-margin);
         gap: 5vh;
     }
 }
-
-/* ─── Hero ──────────────────────────────────────────────── */
 
 .heroSection {
     position: relative;

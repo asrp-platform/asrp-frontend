@@ -1,0 +1,111 @@
+.resourceCard {
+    background: #fff;
+    border-radius: 24px;
+    padding: 28px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 260px;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgb(0 0 0 / 0.1);
+        border-color: #fecaca;
+    }
+
+    .cardHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+
+        .cardBadge {
+            padding: 4px 10px;
+            background: #fef3c782;
+            color: #92400e;
+            border: 1px solid #92410e35;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &::before {
+                content: "🔒";
+                font-size: 11px;
+            }
+        }
+
+        .cardBadgePublic {
+            padding: 4px 10px;
+            background: #dcfce73c;
+            color: #166534;
+            border: 1px solid #16653430;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &::before {
+                content: "🌐";
+                font-size: 11px;
+            }
+        }
+
+        .cardBadgePractice {
+            padding: 4px 10px;
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #16653425;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &::before {
+                content: "🧠";
+                font-size: 11px;
+            }
+        }
+
+        .cardMeta {
+            font-size: 12px;
+            color: var(--text-muted-color-dark);
+        }
+    }
+
+    h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary-color-dark);
+        margin-bottom: 12px;
+    }
+
+    p {
+        font-size: 14px;
+        color: var(--text-secondary-color-dark);
+        line-height: 1.6;
+        flex-grow: 1;
+        margin-bottom: 20px;
+    }
+
+    .cardLink {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary-color-red);
+        text-decoration: none;
+        transition: color 0.2s ease;
+        align-self: flex-start;
+
+        &:hover {
+            color: var(--button-primary-red-hover);
+        }
+    }
+}

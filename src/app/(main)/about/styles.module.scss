@@ -103,19 +103,28 @@
 
     .byLawsLink {
         background-color: var(--button-primary-red);
+        border: none;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
         margin: 20px 0;
         padding: 10px 0;
         border-radius: 999px;
         color: #fff;
+        font: inherit;
         transition: 0.3s ease-in-out;
 
         &:hover {
             cursor: pointer;
             transform: translateY(-1px);
             background-color: var(--button-primary-red-hover);
+        }
+
+        &:disabled {
+            cursor: progress;
+            opacity: 0.7;
+            transform: none;
         }
     }
 

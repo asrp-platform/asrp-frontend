@@ -1,10 +1,10 @@
 "use client"
 
 import { message, Table, Tag } from "antd"
-import { useEffect, useState } from "react"
+import type { ColumnsType } from "antd/es/table"
+import { useEffect, useMemo, useState } from "react"
 import { isAxiosError } from "axios"
 import api from "@/axios.ts"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
 import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { CONTACT_MESSAGES_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
@@ -12,6 +12,7 @@ import { ContactMessageType, type IContactMessage } from "@/entities/ContactMess
 import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
 import ContactMessageReplyButton from "../ContactMessageReply/ContactMessageReplyButton"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 interface ITableFilters {
     name__startswith?: string
@@ -30,17 +31,104 @@ const initialData: IPaginatedBackendResponse<IContactMessage> = {
     data: [],
 }
 
-export const ContactMessageTable = ({ contactMessageType }: IProps) => {
-    const { permissions, isPermissionsLoading } = usePermissions()
+const renderBooleanTag = (value: boolean | undefined) =>
+    value ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>
 
-    const canView = permissions.includes("feedback.view")
-    const canUpdate = canView && permissions.includes("feedback.update")
+const renderTagList = (values: string[] | undefined) =>
+    values?.length
+        ? values.map((value) => (
+              <Tag key={value} style={{ marginBottom: 4 }}>
+                  {value}
+              </Tag>
+          ))
+        : null
+
+const messageContentColumnsByType: Record<ContactMessageType, ColumnsType<IContactMessage>> = {
+    [ContactMessageType.Contact]: [
+        {
+            title: "Subject",
+            render: (_: unknown, record) => record.message_content?.subject,
+        },
+        {
+            title: "Message",
+            render: (_: unknown, record) => record.message_content?.contact_message,
+        },
+    ],
+    [ContactMessageType.GetInvolved]: [
+        {
+            title: "Current Role",
+            render: (_: unknown, record) => record.message_content?.current_role,
+        },
+        {
+            title: "Institution / Location",
+            render: (_: unknown, record) => record.message_content?.institution_location,
+        },
+        {
+            title: "Areas",
+            render: (_: unknown, record) => renderTagList(record.message_content?.areas),
+        },
+        {
+            title: "Ideas",
+            render: (_: unknown, record) => record.message_content?.ideas,
+        },
+        {
+            title: "Committee Work",
+            render: (_: unknown, record) =>
+                renderBooleanTag(record.message_content?.future_committee_working),
+        },
+        {
+            title: "Leadership",
+            render: (_: unknown, record) =>
+                renderBooleanTag(record.message_content?.future_leadership_positions),
+        },
+        {
+            title: "Updates",
+            render: (_: unknown, record) =>
+                renderBooleanTag(record.message_content?.receive_updates),
+        },
+    ],
+    [ContactMessageType.GetInvolvedCommittees]: [
+        {
+            title: "Role / Affiliation",
+            render: (_: unknown, record) => record.message_content?.role_affiliation,
+        },
+        {
+            title: "Message",
+            render: (_: unknown, record) => record.message_content?.get_involved_message,
+        },
+    ],
+    [ContactMessageType.DonationSponsorship]: [
+        {
+            title: "Organization",
+            render: (_: unknown, record) => record.message_content?.organization,
+        },
+        {
+            title: "Donation Type",
+            render: (_: unknown, record) => record.message_content?.donation_type,
+        },
+        {
+            title: "Message",
+            render: (_: unknown, record) => record.message_content?.message,
+        },
+    ],
+}
+
+export const ContactMessageTable = ({ contactMessageType }: IProps) => {
+    const { data: permissions = [], isLoading: isPermissionsLoading } =
+        useCurrentUserPermissionsQuery()
 
     const [isDataLoading, setIsDataLoading] = useState<boolean>(true)
     const [data, setData] = useState<IPaginatedBackendResponse<IContactMessage>>(initialData)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [pageSize] = useState<number>(10)
     const [filters, setFilters] = useState<ITableFilters>({ type: contactMessageType })
+
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
+
+    const canView = permissionsActions.includes("feedback.view")
+    const canUpdate = canView && permissionsActions.includes("feedback.update")
 
     useEffect(() => {
         const fetchData = async () => {
@@ -73,7 +161,7 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
         }
     }, [canView, currentPage, pageSize, filters])
 
-    const columns = [
+    const columns: ColumnsType<IContactMessage> = [
         {
             title: "ID",
             dataIndex: "id",
@@ -83,7 +171,7 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
             title: "Name",
             dataIndex: "name",
             key: "name",
-            ...getInputColumnSearchProps("email", filters, setFilters),
+            ...getInputColumnSearchProps("name", filters, setFilters),
         },
         {
             title: "Email",
@@ -91,18 +179,10 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
             key: "email",
             ...getInputColumnSearchProps("email", filters, setFilters),
         },
-        {
-            title: "Subject",
-            render: (_: string, record: IContactMessage) => record.message_content?.subject,
-        },
-        {
-            title: "Message",
-            render: (_: string, record: IContactMessage) => record.message_content?.contact_message,
-        },
+        ...messageContentColumnsByType[contactMessageType],
         {
             title: "Answered",
-            render: (_: unknown, record: IContactMessage) =>
-                record.answered ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>,
+            render: (_: unknown, record: IContactMessage) => renderBooleanTag(record.answered),
         },
         { title: "Created", dataIndex: "created_at" },
         {

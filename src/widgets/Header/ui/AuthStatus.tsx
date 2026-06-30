@@ -9,7 +9,7 @@ import { useMemo } from "react"
 
 import styles from "@/widgets/Header/ui/styles.module.scss"
 import Link from "next/link"
-import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
+import UserAvatarView from "@/shared/ui/Avatar/UserAvatarView.tsx"
 import { handleLogout } from "@/widgets/Header/helpers/logout.ts"
 import { onUserLoginClick } from "@/widgets/Header/helpers/login.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
@@ -64,7 +64,7 @@ const AuthStatus = () => {
     return (
         <Dropdown menu={{ items }} placement="bottomRight">
             <div className={styles.userProfileIcon}>
-                <UserAvatar user={currentUser} />
+                <UserAvatarView user={currentUser} />
             </div>
         </Dropdown>
     )

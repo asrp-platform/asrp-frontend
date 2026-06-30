@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Table, Tag } from "antd"
 import type { ColumnsType } from "antd/lib/table"
 
@@ -19,7 +19,7 @@ import { handleTableChange } from "@/shared/helpers/antdTableHelpers.ts"
 import { getSelectTableFilterDropdown } from "@/widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"
 import NameChangeStatusModal from "@/features/NameChangeRequestModal/NameChangeRequestModal.tsx"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
-import { usePermissions } from "@/context/PermissionsProvider.tsx"
+import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 interface ITableFilters {
     status?: NameChangeRequestStatus
@@ -34,10 +34,14 @@ const statusOptions = [
 ]
 
 const NameChangeRequestsTable = () => {
-    const { permissions } = usePermissions()
+    const { data: permissions = [] } = useCurrentUserPermissionsQuery()
 
-    const canView = permissions.includes("name_change_requests.view")
-    const canUpdate = canView && permissions.includes("name_change_requests.update")
+    const permissionsActions = useMemo(() => {
+        return permissions.map((p) => p.action)
+    }, [permissions])
+
+    const canView = permissionsActions.includes("name_change_requests.view")
+    const canUpdate = canView && permissionsActions.includes("name_change_requests.update")
 
     const [isLoading, setIsLoading] = useState(true)
     const [statusUpdateLoading, setStatusUpdateLoading] = useState<boolean>(false)
