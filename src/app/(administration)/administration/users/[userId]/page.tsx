@@ -5,6 +5,7 @@ import { Flex, Typography } from "antd"
 
 import UserDataCard from "@app/(administration)/administration/users/[userId]/(ui)/UserDataCard.tsx"
 import MembershipInformationCard from "@app/(administration)/administration/users/[userId]/(ui)/MembershipInformationCard.tsx"
+import UserProfessionalProfileCard from "@app/(administration)/administration/users/[userId]/(ui)/UserProfessionalProfileCard.tsx"
 
 const { Title } = Typography
 
@@ -15,6 +16,9 @@ const Page = () => {
         <Flex vertical gap={24}>
             <Title level={2}>User profile</Title>
             <UserDataCard userId={userId} />
+
+            <Title level={2}>User professional profile</Title>
+            <UserProfessionalProfileCard userId={userId} />
 
             <Title level={2}>User membership information</Title>
             <MembershipInformationCard userId={userId} />
