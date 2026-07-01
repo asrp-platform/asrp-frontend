@@ -8,6 +8,7 @@ import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import ManageUserMembership from "@app/(administration)/administration/membership/(tabs)/MembersTable/ManageUserMembership/ManageUserMembership.tsx"
 import MembershipStatusTag from "@app/(administration)/administration/membership/(tabs)/MembersTable/MembershipStatusTag.tsx"
+import Link from "next/link"
 
 interface IFilters {
     user_id: string | null
@@ -43,7 +44,9 @@ const MembersTable = () => {
             title: "User email",
             dataIndex: ["user", "email"],
             key: "user_email",
-            width: 250,
+            render: (_, record) => (
+                <Link href={`/administration/users/${record.user_id}`}>{record.user?.email}</Link>
+            ),
         },
         {
             title: "Status",

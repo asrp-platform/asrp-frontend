@@ -55,7 +55,7 @@ const MembershipRequestsTable = () => {
             title: "User",
             key: "user",
             render: (_, record) => (
-                <Link href={`/administration/users/${record.id}`}>{record.user?.email}</Link>
+                <Link href={`/administration/users/${record.user_id}`}>{record.user?.email}</Link>
             ),
         },
         {
@@ -184,7 +184,7 @@ const MembershipRequestsTable = () => {
                 total: data?.count ?? 0,
                 onChange: (nextPage) => setPage(nextPage),
             }}
-            scroll={{ x: 1600 }}
+            scroll={{ x: "max-content" }}
         />
     )
 }

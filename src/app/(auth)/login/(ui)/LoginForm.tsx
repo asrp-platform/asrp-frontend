@@ -18,7 +18,7 @@ import { useState } from "react"
 type FieldType = {
     email: string
     password: string
-    remember_me: boolean
+    remember: boolean
 }
 
 const { Paragraph } = Typography
@@ -110,7 +110,7 @@ const LoginForm = () => {
                 </Paragraph>
             </Typography>
             <div className={styles.submitContainer}>
-                <Form.Item<FieldType> name="remember_me" valuePropName="checked">
+                <Form.Item<FieldType> name="remember" valuePropName="checked">
                     <Checkbox checked={false}>Remember me</Checkbox>
                 </Form.Item>
                 <CustomButton

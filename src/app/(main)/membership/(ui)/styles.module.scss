@@ -31,6 +31,7 @@
     width: 100%;
     transition: 0.3s ease-in-out;
     font-weight: 600;
+    text-align: center;
     &:hover {
         background-color: var(--button-primary-red-hover);
         transform: translateY(-1px);
