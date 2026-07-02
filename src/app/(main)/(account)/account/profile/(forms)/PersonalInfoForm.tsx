@@ -1,7 +1,8 @@
 "use client"
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
-import { Button, Col, Form, type FormProps, Input, message, Row } from "antd"
+import { Button, Col, Form, type FormProps, Input, Row } from "antd"
+import type { MessageInstance } from "antd/es/message/interface"
 import type { IUser } from "@/entities/User.ts"
 import { useState } from "react"
 import { isAxiosError } from "axios"
@@ -12,6 +13,7 @@ import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts
 
 interface IProps {
     user: IUser
+    messageApi: MessageInstance
 }
 
 type FieldType = {
@@ -28,7 +30,7 @@ type FieldType = {
     preferred_name: string
 }
 
-const PersonalInfoForm = ({ user }: IProps) => {
+const PersonalInfoForm = ({ user, messageApi }: IProps) => {
     const [personalInfoForm] = Form.useForm()
 
     const [isLoading, setIsLoading] = useState(false)
@@ -45,7 +47,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
         try {
             setIsLoading(true)
             await api.patch(CURRENT_USER_URL, updateData)
-            message.success("Successfully updated user data")
+            messageApi.success("Successfully updated user data")
         } catch (error) {
             if (isAxiosError(error)) {
                 if (error.status === 422) {
