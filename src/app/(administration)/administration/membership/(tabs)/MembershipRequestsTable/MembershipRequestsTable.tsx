@@ -7,9 +7,9 @@ import type { ColumnsType } from "antd/lib/table"
 import type { FilterValue, SorterResult, TablePaginationConfig } from "antd/es/table/interface"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import Link from "next/link"
-import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/ActionsCell/ActionsCell.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import MembershipRequestStatusTag from "@shared/ui/Tags/MembershipRequestStatusTag/MembershipRequestStatusTag.tsx"
+import ActionsCell from "./ActionsCell/ActionsCell"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum
