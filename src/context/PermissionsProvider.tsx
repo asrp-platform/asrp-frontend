@@ -12,8 +12,8 @@ import {
 } from "react"
 import type { IPermission } from "@/entities/Permission.ts"
 import api from "@/axios.ts"
-import { getUserPermissionsStuffUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { getUserPermissionsAdminUrl } from "@/shared/backend/restApiUrls/admin/adminApiUrls"
 
 interface IPermissionsContext {
     permissions: string[]
@@ -54,7 +54,7 @@ export const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
         const fetchUsersPermissions = async () => {
             try {
                 const response = await api.get<IPermission[]>(
-                    getUserPermissionsStuffUrl(currentUser.id),
+                    getUserPermissionsAdminUrl(currentUser.id),
                 )
                 setPermissions(response.data.map((p) => p.action))
             } catch (error) {
