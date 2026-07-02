@@ -68,6 +68,7 @@ const ExperienceCard = ({
     getByIdUrl,
 }: IProps) => {
     const queryClient = useQueryClient()
+    const [messageApi, contextHolder] = message.useMessage()
     const [isCreating, setIsCreating] = useState(false)
 
     const { data: entities = [], isLoading } = useQuery<IExperienceEntity[]>({
@@ -86,14 +87,14 @@ const ExperienceCard = ({
         onSuccess: async () => {
             setIsCreating(false)
             await queryClient.invalidateQueries({ queryKey: getExperienceQueriesRoot(user.id) })
-            message.success(`Successfully created ${deleteEntityLabel.toLowerCase()}`)
+            messageApi.success(`Successfully created ${deleteEntityLabel.toLowerCase()}`)
         },
         onError: (error) => {
             const errorMsg = getErrorMessage(
                 error,
                 `Failed to create ${deleteEntityLabel.toLowerCase()}`,
             )
-            message.error(errorMsg)
+            messageApi.error(errorMsg)
         },
     })
 
@@ -104,14 +105,14 @@ const ExperienceCard = ({
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: getExperienceQueriesRoot(user.id) })
-            message.success(`Successfully updated ${deleteEntityLabel.toLowerCase()}`)
+            messageApi.success(`Successfully updated ${deleteEntityLabel.toLowerCase()}`)
         },
         onError: (error) => {
             const errorMsg = getErrorMessage(
                 error,
                 `Failed to update ${deleteEntityLabel.toLowerCase()}`,
             )
-            message.error(errorMsg)
+            messageApi.error(errorMsg)
         },
     })
 
@@ -123,62 +124,66 @@ const ExperienceCard = ({
             await queryClient.invalidateQueries({ queryKey: getExperienceQueriesRoot(user.id) })
         },
         onError: (error) => {
-            message.error(getDeleteErrorMessage(error, deleteEntityLabel))
+            messageApi.error(getDeleteErrorMessage(error, deleteEntityLabel))
         },
     })
 
     return (
-        <Card title={title} className={styles.card}>
-            <Text className={styles.residencySubtitle}>{subtitle}</Text>
+        <>
+            {contextHolder}
+            <Card title={title} className={styles.card}>
+                <Text className={styles.residencySubtitle}>{subtitle}</Text>
 
-            <div className={styles.residenciesContainer}>
-                {isLoading && <Spin />}
+                <div className={styles.residenciesContainer}>
+                    {isLoading && <Spin />}
 
-                {entities.map((entity) => {
-                    const isLastResidency = queryScope === "residencies" && entities.length === 1
+                    {entities.map((entity) => {
+                        const isLastResidency =
+                            queryScope === "residencies" && entities.length === 1
 
-                    return (
-                        <div className={styles.experienceItem} key={entity.id}>
+                        return (
+                            <div className={styles.experienceItem} key={entity.id}>
+                                <ExperienceForm
+                                    initialValues={entity}
+                                    isDeleteDisabled={isLastResidency}
+                                    deleteDisabledReason={
+                                        isLastResidency
+                                            ? "At least one residency is required."
+                                            : undefined
+                                    }
+                                    onSubmit={async (values) => {
+                                        await updateMutation.mutateAsync({ id: entity.id, values })
+                                    }}
+                                    onDelete={async () => {
+                                        await deleteMutation.mutateAsync(entity.id)
+                                    }}
+                                    deleteEntityLabel={deleteEntityLabel}
+                                />
+                            </div>
+                        )
+                    })}
+
+                    {isCreating && (
+                        <div className={styles.experienceItem}>
                             <ExperienceForm
-                                initialValues={entity}
-                                isDeleteDisabled={isLastResidency}
-                                deleteDisabledReason={
-                                    isLastResidency
-                                        ? "At least one residency is required."
-                                        : undefined
-                                }
+                                startInEditMode
                                 onSubmit={async (values) => {
-                                    await updateMutation.mutateAsync({ id: entity.id, values })
-                                }}
-                                onDelete={async () => {
-                                    await deleteMutation.mutateAsync(entity.id)
+                                    await createMutation.mutateAsync(values)
                                 }}
                                 deleteEntityLabel={deleteEntityLabel}
                             />
                         </div>
-                    )
-                })}
+                    )}
+                </div>
 
-                {isCreating && (
-                    <div className={styles.experienceItem}>
-                        <ExperienceForm
-                            startInEditMode
-                            onSubmit={async (values) => {
-                                await createMutation.mutateAsync(values)
-                            }}
-                            deleteEntityLabel={deleteEntityLabel}
-                        />
-                    </div>
-                )}
-            </div>
-
-            <button
-                onClick={() => setIsCreating((prev) => !prev)}
-                className={styles.addResidencyButton}
-            >
-                {isCreating ? closeButtonText : addButtonText}
-            </button>
-        </Card>
+                <button
+                    onClick={() => setIsCreating((prev) => !prev)}
+                    className={styles.addResidencyButton}
+                >
+                    {isCreating ? closeButtonText : addButtonText}
+                </button>
+            </Card>
+        </>
     )
 }
 

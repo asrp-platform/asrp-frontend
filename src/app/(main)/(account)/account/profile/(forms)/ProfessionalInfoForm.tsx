@@ -1,6 +1,7 @@
 "use client"
 
 import { Button, Checkbox, Col, Form, type FormProps, Input, Row } from "antd"
+import type { MessageInstance } from "antd/es/message/interface"
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
 import { useEffect, useState } from "react"
@@ -22,9 +23,10 @@ type FieldType = {
 
 interface IProps {
     user: IUser
+    messageApi: MessageInstance
 }
 
-const ProfessionalInfoForm = ({ user }: IProps) => {
+const ProfessionalInfoForm = ({ user, messageApi }: IProps) => {
     const [professionalInfoForm] = Form.useForm()
 
     const [isLoading, setIsLoading] = useState(false)
@@ -33,6 +35,7 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
         try {
             setIsLoading(true)
             await api.put(getUserProfessionalInformationUrl(user.id), values)
+            messageApi.success("Successfully updated professional information")
         } catch (error: unknown) {
             if (isAxiosError(error)) {
                 if (error.status === 422) {

@@ -76,9 +76,9 @@ const UserProfileCard = ({ user }: IProps) => {
                     </div>
                 </div>
 
-                <PersonalInfoForm user={user} />
+                <PersonalInfoForm user={user} messageApi={messageApi} />
                 <Divider />
-                <ProfessionalInfoForm user={user} />
+                <ProfessionalInfoForm user={user} messageApi={messageApi} />
             </Card>
         </>
     )
