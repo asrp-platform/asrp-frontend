@@ -1,13 +1,10 @@
-import type { Role } from "@shared/types/types.ts"
-
 export type RegisterFormFields = {
     email: string
     password: string
     repeat_password: string
     firstname: string
     lastname: string
-    institution: string
-    role: Role
+    credentials: string[] | null
     city: string
     state?: string
     postal_code?: string

@@ -1,6 +1,7 @@
-import { Form, Input } from "antd"
+import { Form, Input, Select } from "antd"
 import styles from "@app/(auth)/registration/styles.module.scss"
 import type { RegisterFormFields } from "@app/(auth)/registration/(ui)/types.ts"
+import { credentialsOptions } from "@shared/options.ts"
 
 const AccountCredentialsSection = () => {
     return (
@@ -44,6 +45,16 @@ const AccountCredentialsSection = () => {
                     <Input.Password />
                 </Form.Item>
             </div>
+
+            <Form.Item label="Credentials" name="credentials">
+                <Select mode={"multiple"} allowClear placeholder="Select an option">
+                    {credentialsOptions.map((c) => (
+                        <Select.Option key={c} value={c}>
+                            {c}
+                        </Select.Option>
+                    ))}
+                </Select>
+            </Form.Item>
         </>
     )
 }

@@ -207,7 +207,7 @@ const MembershipApplicationForm = () => {
                 </Form.Item>
 
                 <Form.Item label="Credentials" name="credentials">
-                    <Select allowClear placeholder="Select an option">
+                    <Select mode={"multiple"} allowClear placeholder="Select an option">
                         {credentialsOptions.map((c) => (
                             <Select.Option key={c} value={c}>
                                 {c}

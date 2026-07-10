@@ -37,10 +37,15 @@ const RegisterForm = () => {
     const onFinish: FormProps<RegisterFormFields>["onFinish"] = async (values) => {
         clearFormErrors(form)
         try {
-            await api.post(REGISTER_URL, values)
+            const credentials = values.credentials?.length ? values.credentials.join(",") : null
+            await api.post(REGISTER_URL, {
+                ...values,
+                credentials,
+            })
             setRegistrationEmail(values.email)
         } catch (error: unknown) {
             if (!isAxiosError(error)) {
+                console.error(error)
                 notification.error({
                     title: "Server Error",
                     description:
@@ -50,12 +55,14 @@ const RegisterForm = () => {
                 })
                 return
             } else if (error.response === undefined) {
+                console.error(error)
                 notification.error({
                     title: "Network error",
                     description: "Check your internet connection and try again.",
                     showProgress: true,
                     pauseOnHover: true,
                 })
+                return
             } else {
                 if (error.response?.status === 409) {
                     form.setFields([
