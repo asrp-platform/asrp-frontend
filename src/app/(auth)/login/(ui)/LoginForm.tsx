@@ -42,6 +42,7 @@ const LoginForm = () => {
     }
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+        localStorage.removeItem("accessToken")
         try {
             setIsLoading(true)
             const response = await api.post<LoginResponse>(LOGIN_URL, values)

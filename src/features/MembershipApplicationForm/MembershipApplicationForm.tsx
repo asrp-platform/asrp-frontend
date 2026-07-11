@@ -15,7 +15,7 @@ import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
-import { countries, credentialsOptions, referralSourceOptions } from "@shared/options.ts"
+import { referralSourceOptions } from "@shared/options.ts"
 import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
@@ -24,6 +24,11 @@ import MembershipApplicationAvailabilityAlert from "@/features/MembershipApplica
 type TrainingState = {
     isUsBoardCertified?: boolean
     isUsTrainee?: boolean
+}
+
+const initialValues = {
+    confirmAccuracy: false,
+    is_agrees_communications: false,
 }
 
 const MembershipApplicationForm = () => {
@@ -45,29 +50,7 @@ const MembershipApplicationForm = () => {
         [currentUser, currentUserMembership, currentUserMembershipRequest],
     )
 
-    const initialValues = useMemo(() => {
-        const selectedCredentials = currentUser?.credentials
-            ? currentUser?.credentials
-                  .split(",")
-                  .map((item) => item.trim())
-                  .filter(Boolean)
-            : []
-
-        return {
-            firstname: currentUser?.firstname,
-            lastname: currentUser?.lastname,
-            middlename: currentUser?.middlename,
-            suffix: currentUser?.suffix,
-            credentials: selectedCredentials,
-            email: currentUser?.email,
-            phone: currentUser?.phone_number,
-            country: currentUser?.country,
-            state: currentUser?.state,
-            city: currentUser?.city,
-            confirmAccuracy: false,
-            is_agrees_communications: false,
-        }
-    }, [currentUser])
+    console.log(currentUser, currentUserMembership, currentUserMembershipRequest)
 
     const [form] = useForm<FieldType>()
 
@@ -165,7 +148,7 @@ const MembershipApplicationForm = () => {
                         Once signed in, you’ll be able to fill out the form and proceed with your
                         application.
                     </p>
-                    <LinkButton href="/login" variant="blue">
+                    <LinkButton href="/login" variant="default">
                         Sign Up
                     </LinkButton>
                 </Warning>
@@ -179,73 +162,6 @@ const MembershipApplicationForm = () => {
                     />
                 </div>
             )}
-
-            <div className={styles.blockInfoContainer}>
-                <h2>Personal information</h2>
-                <p>
-                    Your basic contact information will be used for official ASRP communications
-                    only and will not be shared
-                    <br /> outside the Society without your permission.
-                </p>
-            </div>
-
-            <div className={styles.grid}>
-                <Form.Item label="First name" name="firstname" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Last name" name="lastname" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Middle name" name="middlename">
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Suffix" name="suffix">
-                    <Input placeholder="Jr., Sr., III, etc." />
-                </Form.Item>
-
-                <Form.Item<FieldType> name="credentials" label="Credentials">
-                    <Select
-                        mode="multiple"
-                        options={credentialsOptions.map((credential) => ({
-                            label: credential,
-                            value: credential,
-                        }))}
-                    />
-                </Form.Item>
-
-                <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Phone" name="phone">
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Country" name="country" rules={[{ required: true }]}>
-                    <Select placeholder="Select country">
-                        {countries.map((c) => (
-                            <Select.Option key={c.code} value={c.code}>
-                                {c.name}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-
-                <Form.Item label="City" name="city" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="State (required if in US)"
-                    name="state"
-                    rules={[{ required: false }]}
-                >
-                    <Input />
-                </Form.Item>
-            </div>
 
             <div className={styles.blockInfoContainer}>
                 <h2>Professional information</h2>

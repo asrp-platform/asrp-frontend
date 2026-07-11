@@ -35,17 +35,6 @@ export type PracticeSetting =
     | "other"
 
 export type FieldType = {
-    firstname: string
-    lastname: string
-    middlename?: string
-    suffix?: string
-    credentials?: Credentials[]
-    email: string
-    phone?: string
-    country: string
-    state: string
-    city: string
-
     primary_affiliation: string
     job_title: JobTitle
     practice_setting?: PracticeSetting
