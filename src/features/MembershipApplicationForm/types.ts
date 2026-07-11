@@ -39,7 +39,7 @@ export type FieldType = {
     lastname: string
     middlename?: string
     suffix?: string
-    credentials?: Credentials
+    credentials?: Credentials[]
     email: string
     phone?: string
     country: string
@@ -56,6 +56,8 @@ export type FieldType = {
     hear_about_asrp: string
     tg_username?: string
     interest_description?: string
+    confirmAccuracy: boolean
+    is_agrees_communications: boolean
 }
 
 export type MembershipKey = "ACTIVE" | "TRAINEE" | "AFFILIATE" | "PATHWAY" | "HONORARY"

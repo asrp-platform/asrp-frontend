@@ -1,14 +1,16 @@
 "use client"
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
-import { Button, Col, Form, type FormProps, Input, message, Row } from "antd"
+import { Button, Col, Form, type FormProps, Input, message, Row, Select } from "antd"
 import type { IUser } from "@/entities/User.ts"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
 import api from "@/axios.ts"
 import ChangeNameModal from "@/app/(main)/(account)/account/profile/(ui)/RequestNameChangeModal.tsx"
 import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
+import { credentialsOptions } from "@shared/options.ts"
+import type { Credentials } from "@features/MembershipApplicationForm/types.ts"
 
 interface IProps {
     user: IUser
@@ -19,7 +21,7 @@ type FieldType = {
     lastname: string
     middlename?: string
     suffix?: string
-    credentials?: string
+    credentials?: Credentials[]
     email: string
     phone?: string
     country: string
@@ -44,7 +46,10 @@ const PersonalInfoForm = ({ user }: IProps) => {
         } = values
         try {
             setIsLoading(true)
-            await api.patch(CURRENT_USER_URL, updateData)
+            await api.patch(CURRENT_USER_URL, {
+                ...updateData,
+                credentials: updateData.credentials?.join(","),
+            })
             message.success("Successfully updated user data")
         } catch (error) {
             if (isAxiosError(error)) {
@@ -57,6 +62,29 @@ const PersonalInfoForm = ({ user }: IProps) => {
         }
     }
 
+    const initialValues = useMemo(() => {
+        const selectedCredentials = user.credentials
+            ? user.credentials
+                  .split(",")
+                  .map((item) => item.trim())
+                  .filter(Boolean)
+            : []
+
+        return {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            preferred_name: user.preferred_name,
+            credentials: selectedCredentials,
+            middlename: user.middlename,
+            suffix: user.suffix,
+            email: user.email,
+            country: user.country,
+            city: user.city,
+            state: user.state,
+            phone_number: user.phone_number,
+        }
+    }, [user])
+
     return (
         <div>
             <h2 className={styles.titleLevelTwo}>Personal information</h2>
@@ -65,19 +93,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
                 form={personalInfoForm}
                 layout="vertical"
                 onFinish={onFinish}
-                initialValues={{
-                    firstname: user.firstname,
-                    lastname: user.lastname,
-                    preferred_name: user.preferred_name,
-                    credentials: user.credentials,
-                    middlename: user.middlename,
-                    suffix: user.suffix,
-                    email: user.email,
-                    country: user.country,
-                    city: user.city,
-                    state: user.state,
-                    phone_number: user.phone_number,
-                }}
+                initialValues={initialValues}
             >
                 <Row gutter={16}>
                     <Col xs={24} md={12}>
@@ -111,8 +127,14 @@ const PersonalInfoForm = ({ user }: IProps) => {
                     </Col>
 
                     <Col xs={24} md={12}>
-                        <Form.Item label="Credentials" name="credentials">
-                            <Input />
+                        <Form.Item<FieldType> name="credentials" label="Credentials">
+                            <Select
+                                mode="multiple"
+                                options={credentialsOptions.map((credential) => ({
+                                    label: credential,
+                                    value: credential,
+                                }))}
+                            />
                         </Form.Item>
                     </Col>
 
