@@ -3,7 +3,7 @@
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
 import { Button, Col, Form, type FormProps, Input, message, Row, Select } from "antd"
 import type { IUser } from "@/entities/User.ts"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
 import api from "@/axios.ts"
@@ -11,6 +11,8 @@ import ChangeNameModal from "@/app/(main)/(account)/account/profile/(ui)/Request
 import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
 import { credentialsOptions } from "@shared/options.ts"
 import type { Credentials } from "@features/MembershipApplicationForm/types.ts"
+import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
+import { useCountriesQuery } from "@shared/backend/queries/useCountriesQuery.ts"
 
 interface IProps {
     user: IUser
@@ -23,20 +25,73 @@ type FieldType = {
     suffix?: string
     credentials?: Credentials[]
     email: string
-    phone?: string
+    phone_number?: string
     country: string
     state?: string
+    postal_code?: string
     city: string
     preferred_name: string
 }
 
+const normalizeCountryCode = (
+    countryValue: string | null | undefined,
+    countries?: { code: string; name: string }[],
+) => {
+    if (!countryValue) {
+        return undefined
+    }
+
+    const normalizedCountryValue = countryValue.trim().toLowerCase()
+    const matchedCountry = countries?.find(
+        (country) =>
+            country.code.toLowerCase() === normalizedCountryValue ||
+            country.name.toLowerCase() === normalizedCountryValue,
+    )
+
+    if (matchedCountry) {
+        return matchedCountry.code
+    }
+
+    if (
+        ["us", "usa", "u.s.", "u.s.a.", "united states", "united states of america"].includes(
+            normalizedCountryValue,
+        )
+    ) {
+        return "US"
+    }
+
+    return countryValue
+}
+
 const PersonalInfoForm = ({ user }: IProps) => {
-    const [personalInfoForm] = Form.useForm()
+    const [form] = Form.useForm()
+    const { data: countries, isLoading: isCountriesLoading } = useCountriesQuery()
 
     const [isLoading, setIsLoading] = useState(false)
     const [nameChangeModalOpen, setNameChangeModalOpen] = useState(false)
+    const watchedCountryCode = Form.useWatch<FieldType["country"]>("country", form)
+    const initialCountryCode = useMemo(
+        () => normalizeCountryCode(user.country, countries),
+        [countries, user.country],
+    )
+    const selectedCountryCode = watchedCountryCode ?? initialCountryCode
+    const selectedCountry = countries?.find((country) => country.code === selectedCountryCode)
+    const isUsaSelected = selectedCountryCode === "US"
+
+    useEffect(() => {
+        if (initialCountryCode) {
+            form.setFieldValue("country", initialCountryCode)
+        }
+    }, [form, initialCountryCode])
+
+    useEffect(() => {
+        if (selectedCountryCode && !isUsaSelected) {
+            form.setFieldsValue({ state: undefined, postal_code: undefined })
+        }
+    }, [form, isUsaSelected, selectedCountryCode])
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+        clearFormErrors(form)
         const {
             email: _email,
             firstname: _firstname,
@@ -54,7 +109,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
         } catch (error) {
             if (isAxiosError(error)) {
                 if (error.status === 422) {
-                    setFormFieldsErrors(error, personalInfoForm)
+                    setFormFieldsErrors(error, form)
                 }
             }
         } finally {
@@ -78,23 +133,19 @@ const PersonalInfoForm = ({ user }: IProps) => {
             middlename: user.middlename,
             suffix: user.suffix,
             email: user.email,
-            country: user.country,
+            country: initialCountryCode,
             city: user.city,
             state: user.state,
+            postal_code: user.postal_code,
             phone_number: user.phone_number,
         }
-    }, [user])
+    }, [initialCountryCode, user])
 
     return (
         <div>
             <h2 className={styles.titleLevelTwo}>Personal information</h2>
 
-            <Form
-                form={personalInfoForm}
-                layout="vertical"
-                onFinish={onFinish}
-                initialValues={initialValues}
-            >
+            <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues}>
                 <Row gutter={16}>
                     <Col xs={24} md={12}>
                         <Form.Item label="First name" name="firstname" rules={[{ required: true }]}>
@@ -152,13 +203,16 @@ const PersonalInfoForm = ({ user }: IProps) => {
 
                     <Col xs={24} md={12}>
                         <Form.Item label="Country" name="country" rules={[{ required: true }]}>
-                            <Input />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} md={12}>
-                        <Form.Item label="State" name="state">
-                            <Input />
+                            <Select
+                                showSearch
+                                loading={isCountriesLoading}
+                                placeholder="Select country"
+                                optionFilterProp="label"
+                                options={countries?.map((country) => ({
+                                    value: country.code,
+                                    label: country.name,
+                                }))}
+                            />
                         </Form.Item>
                     </Col>
 
@@ -167,6 +221,45 @@ const PersonalInfoForm = ({ user }: IProps) => {
                             <Input />
                         </Form.Item>
                     </Col>
+
+                    {isUsaSelected && (
+                        <>
+                            <Col xs={24} md={12}>
+                                <Form.Item
+                                    label={selectedCountry?.state_label || "State"}
+                                    name="state"
+                                    rules={[{ required: true, message: "Please enter your state" }]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={24} md={12}>
+                                <Form.Item
+                                    label={selectedCountry?.postal_code_label || "ZIP"}
+                                    name="postal_code"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please enter your ZIP code",
+                                        },
+                                        ...(selectedCountry?.postal_code_pattern
+                                            ? [
+                                                  {
+                                                      pattern: new RegExp(
+                                                          selectedCountry.postal_code_pattern,
+                                                      ),
+                                                      message: "Please enter a valid ZIP code",
+                                                  },
+                                              ]
+                                            : []),
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </>
+                    )}
                 </Row>
 
                 <div className={styles.personalInfoActions}>
