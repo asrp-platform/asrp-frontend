@@ -18,7 +18,7 @@ const items = [
         children: <MembershipRequestsTable />,
     },
     {
-        label: `Type Change Requests`,
+        label: `Membership Downgrade Requests`,
         key: "downgrade-requests",
         children: <MembershipDowngradeRequestsTable />,
     },

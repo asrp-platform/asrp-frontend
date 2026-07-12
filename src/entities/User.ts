@@ -14,6 +14,7 @@ export interface IUser {
 
     country: string
     state: string | null
+    postal_code: string | null
     city: string
 
     languages_spoken: string | null

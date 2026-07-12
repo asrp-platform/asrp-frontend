@@ -9,6 +9,7 @@ import { getUserProfessionalInformationUrl } from "@shared/backend/restApiUrls/r
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
 import type { IUser, IUserProfessionalInformation } from "@/entities/User"
 import api from "@/axios"
+import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
 
 type FieldType = {
     medical_school: string
@@ -30,6 +31,7 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
     const [isLoading, setIsLoading] = useState(false)
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+        clearFormErrors(professionalInfoForm)
         try {
             setIsLoading(true)
             await api.put(getUserProfessionalInformationUrl(user.id), values)

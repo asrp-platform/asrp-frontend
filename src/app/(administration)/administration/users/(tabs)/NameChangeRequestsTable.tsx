@@ -20,6 +20,7 @@ import { getSelectTableFilterDropdown } from "@/widgets/TableDropdown/SelectTabl
 import NameChangeStatusModal from "@/features/NameChangeRequestModal/NameChangeRequestModal.tsx"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import Link from "next/link"
 
 interface ITableFilters {
     status?: NameChangeRequestStatus
@@ -139,7 +140,9 @@ const NameChangeRequestsTable = () => {
             key: "user_id",
             sorter: true,
             sortOrder: getSortOrder("user_id", ordering),
-            render: (_, record) => `${record.user_id}`,
+            render: (_, record) => (
+                <Link href={`/administration/users/${record.user_id}`}>{record.user_id}</Link>
+            ),
         },
         {
             title: "New first name",
@@ -224,7 +227,7 @@ const NameChangeRequestsTable = () => {
                 onChange={(pagination, filters, sorter) =>
                     handleTableChange(pagination, filters, sorter, setOrdering)
                 }
-                scroll={{ x: 1 }}
+                scroll={{ x: "max-content" }}
             />
             <NameChangeStatusModal
                 open={statusModalOpen}

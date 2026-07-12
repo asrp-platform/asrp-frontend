@@ -1,5 +1,6 @@
-import { Descriptions } from "antd"
 import type { IUser } from "@entities/User.ts"
+
+import ProfileFieldList from "@app/(administration)/administration/users/[userId]/(ui)/components/ProfileFieldList.tsx"
 
 type IProps = {
     user: IUser
@@ -7,28 +8,33 @@ type IProps = {
 
 const ProfessionalInformationDescription = ({ user }: IProps) => {
     return (
-        <Descriptions
+        <ProfileFieldList
             title="Professional information"
-            bordered
-            size="small"
-            column={{ xs: 1, md: 2 }}
-        >
-            <Descriptions.Item label="Institution">{user.institution || "—"}</Descriptions.Item>
-
-            <Descriptions.Item label="Role">{user.role || "—"}</Descriptions.Item>
-
-            <Descriptions.Item label="Languages spoken">
-                {user.languages_spoken || "—"}
-            </Descriptions.Item>
-
-            <Descriptions.Item label="Professional interests">
-                {user.professional_interests || "—"}
-            </Descriptions.Item>
-
-            <Descriptions.Item label="Description" span={2}>
-                {user.description || "—"}
-            </Descriptions.Item>
-        </Descriptions>
+            variant="professional"
+            fields={[
+                {
+                    label: "Institution",
+                    value: user.institution,
+                },
+                {
+                    label: "Role",
+                    value: user.role,
+                },
+                {
+                    label: "Languages spoken",
+                    value: user.languages_spoken,
+                },
+                {
+                    label: "Professional interests",
+                    value: user.professional_interests,
+                },
+                {
+                    label: "Description",
+                    value: user.description,
+                    wide: true,
+                },
+            ]}
+        />
     )
 }
 

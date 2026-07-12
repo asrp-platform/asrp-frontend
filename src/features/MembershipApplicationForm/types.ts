@@ -35,17 +35,6 @@ export type PracticeSetting =
     | "other"
 
 export type FieldType = {
-    firstname: string
-    lastname: string
-    middlename?: string
-    suffix?: string
-    credentials?: Credentials
-    email: string
-    phone?: string
-    country: string
-    state: string
-    city: string
-
     primary_affiliation: string
     job_title: JobTitle
     practice_setting?: PracticeSetting
@@ -56,6 +45,8 @@ export type FieldType = {
     hear_about_asrp: string
     tg_username?: string
     interest_description?: string
+    confirmAccuracy: boolean
+    is_agrees_communications: boolean
 }
 
 export type MembershipKey = "ACTIVE" | "TRAINEE" | "AFFILIATE" | "PATHWAY" | "HONORARY"

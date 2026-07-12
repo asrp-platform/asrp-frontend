@@ -61,6 +61,11 @@ export const metadata: Metadata = {
     },
     icons: {
         icon: [
+            {
+                url: "/favicon-black.svg",
+                type: "image/svg+xml",
+                media: "(prefers-color-scheme: light)",
+            },
             { url: "/icon.png", type: "image/png", sizes: "256x256" },
             { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
         ],

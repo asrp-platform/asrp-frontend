@@ -1,6 +1,8 @@
 import type { IUser } from "@entities/User.ts"
-import { Descriptions, Space } from "antd"
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons"
+import { Space } from "antd"
+
+import ProfileFieldList from "@app/(administration)/administration/users/[userId]/(ui)/components/ProfileFieldList.tsx"
 
 type IProps = {
     user: IUser
@@ -11,37 +13,46 @@ const ContactInformationDescription = ({ user }: IProps) => {
     const telegramUsername = user.telegram_username?.replace("@", "")
 
     return (
-        <Descriptions title="Contact information" bordered size="small" column={{ xs: 1, md: 2 }}>
-            <Descriptions.Item label="Email">
-                <Space>
-                    <MailOutlined />
-                    <a href={`mailto:${user.email}`}>{user.email}</a>
-                </Space>
-            </Descriptions.Item>
-
-            <Descriptions.Item label="Phone">
-                {user.phone_number ? (
-                    <Space>
-                        <PhoneOutlined />
-                        <a href={`tel:${user.phone_number}`}>{user.phone_number}</a>
-                    </Space>
-                ) : (
-                    "—"
-                )}
-            </Descriptions.Item>
-
-            <Descriptions.Item label="Telegram">
-                {telegramUsername ? (
-                    <a href={`https://t.me/${telegramUsername}`} target="_blank" rel="noreferrer">
-                        @{telegramUsername}
-                    </a>
-                ) : (
-                    "—"
-                )}
-            </Descriptions.Item>
-
-            <Descriptions.Item label="Location">{location || "—"}</Descriptions.Item>
-        </Descriptions>
+        <ProfileFieldList
+            title="Contact information"
+            variant="contact"
+            fields={[
+                {
+                    label: "Email",
+                    value: (
+                        <Space>
+                            <MailOutlined />
+                            <a href={`mailto:${user.email}`}>{user.email}</a>
+                        </Space>
+                    ),
+                },
+                {
+                    label: "Phone",
+                    value: user.phone_number ? (
+                        <Space>
+                            <PhoneOutlined />
+                            <a href={`tel:${user.phone_number}`}>{user.phone_number}</a>
+                        </Space>
+                    ) : null,
+                },
+                {
+                    label: "Telegram",
+                    value: telegramUsername ? (
+                        <a
+                            href={`https://t.me/${telegramUsername}`}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            @{telegramUsername}
+                        </a>
+                    ) : null,
+                },
+                {
+                    label: "Location",
+                    value: location,
+                },
+            ]}
+        />
     )
 }
 
