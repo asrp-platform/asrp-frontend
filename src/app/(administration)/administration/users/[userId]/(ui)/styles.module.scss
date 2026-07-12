@@ -1,0 +1,191 @@
+.profileCard {
+    width: 100%;
+}
+
+.profileSection {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-left: 4px solid var(--section-accent-color, #94a3b8);
+    border-radius: 8px;
+    background: var(--section-background-color, rgba(248, 250, 252, 0.72));
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px;
+    color: var(--text-primary-color-dark);
+    font-size: 18px;
+    font-weight: 600;
+
+    &::before {
+        display: block;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--section-accent-color, #94a3b8);
+        content: "";
+    }
+}
+
+.profileSectionContact {
+    --section-accent-color: #2563eb;
+    --section-background-color: #eff6ff;
+}
+
+.profileSectionProfessional {
+    --section-accent-color: #0f766e;
+    --section-background-color: #f0fdfa;
+}
+
+.profileSectionAccount {
+    --section-accent-color: #7c3aed;
+    --section-background-color: #f5f3ff;
+}
+
+.profileSectionEducation {
+    --section-accent-color: #c2410c;
+    --section-background-color: #fff7ed;
+}
+
+.profileSectionStatus {
+    --section-accent-color: #15803d;
+    --section-background-color: #f0fdf4;
+}
+
+.profileSectionJobs {
+    --section-accent-color: #0369a1;
+    --section-background-color: #f0f9ff;
+}
+
+.profileSectionResidencies {
+    --section-accent-color: #be123c;
+    --section-background-color: #fff1f2;
+}
+
+.profileSectionFellowships {
+    --section-accent-color: #4f46e5;
+    --section-background-color: #eef2ff;
+}
+
+.profileSectionMembership {
+    --section-accent-color: #0d9488;
+    --section-background-color: #f0fdfa;
+}
+
+.profileSectionMembershipType {
+    --section-accent-color: #ca8a04;
+    --section-background-color: #fefce8;
+}
+
+.profileSectionRestrictions {
+    --section-accent-color: #dc2626;
+    --section-background-color: #fef2f2;
+}
+
+.profileSectionReferences {
+    --section-accent-color: #64748b;
+    --section-background-color: #f8fafc;
+}
+
+.fieldGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.fieldItem {
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.78);
+
+    dt {
+        margin-bottom: 4px;
+        color: var(--text-secondary-color-dark);
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    dd {
+        margin: 0;
+        color: var(--text-primary-color-dark);
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+    }
+}
+
+.fieldItemWide {
+    grid-column: 1 / -1;
+}
+
+.experienceList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+
+    @media (max-width: 991px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.experienceCard {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.82);
+}
+
+.experienceHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+
+    h4 {
+        margin: 0 0 4px;
+        color: var(--text-primary-color-dark);
+        font-size: 16px;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+}
+
+.compactFieldGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+    margin: 0;
+
+    @media (max-width: 575px) {
+        grid-template-columns: 1fr;
+    }
+
+    div {
+        min-width: 0;
+    }
+
+    dt {
+        margin-bottom: 2px;
+        color: var(--text-secondary-color-dark);
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    dd {
+        margin: 0;
+        color: var(--text-primary-color-dark);
+        overflow-wrap: anywhere;
+    }
+}

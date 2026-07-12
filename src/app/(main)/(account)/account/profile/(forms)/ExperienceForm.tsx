@@ -4,6 +4,7 @@ import { isAxiosError } from "axios"
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
+import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
 
 export interface IExperienceFormValues {
     institution: string
@@ -58,6 +59,7 @@ const ExperienceForm = ({
     }, [initialValues, form])
 
     const handleFinish = async (values: IExperienceFormValues) => {
+        clearFormErrors(form)
         try {
             setIsLoading(true)
             await onSubmit(values)

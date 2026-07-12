@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Alert, Button, Form, type FormProps, Input, Result, Typography } from "antd"
+import { Form, type FormProps, Typography } from "antd"
 import { LeftOutlined } from "@ant-design/icons"
 import { useForm } from "antd/es/form/Form"
 import { isAxiosError } from "axios"
@@ -10,26 +10,18 @@ import useNotification from "antd/es/notification/useNotification"
 import { useState } from "react"
 
 import styles from "@app/(auth)/registration/styles.module.scss"
-import { Role } from "@shared/types/types.ts"
 import api from "@/axios.ts"
-import { REGISTER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import type { IBackendErrorResponse } from "@shared/types/interfaces.ts"
-import ResendEmailConfirmationButton from "@features/ResendEmailConfirmation/ResendEmailConfirmationButton.tsx"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
-
-const { Paragraph, Text } = Typography
-
-type FieldType = {
-    email: string
-    password: string
-    repeat_password: string
-    firstname: string
-    lastname: string
-    institution: string
-    role: Role
-    city: string
-    country: string
-}
+import type { RegisterFormFields } from "@app/(auth)/registration/(ui)/types.ts"
+import NameSection from "@app/(auth)/registration/(ui)/NameSection.tsx"
+import AccountCredentialsSection from "@app/(auth)/registration/(ui)/AccountCredentialsSection.tsx"
+import LocationSection from "@app/(auth)/registration/(ui)/LocationSection.tsx"
+import RegistrationSuccess from "@app/(auth)/registration/(ui)/RegistrationSuccess.tsx"
+import { useCountriesQuery } from "@shared/backend/queries/useCountriesQuery.ts"
+import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
+import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
+import { REGISTER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 const RegisterForm = () => {
     const router = useRouter()
@@ -38,120 +30,76 @@ const RegisterForm = () => {
     const [resendMessage, setResendMessage] = useState<string | null>(null)
     const [resendStatus, setResendStatus] = useState<"success" | "error">("success")
 
+    const { data: countries, isLoading: isCountriesLoading } = useCountriesQuery()
+
     const [notification, contextHolder] = useNotification()
 
-    const openNotification = (pauseOnHover: boolean) => {
-        notification.error({
-            title: "Server Error",
-            description: "An unexpected error occurred on the server. Please try again later.",
-            showProgress: true,
-            pauseOnHover,
-        })
-    }
-
-    const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-        const registerUser = async () => {
-            try {
-                await api.post(REGISTER_URL, values)
-                setRegistrationEmail(values.email)
-            } catch (error: unknown) {
-                if (isAxiosError(error)) {
-                    const errorResponse: IBackendErrorResponse = error.response?.data
-                    const errorResponseDetail = errorResponse.detail
-
-                    console.log(error.response)
-
-                    if (error.response?.status === 409) {
-                        if (typeof errorResponseDetail === "string") {
-                            form.setFields([{ name: "email", errors: [errorResponseDetail] }])
-                        }
-                    } else if (error.response?.status === 400) {
-                        if (typeof errorResponseDetail === "string") {
-                            form.setFields([
-                                { name: "password", errors: [errorResponseDetail] },
-                                { name: "repeat_password", errors: [errorResponseDetail] },
-                            ])
-                        }
-                    } else if (error.response?.status === 422) {
-                        if (typeof errorResponseDetail !== "string") {
-                            const fieldErrors = errorResponseDetail.errors.flatMap((error) => {
-                                if (
-                                    error.field === "" &&
-                                    error.message === "Passwords do not match"
-                                ) {
-                                    return [
-                                        { name: "password", errors: [error.message] },
-                                        { name: "repeat_password", errors: [error.message] },
-                                    ]
-                                }
-
-                                return [{ name: error.field, errors: [error.message] }]
-                            })
-                            form.setFields(fieldErrors)
-                        }
-                    } else {
-                        openNotification(false)
-                    }
+    const onFinish: FormProps<RegisterFormFields>["onFinish"] = async (values) => {
+        clearFormErrors(form)
+        try {
+            const credentials = values.credentials?.length ? values.credentials.join(",") : null
+            await api.post(REGISTER_URL, {
+                ...values,
+                credentials,
+            })
+            setRegistrationEmail(values.email)
+        } catch (error: unknown) {
+            if (!isAxiosError(error)) {
+                console.error(error)
+                notification.error({
+                    title: "Server Error",
+                    description:
+                        "An unexpected error occurred on the server. Please try again later.",
+                    showProgress: true,
+                    pauseOnHover: true,
+                })
+                return
+            } else if (error.response === undefined) {
+                console.error(error)
+                notification.error({
+                    title: "Network error",
+                    description: "Check your internet connection and try again.",
+                    showProgress: true,
+                    pauseOnHover: true,
+                })
+                return
+            } else {
+                if (error.response?.status === 409) {
+                    form.setFields([
+                        { name: "email", errors: ["Provided email is already in use"] },
+                    ])
+                } else if (error.response?.status === 422) {
+                    setFormFieldsErrors(error, form)
+                } else {
+                    handleStatusError(error)
                 }
             }
         }
-        registerUser()
     }
 
     if (registrationEmail) {
         return (
-            <div className={styles.registrationSuccessContainer}>
-                <Result
-                    status="success"
-                    title="Check your email"
-                    subTitle={
-                        <div className={styles.confirmationMessage}>
-                            <Paragraph>
-                                We sent a confirmation link to{" "}
-                                <Text strong>{registrationEmail}</Text>.
-                            </Paragraph>
-                            <Paragraph>
-                                To complete your registration, open the email and follow the
-                                confirmation link.
-                            </Paragraph>
-                            {resendMessage && (
-                                <Alert
-                                    type={resendStatus}
-                                    title={resendMessage}
-                                    showIcon
-                                    className={styles.resendAlert}
-                                />
-                            )}
-                        </div>
-                    }
-                    extra={[
-                        <ResendEmailConfirmationButton
-                            key="resend"
-                            email={registrationEmail}
-                            onSuccess={(message) => {
-                                setResendStatus("success")
-                                setResendMessage(message)
-                            }}
-                            onError={(message) => {
-                                setResendStatus("error")
-                                setResendMessage(message)
-                            }}
-                        />,
-                        <Button type="primary" key="login" onClick={() => router.push("/login")}>
-                            Back to login
-                        </Button>,
-                        <Button key="home" onClick={() => router.push("/")}>
-                            Home
-                        </Button>,
-                    ]}
-                />
-            </div>
+            <RegistrationSuccess
+                registrationEmail={registrationEmail}
+                resendMessage={resendMessage}
+                resendStatus={resendStatus}
+                onBackToLogin={() => router.push("/login")}
+                onHome={() => router.push("/")}
+                onResendSuccess={(message) => {
+                    setResendStatus("success")
+                    setResendMessage(message)
+                }}
+                onResendError={(message) => {
+                    setResendStatus("error")
+                    setResendMessage(message)
+                }}
+            />
         )
     }
 
     return (
         <>
-            <header>
+            <header className={styles.header}>
                 <h1>Create an account</h1>
                 <Typography>
                     <Link
@@ -166,82 +114,9 @@ const RegisterForm = () => {
             </header>
             <Form layout="vertical" onFinish={onFinish} form={form} className={styles.registerForm}>
                 {contextHolder}
-                <h2>Name</h2>
-                <div className={styles.twoFieldContainer}>
-                    <Form.Item<FieldType>
-                        label="First name"
-                        name="firstname"
-                        rules={[{ required: true, message: "Please enter your name" }]}
-                    >
-                        <Input className={styles.antdInput} />
-                    </Form.Item>
-
-                    <Form.Item<FieldType>
-                        label="Last name"
-                        name="lastname"
-                        rules={[{ required: true, message: "Please enter your lastname" }]}
-                    >
-                        <Input className={styles.antdInput} />
-                    </Form.Item>
-                </div>
-
-                <h2>Credentials</h2>
-                <Form.Item<FieldType>
-                    label="Email"
-                    name="email"
-                    rules={[{ required: true, message: "Please enter your email" }]}
-                    className={styles.emailInput}
-                >
-                    <Input className={styles.antdInput} />
-                </Form.Item>
-
-                <div className={styles.twoFieldContainer}>
-                    <Form.Item<FieldType>
-                        label="Password"
-                        name="password"
-                        rules={[{ required: true, message: "Please enter your password" }]}
-                    >
-                        <Input.Password className={styles.antdInput} />
-                    </Form.Item>
-
-                    <Form.Item<FieldType>
-                        label="Repeat password"
-                        name="repeat_password"
-                        dependencies={["password"]}
-                        rules={[
-                            { required: true, message: "Please repeat your password" },
-                            ({ getFieldValue }) => ({
-                                validator(_, value: string | undefined) {
-                                    if (!value || getFieldValue("password") === value) {
-                                        return Promise.resolve()
-                                    }
-
-                                    return Promise.reject(new Error("Passwords do not match"))
-                                },
-                            }),
-                        ]}
-                    >
-                        <Input.Password className={styles.antdInput} />
-                    </Form.Item>
-                </div>
-
-                <div className={styles.twoFieldContainer}>
-                    <Form.Item<FieldType>
-                        label="Country"
-                        name="country"
-                        rules={[{ required: true, message: "Please enter your country" }]}
-                    >
-                        <Input className={styles.antdInput} />
-                    </Form.Item>
-
-                    <Form.Item<FieldType>
-                        label="City"
-                        name="city"
-                        rules={[{ required: true, message: "Please select your city" }]}
-                    >
-                        <Input className={styles.antdInput} />
-                    </Form.Item>
-                </div>
+                <NameSection />
+                <AccountCredentialsSection />
+                <LocationSection countries={countries} isCountriesLoading={isCountriesLoading} />
 
                 <div className={styles.submitButtonContainer}>
                     <CustomButton variant="primary-filled" htmlType="submit">

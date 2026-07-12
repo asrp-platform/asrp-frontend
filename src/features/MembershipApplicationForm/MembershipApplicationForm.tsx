@@ -15,7 +15,7 @@ import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
-import { countries, credentialsOptions, referralSourceOptions } from "@shared/options.ts"
+import { referralSourceOptions } from "@shared/options.ts"
 import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
@@ -26,9 +26,9 @@ type TrainingState = {
     isUsTrainee?: boolean
 }
 
-type AgreementState = {
-    confirmAccuracy: boolean
-    is_agrees_communications: boolean
+const initialValues = {
+    confirmAccuracy: false,
+    is_agrees_communications: false,
 }
 
 const MembershipApplicationForm = () => {
@@ -42,10 +42,6 @@ const MembershipApplicationForm = () => {
         )
 
     const [training, setTraining] = useState<TrainingState>({})
-    const [agreements, setAgreements] = useState<AgreementState>({
-        confirmAccuracy: false,
-        is_agrees_communications: false,
-    })
     const [isFormSubmitting, setIsFormSubmitting] = useState(false)
 
     const isFormDisabled = useMemo(
@@ -54,21 +50,7 @@ const MembershipApplicationForm = () => {
         [currentUser, currentUserMembership, currentUserMembershipRequest],
     )
 
-    const initialValues = useMemo(
-        () => ({
-            firstname: currentUser?.firstname,
-            lastname: currentUser?.lastname,
-            middlename: currentUser?.middlename,
-            suffix: currentUser?.suffix,
-            credentials: currentUser?.credentials,
-            email: currentUser?.email,
-            phone: currentUser?.phone_number,
-            country: currentUser?.country,
-            state: currentUser?.state,
-            city: currentUser?.city,
-        }),
-        [currentUser],
-    )
+    console.log(currentUser, currentUserMembership, currentUserMembershipRequest)
 
     const [form] = useForm<FieldType>()
 
@@ -113,7 +95,7 @@ const MembershipApplicationForm = () => {
                     tg_username: values.tg_username,
                     interest_description: values.interest_description,
                 },
-                is_agrees_communications: agreements.is_agrees_communications,
+                is_agrees_communications: values.is_agrees_communications,
             }
 
             const response = await api.post<PaymentCheckoutResponse>(
@@ -156,6 +138,7 @@ const MembershipApplicationForm = () => {
             onFinish={onFinish}
             disabled={isFormDisabled}
             initialValues={initialValues}
+            scrollToFirstError
         >
             {!currentUser && (
                 <Warning>
@@ -165,7 +148,7 @@ const MembershipApplicationForm = () => {
                         Once signed in, you’ll be able to fill out the form and proceed with your
                         application.
                     </p>
-                    <LinkButton href="/login" variant="blue">
+                    <LinkButton href="/login" variant="default">
                         Sign Up
                     </LinkButton>
                 </Warning>
@@ -179,73 +162,6 @@ const MembershipApplicationForm = () => {
                     />
                 </div>
             )}
-
-            <div className={styles.blockInfoContainer}>
-                <h2>Personal information</h2>
-                <p>
-                    Your basic contact information will be used for official ASRP communications
-                    only and will not be shared
-                    <br /> outside the Society without your permission.
-                </p>
-            </div>
-
-            <div className={styles.grid}>
-                <Form.Item label="First name" name="firstname" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Last name" name="lastname" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Middle name" name="middlename">
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Suffix" name="suffix">
-                    <Input placeholder="Jr., Sr., III, etc." />
-                </Form.Item>
-
-                <Form.Item label="Credentials" name="credentials">
-                    <Select allowClear placeholder="Select an option">
-                        {credentialsOptions.map((c) => (
-                            <Select.Option key={c} value={c}>
-                                {c}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-
-                <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Phone" name="phone">
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Country" name="country" rules={[{ required: true }]}>
-                    <Select placeholder="Select country">
-                        {countries.map((c) => (
-                            <Select.Option key={c.code} value={c.code}>
-                                {c.name}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-
-                <Form.Item label="City" name="city" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="State (required if in US)"
-                    name="state"
-                    rules={[{ required: false }]}
-                >
-                    <Input />
-                </Form.Item>
-            </div>
 
             <div className={styles.blockInfoContainer}>
                 <h2>Professional information</h2>
@@ -386,33 +302,57 @@ const MembershipApplicationForm = () => {
             </div>
 
             <div className={styles.agreementBlock}>
-                <div className={styles.checkboxContainer}>
-                    <Checkbox
-                        checked={agreements.confirmAccuracy}
-                        onChange={(e) =>
-                            setAgreements((s) => ({
-                                ...s,
-                                confirmAccuracy: e.target.checked,
-                            }))
-                        }
-                    />
-                    <p>
-                        I confirm that the information provided in this application is accurate to
-                        the best of my knowledge and that I meet the eligibility criteria for the
-                        selected membership category<span className={styles.required}> *</span>.
-                    </p>
-                </div>
+                <Form.Item<FieldType> noStyle shouldUpdate>
+                    {({ getFieldError }) => {
+                        const hasConfirmAccuracyError = getFieldError("confirmAccuracy").length > 0
+
+                        return (
+                            <div
+                                className={[
+                                    styles.checkboxContainer,
+                                    hasConfirmAccuracyError ? styles.checkboxContainerError : "",
+                                ]
+                                    .filter(Boolean)
+                                    .join(" ")}
+                            >
+                                <Form.Item<FieldType>
+                                    name="confirmAccuracy"
+                                    valuePropName="checked"
+                                    noStyle
+                                    rules={[
+                                        {
+                                            validator: (_, value) =>
+                                                value
+                                                    ? Promise.resolve()
+                                                    : Promise.reject(
+                                                          new Error(
+                                                              "Please confirm the information accuracy",
+                                                          ),
+                                                      ),
+                                        },
+                                    ]}
+                                >
+                                    <Checkbox />
+                                </Form.Item>
+                                <p>
+                                    I confirm that the information provided in this application is
+                                    accurate to the best of my knowledge and that I meet the
+                                    eligibility criteria for the selected membership category
+                                    <span className={styles.required}> *</span>.
+                                </p>
+                            </div>
+                        )
+                    }}
+                </Form.Item>
 
                 <div className={styles.checkboxContainer}>
-                    <Checkbox
-                        checked={agreements.is_agrees_communications}
-                        onChange={(e) =>
-                            setAgreements((s) => ({
-                                ...s,
-                                is_agrees_communications: e.target.checked,
-                            }))
-                        }
-                    />
+                    <Form.Item<FieldType>
+                        name="is_agrees_communications"
+                        valuePropName="checked"
+                        noStyle
+                    >
+                        <Checkbox />
+                    </Form.Item>
                     <p>
                         I agree to receive membership-related communications from ASRP, including
                         newsletters, event invitations, and important Society updates. I understand

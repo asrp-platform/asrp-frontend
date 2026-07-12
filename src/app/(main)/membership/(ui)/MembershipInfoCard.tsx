@@ -1,5 +1,6 @@
 import styles from "@/app/(main)/membership/(ui)/styles.module.scss"
 import type { ReactNode } from "react"
+import Link from "next/link"
 
 interface IProps {
     title: string
@@ -42,7 +43,11 @@ const MembershipInfoCard = ({
             <p>{info}</p>
             <span className={styles.price}>${price} / year</span>
             <div className={styles.subdescription}>{subDescription}</div>
-            {renderButton && <button className={styles.secondaryLink}>Join</button>}
+            {renderButton && (
+                <Link href={"/membership/become-member"} className={styles.secondaryLink}>
+                    Join
+                </Link>
+            )}
         </div>
     )
 }

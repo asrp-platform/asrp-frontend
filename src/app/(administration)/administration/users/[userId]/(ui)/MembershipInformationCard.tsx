@@ -2,8 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query"
 import { isAxiosError } from "axios"
-import type { ReactNode } from "react"
-import { Card, Descriptions, Divider, Empty, Result, Tag } from "antd"
+import { Card, Empty, Result, Space, Tag } from "antd"
 
 import api from "@/axios.ts"
 import type { IUserMembership } from "@entities/Membership.ts"
@@ -14,16 +13,13 @@ import MembershipStatusTag from "@app/(administration)/administration/membership
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
+import ProfileFieldList, {
+    type IProfileField,
+} from "@app/(administration)/administration/users/[userId]/(ui)/components/ProfileFieldList.tsx"
+import styles from "@app/(administration)/administration/users/[userId]/(ui)/styles.module.scss"
 
 type IProps = {
     userId: string
-}
-
-type DescriptionItem = {
-    key: string
-    label: string
-    children: ReactNode
-    span?: number
 }
 
 const EMPTY_VALUE = "N/A"
@@ -43,127 +39,106 @@ const renderDate = (value: string | null | undefined) => {
     return formatDatetime(value) || EMPTY_VALUE
 }
 
-const getMembershipOverviewItems = (membership: IUserMembership): DescriptionItem[] => [
+const getMembershipOverviewItems = (membership: IUserMembership): IProfileField[] => [
     {
-        key: "id",
         label: "Membership ID",
-        children: membership.id,
+        value: membership.id,
     },
     {
-        key: "status",
         label: "Status",
-        children: <MembershipStatusTag membership={membership} />,
+        value: <MembershipStatusTag membership={membership} />,
     },
     {
-        key: "type",
         label: "Type",
-        children: <MembershipTypeTag type={membership.membership_type.type} />,
+        value: <MembershipTypeTag type={membership.membership_type.type} />,
     },
     {
-        key: "expires_at",
         label: "Expires at",
-        children: renderDate(membership.expires_at),
+        value: renderDate(membership.expires_at),
     },
     {
-        key: "created_at",
         label: "Created at",
-        children: renderDate(membership.created_at),
+        value: renderDate(membership.created_at),
     },
     {
-        key: "updated_at",
         label: "Updated at",
-        children: renderDate(membership.updated_at),
+        value: renderDate(membership.updated_at),
     },
 ]
 
-const getMembershipTypeItems = (membership: IUserMembership): DescriptionItem[] => [
+const getMembershipTypeItems = (membership: IUserMembership): IProfileField[] => [
     {
-        key: "membership_type_name",
         label: "Name",
-        children: membership.membership_type.name,
+        value: membership.membership_type.name,
     },
     {
-        key: "membership_type_price",
         label: "Price",
-        children: formatMoney(membership.membership_type.price_usd),
+        value: formatMoney(membership.membership_type.price_usd),
     },
     {
-        key: "membership_type_duration",
         label: "Duration",
-        children: `${membership.membership_type.duration} days`,
+        value: `${membership.membership_type.duration} days`,
     },
     {
-        key: "membership_type_purchasable",
         label: "Purchasable",
-        children: renderBooleanTag(membership.membership_type.is_purchasable),
+        value: renderBooleanTag(membership.membership_type.is_purchasable),
     },
     {
-        key: "membership_type_description",
         label: "Description",
-        children: membership.membership_type.description || EMPTY_VALUE,
-        span: 2,
+        value: membership.membership_type.description || EMPTY_VALUE,
+        wide: true,
     },
 ]
 
-const getMembershipRestrictionItems = (membership: IUserMembership): DescriptionItem[] => [
+const getMembershipRestrictionItems = (membership: IUserMembership): IProfileField[] => [
     {
-        key: "terminated",
         label: "Terminated",
-        children: renderBooleanTag(membership.terminated, "Terminated", "Not terminated"),
+        value: renderBooleanTag(membership.terminated, "Terminated", "Not terminated"),
     },
     {
-        key: "terminated_at",
         label: "Terminated at",
-        children: renderDate(membership.terminated_at),
+        value: renderDate(membership.terminated_at),
     },
     {
-        key: "termination_reason",
         label: "Termination reason",
-        children: membership.termination_reason || EMPTY_VALUE,
-        span: 2,
+        value: membership.termination_reason || EMPTY_VALUE,
+        wide: true,
     },
     {
-        key: "suspended",
         label: "Suspended",
-        children: renderBooleanTag(membership.is_suspended, "Suspended", "Not suspended"),
+        value: renderBooleanTag(membership.is_suspended, "Suspended", "Not suspended"),
     },
     {
-        key: "suspended_until",
         label: "Suspended until",
-        children: renderDate(membership.suspended_until),
+        value: renderDate(membership.suspended_until),
     },
     {
-        key: "suspended_at",
         label: "Suspended at",
-        children: renderDate(membership.suspended_at),
+        value: renderDate(membership.suspended_at),
     },
     {
-        key: "suspension_reason",
         label: "Suspension reason",
-        children: membership.suspension_reason || EMPTY_VALUE,
+        value: membership.suspension_reason || EMPTY_VALUE,
+        wide: true,
     },
 ]
 
-const getMembershipReferenceItems = (membership: IUserMembership): DescriptionItem[] => [
+const getMembershipReferenceItems = (membership: IUserMembership): IProfileField[] => [
     {
-        key: "membership_request_id",
         label: "Membership request ID",
-        children: membership.membership_request_id,
+        value: membership.membership_request_id,
     },
     {
-        key: "membership_type_id",
         label: "Membership type ID",
-        children: membership.membership_type_id,
+        value: membership.membership_type_id,
     },
     {
-        key: "user_id",
         label: "User ID",
-        children: membership.user_id,
+        value: membership.user_id,
     },
     {
-        key: "user_email",
         label: "User email",
-        children: membership.user.email,
+        value: membership.user.email,
     },
 ]
 
@@ -212,46 +187,35 @@ const MembershipInformationCard = ({ userId }: IProps) => {
 
     return (
         <AdminPermissionGuard permission="memberships.view">
-            <Card>
+            <Card className={styles.profileCard}>
                 {!membership ? (
                     <Empty description="This user does not have a membership yet" />
                 ) : (
-                    <>
-                        <Descriptions
+                    <Space direction="vertical" size={24} style={{ width: "100%" }}>
+                        <ProfileFieldList
                             title="Membership overview"
-                            bordered
-                            size="small"
-                            column={{ xs: 1, md: 2 }}
-                            items={getMembershipOverviewItems(membership)}
+                            variant="membership"
+                            fields={getMembershipOverviewItems(membership)}
                         />
-                        <Divider />
 
-                        <Descriptions
+                        <ProfileFieldList
                             title="Membership type"
-                            bordered
-                            size="small"
-                            column={{ xs: 1, md: 2 }}
-                            items={getMembershipTypeItems(membership)}
+                            variant="membershipType"
+                            fields={getMembershipTypeItems(membership)}
                         />
-                        <Divider />
 
-                        <Descriptions
+                        <ProfileFieldList
                             title="Restrictions"
-                            bordered
-                            size="small"
-                            column={{ xs: 1, md: 2 }}
-                            items={getMembershipRestrictionItems(membership)}
+                            variant="restrictions"
+                            fields={getMembershipRestrictionItems(membership)}
                         />
-                        <Divider />
 
-                        <Descriptions
+                        <ProfileFieldList
                             title="References"
-                            bordered
-                            size="small"
-                            column={{ xs: 1, md: 2 }}
-                            items={getMembershipReferenceItems(membership)}
+                            variant="references"
+                            fields={getMembershipReferenceItems(membership)}
                         />
-                    </>
+                    </Space>
                 )}
             </Card>
         </AdminPermissionGuard>

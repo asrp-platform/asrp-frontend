@@ -74,6 +74,16 @@ $desktop-text-font-size: 14px;
     display: flex;
     align-items: flex-start;
     gap: 10px;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.checkboxContainerError {
+    background-color: rgba(201, 0, 0, 0.06);
+
+    :global(.ant-checkbox-inner) {
+        border-color: var(--text-primary-color-red);
+    }
 }
 
 .buttonContainer {
