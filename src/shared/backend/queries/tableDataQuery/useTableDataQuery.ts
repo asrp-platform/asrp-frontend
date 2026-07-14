@@ -11,8 +11,8 @@ type TableFilters<Filters> = {
 interface TableQueryParams<Filters extends TableFilters<Filters>> {
     url: string
     queryKey: QueryKey
-    page: number
-    pageSize: number
+    page?: number
+    pageSize?: number
     ordering?: string[]
     filters?: Filters
 }
