@@ -86,21 +86,19 @@ const catalogItems = [
 
 const EducationCatalog = () => {
     return (
-        <div className={styles.pageContainer}>
-            <div className={styles.catalogSection}>
-                <div className={styles.catalogHeader}>
-                    <span className={styles.catalogLabel}>Education catalog</span>
-                    <h2>Explore learning areas</h2>
-                    <p>
-                        Browse resources across training, practice, and professional development.
-                        Locked sections require login (member access).
-                    </p>
-                </div>
-                <div className={styles.cardsGrid}>
-                    {catalogItems.map((item, index) => (
-                        <ResourceCard key={index} {...item} />
-                    ))}
-                </div>
+        <div className={styles.catalogSection}>
+            <div className={styles.catalogHeader}>
+                <span className={styles.catalogLabel}>Education catalog</span>
+                <h2>Explore learning areas</h2>
+                <p>
+                    Browse resources across training, practice, and professional development. Locked
+                    sections require login (member access).
+                </p>
+            </div>
+            <div className={styles.cardsGrid}>
+                {catalogItems.map((item, index) => (
+                    <ResourceCard key={index} {...item} />
+                ))}
             </div>
         </div>
     )
