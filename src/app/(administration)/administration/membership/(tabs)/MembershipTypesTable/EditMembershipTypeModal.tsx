@@ -39,7 +39,7 @@ const EditMembershipTypeModal = ({ membershipType }: IProps) => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["membership-types"] })
             setOpen(false)
-            message.success(`${membershipType.type} membership type created`)
+            message.success(`${membershipType.type} membership type updated`)
         },
         onError: (error) => {
             handleStatusError(error)
