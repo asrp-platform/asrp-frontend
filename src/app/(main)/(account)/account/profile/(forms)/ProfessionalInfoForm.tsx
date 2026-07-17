@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Checkbox, Col, Form, type FormProps, Input, Row } from "antd"
+import { Button, Checkbox, Col, Form, type FormProps, Input, message, Row } from "antd"
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
 import { useEffect, useState } from "react"
@@ -35,12 +35,14 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
         try {
             setIsLoading(true)
             await api.put(getUserProfessionalInformationUrl(user.id), values)
+            message.success("Successfully updated professional information")
         } catch (error: unknown) {
             if (isAxiosError(error)) {
                 if (error.status === 422) {
                     setFormFieldsErrors(error, professionalInfoForm)
                 }
             }
+            message.error("Failed to update professional information")
         } finally {
             setIsLoading(false)
         }
