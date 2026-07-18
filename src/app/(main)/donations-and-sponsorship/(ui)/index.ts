@@ -1,0 +1,6 @@
+export { default as ContactSection } from "./ContactSection/ContactSection"
+export { default as CorporateSponsorsSection } from "./CorporateSponsorsSection/CorporateSponsorsSection"
+export { default as DonationsHero } from "./DonationsHero/DonationsHero"
+export { default as FaqSection } from "./FaqSection/FaqSection"
+export { default as IndividualDonorsSection } from "./IndividualDonorsSection/IndividualDonorsSection"
+export { default as WhyGiveSection } from "./WhyGiveSection/WhyGiveSection"

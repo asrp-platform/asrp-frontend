@@ -1,4 +1,4 @@
-import styles from "../(ui)/SponsorsList.module.scss"
+import styles from "./SponsorsListSkeleton.module.scss"
 
 const SponsorsListSkeleton = () => (
     <ul className={styles.sponsorsList}>
