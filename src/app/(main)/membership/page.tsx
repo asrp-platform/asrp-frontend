@@ -1,6 +1,5 @@
 import styles from "@/app/(main)/membership/styles.module.scss"
-import MembershipInfoCard from "@/app/(main)/membership/(ui)/MembershipInfoCard.tsx"
-import Image from "next/image"
+import MembershipTypesCards from "@/app/(main)/membership/(ui)/MembershipTypesCards.tsx"
 import PageTitleCard from "@/shared/ui/PageTitleCard/PageTitleCard.tsx"
 import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
 import Link from "next/link"
@@ -101,61 +100,7 @@ const MembershipPage = () => {
                         professional involvement, while supporting a shared mission and community.
                     </p>
 
-                    <div className={styles.cardsGrid}>
-                        <MembershipInfoCard
-                            title="Full Member"
-                            info="Any legally qualified Russian-speaking specialist (MD, DO, MBBS, PhD, or equivalent) who is actively practicing pathology in the United States."
-                            votingStatus="Voting Member"
-                            votingColor="red"
-                            subDescription="Ideal for: attending pathologists, practicing subspecialists, academic faculty, and community pathologists."
-                            price={120}
-                        />
-
-                        <MembershipInfoCard
-                            title="Trainee Member"
-                            info="Russian-speaking residents or fellows in pathology or related disciplines training in the United States."
-                            votingStatus="Voting member • Trainee"
-                            votingColor="blue"
-                            subDescription="Ideal for: residents, fellows, and other pathology trainees seeking mentorship, education, and networking."
-                            price={60}
-                        />
-
-                        <MembershipInfoCard
-                            title="Affiliate Member"
-                            info="Russian-speaking pathologists, scientists, researchers, or allied professionals whose involvement is relevant and contributes meaningfully to the Society."
-                            votingStatus="Non-voting"
-                            votingColor="blue"
-                            subDescription="Ideal for: PhD scientists, laboratory professionals, industry partners, researchers, and educators."
-                            price={90}
-                        />
-
-                        <MembershipInfoCard
-                            title="Honorary Member"
-                            info="Individuals recognized for exceptional service to the field of pathology or outstanding contributions to the Society."
-                            votingStatus="Non-voting"
-                            votingColor="blue"
-                            subDescription="*This membership category is awarded by the Society and cannot be joined directly.*"
-                            price={0}
-                            renderButton={false}
-                            icon={
-                                <Image
-                                    src="/icons/honorary.svg"
-                                    alt="HonoraryMember"
-                                    width={12}
-                                    height={12}
-                                />
-                            }
-                        />
-
-                        <MembershipInfoCard
-                            title="Pathway Member"
-                            info="Russian-speaking individuals pursuing or transitioning into a medical career in the United States, including medical students and internationally trained medical graduates seeking mentorship."
-                            votingStatus="Non-voting • Pathway"
-                            votingColor="blue"
-                            subDescription="Ideal for: medical students, IMGs applying to U.S. pathology residencies, and those exploring pathology as a specialty."
-                            price={30}
-                        />
-                    </div>
+                    <MembershipTypesCards />
                 </section>
             </div>
         </div>

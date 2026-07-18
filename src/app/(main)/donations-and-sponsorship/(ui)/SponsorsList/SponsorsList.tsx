@@ -3,9 +3,9 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import Link from "next/link"
-import styles from "../(ui)/SponsorsList.module.scss"
+import styles from "./SponsorsList.module.scss"
 
-import SponsorsListSkeleton from "./SponsorsListSkeleton"
+import SponsorsListSkeleton from "../SponsorsListSkeleton/SponsorsListSkeleton"
 import { SPONSORS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 interface Sponsor {

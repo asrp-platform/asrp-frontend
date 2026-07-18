@@ -1,0 +1,59 @@
+.checkoutContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.actionRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    span {
+        font-size: 11px;
+        line-height: 16px;
+        color: #314158;
+    }
+}
+
+.toggleButton,
+.submitButton {
+    padding: 10px 20px;
+    width: fit-content;
+    border: var(--red-border);
+    border-radius: 9999px;
+    background-color: var(--button-primary-red);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        background-color: var(--button-primary-red-hover);
+        transform: translateY(-1px);
+        cursor: pointer;
+    }
+}
+
+.checkoutForm {
+    max-width: 420px;
+    padding-top: 4px;
+
+    :global(.ant-input-number) {
+        width: 100%;
+    }
+
+    :global(.ant-input),
+    :global(.ant-input-number-input) {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 12px;
+    }
+}
+
+.submitButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+    transform: none;
+}

@@ -1,0 +1,200 @@
+@use "../../../../shared/mixins" as m;
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--general-vertical-blocks-gap);
+    min-height: 70vh;
+    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
+    color: var(--text-primary-color-dark);
+
+    @media (min-width: 1200px) {
+        margin: 48px var(--page-container-horizontal-margin);
+    }
+}
+
+.hero {
+    @include m.heading-card-container;
+    background: var(--background-heading-gradient);
+    color: var(--text-primary-color-light);
+
+    h1 {
+        color: var(--text-highlight-main-color-light);
+        font-size: 2.25rem;
+    }
+
+    p {
+        max-width: 760px;
+        color: var(--text-primary-color-light);
+    }
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 76px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(255 255 255 / 0.32);
+    border-radius: var(--pill-border-radius);
+    background: rgb(255 255 255 / 0.16);
+}
+
+.icon {
+    width: 42px;
+    height: 42px;
+    color: var(--text-highlight-main-color-light);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    border: 1px solid rgb(255 255 255 / 0.36);
+    border-radius: var(--pill-border-radius);
+    background: rgb(255 255 255 / 0.14);
+    color: var(--text-highlight-main-color-light);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.details {
+    @include m.main-page-card;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.infoGrid {
+    display: grid;
+    gap: 16px;
+
+    @media (min-width: 900px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.infoCard {
+    padding: 24px;
+    border: var(--light-border);
+    border-radius: var(--card-border-radius);
+    background: var(--surface-muted-color);
+
+    > svg {
+        margin-bottom: 12px;
+        color: var(--text-primary-color-red);
+    }
+
+    h2 {
+        margin: 0;
+        color: var(--text-primary-color-dark);
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    p {
+        margin-top: 10px;
+        color: var(--text-secondary-color-dark);
+        font-size: 16px;
+        line-height: var(--paragraph-line-height);
+    }
+}
+
+.emailLink {
+    display: inline-flex;
+    margin-top: 16px;
+    color: var(--text-primary-color-red);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        color: var(--button-primary-red-hover);
+        transform: translateY(-1px);
+    }
+}
+
+.note {
+    padding: 20px 24px;
+    border: var(--red-border);
+    border-radius: var(--card-border-radius);
+    background: var(--surface-danger-hover-color);
+
+    p {
+        margin: 0;
+        color: var(--text-secondary-color-dark);
+        font-size: 16px;
+        line-height: var(--paragraph-line-height);
+    }
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 20px;
+    border-radius: var(--pill-border-radius);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+}
+
+.primaryButton {
+    border: 1px solid var(--button-primary-red);
+    background: var(--button-primary-red);
+    color: var(--text-highlight-main-color-light);
+
+    &:visited {
+        color: var(--text-highlight-main-color-light);
+    }
+
+    &:hover {
+        border-color: var(--button-primary-red-hover);
+        background: var(--button-primary-red-hover);
+    }
+}
+
+.secondaryButton {
+    border: var(--light-border);
+    background: var(--button-primary-light);
+    color: var(--text-primary-color-dark);
+
+    &:hover {
+        background: var(--button-primary-light-hover);
+        color: var(--text-secondary-color-dark);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .primaryButton,
+    .secondaryButton {
+        width: 100%;
+    }
+}

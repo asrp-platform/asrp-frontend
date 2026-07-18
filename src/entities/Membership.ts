@@ -28,9 +28,9 @@ export interface IMembershipType {
     id: number
     name: string
     type: MembershipTypeEnum
-    price_usd: number | string
+    price_usd: number
     duration: number
-    description: string | null
+    description: string
     is_purchasable: boolean
 }
 
