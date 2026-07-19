@@ -46,7 +46,7 @@ export const getUserJobByIdUrl = (userId: number | string, jobId: number | strin
 
 // Feedback
 export const CONTACT_MESSAGE_URL = "/contact-messages"
-export const DONATION_CHECKOUT_URL = "/payments/donations/"
+export const DONATION_CHECKOUT_URL = "/payments/donations"
 
 export const DIRECTORS_BOARD_URL = "/directors-board"
 
