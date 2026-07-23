@@ -22,13 +22,36 @@ export const setFormFieldsErrors = (error: AxiosError, form: FormInstance) => {
     if (error.response.status === 422) {
         if (hasValidationErrors(error.response.data)) {
             const backendErrors: IValidationError[] = error.response.data.detail.errors
+            const registeredFields = form.getFieldsError().map(({ name }) => ({
+                name,
+                path: name.map(String).join("."),
+            }))
 
-            form.setFields(
-                backendErrors.map((error) => ({
-                    name: error.field,
+            const formErrors = backendErrors.map((error) => {
+                const exactField = registeredFields.find(({ path }) => path === error.field)
+                const flatFieldName = error.field.split(".").at(-1) ?? error.field
+                const flatField = registeredFields.find(
+                    ({ name }) => name.length === 1 && String(name[0]) === flatFieldName,
+                )
+
+                return {
+                    name: exactField?.name ?? flatField?.name ?? error.field,
                     errors: [error.message],
-                })),
-            )
+                }
+            })
+
+            form.setFields(formErrors)
+
+            const firstError = formErrors[0]
+            if (firstError) {
+                requestAnimationFrame(() => {
+                    form.scrollToField(firstError.name, {
+                        behavior: "smooth",
+                        block: "center",
+                        focus: true,
+                    })
+                })
+            }
         }
     }
 }
