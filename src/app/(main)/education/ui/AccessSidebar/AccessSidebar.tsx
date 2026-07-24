@@ -1,4 +1,5 @@
-import Link from "next/link"
+import CustomLink from "@/shared/ui/Buttons/CustomLink/CustomLink"
+
 import styles from "./styles.module.scss"
 
 const AccessSidebar = () => {
@@ -27,12 +28,16 @@ const AccessSidebar = () => {
                 <p>Submit cases, questions, or teaching materials to support the community.</p>
             </div>
             <div className={styles.sidebarButtons}>
-                <Link href="/login" className={styles.loginButton}>
+                <CustomLink href="/login" variant="ghost">
                     Log in
-                </Link>
-                <Link href="/membership/become-member" className={styles.joinButton}>
+                </CustomLink>
+                <CustomLink
+                    href="/membership/become-member"
+                    variant="primary-filled"
+                    className={styles.joinLink}
+                >
                     Join ASRP
-                </Link>
+                </CustomLink>
             </div>
         </div>
     )

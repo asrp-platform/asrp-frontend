@@ -1,0 +1,118 @@
+.link {
+    display: inline-block;
+    border-radius: var(--pill-border-radius);
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    align-self: flex-start;
+    line-height: normal;
+
+    &:visited {
+        text-decoration: none;
+    }
+
+    &.primary {
+        background: transparent;
+        border: var(--red-border);
+        color: var(--button-primary-red);
+
+        &:hover {
+            color: var(--button-primary-red-hover);
+            transform: translateY(-1px);
+            background: var(--surface-danger-hover-color);
+        }
+    }
+
+    &.secondary {
+        border: 1px solid #cbd5f5;
+        background: var(--button-primary-light);
+        color: var(--text-primary-color-dark);
+
+        &:hover {
+            color: var(--text-secondary-color-dark);
+            transform: translateY(-1px);
+            background: var(--button-primary-light-hover);
+        }
+    }
+
+    &.primary-filled {
+        background: var(--button-primary-red);
+        color: white;
+        border: none;
+
+        &:hover {
+            transform: translateY(-1px);
+            background: var(--button-primary-red-hover);
+        }
+    }
+
+    &.red {
+        padding: 0.5rem 1rem;
+        border-radius: 100vw;
+        color: #ffffff;
+        background-color: #e7000b;
+        border: none;
+
+        @media (min-width: 1200px) {
+            align-self: flex-start;
+        }
+
+        &:hover {
+            color: inherit;
+            transform: translateY(-1px);
+            background-color: #c10007;
+        }
+    }
+
+    &.blue {
+        padding: 0.5rem 1rem;
+        border-radius: 100vw;
+        background-color: #91caff;
+        border: none;
+
+        @media (min-width: 1200px) {
+            align-self: flex-start;
+        }
+
+        &:hover {
+            color: inherit;
+            transform: translateY(-1px);
+            background-color: #bae0ff;
+        }
+    }
+
+    &.default {
+        padding: 0.5rem 1rem;
+        border-radius: 100vw;
+        border-width: 1px;
+        border-style: solid;
+        background: transparent;
+
+        @media (min-width: 1200px) {
+            align-self: flex-start;
+        }
+
+        &:hover {
+            color: inherit;
+            transform: translateY(-1px);
+            backdrop-filter: contrast(0.8);
+        }
+    }
+
+    &.ghost {
+        padding: 12px 16px;
+        font-size: 15px;
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgb(255 255 255 / 0.3);
+        border-radius: 999px;
+
+        &:hover {
+            background: rgb(255 255 255 / 0.1);
+        }
+    }
+}
