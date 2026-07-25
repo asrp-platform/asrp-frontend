@@ -7,6 +7,7 @@ import {
     MailOutlined,
     DashboardOutlined,
     SettingOutlined,
+    CreditCardOutlined,
 } from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useMemo, useState } from "react"
@@ -40,6 +41,11 @@ const menuItems = [
         key: "/administration/contact-messages",
         icon: <MailOutlined />,
         label: "Contact Messages",
+    },
+    {
+        key: "/administration/payments",
+        icon: <CreditCardOutlined />,
+        label: "Payments",
     },
     {
         key: "/administration/site-settings",
