@@ -14,6 +14,7 @@ export const VERIFY_PASSWORD_RESET_TOKEN_URL = `${PASSWORD_RESET_URL}/verify`
 export const CONFIRM_PASSWORD_RESET_URL = `${PASSWORD_RESET_URL}/confirm`
 
 export const MEMBERSHIP_TYPES_URL = `/membership-types`
+export const MEMBERS_URL = "/members"
 
 // Users urls
 export const USERS_URL = "/users"

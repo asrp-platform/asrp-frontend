@@ -1,7 +1,7 @@
 import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard"
-import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 import styles from "./MembershipBenefits.module.scss"
+import PrimaryLinkOutlined from "@shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
 
 const MembershipBenefits = () => {
     return (
@@ -12,7 +12,9 @@ const MembershipBenefits = () => {
                 <li>Member-only communications and announcements</li>
                 <li>Eligibility for committees and leadership roles</li>
             </ul>
-            <CustomButton variant={"primary"}>Member directory</CustomButton>
+            <PrimaryLinkOutlined href="/account/member-directory">
+                Member directory
+            </PrimaryLinkOutlined>
         </ProfileInfoCard>
     )
 }

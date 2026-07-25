@@ -33,7 +33,7 @@ const navItemsList: NavListItem[] = [
     {
         href: "/account/membership",
         label: "Membership",
-        match: ["/account/membership"],
+        match: ["/account/membership", "/account/member-directory"],
     },
     {
         href: "/account/payments",
