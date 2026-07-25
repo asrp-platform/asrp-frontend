@@ -1,9 +1,7 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { ADMIN_USERS_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
-import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
-import api from "@/axios.ts"
 import type { IUser } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { Button, Input, type InputRef, Table, Tag } from "antd"
@@ -17,8 +15,9 @@ import { getBooleanColumnSearchProps } from "@/widgets/TableDropdown/BooleanTabl
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 import RoleTag from "./ui/tags/RoleTag"
 import Link from "next/link"
-import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
+import { useQueryClient } from "@tanstack/react-query"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -29,65 +28,32 @@ interface ITableFilters {
     admin?: string
 }
 
+const USERS_ADMIN_QUERY_KEY = ["users-admin"]
+
 const UsersTable = () => {
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [pageSize] = useState<number>(10)
+    const [filters, setFilters] = useState<ITableFilters>({})
+    const [ordering, setOrdering] = useState<string[]>(["-id"])
+    const searchInput = useRef<InputRef>(null)
+
+    const queryClient = useQueryClient()
+
     const { data: permissions = [] } = useCurrentUserPermissionsQuery()
+    const { data: tableData, isLoading } = useTableDataQuery<IUser, ITableFilters>({
+        url: ADMIN_USERS_URL,
+        queryKey: USERS_ADMIN_QUERY_KEY,
+        page: currentPage,
+        pageSize,
+        ordering,
+        filters,
+    })
 
     const permissionsActions = useMemo(() => {
         return permissions.map((p) => p.action)
     }, [permissions])
-
-    const [isLoading, setIsLoading] = useState(true)
-    const [tableData, setTableData] = useState<IPaginatedBackendResponse<IUser> | null>()
-    const [currentPage, setCurrentPage] = useState<number>(1)
-    const [pageSize] = useState<number>(10)
-
-    const [filters, setFilters] = useState<ITableFilters>({})
-    const [ordering, setOrdering] = useState<string[]>([])
-    const searchInput = useRef<InputRef>(null)
-
     const canPromoteAdminRole = permissionsActions.includes("admin.create")
     const canRevokeAdminRole = permissionsActions.includes("admin.delete")
-
-    const updateUserAdminRole = (targetUserId: string | number, isAdmin: boolean) => {
-        setTableData((current) => {
-            if (!current) {
-                return current
-            }
-
-            return {
-                ...current,
-                data: current.data.map((user) =>
-                    user.id === Number(targetUserId) ? { ...user, admin: isAdmin } : user,
-                ),
-            }
-        })
-    }
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                setIsLoading(true)
-                const response = await api.get<IPaginatedBackendResponse<IUser>>(
-                    `${ADMIN_USERS_URL}`,
-                    {
-                        params: {
-                            page: currentPage,
-                            page_size: pageSize,
-                            ordering: ordering.length ? ordering.join(",") : null,
-                            ...filters,
-                        },
-                    },
-                )
-                setTableData(response.data)
-            } catch (error) {
-                handleStatusError(error)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-
-        fetchUsers()
-    }, [setTableData, pageSize, currentPage, filters, ordering])
 
     const getColumnSearchProps = <T extends keyof IUser>(dataIndex: T) => {
         const filterKey = `${String(dataIndex)}__startswith` as keyof ITableFilters
@@ -162,6 +128,37 @@ const UsersTable = () => {
             dataIndex: "id",
             key: "id",
             width: 80,
+            sorter: true,
+            sortOrder: getSortOrder("id", ordering),
+        },
+        {
+            title: "Admin",
+            key: "Admin",
+            render: (_, record) =>
+                record.admin ? (
+                    <RoleTag
+                        canAssignRole={canRevokeAdminRole}
+                        targetUserId={record.id}
+                        role={"admin"}
+                        onRoleChanged={() =>
+                            queryClient.invalidateQueries({ queryKey: USERS_ADMIN_QUERY_KEY })
+                        }
+                    >
+                        Admin
+                    </RoleTag>
+                ) : (
+                    <RoleTag
+                        canAssignRole={canPromoteAdminRole}
+                        targetUserId={record.id}
+                        role={"user"}
+                        onRoleChanged={() =>
+                            queryClient.invalidateQueries({ queryKey: USERS_ADMIN_QUERY_KEY })
+                        }
+                    >
+                        User
+                    </RoleTag>
+                ),
+            ...getBooleanColumnSearchProps<ITableFilters>("admin", filters, setFilters),
         },
         {
             title: "Firstname",
@@ -186,6 +183,15 @@ const UsersTable = () => {
             ...getColumnSearchProps("lastname"),
         },
         {
+            title: "Email",
+            dataIndex: "email",
+            key: "email",
+            ...getColumnSearchProps("email"),
+            render: (value: string, record: IUser) => (
+                <Link href={`/administration/users/${record.id}`}>{value}</Link>
+            ),
+        },
+        {
             title: "Suffix",
             dataIndex: "suffix",
             key: "suffix",
@@ -196,15 +202,6 @@ const UsersTable = () => {
             dataIndex: "credentials",
             key: "credentials",
             render: (value) => value ?? "—",
-        },
-        {
-            title: "Email",
-            dataIndex: "email",
-            key: "email",
-            ...getColumnSearchProps("email"),
-            render: (value: string, record: IUser) => (
-                <Link href={`/administration/users/${record.id}`}>{value}</Link>
-            ),
         },
         {
             title: "Phone",
@@ -243,31 +240,6 @@ const UsersTable = () => {
             title: "City",
             dataIndex: "city",
             key: "city",
-        },
-        {
-            title: "Admin",
-            key: "Admin",
-            render: (_, record) =>
-                record.admin ? (
-                    <RoleTag
-                        canAssignRole={canRevokeAdminRole}
-                        targetUserId={record.id}
-                        role={"admin"}
-                        onRoleChanged={updateUserAdminRole}
-                    >
-                        Admin
-                    </RoleTag>
-                ) : (
-                    <RoleTag
-                        canAssignRole={canPromoteAdminRole}
-                        targetUserId={record.id}
-                        role={"member"}
-                        onRoleChanged={updateUserAdminRole}
-                    >
-                        Member
-                    </RoleTag>
-                ),
-            ...getBooleanColumnSearchProps<ITableFilters>("admin", filters, setFilters),
         },
         {
             title: "Pending",
