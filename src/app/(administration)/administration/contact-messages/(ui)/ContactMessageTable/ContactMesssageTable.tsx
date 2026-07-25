@@ -219,6 +219,7 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
                 total: data?.count,
                 onChange: (page) => setCurrentPage(page),
             }}
+            scroll={{ x: "max-content" }}
             rowKey="id"
         />
     )

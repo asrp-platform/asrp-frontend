@@ -55,7 +55,18 @@ const MembershipApplicationForm = () => {
     const [form] = useForm<FieldType>()
 
     const resetMembership = () => {
-        form.setFieldsValue({ membership_type: undefined })
+        form.setFields([{ name: "membership_type", value: undefined, errors: [] }])
+    }
+
+    const clearChangedFieldErrors: FormProps<FieldType>["onValuesChange"] = (changedValues) => {
+        const changedFieldNames = Object.keys(changedValues) as Array<keyof FieldType>
+
+        form.setFields(
+            changedFieldNames.map((name) => ({
+                name,
+                errors: [],
+            })),
+        )
     }
 
     const allowedMemberships = useMemo(() => {
@@ -136,6 +147,7 @@ const MembershipApplicationForm = () => {
             layout="vertical"
             className={styles.form}
             onFinish={onFinish}
+            onValuesChange={clearChangedFieldErrors}
             disabled={isFormDisabled}
             initialValues={initialValues}
             scrollToFirstError
@@ -231,7 +243,15 @@ const MembershipApplicationForm = () => {
                 <h2>Membership category</h2>
             </div>
 
-            <Form.Item name="membership_type">
+            <Form.Item
+                name="membership_type"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please select a membership category.",
+                    },
+                ]}
+            >
                 <Radio.Group>
                     <div className={styles.membershipCardsGrid}>
                         <MembershipCard
