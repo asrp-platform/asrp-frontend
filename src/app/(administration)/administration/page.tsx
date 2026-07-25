@@ -1,7 +1,8 @@
 "use client"
 
 import HearAboutStatistics from "@app/(administration)/administration/(components)/HearAboutStatistics/HearAboutStatistics.tsx"
-import { Divider, Typography } from "antd"
+import { Divider, Flex, Typography } from "antd"
+import UserStatistics from "@app/(administration)/administration/(components)/UsersStatistics/UserStatistics.tsx"
 
 const { Title } = Typography
 
@@ -10,7 +11,11 @@ const Page = () => {
         <>
             <Title level={2}>Dashboard</Title>
             <Divider />
-            <HearAboutStatistics />
+
+            <Flex gap={16} wrap="wrap" align="flex-start">
+                <HearAboutStatistics />
+                <UserStatistics />
+            </Flex>
         </>
     )
 }
