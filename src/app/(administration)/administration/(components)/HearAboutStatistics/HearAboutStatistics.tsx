@@ -7,7 +7,6 @@ import type { IHearAboutStatistics } from "@app/(administration)/administration/
 import { Card, Empty, Statistic, Typography } from "antd"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { Column } from "@ant-design/plots"
-import { useMemo } from "react"
 
 import styles from "@app/(administration)/administration/(components)/HearAboutStatistics/styles.module.scss"
 
@@ -23,12 +22,13 @@ const HearAboutStatistics = () => {
         staleTime: 1000 * 60 * 5,
     })
 
-    const chartData = useMemo(() => {
-        return data?.stats.map((stat) => ({
-            type: stat.option.replace("_", " "),
-            value: stat.percentage,
-        }))
-    }, [data])
+    const chartData =
+        data?.stats.map((stat) => ({
+            type: stat.option.replace(/_/g, " "),
+            percentage: stat.percentage,
+            count: stat.count,
+            tooltipValue: `${stat.percentage}% (${stat.count})`,
+        })) ?? []
 
     if (isLoading) {
         return <Loading />
@@ -56,7 +56,7 @@ const HearAboutStatistics = () => {
             <Column
                 data={chartData}
                 xField="type"
-                yField="value"
+                yField="percentage"
                 height={240}
                 autoFit
                 scale={{ y: { domain: [0, 100] } }}
@@ -67,7 +67,16 @@ const HearAboutStatistics = () => {
                     },
                     y: {
                         labelFontSize: 11,
+                        labelFormatter: (value: number) => `${value}%`,
                     },
+                }}
+                tooltip={{
+                    items: [
+                        {
+                            field: "tooltipValue",
+                            name: "Percentage (responses)",
+                        },
+                    ],
                 }}
                 legend={false}
             />
