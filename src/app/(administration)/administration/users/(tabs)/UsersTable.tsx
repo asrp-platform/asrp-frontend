@@ -216,16 +216,6 @@ const UsersTable = () => {
             render: (value) => (value ? `@${value}` : "—"),
         },
         {
-            title: "Institution",
-            dataIndex: "institution",
-            key: "institution",
-        },
-        {
-            title: "Role",
-            dataIndex: "role",
-            key: "role",
-        },
-        {
             title: "Country",
             dataIndex: "country",
             key: "country",

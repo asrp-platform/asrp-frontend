@@ -13,14 +13,6 @@ const ProfessionalInformationDescription = ({ user }: IProps) => {
             variant="professional"
             fields={[
                 {
-                    label: "Institution",
-                    value: user.institution,
-                },
-                {
-                    label: "Role",
-                    value: user.role,
-                },
-                {
                     label: "Languages spoken",
                     value: user.languages_spoken,
                 },

@@ -48,7 +48,6 @@ const AdminCard = ({ user }: Props) => {
                         <Tag color={user.admin ? "volcano" : "blue"}>
                             {user.admin ? "Admin" : "Member"}
                         </Tag>
-                        {user.role && <Tag>{user.role}</Tag>}
                     </Space>
                 </Flex>
 
