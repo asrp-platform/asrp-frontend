@@ -7,7 +7,7 @@ import {
     ADMIN_USERS_URL,
 } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import api from "@/axios.ts"
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { Button, Card, Flex, message, Table, Tag } from "antd"
 import Link from "next/link"
@@ -39,7 +39,7 @@ const AdministratorsPermissions = () => {
     const [ordering] = useState<string[]>([])
     const [filters, setFilters] = useState<ITableFilters>({ admin: true })
 
-    const [selectedUser, setSelectedUser] = useState<IUser | null>(null)
+    const [selectedUser, setSelectedUser] = useState<IUserPrivate | null>(null)
 
     const [checkedPermissions, setCheckedPermissions] = useState<number[]>([])
 
@@ -56,7 +56,7 @@ const AdministratorsPermissions = () => {
     })
 
     const { data: tableData, isLoading: isTableDataLoading } = useTableDataQuery<
-        IUser,
+        IUserPrivate,
         ITableFilters
     >({
         url: ADMIN_USERS_URL,
@@ -67,7 +67,7 @@ const AdministratorsPermissions = () => {
         filters,
     })
 
-    const fetchPermissions = async (user: IUser) => {
+    const fetchPermissions = async (user: IUserPrivate) => {
         try {
             const response = await api.get<IPermission[]>(getUserPermissionsAdminUrl(user.id))
             setCheckedPermissions(response.data.map((p) => p.id))
@@ -91,7 +91,7 @@ const AdministratorsPermissions = () => {
         },
     })
 
-    const columns: ColumnsType<IUser> = [
+    const columns: ColumnsType<IUserPrivate> = [
         {
             title: "",
             dataIndex: "id",
@@ -136,7 +136,7 @@ const AdministratorsPermissions = () => {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            render: (value, record: IUser) => (
+            render: (value, record: IUserPrivate) => (
                 <Link href={`/administration/users/${record.id}`}>{value}</Link>
             ),
             ...getInputColumnSearchProps("email", filters, setFilters),

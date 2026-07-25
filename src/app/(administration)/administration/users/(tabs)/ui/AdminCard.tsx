@@ -1,15 +1,15 @@
 import { Card, Typography, Flex, Space, Tag, Avatar } from "antd"
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 import { IdcardOutlined, MailOutlined, UserOutlined } from "@ant-design/icons"
 import styles from "./AdminCards.module.scss"
 
 interface Props {
-    user: IUser
+    user: IUserPrivate
 }
 
 const { Title, Text } = Typography
 
-const getInitials = (user: IUser) => {
+const getInitials = (user: IUserPrivate) => {
     return `${user.firstname[0] ?? ""}${user.lastname[0] ?? ""}`.toUpperCase()
 }
 

@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react"
 import { ADMIN_USERS_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { Button, Input, type InputRef, Table, Tag } from "antd"
 import type { FilterDropdownProps } from "antd/es/table/interface"
@@ -40,7 +40,7 @@ const UsersTable = () => {
     const queryClient = useQueryClient()
 
     const { data: permissions = [] } = useCurrentUserPermissionsQuery()
-    const { data: tableData, isLoading } = useTableDataQuery<IUser, ITableFilters>({
+    const { data: tableData, isLoading } = useTableDataQuery<IUserPrivate, ITableFilters>({
         url: ADMIN_USERS_URL,
         queryKey: USERS_ADMIN_QUERY_KEY,
         page: currentPage,
@@ -55,7 +55,7 @@ const UsersTable = () => {
     const canPromoteAdminRole = permissionsActions.includes("admin.create")
     const canRevokeAdminRole = permissionsActions.includes("admin.delete")
 
-    const getColumnSearchProps = <T extends keyof IUser>(dataIndex: T) => {
+    const getColumnSearchProps = <T extends keyof IUserPrivate>(dataIndex: T) => {
         const filterKey = `${String(dataIndex)}__startswith` as keyof ITableFilters
         const value = filters[filterKey]
 
@@ -122,7 +122,7 @@ const UsersTable = () => {
         }
     }
 
-    const columns: ColumnsType<IUser> = [
+    const columns: ColumnsType<IUserPrivate> = [
         {
             title: "ID",
             dataIndex: "id",
@@ -187,7 +187,7 @@ const UsersTable = () => {
             dataIndex: "email",
             key: "email",
             ...getColumnSearchProps("email"),
-            render: (value: string, record: IUser) => (
+            render: (value: string, record: IUserPrivate) => (
                 <Link href={`/administration/users/${record.id}`}>{value}</Link>
             ),
         },

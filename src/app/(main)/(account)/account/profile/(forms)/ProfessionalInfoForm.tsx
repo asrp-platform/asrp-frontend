@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
 import { getUserProfessionalInformationUrl } from "@shared/backend/restApiUrls/restApiUrls"
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
-import type { IUser, IUserProfessionalInformation } from "@/entities/User"
+import type { IUserPrivate, IUserProfessionalInformation } from "@/entities/User"
 import api from "@/axios"
 import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
 
@@ -22,7 +22,7 @@ type FieldType = {
 }
 
 interface IProps {
-    user: IUser
+    user: IUserPrivate
 }
 
 const ProfessionalInfoForm = ({ user }: IProps) => {

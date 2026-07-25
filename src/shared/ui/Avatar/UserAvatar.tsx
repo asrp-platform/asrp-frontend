@@ -1,6 +1,6 @@
 "use client"
 
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 import styles from "@/shared/ui/Avatar/avatar.module.scss"
 import { type ChangeEvent, useEffect, useId, useState } from "react"
 import api from "@/axios.ts"
@@ -13,7 +13,7 @@ import { CURRENT_USER_QUERY_KEY } from "@shared/backend/queries/useCurrentUserQu
 import { useQueryClient } from "@tanstack/react-query"
 
 interface AvatarProps {
-    user: IUser
+    user: IUserPrivate
     editable?: boolean
     size?: number
 }
@@ -55,8 +55,10 @@ const UserAvatar = ({ user, editable = false, size }: AvatarProps) => {
             })
 
             setAvatarUrl(res.data)
-            queryClient.setQueryData<IUser | undefined>(CURRENT_USER_QUERY_KEY, (currentUser) =>
-                currentUser ? { ...currentUser, avatar_url: res.data } : currentUser,
+            queryClient.setQueryData<IUserPrivate | undefined>(
+                CURRENT_USER_QUERY_KEY,
+                (currentUser) =>
+                    currentUser ? { ...currentUser, avatar_url: res.data } : currentUser,
             )
 
             message.success("Avatar updated successfully")

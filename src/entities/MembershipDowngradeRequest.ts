@@ -1,5 +1,5 @@
 import type { MembershipTypeEnum } from "@/entities/Membership.ts"
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 
 export interface MembershipTypeChangeRequestMembershipType {
     id: number
@@ -10,7 +10,7 @@ export interface MembershipTypeChangeRequestMembershipType {
 export interface IMembershipDowngradeRequestBoundedUserMembership {
     is_active: boolean
     user_id: number
-    user: Pick<IUser, "id" | "email">
+    user: Pick<IUserPrivate, "id" | "email">
     membership_type_id: number
     membership_type: MembershipTypeChangeRequestMembershipType
 }

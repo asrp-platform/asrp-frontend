@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { isAxiosError } from "axios"
 
 import api from "@/axios"
-import type { IUser } from "@/entities/User"
+import type { IUserPrivate } from "@/entities/User"
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
 import ExperienceForm, {
     type IExperienceFormValues,
@@ -15,7 +15,7 @@ interface IExperienceEntity extends IExperienceFormValues {
 }
 
 interface IProps {
-    user: IUser
+    user: IUserPrivate
     title: string
     subtitle: string
     addButtonText: string

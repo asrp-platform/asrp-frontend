@@ -2,7 +2,7 @@
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
 import { Button, Col, Form, type FormProps, Input, message, Row, Select } from "antd"
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 import { useEffect, useMemo, useState } from "react"
 import { isAxiosError } from "axios"
 import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
@@ -15,7 +15,7 @@ import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
 import { useCountriesQuery } from "@shared/backend/queries/useCountriesQuery.ts"
 
 interface IProps {
-    user: IUser
+    user: IUserPrivate
 }
 
 type FieldType = {

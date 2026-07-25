@@ -1,16 +1,16 @@
-import type { IUser } from "@entities/User.ts"
+import type { IUserPrivate } from "@entities/User.ts"
 import { Avatar, Space, Tag, Typography } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 
 type IProps = {
-    user: IUser
+    user: IUserPrivate
 }
 
-const getInitials = (user: IUser): string => {
+const getInitials = (user: IUserPrivate): string => {
     return `${user.firstname[0] ?? ""}${user.lastname[0] ?? ""}`.toUpperCase()
 }
 
-const getFullName = (user: IUser): string => {
+const getFullName = (user: IUserPrivate): string => {
     return [user.firstname, user.middlename, user.lastname, user.suffix, user.credentials]
         .filter(Boolean)
         .join(" ")

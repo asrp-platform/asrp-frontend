@@ -1,11 +1,11 @@
-import type { IUser } from "@entities/User.ts"
+import type { IUserPrivate } from "@entities/User.ts"
 import { Alert, Space, Tag } from "antd"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 
 import ProfileFieldList from "@app/(administration)/administration/users/[userId]/(ui)/components/ProfileFieldList.tsx"
 
 type IProps = {
-    user: IUser
+    user: IUserPrivate
 }
 
 const AccountInformationDescription = ({ user }: IProps) => {
