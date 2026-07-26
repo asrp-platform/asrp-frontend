@@ -22,9 +22,13 @@ interface Props {
 const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
     const [photoUrl, setPhotoUrl] = useState<string | null>(member.photo_url ?? null)
     const [isUploading, setIsUploading] = useState(false)
+    const [isPhotoLoading, setIsPhotoLoading] = useState(Boolean(member.photo_url))
+    const [hasPhotoError, setHasPhotoError] = useState(false)
 
     useEffect(() => {
         setPhotoUrl(member.photo_url ?? null)
+        setIsPhotoLoading(Boolean(member.photo_url))
+        setHasPhotoError(false)
     }, [member.photo_url])
 
     const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +50,8 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
             const newPhotoUrl = res.data.path
 
             setPhotoUrl(newPhotoUrl)
+            setIsPhotoLoading(true)
+            setHasPhotoError(false)
             onPhotoChange?.(newPhotoUrl)
         } catch (error) {
             if (isAxiosError(error)) {
@@ -60,14 +66,32 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
     }
     const handlePhotoRemove = () => {
         setPhotoUrl(null)
+        setIsPhotoLoading(false)
+        setHasPhotoError(false)
         onPhotoChange?.("")
     }
 
     return (
         <div className={styles.photoContainer}>
             <div className={styles.photoInnerContainer}>
-                {photoUrl ? (
-                    <img src={photoUrl} alt="Member photo" />
+                {photoUrl && !hasPhotoError ? (
+                    <>
+                        {isPhotoLoading && <div className={styles.photoSkeleton} />}
+                        <img
+                            src={photoUrl}
+                            alt={`${member.name} portrait`}
+                            width={180}
+                            height={180}
+                            loading="lazy"
+                            decoding="async"
+                            className={isPhotoLoading ? styles.photoLoading : undefined}
+                            onLoad={() => setIsPhotoLoading(false)}
+                            onError={() => {
+                                setIsPhotoLoading(false)
+                                setHasPhotoError(true)
+                            }}
+                        />
+                    </>
                 ) : (
                     <div className={styles.placeholder}>No photo</div>
                 )}

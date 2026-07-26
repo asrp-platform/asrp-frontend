@@ -73,16 +73,6 @@ const MembershipRequestsTable = () => {
             dataIndex: "status",
             key: "status",
             sorter: true,
-            filteredValue: filters.status ? [filters.status] : null,
-            filters: [
-                { text: "Submitted", value: MembershipRequestStatusEnum.SUBMITTED },
-                { text: "Payment pending", value: MembershipRequestStatusEnum.PAYMENT_PENDING },
-                { text: "Paid", value: MembershipRequestStatusEnum.PAID },
-                { text: "Approved", value: MembershipRequestStatusEnum.APPROVED },
-                { text: "Rejected", value: MembershipRequestStatusEnum.REJECTED },
-                { text: "Payment failed", value: MembershipRequestStatusEnum.PAYMENT_FAILED },
-                { text: "Payment expired", value: MembershipRequestStatusEnum.PAYMENT_EXPIRED },
-            ],
             render: (value: MembershipRequestStatusEnum) => (
                 <MembershipRequestStatusTag status={value} />
             ),

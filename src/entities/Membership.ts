@@ -1,4 +1,4 @@
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 
 /* eslint-disable */
 
@@ -49,7 +49,7 @@ export interface IMembershipRequest {
     admin_comment: string | null
 
     user_id: number | string
-    user?: IUser
+    user?: IUserPrivate
 
     membership_type_id: number | string
     membership_type?: IMembershipType
@@ -77,5 +77,5 @@ export interface IUserMembership {
     membership_type: IMembershipType
 
     user_id: number
-    user: Pick<IUser, "id" | "email">
+    user: Pick<IUserPrivate, "id" | "email">
 }

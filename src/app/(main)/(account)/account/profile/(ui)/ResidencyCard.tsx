@@ -1,4 +1,4 @@
-import type { IUser } from "@/entities/User"
+import type { IUserPrivate } from "@/entities/User"
 import {
     getUserResidenciesUrl,
     getUserResidencyByIdUrl,
@@ -6,7 +6,7 @@ import {
 import ExperienceCard from "@/app/(main)/(account)/account/profile/(ui)/ExperienceCard"
 
 interface IProps {
-    user: IUser
+    user: IUserPrivate
 }
 
 const ResidencyCard = ({ user }: IProps) => {

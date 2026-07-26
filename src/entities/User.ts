@@ -1,39 +1,33 @@
-export interface IUser {
+export interface IUserPublic {
     id: number
-
     firstname: string
     middlename: string | null
     lastname: string
+    preferred_name: string | null
     suffix: string | null
     credentials: string | null
-    preferred_name: string
-
     email: string
     admin: boolean
-    description: string | null
-
-    country: string
-    state: string | null
-    postal_code: string | null
-    city: string
-
-    languages_spoken: string | null
-    professional_interests: string | null
-    telegram_username: string | null
-
-    institution: string
-    role: string
-
-    avatar_path: string | null
-    avatar_url: string | null
-    phone_number: string | null
-
-    pending: boolean
+    superuser: boolean
     banned: boolean
     ban_reason: string | null
+    description: string | null
+    country: string
+    state: string | null
+    city: string
+    languages_spoken: string | null
+    professional_interests: string | null
+    avatar_url: string | null
+}
 
+export interface IUserPrivate extends IUserPublic {
+    telegram_username: string | null
+    avatar_path: string | null
+    phone_number: string | null
+    pending: boolean
     created_at: string
     last_password_change: string | null
+    postal_code: string | null
 }
 
 export interface IUserProfessionalInformation {

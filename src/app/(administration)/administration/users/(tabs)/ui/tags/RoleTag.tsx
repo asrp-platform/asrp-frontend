@@ -10,7 +10,7 @@ import { PromoteToAdminModal } from "@app/(administration)/administration/users/
 interface IProps {
     canAssignRole: boolean
     targetUserId: string | number
-    role: "admin" | "member"
+    role: "admin" | "user"
     onRoleChanged?: (_targetUserId: string | number, _isAdmin: boolean) => void
     children?: ReactNode
 }
@@ -18,7 +18,7 @@ interface IProps {
 const RoleTag = ({ canAssignRole, targetUserId, role, onRoleChanged, children }: IProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [confirmLoading, setConfirmLoading] = useState(false)
-    const nextIsAdmin = role === "member"
+    const nextIsAdmin = role === "user"
 
     const _handleClick = () => {
         setIsModalOpen(true)

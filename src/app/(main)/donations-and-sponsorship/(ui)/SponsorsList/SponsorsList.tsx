@@ -35,11 +35,9 @@ const SponsorsList = () => {
         retry: false,
     })
 
-    if (isLoading) {
+    if (isLoading || isError || !sponsors || sponsors.length === 0) {
         return <SponsorsListSkeleton />
     }
-
-    if (isError || !sponsors || sponsors.length === 0) return null
 
     return (
         <ul className={styles.sponsorsList}>
