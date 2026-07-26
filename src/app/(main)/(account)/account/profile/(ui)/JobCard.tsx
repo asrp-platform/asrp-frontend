@@ -1,9 +1,9 @@
-import type { IUser } from "@/entities/User"
+import type { IUserPrivate } from "@/entities/User"
 import ExperienceCard from "@/app/(main)/(account)/account/profile/(ui)/ExperienceCard"
 import { getUserJobByIdUrl, getUserJobsUrl } from "@shared/backend/restApiUrls/restApiUrls"
 
 interface IProps {
-    user: IUser
+    user: IUserPrivate
 }
 
 const JobCard = ({ user }: IProps) => {

@@ -1,0 +1,85 @@
+.statistics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+    min-width: 280px;
+    max-width: 560px;
+}
+
+.statisticCard {
+    overflow: hidden;
+    border: 1px solid #e8edf3;
+    box-shadow: 0 4px 16px rgb(15 23 42 / 5%);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.usersIcon {
+    color: #1677ff;
+    background: #e6f4ff;
+}
+
+.membersIcon {
+    color: #389e0d;
+    background: #f6ffed;
+}
+
+.paymentsIcon {
+    color: #722ed1;
+    background: #f9f0ff;
+}
+
+.succeededPaymentsIcon {
+    color: #08979c;
+    background: #e6fffb;
+}
+
+.label {
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.statistic :global(.ant-statistic-content) {
+    color: #0f172a;
+    font-size: clamp(32px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.valueSkeleton {
+    width: 96px !important;
+    height: 46px !important;
+    margin-bottom: 1px;
+}
+
+.description {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+@media (max-width: 700px) {
+    .statistics {
+        grid-template-columns: 1fr;
+        max-width: none;
+    }
+}

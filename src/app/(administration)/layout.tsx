@@ -7,11 +7,13 @@ import {
     MailOutlined,
     DashboardOutlined,
     SettingOutlined,
+    CreditCardOutlined,
 } from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useMemo, useState } from "react"
 import styles from "@/app/(administration)/layout.module.scss"
 import BackToMainSiteButton from "@/shared/ui/Buttons/BackToMainSiteButton.tsx"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
 const { Header, Sider, Content } = Layout
 
@@ -41,6 +43,11 @@ const menuItems = [
         label: "Contact Messages",
     },
     {
+        key: "/administration/payments",
+        icon: <CreditCardOutlined />,
+        label: "Payments",
+    },
+    {
         key: "/administration/site-settings",
         icon: <SettingOutlined />,
         label: "Site Settings",
@@ -50,6 +57,8 @@ const menuItems = [
 const menuKeys = menuItems.map((item) => item.key).sort((a, b) => b.length - a.length)
 
 const AdminLayout = ({ children }: IProps) => {
+    const { data: currentUser, isPending: userIsPending } = useCurrentUserQuery()
+
     const router = useRouter()
     const pathname = usePathname()
     const [collapsed, setCollapsed] = useState(false)
@@ -62,6 +71,10 @@ const AdminLayout = ({ children }: IProps) => {
     }, [pathname])
 
     const selectedKeys = useMemo(() => [selectedKey], [selectedKey])
+
+    if (!currentUser && !userIsPending) {
+        router.push("/login")
+    }
 
     return (
         <Layout className={styles.layout}>

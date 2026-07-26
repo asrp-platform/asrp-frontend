@@ -2,11 +2,11 @@
 
 import type { CSSProperties } from "react"
 
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 import styles from "@/shared/ui/Avatar/avatar.module.scss"
 
 interface UserAvatarViewProps {
-    user: Pick<IUser, "firstname" | "lastname" | "avatar_url">
+    user: Pick<IUserPrivate, "firstname" | "lastname" | "avatar_url">
     avatarUrl?: string | null
     size?: number
 }

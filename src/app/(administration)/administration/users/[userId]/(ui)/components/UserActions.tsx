@@ -5,13 +5,13 @@ import { useMemo, useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import api from "@/axios.ts"
-import type { IUser } from "@entities/User.ts"
+import type { IUserPrivate } from "@entities/User.ts"
 import { getUserBanAdminUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
 import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 interface IProps {
-    user: IUser
+    user: IUserPrivate
 }
 
 const UserActions = ({ user }: IProps) => {

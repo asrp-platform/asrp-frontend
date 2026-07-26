@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button, Card, Divider, Modal, message } from "antd"
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
-import type { IUser } from "@/entities/User.ts"
+import type { IUserPrivate } from "@/entities/User.ts"
 import PersonalInfoForm from "@/app/(main)/(account)/account/profile/(forms)/PersonalInfoForm.tsx"
 import ProfessionalInfoForm from "@/app/(main)/(account)/account/profile/(forms)/ProfessionalInfoForm.tsx"
 import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
@@ -14,7 +14,7 @@ import { CURRENT_USER_QUERY_KEY } from "@shared/backend/queries/useCurrentUserQu
 import { useQueryClient } from "@tanstack/react-query"
 
 interface IProps {
-    user: IUser
+    user: IUserPrivate
 }
 
 const UserProfileCard = ({ user }: IProps) => {
@@ -27,8 +27,9 @@ const UserProfileCard = ({ user }: IProps) => {
 
         try {
             await api.delete(CURRENT_USER_AVATAR_URL)
-            queryClient.setQueryData<IUser | undefined>(CURRENT_USER_QUERY_KEY, (currentUser) =>
-                currentUser ? { ...currentUser, avatar_url: null } : currentUser,
+            queryClient.setQueryData<IUserPrivate | undefined>(
+                CURRENT_USER_QUERY_KEY,
+                (currentUser) => (currentUser ? { ...currentUser, avatar_url: null } : currentUser),
             )
             messageApi.success("Avatar deleted successfully")
         } catch (error) {
