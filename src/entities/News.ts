@@ -9,3 +9,25 @@ export interface News {
     is_published: boolean
     is_deleted: boolean
 }
+
+export interface IWebinar {
+    id: number
+    created_at: string
+    updated_at: string
+    title: string
+    description: string
+    learning_objectives: string[]
+    slug: string
+
+    speaker_name: string
+    speaker_description: string | null
+
+    registration_link: string | null
+    join_link: string | null
+    recording_link: string | null
+
+    starts_at: string
+    location: string | null
+
+    member_only: boolean
+}

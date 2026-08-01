@@ -1,0 +1,85 @@
+.form {
+    margin-top: 24px;
+    padding-right: 6px;
+}
+
+.formSection {
+    padding: 20px;
+    border: var(--light-border);
+    border-radius: 16px;
+    background: var(--surface-card-color);
+
+    & + & {
+        margin-top: 16px;
+    }
+}
+
+.sectionHeading {
+    margin-bottom: 18px;
+
+    h3 {
+        color: var(--text-heading-color-dark);
+        font-size: 17px;
+    }
+
+    p {
+        margin-top: 4px;
+        color: var(--text-muted-color-dark);
+        font-size: 13px;
+        line-height: 1.45;
+    }
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.objectivesList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.objectiveRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 32px;
+    align-items: start;
+    gap: 8px;
+}
+
+.addObjectiveButton {
+    align-self: flex-start;
+}
+
+.memberOnlyField {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px;
+    border: var(--light-border);
+    border-radius: 12px;
+    background: var(--surface-muted-color);
+
+    strong {
+        color: var(--text-heading-color-dark);
+        font-size: 14px;
+    }
+
+    p {
+        margin-top: 3px;
+        color: var(--text-muted-color-dark);
+        font-size: 12px;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 575px) {
+    .formSection {
+        padding: 16px;
+    }
+}
+
+.buttonsContainer {
+    margin-top: 20px;
+}

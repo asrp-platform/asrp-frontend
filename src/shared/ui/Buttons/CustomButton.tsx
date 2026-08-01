@@ -11,7 +11,7 @@ interface IProps {
     className?: string
     onClick?: MouseEventHandler<HTMLButtonElement> | undefined
     htmlType?: "button" | "submit" | "reset"
-    variant?: "primary" | "primary-filled" | "secondary"
+    variant?: "primary" | "primary-filled" | "secondary" | "green"
 }
 
 const CustomButton = ({

@@ -3,6 +3,7 @@ import { CalendarDays, Clock3, MapPin } from "lucide-react"
 import PageSection from "@/shared/ui/PageSection/PageSection"
 import MemberAccess from "../MemberAccess/MemberAccess"
 import styles from "../../PageSection.module.scss"
+import CreateWebinarModal from "@app/(main)/education/webinars/(ui)/CreateWebinarModal/CreateWebinarModal.tsx"
 
 const upcomingWebinars = [
     {
@@ -26,7 +27,10 @@ const UpcomingWebinarsSection = () => (
                 <h2>Upcoming webinars</h2>
                 <p>Live educational programs and upcoming member events.</p>
             </div>
-            <span className={styles.countBadge}>3 upcoming</span>
+            <div className={styles.upcomingWebinarsContainer}>
+                <CreateWebinarModal />
+                <span className={styles.countBadge}>3 upcoming</span>
+            </div>
         </div>
 
         <article className={styles.featuredCard}>

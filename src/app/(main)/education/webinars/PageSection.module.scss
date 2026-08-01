@@ -403,6 +403,11 @@
     white-space: nowrap;
 }
 
+.upcomingWebinarsContainer {
+    display: flex;
+    gap: 10px;
+}
+
 @media (max-width: 760px) {
     .sectionHeader {
         align-items: flex-start;

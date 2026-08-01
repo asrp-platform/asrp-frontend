@@ -38,3 +38,6 @@ export const HEAR_ABOUT_STATISTICS_ADMIN_URL = `${ADMIN_URL}/feedback-additional
 
 // Payments
 export const PAYMENTS_ADMIN_URL = `${ADMIN_URL}/payments`
+
+// Webinars
+export const WEBINARS_ADMIN_URL = `${ADMIN_URL}/webinars`
