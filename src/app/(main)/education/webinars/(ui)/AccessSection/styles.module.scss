@@ -1,0 +1,57 @@
+.ctaSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 34px;
+  border-radius: 24px;
+  background: var(--widget-background-dark-color);
+  color: #fff;
+
+  .descriptionContainer {
+    flex: 1;
+
+    h2 {
+      margin: 7px 0;
+      font-size: 28px;
+
+    }
+
+    p {
+      color: var(--text-primary-color-light);
+      line-height: 1.5;
+    }
+
+    span {
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: bold;
+      color: var(--text-secondary-color-red);
+    }
+  }
+
+
+  .ctaLink {
+    align-self: center;
+
+    .linkInnerContainer {
+
+      display: flex;
+      gap: 6px;
+      align-items: center;
+
+      span {
+
+      }
+
+      .icon {
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+
+
+
+

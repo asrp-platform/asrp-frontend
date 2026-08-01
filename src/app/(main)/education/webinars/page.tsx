@@ -4,6 +4,7 @@ import { ArrowRight, CalendarDays, Clock3, LockKeyhole, MapPin, Play } from "luc
 import PageSection from "@/shared/ui/PageSection/PageSection"
 import styles from "./PageSection.module.scss"
 import MemberAccess from "@app/(main)/education/webinars/(ui)/MemberAccess/MemberAccess.tsx"
+import AccessSection from "@app/(main)/education/webinars/(ui)/AccessSection/AccessSection.tsx"
 
 const upcomingWebinars = [
     {
@@ -166,19 +167,7 @@ const Page = () => {
                 </div>
             </PageSection>
 
-            <PageSection className={styles.ctaSection}>
-                <div>
-                    <span>Member benefit</span>
-                    <h2>Access live webinars and available recordings</h2>
-                    <p>
-                        ASRP members receive access to webinar links, member materials, and the
-                        growing educational recording archive.
-                    </p>
-                </div>
-                <Link href="/membership/become-member" className={styles.ctaButton}>
-                    Become a member <ArrowRight size={17} />
-                </Link>
-            </PageSection>
+            <AccessSection />
         </div>
     )
 }

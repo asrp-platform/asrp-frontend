@@ -229,21 +229,11 @@
   font-size: 12px;
 }
 
-.primaryButton, .ctaButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 18px;
-  border-radius: var(--pill-border-radius);
-  background: var(--button-primary-red);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 700;
-  transition: 0.2s ease;
+.primaryButton {
+    display: flex;
 }
 
-.primaryButton:hover, .ctaButton:hover {
+.primaryButton:hover {
   background: var(--button-primary-red-hover);
   transform: translateY(-1px);
 }
@@ -413,44 +403,6 @@
   color: var(--text-muted-color-dark);
   font-size: 11px;
   font-weight: 600;
-}
-
-.ctaSection {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  padding: 34px;
-  border-radius: 24px;
-  background: var(--widget-background-dark-color);
-  color: #fff;
-
-  span {
-    color: #fecdd3;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.15em;
-  }
-
-  h2 {
-    margin: 7px 0;
-    font-size: clamp(25px, 3vw, 34px);
-  }
-
-  p {
-    color: #f1f5f9;
-    line-height: 1.5;
-  }
-}
-
-.ctaButton {
-  flex: none;
-  background: #fff;
-  color: #991b1b;
-}
-
-.ctaButton:hover {
-  background: #fff1f2;
 }
 
 @media (max-width: 760px) {
