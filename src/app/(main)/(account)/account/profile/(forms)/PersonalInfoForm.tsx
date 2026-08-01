@@ -4,11 +4,10 @@ import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.sc
 import { Button, Col, Form, type FormProps, Input, message, Row, Select } from "antd"
 import type { IUserPrivate } from "@/entities/User.ts"
 import { useEffect, useMemo, useState } from "react"
-import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
 import api from "@/axios.ts"
 import ChangeNameModal from "@/app/(main)/(account)/account/profile/(ui)/RequestNameChangeModal.tsx"
-import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
+import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { credentialsOptions } from "@shared/options.ts"
 import type { Credentials } from "@features/MembershipApplicationForm/types.ts"
 import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
@@ -107,11 +106,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
             })
             message.success("Successfully updated user data")
         } catch (error) {
-            if (isAxiosError(error)) {
-                if (error.status === 422) {
-                    setFormFieldsErrors(error, form)
-                }
-            }
+            handleFormError(error, form)
         } finally {
             setIsLoading(false)
         }

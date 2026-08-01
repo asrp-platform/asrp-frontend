@@ -1,6 +1,6 @@
 "use client"
 
-import { Checkbox, Form, type FormProps, Input, message, Typography } from "antd"
+import { Checkbox, Form, type FormProps, Input, Typography } from "antd"
 import styles from "@/app/(auth)/login/styles.module.scss"
 import Link from "next/link"
 import api from "@/axios.ts"
@@ -9,10 +9,9 @@ import { LOGIN_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { isAxiosError } from "axios"
 import { useRouter } from "next/navigation"
 import { useForm } from "antd/es/form/Form"
-import useNotification from "antd/es/notification/useNotification"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import { useQueryClient } from "@tanstack/react-query"
-import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
 import { useState } from "react"
 
 type FieldType = {
@@ -30,17 +29,6 @@ const LoginForm = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const queryClient = useQueryClient()
-    const [notification, contextHolder] = useNotification()
-
-    const openNotification = (pauseOnHover: boolean) => {
-        notification.error({
-            title: "Server Error",
-            description: "An unexpected error occurred on the server. Please try again later.",
-            showProgress: true,
-            pauseOnHover,
-        })
-    }
-
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
         localStorage.removeItem("accessToken")
         try {
@@ -52,25 +40,13 @@ const LoginForm = () => {
             })
             router.push("/")
         } catch (error: unknown) {
-            if (!isAxiosError(error)) {
-                message.error("Unexpected error. Please try again later.")
-                return
-            }
-
-            if (error.response === undefined) {
-                message.error("Network error. Check your internet connection and try again.")
-                return
-            }
-
-            if (error.response.status === 401) {
+            if (isAxiosError(error) && error.response?.status === 401) {
                 form.setFields([
                     { name: "email", errors: ["Wrong credentials"] },
                     { name: "password", errors: ["Wrong credentials"] },
                 ])
-            } else if (error.response.status === 422) {
-                setFormFieldsErrors(error, form)
             } else {
-                openNotification(false)
+                handleFormError(error, form)
             }
         } finally {
             setIsLoading(false)
@@ -79,7 +55,6 @@ const LoginForm = () => {
 
     return (
         <Form layout="vertical" form={form} onFinish={onFinish}>
-            {contextHolder}
             <Form.Item<FieldType>
                 label="Email"
                 name="email"

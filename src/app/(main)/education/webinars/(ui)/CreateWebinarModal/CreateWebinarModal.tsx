@@ -4,14 +4,13 @@ import { useState } from "react"
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
-import { Button, Col, DatePicker, Flex, Form, Input, Modal, Row, Switch } from "antd"
+import { Button, Col, DatePicker, Flex, Form, Input, message, Modal, Row, Switch } from "antd"
 import { useForm } from "antd/es/form/Form"
 import type { Dayjs } from "dayjs"
 import styles from "./styles.module.scss"
-import { WEBINARS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { WEBINARS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios"
-import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
-import { isAxiosError } from "axios"
+import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
 
 type FieldType = {
     title: string
@@ -38,13 +37,12 @@ const CreateWebinarModal = () => {
         try {
             setIsLoading(true)
             await api.post(WEBINARS_ADMIN_URL, values)
+            setOpen(false)
+            message.success("Webinars created successfully.")
         } catch (error) {
-            if (isAxiosError(error)) {
-                setFormFieldsErrors(error, form)
-            }
+            handleFormError(error, form)
         } finally {
             setIsLoading(false)
-            setOpen(false)
         }
     }
 

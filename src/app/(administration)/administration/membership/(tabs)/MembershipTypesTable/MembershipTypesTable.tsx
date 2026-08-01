@@ -1,7 +1,7 @@
 "use client"
 
 import type { IMembershipType } from "@entities/Membership.ts"
-import { MEMBERSHIP_TYPES_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { MEMBERSHIP_TYPES_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import type { ColumnsType } from "antd/lib/table"
 import { Table, Tag } from "antd"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"

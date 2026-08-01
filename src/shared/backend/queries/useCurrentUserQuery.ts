@@ -1,7 +1,7 @@
 import api from "@/axios.ts"
 import type { IUserPrivate } from "@/entities/User.ts"
 import { useQuery } from "@tanstack/react-query"
-import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
+import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 export const CURRENT_USER_QUERY_KEY = ["current-user"]
 

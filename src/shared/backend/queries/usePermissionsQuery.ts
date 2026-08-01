@@ -1,6 +1,6 @@
 import api from "@/axios.ts"
 import type { IPermission } from "@entities/Permission.ts"
-import { getUserPermissionsAdminUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { getAdminUserPermissionsUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { useQuery } from "@tanstack/react-query"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
@@ -9,7 +9,7 @@ export const CURRENT_USER_PERMISSIONS_QUERY_KEY = ["current-user-permissions"]
 const CURRENT_USER_PERMISSIONS_LIFETIME = 1000 * 60 * 60
 
 const fetchCurrentUserPermissions = async (currentUserId: string | number) => {
-    const response = await api.get<IPermission[]>(getUserPermissionsAdminUrl(currentUserId))
+    const response = await api.get<IPermission[]>(getAdminUserPermissionsUrl(currentUserId))
     return response.data
 }
 

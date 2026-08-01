@@ -5,8 +5,8 @@ import type { IMembershipType } from "@entities/Membership.ts"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "antd/es/form/Form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
-import { MEMBERSHIP_TYPES_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import { getAdminMembershipTypeUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios.ts"
 
 interface IProps {
@@ -34,7 +34,7 @@ const EditMembershipTypeModal = ({ membershipType }: IProps) => {
 
     const updateMutation = useMutation({
         mutationFn: async (values: FieldType) => {
-            await api.patch(`${MEMBERSHIP_TYPES_ADMIN_URL}/${membershipType.id}`, values)
+            await api.patch(getAdminMembershipTypeUrl(membershipType.id), values)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["membership-types"] })
@@ -42,7 +42,7 @@ const EditMembershipTypeModal = ({ membershipType }: IProps) => {
             message.success(`${membershipType.type} membership type updated`)
         },
         onError: (error) => {
-            handleStatusError(error)
+            handleRequestError(error)
         },
     })
 

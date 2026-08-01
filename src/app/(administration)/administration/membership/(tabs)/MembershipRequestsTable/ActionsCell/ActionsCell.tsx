@@ -6,7 +6,7 @@ import { MembershipRequestStatusEnum } from "@entities/Membership.ts"
 import api from "@/axios.ts"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { getAdminMembershipRequestUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
 type UpdateMembershipRequestPayload = {
     requestId: number | string
@@ -19,7 +19,7 @@ const updateMembershipRequest = async ({
     status,
     adminComment,
 }: UpdateMembershipRequestPayload) => {
-    const response = await api.patch(`${MEMBERSHIP_REQUESTS_ADMIN_URL}/${requestId}`, {
+    const response = await api.patch(getAdminMembershipRequestUrl(requestId), {
         status,
         admin_comment: adminComment,
     })

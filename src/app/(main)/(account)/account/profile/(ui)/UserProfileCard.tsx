@@ -9,7 +9,7 @@ import PersonalInfoForm from "@/app/(main)/(account)/account/profile/(forms)/Per
 import ProfessionalInfoForm from "@/app/(main)/(account)/account/profile/(forms)/ProfessionalInfoForm.tsx"
 import UserAvatar from "@/shared/ui/Avatar/UserAvatar.tsx"
 import api from "@/axios.ts"
-import { CURRENT_USER_AVATAR_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
+import { CURRENT_USER_AVATAR_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { CURRENT_USER_QUERY_KEY } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import { useQueryClient } from "@tanstack/react-query"
 

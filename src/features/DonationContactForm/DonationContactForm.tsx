@@ -8,11 +8,10 @@ import TextArea from "antd/es/input/TextArea"
 
 import { useForm } from "antd/es/form/Form"
 import { useState } from "react"
-import { isAxiosError } from "axios"
 
 import api from "@/axios.ts"
 import { ContactMessageType } from "@/entities/ContactMessage.ts"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
 import { CONTACT_MESSAGE_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 interface DonationFormFields {
@@ -53,13 +52,7 @@ const DonationContactForm = () => {
                 message.success("Your message has been sent successfully.")
                 form.resetFields()
             } catch (error) {
-                if (isAxiosError(error)) {
-                    setFormFieldsErrors(error, form)
-
-                    if (error.response?.status !== 422) {
-                        message.error("Something went wrong. Please try again.")
-                    }
-                }
+                handleFormError(error, form)
             } finally {
                 setLoading(false)
             }

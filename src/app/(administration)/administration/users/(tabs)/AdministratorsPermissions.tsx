@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 import {
-    getUserPermissionsAdminUrl,
+    getAdminUserPermissionsUrl,
     PERMISSIONS_LIST_URL,
     ADMIN_USERS_URL,
-} from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+} from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios.ts"
 import type { IUserPrivate } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
@@ -20,7 +20,7 @@ import styles from "@app/(administration)/administration/users/(tabs)/ui/AdminCa
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
-import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
+import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
 import { CloseOutlined } from "@ant-design/icons"
 
 interface ITableFilters {
@@ -69,10 +69,10 @@ const AdministratorsPermissions = () => {
 
     const fetchPermissions = async (user: IUserPrivate) => {
         try {
-            const response = await api.get<IPermission[]>(getUserPermissionsAdminUrl(user.id))
+            const response = await api.get<IPermission[]>(getAdminUserPermissionsUrl(user.id))
             setCheckedPermissions(response.data.map((p) => p.id))
         } catch (error) {
-            handleStatusError(error, {
+            handleRequestError(error, {
                 404: "User with provided ID not found",
             })
         }
@@ -81,11 +81,11 @@ const AdministratorsPermissions = () => {
     const { mutate: updatePermissions, isPending } = useMutation({
         mutationFn: async () => {
             if (!selectedUser) return
-            await api.put(getUserPermissionsAdminUrl(selectedUser.id), checkedPermissions)
+            await api.put(getAdminUserPermissionsUrl(selectedUser.id), checkedPermissions)
         },
         onSuccess: () => message.success("Permissions updated successfully."),
         onError: (error) => {
-            handleStatusError(error, {
+            handleRequestError(error, {
                 404: "User with provided ID not found",
             })
         },

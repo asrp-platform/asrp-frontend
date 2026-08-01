@@ -1,10 +1,10 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import Link from "next/link"
 import styles from "./SponsorsList.module.scss"
 
+import api from "@/axios.ts"
 import SponsorsListSkeleton from "../SponsorsListSkeleton/SponsorsListSkeleton"
 import { SPONSORS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
@@ -19,7 +19,7 @@ interface Sponsor {
 }
 
 const fetchSponsors = async (): Promise<Sponsor[]> => {
-    const response = await axios.get<Sponsor[]>(SPONSORS_URL)
+    const response = await api.get<Sponsor[]>(SPONSORS_URL)
     return response.data
 }
 

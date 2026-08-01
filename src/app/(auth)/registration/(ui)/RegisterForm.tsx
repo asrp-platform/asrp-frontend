@@ -18,8 +18,7 @@ import AccountCredentialsSection from "@app/(auth)/registration/(ui)/AccountCred
 import LocationSection from "@app/(auth)/registration/(ui)/LocationSection.tsx"
 import RegistrationSuccess from "@app/(auth)/registration/(ui)/RegistrationSuccess.tsx"
 import { useCountriesQuery } from "@shared/backend/queries/useCountriesQuery.ts"
-import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
-import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
 import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
 import { REGISTER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
@@ -68,10 +67,8 @@ const RegisterForm = () => {
                     form.setFields([
                         { name: "email", errors: ["Provided email is already in use"] },
                     ])
-                } else if (error.response?.status === 422) {
-                    setFormFieldsErrors(error, form)
                 } else {
-                    handleStatusError(error)
+                    handleFormError(error, form)
                 }
             }
         }

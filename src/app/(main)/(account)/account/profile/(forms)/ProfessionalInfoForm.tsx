@@ -6,7 +6,7 @@ import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.sc
 import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
 import { getUserProfessionalInformationUrl } from "@shared/backend/restApiUrls/restApiUrls"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
+import { handleFormError } from "@/shared/helpers/setFormFieldsErrors"
 import type { IUserPrivate, IUserProfessionalInformation } from "@/entities/User"
 import api from "@/axios"
 import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
@@ -37,12 +37,7 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
             await api.put(getUserProfessionalInformationUrl(user.id), values)
             message.success("Successfully updated professional information")
         } catch (error: unknown) {
-            if (isAxiosError(error)) {
-                if (error.status === 422) {
-                    setFormFieldsErrors(error, professionalInfoForm)
-                }
-            }
-            message.error("Failed to update professional information")
+            handleFormError(error, professionalInfoForm)
         } finally {
             setIsLoading(false)
         }

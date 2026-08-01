@@ -45,6 +45,22 @@ export const getUserJobsUrl = (user_id: number | string): string => `${getUserUr
 export const getUserJobByIdUrl = (userId: number | string, jobId: number | string): string =>
     `${getUserUrl(userId)}/jobs/${jobId}`
 
+export const getUserCommunicationPreferencesUrl = (userId: number | string) =>
+    `${getUserUrl(userId)}/communication-preferences`
+
+// Current user
+export const CURRENT_USER_URL = `${USERS_URL}/current-user`
+export const CURRENT_USER_AVATAR_URL = `${CURRENT_USER_URL}/avatar`
+export const CURRENT_USER_CHANGE_PASSWORD_URL = `${CURRENT_USER_URL}/password-change`
+export const CURRENT_USER_NAME_CHANGE_URL = `${CURRENT_USER_URL}/name-change-requests`
+export const CURRENT_USER_MEMBERSHIP_REQUEST_URL = `${CURRENT_USER_URL}/membership-requests`
+export const CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL = `${CURRENT_USER_MEMBERSHIP_REQUEST_URL}/payments`
+export const CURRENT_USER_MEMBERSHIP_REQUEST_REAPPLIES_URL = `${CURRENT_USER_MEMBERSHIP_REQUEST_URL}/reapplies`
+export const CURRENT_USER_PAYMENTS_URL = `${CURRENT_USER_URL}/payments`
+export const CURRENT_USER_MEMBERSHIP_URL = `${CURRENT_USER_URL}/membership`
+export const CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL = `${CURRENT_USER_MEMBERSHIP_URL}/downgrade-request`
+export const CURRENT_USER_MEMBERSHIP_RENEW_REQUEST_URL = `${CURRENT_USER_MEMBERSHIP_URL}/renewal`
+
 // Feedback
 export const CONTACT_MESSAGE_URL = "/contact-messages"
 export const DONATION_CHECKOUT_URL = "/payments/donations"

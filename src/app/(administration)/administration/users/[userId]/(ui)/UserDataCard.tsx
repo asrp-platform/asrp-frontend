@@ -6,7 +6,7 @@ import { Card, Divider, Flex, Result } from "antd"
 
 import api from "@/axios.ts"
 import type { IUserPrivate } from "@entities/User.ts"
-import { getAdminUsersUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { getAdminUserUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import ProfessionalInformationDescription from "@app/(administration)/administration/users/[userId]/(ui)/components/ProfessionalInformationDescription.tsx"
 import ContactInformationDescription from "@app/(administration)/administration/users/[userId]/(ui)/components/ContactInformationDescription.tsx"
@@ -28,7 +28,7 @@ const UserDataCard = ({ userId }: IProps) => {
     } = useQuery({
         queryKey: ["users", userId],
         queryFn: async () => {
-            const response = await api.get<IUserPrivate>(getAdminUsersUrl(userId))
+            const response = await api.get<IUserPrivate>(getAdminUserUrl(userId))
             return response.data
         },
         staleTime: 1000 * 60 * 5,

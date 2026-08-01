@@ -6,7 +6,7 @@ import { Card, Empty, Result, Space, Tag } from "antd"
 
 import api from "@/axios.ts"
 import type { IUserMembership } from "@entities/Membership.ts"
-import { MEMBERS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { MEMBERS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipStatusTag from "@app/(administration)/administration/membership/(tabs)/MembersTable/MembershipStatusTag.tsx"
