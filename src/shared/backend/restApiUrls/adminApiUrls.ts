@@ -44,6 +44,9 @@ export const PAYMENTS_ADMIN_URL = `${ADMIN_URL}/payments`
 // Webinars
 export const WEBINARS_ADMIN_URL = `${ADMIN_URL}/webinars`
 
+export const getWebinarDetailAdminUrl = (webinarId: number | string) =>
+    `${ADMIN_URL}/webinars/${webinarId}`
+
 // Memberships
 export const MEMBERSHIP_REQUESTS_ADMIN_URL = `${ADMIN_URL}/membership-requests`
 export const MEMBERSHIPS_ADMIN_URL = `${ADMIN_URL}/memberships`

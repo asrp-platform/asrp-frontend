@@ -5,15 +5,18 @@ import styles from "./NextWebinar.module.scss"
 import type { IWebinar } from "@entities/News.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import type { WebinarAccessStatus } from "@app/(main)/education/webinars/(ui)/MemberAccess/webinarAccess.ts"
+import DeleteWebinarButton from "../DeleteWebinarButton/DeleteWebinarButton"
 
 interface IProps {
     webinar: IWebinar
     accessStatus: WebinarAccessStatus
+    canDelete: boolean
 }
 
-const NextWebinar = ({ webinar, accessStatus }: IProps) => {
+const NextWebinar = ({ webinar, accessStatus, canDelete }: IProps) => {
     return (
         <article className={styles.featuredCard}>
+            {canDelete && <DeleteWebinarButton webinar={webinar} />}
             <div className={styles.featuredVisual}>
                 <div className={styles.visualContent}>
                     <div className={styles.slideMark} aria-hidden="true">

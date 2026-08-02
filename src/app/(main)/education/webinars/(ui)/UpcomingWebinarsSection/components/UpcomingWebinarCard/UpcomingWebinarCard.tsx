@@ -6,14 +6,17 @@ import type { WebinarAccessStatus } from "@app/(main)/education/webinars/(ui)/Me
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 
 import styles from "./UpcomingWebinarCard.module.scss"
+import DeleteWebinarButton from "../DeleteWebinarButton/DeleteWebinarButton"
 
 interface IProps {
     webinar: IWebinar
     accessStatus: WebinarAccessStatus
+    canDelete: boolean
 }
 
-const UpcomingWebinarCard = ({ webinar, accessStatus }: IProps) => (
+const UpcomingWebinarCard = ({ webinar, accessStatus, canDelete }: IProps) => (
     <article className={styles.card}>
+        {canDelete && <DeleteWebinarButton webinar={webinar} />}
         <div className={styles.topline}>
             <time>{formatDatetime(webinar.starts_at, ["year", "hour", "minute"])}</time>
             <span>Upcoming</span>

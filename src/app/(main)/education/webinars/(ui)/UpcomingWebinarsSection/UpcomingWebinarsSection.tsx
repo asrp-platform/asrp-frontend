@@ -63,6 +63,7 @@ const UpcomingWebinarsSection = () => {
 
             <NextWebinar
                 webinar={nextWebinar}
+                canDelete={Boolean(showCreateButton)}
                 accessStatus={getWebinarAccessStatus({
                     webinar: nextWebinar,
                     isAuthenticated: Boolean(currentUser),
@@ -83,6 +84,7 @@ const UpcomingWebinarsSection = () => {
                             key={webinar.id}
                             webinar={webinar}
                             accessStatus={accessStatus}
+                            canDelete={Boolean(showCreateButton)}
                         />
                     )
                 })}
