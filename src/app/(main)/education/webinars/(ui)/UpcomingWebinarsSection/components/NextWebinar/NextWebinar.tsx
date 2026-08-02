@@ -6,6 +6,7 @@ import type { IWebinar } from "@entities/News.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import type { WebinarAccessStatus } from "@app/(main)/education/webinars/(ui)/MemberAccess/webinarAccess.ts"
 import DeleteWebinarButton from "../DeleteWebinarButton/DeleteWebinarButton"
+import EditWebinarButton from "../EditWebinarButton/EditWebinarButton"
 
 interface IProps {
     webinar: IWebinar
@@ -16,7 +17,12 @@ interface IProps {
 const NextWebinar = ({ webinar, accessStatus, canDelete }: IProps) => {
     return (
         <article className={styles.featuredCard}>
-            {canDelete && <DeleteWebinarButton webinar={webinar} />}
+            {canDelete && (
+                <div className={styles.adminActions}>
+                    <DeleteWebinarButton webinar={webinar} />
+                    <EditWebinarButton webinar={webinar} />
+                </div>
+            )}
             <div className={styles.featuredVisual}>
                 <div className={styles.visualContent}>
                     <div className={styles.slideMark} aria-hidden="true">

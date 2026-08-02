@@ -7,6 +7,7 @@ import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 
 import styles from "./UpcomingWebinarCard.module.scss"
 import DeleteWebinarButton from "../DeleteWebinarButton/DeleteWebinarButton"
+import EditWebinarButton from "../EditWebinarButton/EditWebinarButton"
 
 interface IProps {
     webinar: IWebinar
@@ -16,7 +17,12 @@ interface IProps {
 
 const UpcomingWebinarCard = ({ webinar, accessStatus, canDelete }: IProps) => (
     <article className={styles.card}>
-        {canDelete && <DeleteWebinarButton webinar={webinar} />}
+        {canDelete && (
+            <div className={styles.adminActions}>
+                <DeleteWebinarButton webinar={webinar} />
+                <EditWebinarButton webinar={webinar} />
+            </div>
+        )}
         <div className={styles.topline}>
             <time>{formatDatetime(webinar.starts_at, ["year", "hour", "minute"])}</time>
             <span>Upcoming</span>

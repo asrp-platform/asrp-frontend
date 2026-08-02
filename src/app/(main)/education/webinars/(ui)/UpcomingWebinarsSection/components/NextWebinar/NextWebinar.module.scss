@@ -12,6 +12,15 @@
     }
 }
 
+.adminActions {
+    position: absolute;
+    z-index: 2;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 8px;
+}
+
 .featuredVisual {
     position: relative;
     min-height: 310px;
