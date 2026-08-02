@@ -7,6 +7,7 @@ import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import type { WebinarAccessStatus } from "@app/(main)/education/webinars/(ui)/MemberAccess/webinarAccess.ts"
 import DeleteWebinarButton from "../DeleteWebinarButton/DeleteWebinarButton"
 import EditWebinarButton from "../EditWebinarButton/EditWebinarButton"
+import WebinarDetailsModal from "../WebinarDetailsModal/WebinarDetailsModal"
 
 interface IProps {
     webinar: IWebinar
@@ -37,7 +38,7 @@ const NextWebinar = ({ webinar, accessStatus, canDelete }: IProps) => {
                 <div className={styles.metaRow}>
                     <span>
                         <CalendarDays size={16} />{" "}
-                        {formatDatetime(webinar.starts_at, ["year", "hour", "minute"])}
+                        {formatDatetime(webinar.starts_at, ["hour", "minute"])}
                     </span>
                     <span>
                         <Clock3 size={16} />{" "}
@@ -55,6 +56,7 @@ const NextWebinar = ({ webinar, accessStatus, canDelete }: IProps) => {
                         <span>{webinar.speaker_description}</span>
                     </div>
                 </div>
+                <WebinarDetailsModal webinar={webinar} accessStatus={accessStatus} />
                 <MemberAccess status={accessStatus} webinar={webinar} />
             </div>
         </article>

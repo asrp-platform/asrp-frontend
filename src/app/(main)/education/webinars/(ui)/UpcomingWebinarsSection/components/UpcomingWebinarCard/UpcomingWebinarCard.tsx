@@ -8,6 +8,7 @@ import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import styles from "./UpcomingWebinarCard.module.scss"
 import DeleteWebinarButton from "../DeleteWebinarButton/DeleteWebinarButton"
 import EditWebinarButton from "../EditWebinarButton/EditWebinarButton"
+import WebinarDetailsModal from "../WebinarDetailsModal/WebinarDetailsModal"
 
 interface IProps {
     webinar: IWebinar
@@ -39,6 +40,7 @@ const UpcomingWebinarCard = ({ webinar, accessStatus, canDelete }: IProps) => (
                 <MapPin size={15} /> Live on Zoom
             </span>
         </div>
+        <WebinarDetailsModal webinar={webinar} accessStatus={accessStatus} />
         <MemberAccess compact status={accessStatus} webinar={webinar} />
     </article>
 )
