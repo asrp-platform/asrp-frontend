@@ -1,0 +1,46 @@
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+
+    h2 {
+        color: var(--text-heading-color-dark);
+        font-size: clamp(27px, 3vw, 34px);
+        letter-spacing: -0.025em;
+    }
+
+    p {
+        margin-top: 8px;
+        color: var(--text-secondary-color-dark);
+        line-height: 1.5;
+    }
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.countBadge {
+    flex: none;
+    padding: 7px 12px;
+    border: var(--light-border);
+    border-radius: var(--pill-border-radius);
+    background: #fff;
+    color: var(--text-secondary-color-dark);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+@media (max-width: 760px) {
+    .header {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .countBadge {
+        display: none;
+    }
+}

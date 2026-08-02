@@ -1,101 +1,94 @@
-import { CalendarDays, Clock3, MapPin } from "lucide-react"
+"use client"
 
 import PageSection from "@/shared/ui/PageSection/PageSection"
-import MemberAccess from "../MemberAccess/MemberAccess"
-import styles from "../../PageSection.module.scss"
-import CreateWebinarModal from "@app/(main)/education/webinars/(ui)/CreateWebinarModal/CreateWebinarModal.tsx"
+import styles from "./UpcomingWebinarsSection.module.scss"
+import { useQuery } from "@tanstack/react-query"
+import { WEBINARS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import api from "@/axios.ts"
+import { type IWebinar, WebinarStatus } from "@entities/News.ts"
+import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
+import NextWebinar from "@app/(main)/education/webinars/(ui)/UpcomingWebinarsSection/components/NextWebinar/NextWebinar.tsx"
+import { Alert } from "antd"
+import UpcomingWebinarsSkeleton from "./components/UpcomingWebinarsSkeleton/UpcomingWebinarsSkeleton"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
+import { getWebinarAccessStatus } from "../MemberAccess/webinarAccess"
+import UpcomingWebinarCard from "./components/UpcomingWebinarCard/UpcomingWebinarCard"
+import UpcomingWebinarsSectionHeader from "./components/UpcomingWebinarsSectionHeader/UpcomingWebinarsSectionHeader"
 
-const upcomingWebinars = [
-    {
-        date: "OCT 15",
-        title: "Updates in Molecular Diagnostics for Solid Tumors",
-        speaker: "Dr. Elena Markova · Molecular Pathology",
-        time: "7:00–8:00 PM ET",
-    },
-    {
-        date: "NOV 12",
-        title: "From Residency to Fellowship: Building Your Path in Pathology",
-        speaker: "ASRP Trainee & Mentorship Committee",
-        time: "7:00–8:00 PM ET",
-    },
-]
+const UpcomingWebinarsSection = () => {
+    const { data: upcomingWebinars = [], isLoading: isWebinarsLoading } = useQuery({
+        queryKey: ["upcomingWebinars"],
+        queryFn: async () => {
+            const response = await api.get<IPaginatedBackendResponse<IWebinar>>(WEBINARS_URL, {
+                params: {
+                    status: WebinarStatus.UPCOMING,
+                    ordering: "starts_at",
+                },
+            })
+            return response.data.data
+        },
+    })
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const { data: membership, isLoading: isMembershipLoading } =
+        useCurrentUserMembershipQuery(!!currentUser)
 
-const UpcomingWebinarsSection = () => (
-    <PageSection className={styles.upcomingSection}>
-        <div className={styles.sectionHeader}>
-            <div>
-                <h2>Upcoming webinars</h2>
-                <p>Live educational programs and upcoming member events.</p>
-            </div>
-            <div className={styles.upcomingWebinarsContainer}>
-                <CreateWebinarModal />
-                <span className={styles.countBadge}>3 upcoming</span>
-            </div>
-        </div>
+    const showCreateButton = !isCurrentUserLoading && currentUser && currentUser.admin
+    const hasActiveMembership = Boolean(membership?.is_active)
+    const isAccessLoading = isCurrentUserLoading || (Boolean(currentUser) && isMembershipLoading)
 
-        <article className={styles.featuredCard}>
-            <div className={styles.featuredVisual}>
-                <div className={styles.visualContent}>
-                    <div className={styles.slideMark} aria-hidden="true">
-                        ASRP
-                    </div>
-                    <span className={styles.nextWebinarBadge}>Next webinar</span>
-                </div>
-            </div>
-            <div className={styles.featuredContent}>
-                <span className={styles.openBadge}>Registration open</span>
-                <h2>Diagnostic Challenges in Soft Tissue Pathology</h2>
-                <div className={styles.metaRow}>
-                    <span>
-                        <CalendarDays size={16} /> September 17, 2026
-                    </span>
-                    <span>
-                        <Clock3 size={16} /> 7:00–8:00 PM ET
-                    </span>
-                    <span>
-                        <MapPin size={16} /> Live virtual webinar
-                    </span>
-                </div>
-                <div className={styles.divider} />
-                <p className={styles.summary}>
-                    Review a practical, pattern-based approach to challenging soft tissue tumors.
-                    This interactive session will highlight common diagnostic pitfalls and the role
-                    of ancillary studies in everyday practice.
-                </p>
-                <div className={styles.speaker}>
-                    <div>
-                        <strong>Dr. Natalia Volkova</strong>
-                        <span>Professor of Pathology · Northwestern University</span>
-                    </div>
-                </div>
-                <MemberAccess />
-            </div>
-        </article>
+    const [nextWebinar, ...otherUpcomingWebinars] = upcomingWebinars
 
-        <div className={styles.upcomingList}>
-            {upcomingWebinars.map((webinar) => (
-                <article className={styles.upcomingCard} key={webinar.title}>
-                    <div className={styles.cardTopline}>
-                        <time>{webinar.date}</time>
-                        <span>Upcoming</span>
-                    </div>
-                    <div className={styles.upcomingInfo}>
-                        <h3>{webinar.title}</h3>
-                        <p>{webinar.speaker}</p>
-                    </div>
-                    <div className={styles.upcomingTime}>
-                        <span>
-                            <Clock3 size={15} /> {webinar.time}
-                        </span>
-                        <span>
-                            <MapPin size={15} /> Live on Zoom
-                        </span>
-                    </div>
-                    <MemberAccess compact />
-                </article>
-            ))}
-        </div>
-    </PageSection>
-)
+    if (isWebinarsLoading || isAccessLoading) {
+        return <UpcomingWebinarsSkeleton />
+    }
+
+    if (upcomingWebinars.length === 0) {
+        return (
+            <Alert
+                type="info"
+                showIcon
+                title="There are no upcoming webinars"
+                description="No webinars are currently scheduled. Please check back later for new events."
+            />
+        )
+    }
+
+    return (
+        <PageSection className={styles.upcomingSection}>
+            <UpcomingWebinarsSectionHeader
+                webinarsCount={upcomingWebinars.length}
+                showCreateButton={Boolean(showCreateButton)}
+            />
+
+            <NextWebinar
+                webinar={nextWebinar}
+                accessStatus={getWebinarAccessStatus({
+                    webinar: nextWebinar,
+                    isAuthenticated: Boolean(currentUser),
+                    hasActiveMembership,
+                })}
+            />
+
+            <div className={styles.upcomingList}>
+                {otherUpcomingWebinars.map((webinar) => {
+                    const accessStatus = getWebinarAccessStatus({
+                        webinar,
+                        isAuthenticated: Boolean(currentUser),
+                        hasActiveMembership,
+                    })
+
+                    return (
+                        <UpcomingWebinarCard
+                            key={webinar.id}
+                            webinar={webinar}
+                            accessStatus={accessStatus}
+                        />
+                    )
+                })}
+            </div>
+        </PageSection>
+    )
+}
 
 export default UpcomingWebinarsSection

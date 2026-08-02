@@ -69,3 +69,6 @@ export const DIRECTORS_BOARD_URL = "/directors-board"
 
 export const BYLAWS_URL = "/legal-documents/bylaws"
 export const SPONSORS_URL = `/legal-documents/sponsors`
+
+// Webinars url
+export const WEBINARS_URL = "/webinars"
