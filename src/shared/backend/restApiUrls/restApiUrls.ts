@@ -72,3 +72,6 @@ export const SPONSORS_URL = `/legal-documents/sponsors`
 
 // Webinars url
 export const WEBINARS_URL = "/webinars"
+
+export const getWebinarRegistrationUrl = (webinarSlug: string): string =>
+    `/webinars/${webinarSlug}/registration`

@@ -46,7 +46,7 @@ const NextWebinar = ({ webinar, accessStatus }: IProps) => {
                         <span>{webinar.speaker_description}</span>
                     </div>
                 </div>
-                <MemberAccess status={accessStatus} registrationLink={webinar.registration_link} />
+                <MemberAccess status={accessStatus} webinar={webinar} />
             </div>
         </article>
     )

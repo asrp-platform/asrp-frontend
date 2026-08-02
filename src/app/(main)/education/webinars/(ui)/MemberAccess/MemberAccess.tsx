@@ -1,21 +1,52 @@
+"use client"
+
 import styles from "./styles.module.scss"
 import { LockKeyhole } from "lucide-react"
 import CustomLink from "@shared/ui/Buttons/CustomLink/CustomLink.tsx"
 import { WebinarAccessStatus } from "./webinarAccess"
+import { getWebinarRegistrationUrl } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import api from "@/axios.ts"
+import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
+import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import type { IWebinar } from "@entities/News.ts"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { message } from "antd"
 
 interface IProps {
     compact?: boolean
-    registrationLink?: string | null
+    webinar: IWebinar
     status: WebinarAccessStatus
 }
 
-const MemberAccess = ({ compact = false, registrationLink, status }: IProps) => {
-    if (status === WebinarAccessStatus.AVAILABLE && registrationLink) {
+const MemberAccess = ({ compact = false, webinar, status }: IProps) => {
+    const queryClient = useQueryClient()
+
+    const registerMutation = useMutation({
+        mutationFn: async (slug: string) => {
+            await api.post(getWebinarRegistrationUrl(slug))
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: ["upcomingWebinars"],
+            })
+            message.success("Successfully registered for the webinar")
+        },
+        onError: (error: unknown) => {
+            handleRequestError(error)
+        },
+    })
+
+    if (status === WebinarAccessStatus.AVAILABLE) {
         return (
             <div className={compact ? styles.registrationCompact : styles.registrationAction}>
-                <CustomLink href={registrationLink} variant="primary">
-                    Register for the webinar
-                </CustomLink>
+                <CustomButton
+                    disabled={webinar.is_registered}
+                    onClick={() => registerMutation.mutate(webinar.slug)}
+                    loading={registerMutation.isPending}
+                    variant="primary"
+                >
+                    {webinar.is_registered ? "Already registered" : "Register for the webinar"}
+                </CustomButton>
             </div>
         )
     }

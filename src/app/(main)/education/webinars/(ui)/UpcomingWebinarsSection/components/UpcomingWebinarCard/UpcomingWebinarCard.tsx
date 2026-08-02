@@ -30,7 +30,7 @@ const UpcomingWebinarCard = ({ webinar, accessStatus }: IProps) => (
                 <MapPin size={15} /> Live on Zoom
             </span>
         </div>
-        <MemberAccess compact status={accessStatus} registrationLink={webinar.registration_link} />
+        <MemberAccess compact status={accessStatus} webinar={webinar} />
     </article>
 )
 

@@ -38,4 +38,5 @@ export interface IWebinar {
     location: string | null
 
     member_only: boolean
+    is_registered: boolean
 }
