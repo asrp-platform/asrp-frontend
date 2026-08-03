@@ -25,6 +25,7 @@ export type WebinarFormValues = {
     speaker_description?: string
     registration_link?: string
     join_link?: string
+    recording_link?: string
     starts_at: Dayjs
     location?: string
     member_only: boolean
@@ -49,6 +50,7 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
               speaker_description: webinar.speaker_description ?? undefined,
               registration_link: webinar.registration_link ?? undefined,
               join_link: webinar.join_link ?? undefined,
+              recording_link: webinar.recording_link ?? undefined,
               location: webinar.location ?? undefined,
               starts_at: dayjs(webinar.starts_at),
           }
@@ -68,6 +70,7 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                 speaker_description: values.speaker_description || null,
                 registration_link: values.registration_link || null,
                 join_link: values.join_link || null,
+                recording_link: values.recording_link || null,
                 location: values.location || null,
             }
             if (webinar) {
@@ -76,6 +79,7 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                 await api.post(WEBINARS_ADMIN_URL, payload)
             }
             await queryClient.invalidateQueries({ queryKey: ["upcomingWebinars"] })
+            await queryClient.invalidateQueries({ queryKey: ["pastWebinars"] })
             setOpen(false)
             message.success(
                 isEditing ? "Webinar updated successfully." : "Webinar created successfully.",
@@ -271,6 +275,14 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                                 </Form.Item>
                             </Col>
                         </Row>
+
+                        <Form.Item
+                            label="Recording link"
+                            name="recording_link"
+                            rules={[{ type: "url", message: "Enter a valid URL" }]}
+                        >
+                            <Input placeholder="https://example.com/webinars/recording" />
+                        </Form.Item>
 
                         <div className={styles.memberOnlyField}>
                             <div>

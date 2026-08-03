@@ -28,7 +28,7 @@ export const getWebinarAccessStatus = ({
         return WebinarAccessStatus.MEMBERSHIP_REQUIRED
     }
 
-    return webinar.registration_link
+    return webinar.registration_link || (webinar.is_registered && webinar.join_link)
         ? WebinarAccessStatus.AVAILABLE
         : WebinarAccessStatus.REGISTRATION_UNAVAILABLE
 }

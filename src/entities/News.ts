@@ -35,6 +35,7 @@ export interface IWebinar {
     recording_link?: string | null
 
     starts_at: string
+    ends_at: string
     location: string | null
 
     member_only: boolean

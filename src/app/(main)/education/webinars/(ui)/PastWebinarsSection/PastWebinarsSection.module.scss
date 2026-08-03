@@ -1,0 +1,48 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 8px;
+}
+
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+
+    h2 {
+        color: var(--text-heading-color-dark);
+        font-size: clamp(27px, 3vw, 34px);
+        letter-spacing: -0.025em;
+    }
+
+    p {
+        margin-top: 8px;
+        color: var(--text-secondary-color-dark);
+        line-height: 1.5;
+    }
+}
+
+.list {
+    overflow: hidden;
+    border: var(--light-border);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgb(15 23 42 / 0.06);
+}
+
+.skeleton {
+    padding: 28px 34px;
+
+    & + & {
+        border-top: var(--light-border);
+    }
+}
+
+@media (max-width: 760px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

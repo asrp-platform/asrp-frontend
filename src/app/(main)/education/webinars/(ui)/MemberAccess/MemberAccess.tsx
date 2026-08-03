@@ -37,6 +37,16 @@ const MemberAccess = ({ compact = false, webinar, status }: IProps) => {
     })
 
     if (status === WebinarAccessStatus.AVAILABLE) {
+        if (webinar.is_registered && webinar.join_link) {
+            return (
+                <div className={compact ? styles.registrationCompact : styles.registrationAction}>
+                    <CustomLink href={webinar.join_link} variant="primary-filled">
+                        Join webinar
+                    </CustomLink>
+                </div>
+            )
+        }
+
         return (
             <div className={compact ? styles.registrationCompact : styles.registrationAction}>
                 <CustomButton

@@ -1,71 +1,96 @@
-import Link from "next/link"
-import { ArrowRight, LockKeyhole } from "lucide-react"
+"use client"
 
+import { Alert, Skeleton } from "antd"
+import { useQuery } from "@tanstack/react-query"
+
+import api from "@/axios.ts"
 import PageSection from "@/shared/ui/PageSection/PageSection"
-import styles from "../../PageSection.module.scss"
+import { type IWebinar, WebinarStatus } from "@entities/News.ts"
+import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
+import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { WEBINARS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
 
-const pastWebinars = [
-    {
-        date: "June 18, 2026",
-        title: "Approach to Difficult Thyroid Cytology",
-        speaker: "Presented by Anna Morozova, MD",
-        description:
-            "A case-based discussion of challenging thyroid cytology specimens and practical application of the Bethesda System.",
-        recordingAvailable: true,
-    },
-    {
-        date: "April 23, 2026",
-        title: "Molecular Testing in Lung Cancer",
-        speaker: "Presented by Sergey Volkov, MD, PhD",
-        description:
-            "A focused review of current molecular testing workflows and clinically relevant biomarkers in pulmonary adenocarcinoma.",
-        recordingAvailable: true,
-    },
-    {
-        date: "February 26, 2026",
-        title: "From Fellowship to the First Job",
-        speaker: "Presented by ASRP Career Panel",
-        description:
-            "Practical guidance on job searches, interviews, contract review, and the transition into independent practice.",
-        recordingAvailable: false,
-    },
-]
+import PastWebinarCard from "./components/PastWebinarCard/PastWebinarCard"
+import PastWebinarsModal from "./components/PastWebinarsModal/PastWebinarsModal"
+import styles from "./PastWebinarsSection.module.scss"
 
-const PastWebinarsSection = () => (
-    <PageSection id="past-webinars" className={styles.pastSection}>
-        <div className={styles.sectionHeader}>
-            <div>
-                <h2>Past Webinars</h2>
-                <p>Browse previous ASRP educational programs and access available recordings.</p>
+const DISPLAYED_WEBINARS_COUNT = 3
+
+const PastWebinarsSection = () => {
+    const {
+        data,
+        isLoading: isWebinarsLoading,
+        isError,
+    } = useQuery({
+        queryKey: ["pastWebinars"],
+        queryFn: async () => {
+            const response = await api.get<IPaginatedBackendResponse<IWebinar>>(WEBINARS_URL, {
+                params: {
+                    status: WebinarStatus.PAST,
+                    ordering: "-starts_at",
+                    page_size: 100,
+                },
+            })
+            return response.data
+        },
+    })
+    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const { data: membership, isLoading: isMembershipLoading } = useCurrentUserMembershipQuery(
+        Boolean(currentUser),
+    )
+
+    const webinars = data?.data ?? []
+    const isAuthenticated = Boolean(currentUser)
+    const canManageRecording = Boolean(currentUser?.admin)
+    const hasActiveMembership = Boolean(membership?.is_active)
+    const isAccessLoading = isCurrentUserLoading || (isAuthenticated && isMembershipLoading)
+    const isLoading = isWebinarsLoading || isAccessLoading
+
+    return (
+        <PageSection id="past-webinars" className={styles.section}>
+            <div className={styles.header}>
+                <div>
+                    <h2>Past Webinars</h2>
+                    <p>Browse previous ASRP educational programs and available recordings.</p>
+                </div>
+                {webinars.length > 0 && (
+                    <PastWebinarsModal
+                        webinars={webinars}
+                        isAuthenticated={isAuthenticated}
+                        hasActiveMembership={hasActiveMembership}
+                        canManageRecording={canManageRecording}
+                    />
+                )}
             </div>
-            <Link href="#past-webinars" className={styles.pastLink}>
-                View all past webinars <ArrowRight size={16} />
-            </Link>
-        </div>
 
-        <div className={styles.pastWebinarsList}>
-            {pastWebinars.map((webinar) => (
-                <article className={styles.pastWebinarRow} key={webinar.title}>
-                    <div className={styles.pastDate}>
-                        <span>COMPLETED</span>
-                        <time>{webinar.date}</time>
-                    </div>
-                    <div className={styles.pastInfo}>
-                        <h3>{webinar.title}</h3>
-                        <span>{webinar.speaker}</span>
-                        <p>{webinar.description}</p>
-                    </div>
-                    {webinar.recordingAvailable ? (
-                        <div className={styles.membersOnlyBadge}>
-                            <LockKeyhole size={16} /> Members only
+            {isLoading ? (
+                <div className={styles.list}>
+                    {Array.from({ length: DISPLAYED_WEBINARS_COUNT }, (_, index) => (
+                        <div className={styles.skeleton} key={index}>
+                            <Skeleton active paragraph={{ rows: 2 }} />
                         </div>
-                    ) : (
-                        <span className={styles.unavailableBadge}>Recording unavailable</span>
-                    )}
-                </article>
-            ))}
-        </div>
-    </PageSection>
-)
+                    ))}
+                </div>
+            ) : isError ? (
+                <Alert type="error" showIcon title="Unable to load past webinars" />
+            ) : webinars.length === 0 ? (
+                <Alert type="info" showIcon title="There are no past webinars yet" />
+            ) : (
+                <div className={styles.list}>
+                    {webinars.slice(0, DISPLAYED_WEBINARS_COUNT).map((webinar) => (
+                        <PastWebinarCard
+                            key={webinar.id}
+                            webinar={webinar}
+                            isAuthenticated={isAuthenticated}
+                            hasActiveMembership={hasActiveMembership}
+                            canManageRecording={canManageRecording}
+                        />
+                    ))}
+                </div>
+            )}
+        </PageSection>
+    )
+}
 
 export default PastWebinarsSection

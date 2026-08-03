@@ -34,7 +34,7 @@ const NextWebinar = ({ webinar, accessStatus, canDelete }: IProps) => {
             </div>
             <div className={styles.featuredContent}>
                 <span className={styles.openBadge}>Registration open</span>
-                <h2>Diagnostic Challenges in Soft Tissue Pathology</h2>
+                <h2>{webinar.title}</h2>
                 <div className={styles.metaRow}>
                     <span>
                         <CalendarDays size={16} />{" "}

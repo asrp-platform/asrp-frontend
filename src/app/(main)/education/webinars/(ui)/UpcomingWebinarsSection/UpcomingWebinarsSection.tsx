@@ -43,17 +43,6 @@ const UpcomingWebinarsSection = () => {
         return <UpcomingWebinarsSkeleton />
     }
 
-    if (upcomingWebinars.length === 0) {
-        return (
-            <Alert
-                type="info"
-                showIcon
-                title="There are no upcoming webinars"
-                description="No webinars are currently scheduled. Please check back later for new events."
-            />
-        )
-    }
-
     return (
         <PageSection className={styles.upcomingSection}>
             <UpcomingWebinarsSectionHeader
@@ -61,34 +50,45 @@ const UpcomingWebinarsSection = () => {
                 showCreateButton={Boolean(showCreateButton)}
             />
 
-            <NextWebinar
-                webinar={nextWebinar}
-                canDelete={Boolean(showCreateButton)}
-                accessStatus={getWebinarAccessStatus({
-                    webinar: nextWebinar,
-                    isAuthenticated: Boolean(currentUser),
-                    hasActiveMembership,
-                })}
-            />
+            {upcomingWebinars.length === 0 ? (
+                <Alert
+                    type="info"
+                    showIcon
+                    title="There are no upcoming webinars"
+                    description="No webinars are currently scheduled. Please check back later for new events."
+                />
+            ) : (
+                <>
+                    <NextWebinar
+                        webinar={nextWebinar}
+                        canDelete={Boolean(showCreateButton)}
+                        accessStatus={getWebinarAccessStatus({
+                            webinar: nextWebinar,
+                            isAuthenticated: Boolean(currentUser),
+                            hasActiveMembership,
+                        })}
+                    />
 
-            <div className={styles.upcomingList}>
-                {otherUpcomingWebinars.map((webinar) => {
-                    const accessStatus = getWebinarAccessStatus({
-                        webinar,
-                        isAuthenticated: Boolean(currentUser),
-                        hasActiveMembership,
-                    })
+                    <div className={styles.upcomingList}>
+                        {otherUpcomingWebinars.map((webinar) => {
+                            const accessStatus = getWebinarAccessStatus({
+                                webinar,
+                                isAuthenticated: Boolean(currentUser),
+                                hasActiveMembership,
+                            })
 
-                    return (
-                        <UpcomingWebinarCard
-                            key={webinar.id}
-                            webinar={webinar}
-                            accessStatus={accessStatus}
-                            canDelete={Boolean(showCreateButton)}
-                        />
-                    )
-                })}
-            </div>
+                            return (
+                                <UpcomingWebinarCard
+                                    key={webinar.id}
+                                    webinar={webinar}
+                                    accessStatus={accessStatus}
+                                    canDelete={Boolean(showCreateButton)}
+                                />
+                            )
+                        })}
+                    </div>
+                </>
+            )}
         </PageSection>
     )
 }
