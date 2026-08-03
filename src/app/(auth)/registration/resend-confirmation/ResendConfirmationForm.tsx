@@ -4,6 +4,7 @@ import { Alert, Button, Form, type FormProps, Input, Typography } from "antd"
 import { isAxiosError } from "axios"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useReturnToLoginHref } from "@shared/hooks/useReturnToLoginHref.ts"
 
 import api from "@/axios.ts"
 import { EMAIL_CONFIRMATION_RESEND_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
@@ -25,6 +26,7 @@ const getResponseMessage = (data: ResendResponse | undefined, fallback: string) 
 
 const ResendConfirmationForm = () => {
     const router = useRouter()
+    const loginHref = useReturnToLoginHref("/login")
     const [form] = Form.useForm<FieldType>()
     const [isLoading, setIsLoading] = useState(false)
     const [status, setStatus] = useState<"success" | "error" | null>(null)
@@ -96,7 +98,7 @@ const ResendConfirmationForm = () => {
                     <Button type="primary" htmlType="submit" loading={isLoading}>
                         Send confirmation email
                     </Button>
-                    <Button onClick={() => router.push("/login")}>Back to login</Button>
+                    <Button onClick={() => router.push(loginHref)}>Back to login</Button>
                 </Form>
             </section>
         </div>

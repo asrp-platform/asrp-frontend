@@ -7,12 +7,13 @@ import api from "@/axios.ts"
 import type { LoginResponse } from "@/app/(auth)/login/types.ts"
 import { LOGIN_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { isAxiosError } from "axios"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useForm } from "antd/es/form/Form"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import { useQueryClient } from "@tanstack/react-query"
 import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
 import { useState } from "react"
+import { getSafeReturnTo } from "@shared/helpers/authRedirect.ts"
 
 type FieldType = {
     email: string
@@ -24,6 +25,7 @@ const { Paragraph } = Typography
 
 const LoginForm = () => {
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [form] = useForm()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -38,7 +40,7 @@ const LoginForm = () => {
             await queryClient.invalidateQueries({
                 queryKey: ["current-user"],
             })
-            router.push("/")
+            router.replace(getSafeReturnTo(searchParams.get("returnTo")))
         } catch (error: unknown) {
             if (isAxiosError(error) && error.response?.status === 401) {
                 form.setFields([

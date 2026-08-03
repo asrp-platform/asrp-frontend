@@ -20,10 +20,12 @@ import RegistrationSuccess from "@app/(auth)/registration/(ui)/RegistrationSucce
 import { useCountriesQuery } from "@shared/backend/queries/useCountriesQuery.ts"
 import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
 import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
+import { useReturnToLoginHref } from "@shared/hooks/useReturnToLoginHref.ts"
 import { REGISTER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 const RegisterForm = () => {
     const router = useRouter()
+    const loginHref = useReturnToLoginHref("/login")
     const [form] = useForm()
     const [registrationEmail, setRegistrationEmail] = useState<string | null>(null)
     const [resendMessage, setResendMessage] = useState<string | null>(null)
@@ -80,7 +82,7 @@ const RegisterForm = () => {
                 registrationEmail={registrationEmail}
                 resendMessage={resendMessage}
                 resendStatus={resendStatus}
-                onBackToLogin={() => router.push("/login")}
+                onBackToLogin={() => router.push(loginHref)}
                 onHome={() => router.push("/")}
                 onResendSuccess={(message) => {
                     setResendStatus("success")
@@ -100,7 +102,7 @@ const RegisterForm = () => {
                 <h1>Create an account</h1>
                 <Typography>
                     <Link
-                        href="/login"
+                        href={loginHref}
                         aria-label="Return to login page"
                         className={styles.returnButton}
                     >

@@ -10,10 +10,11 @@ import {
     CreditCardOutlined,
 } from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
-import { type ReactNode, useMemo, useState } from "react"
+import { type ReactNode, useEffect, useMemo, useState } from "react"
 import styles from "@/app/(administration)/layout.module.scss"
 import BackToMainSiteButton from "@/shared/ui/Buttons/BackToMainSiteButton.tsx"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { getLoginUrl } from "@shared/helpers/authRedirect.ts"
 
 const { Header, Sider, Content } = Layout
 
@@ -72,9 +73,11 @@ const AdminLayout = ({ children }: IProps) => {
 
     const selectedKeys = useMemo(() => [selectedKey], [selectedKey])
 
-    if (!currentUser && !userIsPending) {
-        router.push("/login")
-    }
+    useEffect(() => {
+        if (!currentUser && !userIsPending) {
+            router.replace(getLoginUrl(pathname))
+        }
+    }, [currentUser, pathname, router, userIsPending])
 
     return (
         <Layout className={styles.layout}>
