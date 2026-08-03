@@ -1,5 +1,7 @@
 .link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border-radius: var(--pill-border-radius);
     padding: 8px 16px;
     font-size: 14px;
@@ -9,7 +11,7 @@
     text-align: center;
     transition: 0.3s ease-in-out;
     align-self: flex-start;
-    line-height: normal;
+    line-height: 1.25;
 
     &:visited {
         text-decoration: none;

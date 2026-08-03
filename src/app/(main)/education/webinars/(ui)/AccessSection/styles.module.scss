@@ -1,57 +1,86 @@
 .ctaSection {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  padding: 34px;
-  border-radius: 24px;
-  background: var(--widget-background-dark-color);
-  color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    padding: 34px;
+    border-radius: 24px;
+    background: var(--widget-background-dark-color);
+    color: #fff;
 
-  .descriptionContainer {
-    flex: 1;
+    .descriptionContainer {
+        min-width: 0;
+        flex: 1;
 
-    h2 {
-      margin: 7px 0;
-      font-size: 28px;
+        h2 {
+            max-width: 680px;
+            margin: 7px 0;
+            font-size: clamp(25px, 3vw, 28px);
+            line-height: 1.25;
+            overflow-wrap: break-word;
+        }
 
+        p {
+            max-width: 720px;
+            color: var(--text-primary-color-light);
+            line-height: 1.6;
+        }
+
+        > span {
+            color: var(--text-secondary-color-red);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
     }
 
-    p {
-      color: var(--text-primary-color-light);
-      line-height: 1.5;
+    .ctaLink {
+        flex: none;
+        align-self: center;
     }
-
-    span {
-      font-size: 12px;
-      letter-spacing: 2px;
-      font-weight: bold;
-      color: var(--text-secondary-color-red);
-    }
-  }
-
-
-  .ctaLink {
-    align-self: center;
 
     .linkInnerContainer {
-
-      display: flex;
-      gap: 6px;
-      align-items: center;
-
-      span {
-
-      }
-
-      .icon {
-        margin-top: 2px;
-      }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        line-height: 1;
     }
-  }
+
+    .icon {
+        flex: none;
+    }
 }
 
+@media (max-width: 640px) {
+    .ctaSection {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+        padding: 26px 24px;
+        border-radius: 20px;
 
+        .descriptionContainer {
+            h2 {
+                max-width: 12ch;
+                margin: 10px 0 12px;
+                font-size: clamp(27px, 8vw, 34px);
+                line-height: 1.12;
+            }
 
+            p {
+                max-width: 32ch;
+                font-size: 15px;
+            }
+        }
 
+        .ctaLink {
+            width: 100%;
+            min-height: 50px;
+        }
 
+        .linkInnerContainer {
+            width: 100%;
+        }
+    }
+}

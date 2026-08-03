@@ -8,7 +8,7 @@
     box-shadow: 0 16px 45px rgb(15 23 42 / 0.08);
 
     @media (min-width: 900px) {
-        grid-template-columns: minmax(300px, 0.9fr) 1.1fr;
+        grid-template-columns: minmax(300px, calc(45% - 80px)) minmax(0, 1fr);
     }
 }
 

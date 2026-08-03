@@ -1,0 +1,19 @@
+.trigger {
+    min-height: 42px;
+    white-space: nowrap;
+
+    > div {
+        gap: 7px;
+    }
+}
+
+@media (max-width: 600px) {
+    .trigger {
+        width: 100%;
+        min-height: 48px;
+        align-self: stretch;
+        border-color: var(--button-primary-red);
+        background: var(--surface-danger-hover-color);
+        font-size: 14px;
+    }
+}

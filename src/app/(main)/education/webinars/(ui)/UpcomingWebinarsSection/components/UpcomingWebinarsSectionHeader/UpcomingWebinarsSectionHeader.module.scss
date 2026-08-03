@@ -39,6 +39,18 @@
     }
 }
 
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .actions {
+        width: 100%;
+        align-items: center;
+    }
+}
+
 @media (max-width: 480px) {
     .countBadge {
         display: none;
