@@ -10,6 +10,8 @@
     font-size: 14px;
     font-weight: 700;
     white-space: nowrap;
+    border: 0;
+    cursor: pointer;
     transition:
         background-color 0.2s ease,
         transform 0.2s ease;
@@ -17,6 +19,12 @@
     &:hover {
         background: var(--button-primary-red-hover);
         transform: translateY(-1px);
+    }
+
+    &:disabled {
+        cursor: wait;
+        opacity: 0.7;
+        transform: none;
     }
 }
 

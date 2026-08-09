@@ -1,4 +1,5 @@
 import { LockKeyhole, Play } from "lucide-react"
+import Link from "next/link"
 
 import type { IWebinar } from "@entities/News.ts"
 import CustomLink from "@shared/ui/Buttons/CustomLink/CustomLink.tsx"
@@ -36,16 +37,14 @@ const PastWebinarAction = ({ webinar, isAuthenticated, hasActiveMembership }: IP
         )
     }
 
-    if (webinar.recording_link) {
+    if (webinar.bunny_video_id) {
         return (
-            <a
+            <Link
                 className={styles.recordingLink}
-                href={webinar.recording_link}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/education/webinars/${webinar.slug}/watch`}
             >
-                <Play size={16} /> Watch recording
-            </a>
+                <Play size={16} /> Watch webinar
+            </Link>
         )
     }
 

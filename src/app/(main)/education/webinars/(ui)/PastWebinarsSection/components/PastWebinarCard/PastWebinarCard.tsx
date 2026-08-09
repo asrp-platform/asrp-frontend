@@ -2,7 +2,7 @@ import type { IWebinar } from "@entities/News.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 
 import PastWebinarAction from "../PastWebinarAction/PastWebinarAction"
-import AttachRecordingLinkButton from "../AttachRecordingLinkButton/AttachRecordingLinkButton"
+import AttachRecordingButton from "../AttachRecordingLinkButton/AttachRecordingLinkButton"
 import styles from "./PastWebinarCard.module.scss"
 
 interface IProps {
@@ -34,7 +34,7 @@ const PastWebinarCard = ({
                 isAuthenticated={isAuthenticated}
                 hasActiveMembership={hasActiveMembership}
             />
-            {canManageRecording && <AttachRecordingLinkButton webinar={webinar} />}
+            {canManageRecording && <AttachRecordingButton webinar={webinar} />}
         </div>
     </article>
 )

@@ -1,7 +1,7 @@
 "use client"
 
 import { Form, Input, message, Modal } from "antd"
-import { Link2 } from "lucide-react"
+import { Video } from "lucide-react"
 import { useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
@@ -18,27 +18,34 @@ interface IProps {
 }
 
 interface IFormValues {
-    recording_link: string
+    bunny_video_id: string
 }
 
-const AttachRecordingLinkButton = ({ webinar }: IProps) => {
+const BUNNY_VIDEO_ID_PATTERN =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
+const AttachRecordingButton = ({ webinar }: IProps) => {
     const [isOpen, setIsOpen] = useState(false)
     const [form] = Form.useForm<IFormValues>()
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
-        mutationFn: async ({ recording_link }: IFormValues) => {
+        mutationFn: async ({ bunny_video_id }: IFormValues) => {
+            const normalizedVideoId = bunny_video_id.trim()
+
             await api.patch(getWebinarDetailAdminUrl(webinar.id), {
-                recording_link: recording_link || null,
+                bunny_video_id: normalizedVideoId || null,
             })
+
+            return normalizedVideoId
         },
-        onSuccess: async (_, { recording_link }) => {
+        onSuccess: async (bunnyVideoId) => {
             await queryClient.invalidateQueries({ queryKey: ["pastWebinars"] })
             setIsOpen(false)
             message.success(
-                recording_link
-                    ? "Recording link saved successfully."
-                    : "Recording link removed successfully.",
+                bunnyVideoId
+                    ? "Bunny video ID saved successfully."
+                    : "Bunny video ID removed successfully.",
             )
         },
         onError: (error: unknown) => {
@@ -47,7 +54,7 @@ const AttachRecordingLinkButton = ({ webinar }: IProps) => {
     })
 
     const openModal = () => {
-        form.setFieldsValue({ recording_link: webinar.recording_link ?? "" })
+        form.setFieldsValue({ bunny_video_id: webinar.bunny_video_id ?? "" })
         setIsOpen(true)
     }
 
@@ -56,23 +63,23 @@ const AttachRecordingLinkButton = ({ webinar }: IProps) => {
             <button
                 type="button"
                 className={styles.trigger}
-                aria-label={`${webinar.recording_link ? "Update" : "Attach"} recording link for ${webinar.title}`}
+                aria-label={`${webinar.bunny_video_id ? "Update" : "Attach"} recording for ${webinar.title}`}
                 onClick={openModal}
             >
-                <Link2 size={18} />
-                <span>{webinar.recording_link ? "Update recording" : "Attach recording"}</span>
+                <Video size={18} />
+                <span>{webinar.bunny_video_id ? "Update recording" : "Attach recording"}</span>
             </button>
 
             <Modal
                 open={isOpen}
-                title={webinar.recording_link ? "Update recording link" : "Attach recording link"}
+                title={webinar.bunny_video_id ? "Update recording" : "Attach recording"}
                 width={560}
                 footer={null}
                 destroyOnHidden
                 onCancel={() => setIsOpen(false)}
             >
                 <p className={styles.description}>
-                    Add a recording URL for <strong>{webinar.title}</strong>.
+                    Add a Bunny video ID for <strong>{webinar.title}</strong>.
                 </p>
                 <Form<IFormValues>
                     form={form}
@@ -81,14 +88,21 @@ const AttachRecordingLinkButton = ({ webinar }: IProps) => {
                     onFinish={(values) => mutation.mutate(values)}
                 >
                     <Form.Item
-                        label="Recording link"
-                        name="recording_link"
-                        extra="Leave this field empty to remove the existing recording link."
-                        rules={[{ type: "url", message: "Enter a valid URL" }]}
+                        label="Bunny video ID"
+                        name="bunny_video_id"
+                        extra="Leave this field empty to remove the existing recording."
+                        normalize={(value: string) => value.trim()}
+                        rules={[
+                            {
+                                pattern: BUNNY_VIDEO_ID_PATTERN,
+                                message: "Enter a valid Bunny Stream video ID",
+                            },
+                        ]}
                     >
                         <Input
-                            prefix={<Link2 size={16} />}
-                            placeholder="https://example.com/webinars/recording"
+                            prefix={<Video size={16} />}
+                            placeholder="Bunny Stream video ID"
+                            maxLength={36}
                         />
                     </Form.Item>
                     <div className={styles.actions}>
@@ -98,7 +112,7 @@ const AttachRecordingLinkButton = ({ webinar }: IProps) => {
                             htmlType="submit"
                             variant="green"
                         >
-                            Save recording link
+                            Save recording
                         </CustomButton>
                     </div>
                 </Form>
@@ -107,4 +121,4 @@ const AttachRecordingLinkButton = ({ webinar }: IProps) => {
     )
 }
 
-export default AttachRecordingLinkButton
+export default AttachRecordingButton

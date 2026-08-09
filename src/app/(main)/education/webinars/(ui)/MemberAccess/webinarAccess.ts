@@ -4,7 +4,6 @@ export const WebinarAccessStatus = {
     AVAILABLE: "AVAILABLE",
     SIGN_IN_REQUIRED: "SIGN_IN_REQUIRED",
     MEMBERSHIP_REQUIRED: "MEMBERSHIP_REQUIRED",
-    REGISTRATION_UNAVAILABLE: "REGISTRATION_UNAVAILABLE",
 } as const
 
 export type WebinarAccessStatus = (typeof WebinarAccessStatus)[keyof typeof WebinarAccessStatus]
@@ -28,7 +27,5 @@ export const getWebinarAccessStatus = ({
         return WebinarAccessStatus.MEMBERSHIP_REQUIRED
     }
 
-    return webinar.registration_link || (webinar.is_registered && webinar.join_link)
-        ? WebinarAccessStatus.AVAILABLE
-        : WebinarAccessStatus.REGISTRATION_UNAVAILABLE
+    return WebinarAccessStatus.AVAILABLE
 }

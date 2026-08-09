@@ -15,9 +15,16 @@ import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membershi
 import { getWebinarAccessStatus } from "../MemberAccess/webinarAccess"
 import UpcomingWebinarCard from "./components/UpcomingWebinarCard/UpcomingWebinarCard"
 import UpcomingWebinarsSectionHeader from "./components/UpcomingWebinarsSectionHeader/UpcomingWebinarsSectionHeader"
+import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 const UpcomingWebinarsSection = () => {
-    const { data: upcomingWebinars = [], isLoading: isWebinarsLoading } = useQuery({
+    const {
+        data: upcomingWebinars = [],
+        isLoading: isWebinarsLoading,
+        isError: isWebinarsError,
+        isFetching: isWebinarsFetching,
+        refetch: refetchWebinars,
+    } = useQuery({
         queryKey: ["upcomingWebinars"],
         queryFn: async () => {
             const response = await api.get<IPaginatedBackendResponse<IWebinar>>(WEBINARS_URL, {
@@ -50,7 +57,23 @@ const UpcomingWebinarsSection = () => {
                 showCreateButton={Boolean(showCreateButton)}
             />
 
-            {upcomingWebinars.length === 0 ? (
+            {isWebinarsError ? (
+                <Alert
+                    type="error"
+                    showIcon
+                    title="Unable to load upcoming webinars"
+                    description="Please check your connection and try again."
+                    action={
+                        <CustomButton
+                            loading={isWebinarsFetching}
+                            onClick={() => void refetchWebinars()}
+                            variant="primary"
+                        >
+                            Try again
+                        </CustomButton>
+                    }
+                />
+            ) : upcomingWebinars.length === 0 ? (
                 <Alert
                     type="info"
                     showIcon

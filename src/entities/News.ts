@@ -30,9 +30,8 @@ export interface IWebinar {
     speaker_name: string
     speaker_description: string | null
 
-    registration_link?: string | null
     join_link?: string | null
-    recording_link?: string | null
+    bunny_video_id?: string | null
 
     starts_at: string
     ends_at: string
@@ -40,4 +39,8 @@ export interface IWebinar {
 
     member_only: boolean
     is_registered: boolean
+}
+
+export interface IWebinarPlayback {
+    embed_url: string | null
 }

@@ -23,8 +23,9 @@
 }
 
 .countBadge {
-    flex: none;
-    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    padding: 4px 16px;
     border: var(--light-border);
     border-radius: var(--pill-border-radius);
     background: #fff;

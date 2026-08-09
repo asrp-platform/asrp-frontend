@@ -23,9 +23,8 @@ export type WebinarFormValues = {
     learning_objectives?: string[]
     speaker_name: string
     speaker_description?: string
-    registration_link?: string
     join_link?: string
-    recording_link?: string
+    bunny_video_id?: string
     starts_at: Dayjs
     location?: string
     member_only: boolean
@@ -48,9 +47,8 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
         ? {
               ...webinar,
               speaker_description: webinar.speaker_description ?? undefined,
-              registration_link: webinar.registration_link ?? undefined,
               join_link: webinar.join_link ?? undefined,
-              recording_link: webinar.recording_link ?? undefined,
+              bunny_video_id: webinar.bunny_video_id ?? undefined,
               location: webinar.location ?? undefined,
               starts_at: dayjs(webinar.starts_at),
           }
@@ -68,9 +66,8 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                 ...values,
                 starts_at: values.starts_at.toISOString(),
                 speaker_description: values.speaker_description || null,
-                registration_link: values.registration_link || null,
                 join_link: values.join_link || null,
-                recording_link: values.recording_link || null,
+                bunny_video_id: values.bunny_video_id || null,
                 location: values.location || null,
             }
             if (webinar) {
@@ -255,33 +252,16 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                             </Col>
                         </Row>
 
-                        <Row gutter={16}>
-                            <Col xs={24} md={12}>
-                                <Form.Item
-                                    label="Registration link"
-                                    name="registration_link"
-                                    rules={[{ type: "url", message: "Enter a valid URL" }]}
-                                >
-                                    <Input placeholder="https://example.com/register" />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} md={12}>
-                                <Form.Item
-                                    label="Join link"
-                                    name="join_link"
-                                    rules={[{ type: "url", message: "Enter a valid URL" }]}
-                                >
-                                    <Input placeholder="https://zoom.us/j/..." />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-
                         <Form.Item
-                            label="Recording link"
-                            name="recording_link"
+                            label="Join link"
+                            name="join_link"
                             rules={[{ type: "url", message: "Enter a valid URL" }]}
                         >
-                            <Input placeholder="https://example.com/webinars/recording" />
+                            <Input placeholder="https://zoom.us/j/..." />
+                        </Form.Item>
+
+                        <Form.Item label="Bunny video ID" name="bunny_video_id">
+                            <Input placeholder="Bunny Stream video ID" />
                         </Form.Item>
 
                         <div className={styles.memberOnlyField}>
