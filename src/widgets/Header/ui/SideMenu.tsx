@@ -10,7 +10,7 @@ import SideMenuItemList from "@/widgets/Header/ui/SideMenuItemList.tsx"
 import { handleLogout } from "@/widgets/Header/helpers/logout.ts"
 import Link from "next/link"
 import { UserOutlined } from "@ant-design/icons"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { onUserLoginClick } from "@/widgets/Header/helpers/login.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 
@@ -18,6 +18,7 @@ const SideMenu = () => {
     const { data: currentUser } = useCurrentUserQuery()
 
     const router = useRouter()
+    const pathname = usePathname()
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -68,7 +69,7 @@ const SideMenu = () => {
                     ) : (
                         <div
                             className={styles.authMobileMenuContainer}
-                            onClick={() => onUserLoginClick(router)}
+                            onClick={() => onUserLoginClick(router, pathname)}
                         >
                             <span className={styles.authMobileMenuIcon}>
                                 <UserOutlined size={18} />

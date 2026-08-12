@@ -8,9 +8,9 @@ import api from "@/axios.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 
 import {
-    getUserNameChangeRequestById,
+    getAdminUserNameChangeRequestUrl,
     NAME_CHANGE_REQUESTS_URL,
-} from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+} from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import type { INameChangeRequest, NameChangeRequestStatus } from "@/entities/NameChangeRequest.ts"
 
@@ -86,14 +86,14 @@ const NameChangeRequestsTable = () => {
             setStatusUpdateLoading(true)
             if (data.action === "approve") {
                 await api.patch(
-                    getUserNameChangeRequestById(selectedRow.user_id, selectedRow.id),
+                    getAdminUserNameChangeRequestUrl(selectedRow.user_id, selectedRow.id),
                     data,
                 )
                 updateStatusInTable(selectedRow, data.action)
             }
             if (data.action === "reject") {
                 await api.patch(
-                    getUserNameChangeRequestById(selectedRow.user_id, selectedRow.id),
+                    getAdminUserNameChangeRequestUrl(selectedRow.user_id, selectedRow.id),
                     data,
                 )
                 updateStatusInTable(selectedRow, data.action)

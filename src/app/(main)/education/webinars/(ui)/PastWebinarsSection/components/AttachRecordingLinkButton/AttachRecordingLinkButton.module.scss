@@ -1,0 +1,58 @@
+.trigger {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 7px;
+    padding: 0 12px;
+    border: 1px solid #bfdbfe;
+    border-radius: 11px;
+    background: #fff;
+    color: #2563eb;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+    &:hover {
+        border-color: #2563eb;
+        background: #eff6ff;
+        transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+        outline: 2px solid #2563eb;
+        outline-offset: 2px;
+    }
+}
+
+.description {
+    margin: 6px 0 20px;
+    color: var(--text-secondary-color-dark);
+    line-height: 1.55;
+}
+
+.form {
+    padding-top: 4px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+@media (max-width: 575px) {
+    .trigger span {
+        display: none;
+    }
+
+    .actions {
+        flex-direction: column-reverse;
+    }
+}

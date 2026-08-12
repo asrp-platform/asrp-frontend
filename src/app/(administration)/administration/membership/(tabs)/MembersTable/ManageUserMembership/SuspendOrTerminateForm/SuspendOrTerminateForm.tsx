@@ -16,7 +16,7 @@ import { isAxiosError } from "axios"
 import type { Dayjs } from "dayjs"
 import type { IUserMembership } from "@entities/Membership.ts"
 import api from "@/axios.ts"
-import { getMembershipRestrictionsUrl } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { getAdminMembershipRestrictionUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 
@@ -44,7 +44,7 @@ const manageMembership = async ({
     suspendedUntil,
     reason,
 }: ManageMembershipPayload) => {
-    const response = await api.post(getMembershipRestrictionsUrl(membershipId), {
+    const response = await api.post(getAdminMembershipRestrictionUrl(membershipId), {
         reason,
         suspended_until: temporarySuspension ? suspendedUntil?.endOf("day").toISOString() : null,
     })
@@ -78,8 +78,7 @@ const SuspendOrTerminateForm = ({ userMembership, setOpen }: IProps) => {
         },
         onError: (error) => {
             if (isAxiosError(error)) {
-                if (error.response?.status === 422) {
-                    setFormFieldsErrors(error, form)
+                if (setFormFieldsErrors(error, form)) {
                     return
                 }
 

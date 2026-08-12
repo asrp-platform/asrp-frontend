@@ -1,4 +1,4 @@
-import { isAxiosError } from "axios"
+import { isAxiosError, type AxiosError } from "axios"
 import { message } from "antd"
 
 const defaultStatusMessageMapping: Record<number, string> = {
@@ -7,12 +7,15 @@ const defaultStatusMessageMapping: Record<number, string> = {
     403: "Not enough permissions to perform this action",
 }
 
-export const handleStatusError = (error: unknown, statusMessages?: Record<number, string>) => {
-    if (!isAxiosError(error)) {
-        message.error("Unexpected error. Please try again later.")
-        return
-    }
+interface BackendErrorData {
+    detail?: string
+    message?: string
+}
 
+export const handleStatusError = (
+    error: AxiosError<BackendErrorData>,
+    statusMessages?: Record<number, string>,
+) => {
     if (error.response === undefined) {
         message.error("Network error. Check your internet connection and try again.")
         return
@@ -29,4 +32,13 @@ export const handleStatusError = (error: unknown, statusMessages?: Record<number
         "Something went wrong. Please try again later."
 
     message.error(errorMessage)
+}
+
+export const handleRequestError = (error: unknown, statusMessages?: Record<number, string>) => {
+    if (isAxiosError<BackendErrorData>(error)) {
+        handleStatusError(error, statusMessages)
+        return
+    }
+
+    message.error("Unexpected error. Please try again later.")
 }

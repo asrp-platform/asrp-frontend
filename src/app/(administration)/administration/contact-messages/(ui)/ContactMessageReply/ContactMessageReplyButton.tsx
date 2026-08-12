@@ -4,9 +4,8 @@ import { useState } from "react"
 import { Button, Modal, type FormProps, Input, message, Form } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import api from "../../../../../../axios.ts"
-import { getContactMessageReplyUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
-import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { getAdminContactMessageAnswerUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
+import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
 
 interface ReplyFormValues {
     subject: string
@@ -27,7 +26,7 @@ const ContactMessageReplyButton = ({ messageId, disabled }: IProps) => {
     const onFinish: FormProps<ReplyFormValues>["onFinish"] = async (values) => {
         try {
             setIsSubmitting(true)
-            await api.post(getContactMessageReplyUrl(messageId), {
+            await api.post(getAdminContactMessageAnswerUrl(messageId), {
                 subject: values.subject,
                 answer_message: values.answerMessage,
             })
@@ -35,9 +34,7 @@ const ContactMessageReplyButton = ({ messageId, disabled }: IProps) => {
             form.resetFields()
             setIsModalOpen(false)
         } catch (error) {
-            if (isAxiosError(error)) {
-                setFormFieldsErrors(error, form)
-            }
+            handleFormError(error, form)
         } finally {
             setIsSubmitting(false)
         }

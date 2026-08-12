@@ -8,8 +8,8 @@ import styles from "@/app/(main)/education/styles.module.scss"
 
 const Page = () => {
     return (
-        <div>
-            <PageSection className={styles.pageSection}>
+        <div className={styles.pageContainer}>
+            <PageSection>
                 <Alert
                     type="info"
                     showIcon
@@ -18,19 +18,19 @@ const Page = () => {
                 />
             </PageSection>
 
-            <PageSection className={styles.pageSection}>
+            <PageSection>
                 <HeroSection />
             </PageSection>
 
-            <PageSection id="catalog" className={styles.pageSection}>
+            <PageSection id="catalog">
                 <EducationCatalog />
             </PageSection>
 
-            <PageSection id="case-of-month" className={styles.pageSection}>
+            <PageSection id="case-of-month">
                 <CaseOfTheMonth />
             </PageSection>
 
-            <PageSection id="videos" className={styles.pageSection}>
+            <PageSection id="videos">
                 <EducationalVideos />
             </PageSection>
         </div>

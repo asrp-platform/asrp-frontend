@@ -4,7 +4,7 @@ import { isAxiosError } from "axios"
 import { useState } from "react"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import api from "@/axios.ts"
-import { CURRENT_USER_NAME_CHANGE_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
+import { CURRENT_USER_NAME_CHANGE_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 export interface ChangeNameFormValues {
     lastname: string
@@ -33,7 +33,9 @@ const ChangeNameModal = ({ open, setNameChangeModalOpen }: IProps) => {
             setNameChangeModalOpen(false)
         } catch (error) {
             if (isAxiosError(error)) {
-                setFormFieldsErrors(error, form)
+                if (setFormFieldsErrors(error, form)) {
+                    return
+                }
 
                 const status = error.response?.status
                 const detail = error.response?.data?.detail

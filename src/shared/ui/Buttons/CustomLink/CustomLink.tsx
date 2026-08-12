@@ -1,8 +1,11 @@
+"use client"
+
 import clsx from "clsx"
 import Link from "next/link"
 import type { ReactNode } from "react"
 
 import styles from "./CustomLink.module.scss"
+import { useReturnToLoginHref } from "@shared/hooks/useReturnToLoginHref.ts"
 
 export type CustomLinkVariant =
     | "primary"
@@ -21,8 +24,13 @@ interface IProps {
 }
 
 const CustomLink = ({ href, children, className, variant = "primary" }: IProps) => {
+    const resolvedHref = useReturnToLoginHref(href)
+
     return (
-        <Link href={href} className={clsx(styles.link, variant && styles[variant], className)}>
+        <Link
+            href={resolvedHref}
+            className={clsx(styles.link, variant && styles[variant], className)}
+        >
             {children}
         </Link>
     )

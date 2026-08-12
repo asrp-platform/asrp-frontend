@@ -9,7 +9,7 @@ import Link from "next/link"
 import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/ActionsCell/ActionsCell.tsx"
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import MembershipRequestStatusTag from "@shared/ui/Tags/MembershipRequestStatusTag/MembershipRequestStatusTag.tsx"
-import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum

@@ -1,12 +1,11 @@
 "use client"
 
-import { Form, Input, InputNumber, message, Spin, type FormProps } from "antd"
-import { isAxiosError } from "axios"
+import { Form, Input, InputNumber, Spin, type FormProps } from "antd"
 import { useState } from "react"
 
 import api from "@/axios.ts"
 import { DONATION_CHECKOUT_URL } from "@/shared/backend/restApiUrls/restApiUrls.ts"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
 import type { PaymentCheckoutResponse } from "@/shared/types/interfaces.ts"
 import styles from "./DonationCheckoutForm.module.scss"
 
@@ -26,14 +25,7 @@ const DonationCheckoutForm = () => {
             const response = await api.post<PaymentCheckoutResponse>(DONATION_CHECKOUT_URL, values)
             window.location.assign(response.data.checkout_session_url)
         } catch (error: unknown) {
-            if (isAxiosError(error)) {
-                setFormFieldsErrors(error, form)
-                if (error.response?.status !== 422) {
-                    message.error("Unable to start the payment. Please try again.")
-                }
-            } else {
-                message.error("Unable to start the payment. Please try again.")
-            }
+            handleFormError(error, form)
         } finally {
             setIsSubmitting(false)
         }

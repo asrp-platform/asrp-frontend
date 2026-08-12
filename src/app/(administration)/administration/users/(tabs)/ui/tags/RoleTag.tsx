@@ -4,7 +4,7 @@ import { type ReactNode, useState } from "react"
 import { message, Tag } from "antd"
 import { isAxiosError } from "axios"
 import api from "@/axios.ts"
-import { getAdminUsersUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { getAdminUserUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { PromoteToAdminModal } from "@app/(administration)/administration/users/(tabs)/ui/PromoteAdminRoleModal.tsx"
 
 interface IProps {
@@ -27,7 +27,7 @@ const RoleTag = ({ canAssignRole, targetUserId, role, onRoleChanged, children }:
     const handleConfirm = async () => {
         try {
             setConfirmLoading(true)
-            await api.patch(getAdminUsersUrl(targetUserId), { admin: nextIsAdmin })
+            await api.patch(getAdminUserUrl(targetUserId), { admin: nextIsAdmin })
             onRoleChanged?.(targetUserId, nextIsAdmin)
             setIsModalOpen(false)
             message.success(

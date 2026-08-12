@@ -5,7 +5,7 @@ import styles from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/
 import type { IDirectorsBoardMember } from "@/entities/DirectorsBoardMember.ts"
 import api from "@/axios.ts"
 
-import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { isAxiosError } from "axios"
 import { message } from "antd"
 

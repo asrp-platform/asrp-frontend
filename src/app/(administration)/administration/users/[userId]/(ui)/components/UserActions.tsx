@@ -6,9 +6,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import api from "@/axios.ts"
 import type { IUserPrivate } from "@entities/User.ts"
-import { getUserBanAdminUrl } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
-import { handleStatusError } from "@shared/helpers/handleStatusError.ts"
+import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import { getAdminUserBanUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
 interface IProps {
     user: IUserPrivate
@@ -28,7 +28,7 @@ const UserActions = ({ user }: IProps) => {
 
     const banMutation = useMutation({
         mutationFn: async () => {
-            await api.patch(getUserBanAdminUrl(user.id), {
+            await api.patch(getAdminUserBanUrl(user.id), {
                 ban_reason: banReason.trim(),
             })
         },
@@ -39,19 +39,19 @@ const UserActions = ({ user }: IProps) => {
             queryClient.invalidateQueries({ queryKey: ["users", String(user.id)] })
             queryClient.invalidateQueries({ queryKey: ["users", user.id] })
         },
-        onError: (error) => handleStatusError(error),
+        onError: (error) => handleRequestError(error),
     })
 
     const unbanMutation = useMutation({
         mutationFn: async () => {
-            await api.delete(getUserBanAdminUrl(user.id))
+            await api.delete(getAdminUserBanUrl(user.id))
         },
         onSuccess: () => {
             message.success("User unbanned")
             queryClient.invalidateQueries({ queryKey: ["users", String(user.id)] })
             queryClient.invalidateQueries({ queryKey: ["users", user.id] })
         },
-        onError: (error) => handleStatusError(error),
+        onError: (error) => handleRequestError(error),
     })
 
     const handleBanUser = () => {

@@ -13,8 +13,7 @@ import styles from "@/features/GetInvolvedForm/styles.module.scss"
 import { useState } from "react"
 import api from "@/axios.ts"
 import { CONTACT_MESSAGE_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
 import ContactPreferencesSection from "@/features/GetInvolvedForm/ui/ContactPreferencesSection.tsx"
 import LeadershipAndCommitteesSection from "@/features/GetInvolvedForm/ui/LeadershipAndCommitteesSection.tsx"
 import { ContactMessageType } from "@/entities/ContactMessage.ts"
@@ -114,9 +113,7 @@ const GetInvolvedForm = () => {
             await api.post(CONTACT_MESSAGE_URL, requestData)
             resetFormFields()
         } catch (error) {
-            if (isAxiosError(error)) {
-                setFormFieldsErrors(error, form)
-            }
+            handleFormError(error, form)
         } finally {
             setIsLoading(false)
         }

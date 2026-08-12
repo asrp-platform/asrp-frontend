@@ -1,5 +1,5 @@
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import { MEMBERS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { MEMBERS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { useState } from "react"
 import { type IUserMembership } from "@entities/Membership.ts"
 import { Table } from "antd"

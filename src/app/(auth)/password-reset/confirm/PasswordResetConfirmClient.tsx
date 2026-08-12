@@ -9,11 +9,13 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { VERIFY_PASSWORD_RESET_TOKEN_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import ChangePasswordFormReset from "@/features/ChangePasswordFormReset/ChangePasswordFormReset.tsx"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
+import { useReturnToLoginHref } from "@shared/hooks/useReturnToLoginHref.ts"
 
 const { Title, Paragraph } = Typography
 
 const PasswordResetConfirmClient = () => {
     const router = useRouter()
+    const loginHref = useReturnToLoginHref("/login")
     const searchParams = useSearchParams()
 
     const [isLoading, setIsLoading] = useState(true)
@@ -79,7 +81,7 @@ const PasswordResetConfirmClient = () => {
                 title="Password successfully changed"
                 subTitle="Please request a new link to reset your password."
                 extra={[
-                    <Button type="primary" key="reset" onClick={() => router.push("/login")}>
+                    <Button type="primary" key="reset" onClick={() => router.push(loginHref)}>
                         Login
                     </Button>,
                     <Button key="home" onClick={() => router.push("/")}>

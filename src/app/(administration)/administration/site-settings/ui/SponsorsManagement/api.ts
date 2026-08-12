@@ -1,9 +1,9 @@
 import api from "@/axios.ts"
 import {
-    getSponsorAdminUrl,
+    getAdminSponsorUrl,
     SPONSORS_ADMIN_URL,
     SPONSORS_LOGOS_ADMIN_URL,
-} from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+} from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { SPONSORS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 import type { CreateSponsorPayload, Sponsor } from "./types"
@@ -21,7 +21,7 @@ export const createSponsor = async (payload: CreateSponsorPayload) => {
 }
 
 export const deleteSponsor = async (sponsorId: number) => {
-    await api.delete(getSponsorAdminUrl(sponsorId))
+    await api.delete(getAdminSponsorUrl(sponsorId))
 }
 
 export const uploadSponsorLogo = async (file: File) => {
