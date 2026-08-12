@@ -2,15 +2,15 @@
 
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import type { IUserPrivate } from "@entities/User.ts"
-import { ADMIN_USERS_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { ADMIN_USERS_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { Card, Skeleton, Statistic, Typography } from "antd"
 import { BankOutlined, CheckCircleOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons"
 
 import styles from "./styles.module.scss"
 import type { IUserMembership } from "@entities/Membership.ts"
-import { MEMBERS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { MEMBERS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { type IPayment, PaymentStatusEnum } from "@/entities/Payments.ts"
-import { PAYMENTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { PAYMENTS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
 const { Text } = Typography
 

@@ -3,6 +3,7 @@ import MembershipTypesCards from "@/app/(main)/membership/(ui)/MembershipTypesCa
 import PageTitleCard from "@/shared/ui/PageTitleCard/PageTitleCard.tsx"
 import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
 import Link from "next/link"
+import ReturnToLoginLink from "@shared/ui/ReturnToLoginLink/ReturnToLoginLink.tsx"
 
 const MembershipPage = () => {
     return (
@@ -82,9 +83,9 @@ const MembershipPage = () => {
                         <Link href="/membership/become-member" className={styles.primaryLink}>
                             Become a Member
                         </Link>
-                        <Link href="/login" className={styles.memberLoginLink}>
+                        <ReturnToLoginLink className={styles.memberLoginLink}>
                             Member Login
-                        </Link>
+                        </ReturnToLoginLink>
                         <Link href="#" className={styles.renewMembershipLink}>
                             Renew Membership
                         </Link>

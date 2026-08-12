@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query"
 import api from "@/axios.ts"
-import { HEAR_ABOUT_STATISTICS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { HEAR_ABOUT_STATISTICS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import type { IHearAboutStatistics } from "@app/(administration)/administration/(components)/HearAboutStatistics/types.ts"
 import { Card, Empty, Statistic, Typography } from "antd"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"

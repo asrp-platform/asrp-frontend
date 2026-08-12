@@ -1,9 +1,8 @@
 import { Button, Checkbox, Col, Flex, Form, Input, Modal, Row, Tooltip } from "antd"
 import { useEffect, useState } from "react"
-import { isAxiosError } from "axios"
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors"
+import { handleFormError } from "@/shared/helpers/setFormFieldsErrors"
 import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
 
 export interface IExperienceFormValues {
@@ -65,9 +64,7 @@ const ExperienceForm = ({
             await onSubmit(values)
             setMode("view")
         } catch (error) {
-            if (isAxiosError(error)) {
-                setFormFieldsErrors(error, form)
-            }
+            handleFormError(error, form)
         } finally {
             setIsLoading(false)
         }

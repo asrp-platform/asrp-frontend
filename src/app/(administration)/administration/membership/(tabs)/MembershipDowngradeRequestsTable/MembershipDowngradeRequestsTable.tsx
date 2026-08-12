@@ -10,7 +10,7 @@ import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeT
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipDowngradeRequestsTable/ActionsCell/ActionsCell.tsx"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import { MEMBERSHIP_DOWNGRADE_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { MEMBERSHIP_DOWNGRADE_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
 interface MembershipTypeChangeRequestsFilters {
     pending?: boolean

@@ -4,9 +4,8 @@ import { useState } from "react"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useMembershipTypesQuery } from "@shared/backend/queries/membership/useMembershipTypesQuery.ts"
 import api from "@/axios.ts"
-import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
-import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
 import { useQueryClient } from "@tanstack/react-query"
 import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_QUERY_KEY } from "@shared/backend/queries/membership/useCurrentUserMembershipDowngradeRequestQuery.ts"
 
@@ -60,21 +59,9 @@ const DowngradeMembership = ({ disabled }: DowngradeMembershipProps) => {
             form.resetFields()
             setIsModalOpen(false)
         } catch (error: unknown) {
-            if (isAxiosError(error)) {
-                if (error.response?.status === 422) {
-                    setFormFieldsErrors(error, form)
-                    return
-                } else if (error.response?.status === 401) {
-                    message.error(
-                        "Your session has expired or you are not authorized. Please sign in and try again.",
-                    )
-                    return
-                } else if (error.status === 409) {
-                    message.error("You already have pending membership type change request!")
-                } else {
-                    message.error(error.message)
-                }
-            }
+            handleFormError(error, form, {
+                409: "You already have a pending membership type change request.",
+            })
         } finally {
             setIsSubmitting(false)
         }

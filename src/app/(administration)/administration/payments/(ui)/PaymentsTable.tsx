@@ -17,7 +17,7 @@ import {
     PaymentStatusEnum,
 } from "@/entities/Payments.ts"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import { PAYMENTS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { PAYMENTS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { getSortOrder } from "@shared/helpers/getSortOrder.ts"
 import styles from "@app/(administration)/administration/users/styles.module.scss"
 import { getSelectTableFilterDropdown } from "@/widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"

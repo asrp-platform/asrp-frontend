@@ -1,15 +1,14 @@
 "use client"
 
-import { Button, Checkbox, Form, type FormProps, Input, message, Radio, Select } from "antd"
+import { Button, Checkbox, Form, type FormProps, Input, Radio, Select } from "antd"
 import { useForm } from "antd/es/form/Form"
 import styles from "@/features/MembershipApplicationForm/styles.module.scss"
 import type { FieldType, MembershipKey } from "@/features/MembershipApplicationForm/types"
 import { useMemo, useState } from "react"
 import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCard/MembershipCard.tsx"
 import api from "@/axios.ts"
-import { isAxiosError } from "axios"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
-import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
+import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import Warning from "@/shared/ui/Warning/Warning.tsx"
 import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
@@ -115,19 +114,7 @@ const MembershipApplicationForm = () => {
             )
             window.location.href = response.data.checkout_session_url
         } catch (error: unknown) {
-            if (isAxiosError(error)) {
-                if (error.response?.status === 401) {
-                    message.error(
-                        "Your session has expired or you are not authorized. Please sign in and try again.",
-                    )
-                    return
-                } else if (error.response?.status === 422) {
-                    setFormFieldsErrors(error, form)
-                    return
-                } else {
-                    message.error(error.message)
-                }
-            }
+            handleFormError(error, form)
         } finally {
             setIsFormSubmitting(false)
         }

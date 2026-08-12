@@ -9,3 +9,38 @@ export interface News {
     is_published: boolean
     is_deleted: boolean
 }
+
+/* eslint-disable */
+// @ts-ignore
+export enum WebinarStatus {
+    UPCOMING = "UPCOMING",
+    PAST = "PAST",
+    ALL = "ALL",
+}
+
+export interface IWebinar {
+    id: number
+    created_at: string
+    updated_at: string
+    title: string
+    description: string
+    learning_objectives: string[]
+    slug: string
+
+    speaker_name: string
+    speaker_description: string | null
+
+    join_link?: string | null
+    bunny_video_id?: string | null
+
+    starts_at: string
+    ends_at: string
+    location: string | null
+
+    member_only: boolean
+    is_registered: boolean
+}
+
+export interface IWebinarPlayback {
+    embed_url: string | null
+}

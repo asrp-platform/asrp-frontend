@@ -1,0 +1,151 @@
+.trigger {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 5px;
+    margin-top: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-primary-color-red);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    svg {
+        transition: transform 0.2s ease;
+    }
+
+    &:hover svg {
+        transform: translateX(3px);
+    }
+
+    &:focus-visible {
+        border-radius: 4px;
+        outline: 2px solid var(--text-primary-color-red);
+        outline-offset: 4px;
+    }
+}
+
+.modal {
+    :global(.ant-modal-content) {
+        overflow: hidden;
+        padding: 0;
+        border-radius: 26px;
+    }
+
+    :global(.ant-modal-header) {
+        margin: 0;
+        padding: 30px 32px;
+        border-bottom: var(--light-border);
+    }
+
+    :global(.ant-modal-title) {
+        padding-right: 48px;
+        color: var(--text-heading-color-dark);
+        font-size: clamp(22px, 3vw, 28px);
+        line-height: 1.25;
+    }
+
+    :global(.ant-modal-close) {
+        top: 24px;
+        right: 24px;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--surface-muted-color);
+    }
+
+    :global(.ant-modal-body) {
+        padding: 32px;
+    }
+}
+
+.content {
+    color: var(--text-secondary-color-dark);
+}
+
+.metaRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+    }
+
+    svg {
+        color: var(--text-primary-color-red);
+    }
+}
+
+.speaker {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 28px;
+
+    strong {
+        color: var(--text-heading-color-dark);
+        font-size: 17px;
+    }
+
+    span {
+        color: var(--text-muted-color-dark);
+        font-size: 15px;
+    }
+}
+
+.description {
+    margin-top: 30px;
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+.objectives {
+    margin-top: 28px;
+
+    h3 {
+        color: var(--text-heading-color-dark);
+        font-size: 17px;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 14px;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    li {
+        position: relative;
+        padding-left: 21px;
+        line-height: 1.55;
+
+        &::before {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            top: 0.55em;
+            left: 0;
+            border-radius: 50%;
+            background: var(--text-primary-color-red);
+            content: "";
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .modal {
+        :global(.ant-modal-header),
+        :global(.ant-modal-body) {
+            padding: 22px;
+        }
+    }
+}

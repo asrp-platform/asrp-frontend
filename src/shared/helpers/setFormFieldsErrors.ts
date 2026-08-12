@@ -1,6 +1,7 @@
 import type { IValidationError } from "@/shared/types/interfaces.ts"
-import type { AxiosError } from "axios"
+import { isAxiosError, type AxiosError } from "axios"
 import type { FormInstance } from "antd"
+import { handleRequestError, handleStatusError } from "@/shared/helpers/handleStatusError.ts"
 
 function hasValidationErrors(data: unknown): data is { detail: { errors: IValidationError[] } } {
     return (
@@ -14,44 +15,57 @@ function hasValidationErrors(data: unknown): data is { detail: { errors: IValida
     )
 }
 
-export const setFormFieldsErrors = (error: AxiosError, form: FormInstance) => {
-    if (!error.response) {
+export const setFormFieldsErrors = (error: AxiosError, form: FormInstance): boolean => {
+    if (error.response?.status !== 422 || !hasValidationErrors(error.response.data)) {
+        return false
+    }
+
+    const backendErrors: IValidationError[] = error.response.data.detail.errors
+    const registeredFields = form.getFieldsError().map(({ name }) => ({
+        name,
+        path: name.map(String).join("."),
+    }))
+
+    const formErrors = backendErrors.map((error) => {
+        const exactField = registeredFields.find(({ path }) => path === error.field)
+        const flatFieldName = error.field.split(".").at(-1) ?? error.field
+        const flatField = registeredFields.find(
+            ({ name }) => name.length === 1 && String(name[0]) === flatFieldName,
+        )
+
+        return {
+            name: exactField?.name ?? flatField?.name ?? error.field,
+            errors: [error.message],
+        }
+    })
+
+    form.setFields(formErrors)
+
+    const firstError = formErrors[0]
+    if (firstError) {
+        requestAnimationFrame(() => {
+            form.scrollToField(firstError.name, {
+                behavior: "smooth",
+                block: "center",
+                focus: true,
+            })
+        })
+    }
+
+    return true
+}
+
+export const handleFormError = (
+    error: unknown,
+    form: FormInstance,
+    statusMessages?: Record<number, string>,
+) => {
+    if (!isAxiosError(error)) {
+        handleRequestError(error)
         return
     }
 
-    if (error.response.status === 422) {
-        if (hasValidationErrors(error.response.data)) {
-            const backendErrors: IValidationError[] = error.response.data.detail.errors
-            const registeredFields = form.getFieldsError().map(({ name }) => ({
-                name,
-                path: name.map(String).join("."),
-            }))
-
-            const formErrors = backendErrors.map((error) => {
-                const exactField = registeredFields.find(({ path }) => path === error.field)
-                const flatFieldName = error.field.split(".").at(-1) ?? error.field
-                const flatField = registeredFields.find(
-                    ({ name }) => name.length === 1 && String(name[0]) === flatFieldName,
-                )
-
-                return {
-                    name: exactField?.name ?? flatField?.name ?? error.field,
-                    errors: [error.message],
-                }
-            })
-
-            form.setFields(formErrors)
-
-            const firstError = formErrors[0]
-            if (firstError) {
-                requestAnimationFrame(() => {
-                    form.scrollToField(firstError.name, {
-                        behavior: "smooth",
-                        block: "center",
-                        focus: true,
-                    })
-                })
-            }
-        }
+    if (!setFormFieldsErrors(error, form)) {
+        handleStatusError(error, statusMessages)
     }
 }

@@ -1,0 +1,95 @@
+.memberAccessCard {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 26px;
+    padding: 20px;
+    border: var(--light-border);
+    border-radius: 22px;
+    background: #f8fafc;
+}
+
+.lockIcon {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    flex: none;
+    place-items: center;
+    border: var(--light-border);
+    border-radius: 13px;
+    background: #fff;
+    color: #b45309;
+}
+
+.memberAccessText {
+    max-width: 360px;
+}
+
+.memberAccessText strong {
+    display: block;
+    color: var(--text-heading-color-dark);
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.memberAccessText p {
+    margin-top: 4px;
+    color: var(--text-secondary-color-dark);
+    line-height: 1.45;
+    font-size: 14px;
+}
+
+.memberAccessActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.signInButton,
+.joinButton {
+    white-space: nowrap;
+}
+
+.memberAccessCompact {
+    width: 100%;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding: 16px;
+    border-radius: 16px;
+}
+
+.memberAccessCompact .lockIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+}
+
+.memberAccessCompact .memberAccessText {
+    max-width: calc(100% - 56px);
+}
+
+.memberAccessCompact .memberAccessText strong {
+    font-size: 14px;
+}
+
+.memberAccessCompact .memberAccessText p {
+    font-size: 13px;
+}
+
+.memberAccessCompact .memberAccessActions {
+    width: 100%;
+    margin-left: 56px;
+}
+
+.registrationAction {
+    display: flex;
+    margin-top: 26px;
+}
+
+.registrationCompact {
+    display: flex;
+    width: 100%;
+    margin-top: auto;
+}

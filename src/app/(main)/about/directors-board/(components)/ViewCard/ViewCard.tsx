@@ -14,7 +14,7 @@ import type { IDirectorsBoardMember } from "@/entities/DirectorsBoardMember.ts"
 import styles from "@/app/(main)/about/directors-board/(components)/ViewCard/styles.module.scss"
 import { getPreviewContent } from "@/app/(main)/about/directors-board/(components)/ViewCard/helpers/getPreviewContent.ts"
 import api from "@/axios.ts"
-import { DIRECTORS_BOARD_MEMBER_REORDER_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { DIRECTORS_BOARD_MEMBER_REORDER_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
 interface IProps {
     member: IDirectorsBoardMember

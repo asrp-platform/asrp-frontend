@@ -59,6 +59,18 @@ export const headerMenuItems: HeaderMenuItem[] = [
         to: "/education",
         label: "Education",
         icon: <GraduationCap size={18} />,
+        children: [
+            {
+                key: "2-1",
+                to: "/education",
+                label: "Education",
+            },
+            {
+                key: "2-2",
+                to: "/education/webinars",
+                label: "Webinars",
+            },
+        ],
     },
     {
         key: 5,

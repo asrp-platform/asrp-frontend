@@ -6,6 +6,20 @@
     cursor: pointer;
     align-self: flex-start;
 
+    &:hover {
+        transform: translateY(-1px);
+    }
+
+    &.green {
+        background: transparent;
+        border: #70ea70 1px solid;
+        color: green;
+    }
+
+    &.green:hover {
+        background: #ccffcc;
+    }
+
     &.primary-filled {
         background: var(--button-primary-red);
         color: white;
@@ -24,7 +38,6 @@
     }
 
     &.primary:hover {
-        transform: translateY(-1px);
         background: var(--surface-danger-hover-color);
     }
 

@@ -3,7 +3,7 @@ import { Alert, Button, Input, Modal, message } from "antd"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import api from "@/axios.ts"
-import { getMembershipDowngradeRequestByIdUrl } from "@shared/backend/restApiUrls/admin/membershipsAdminUrls.ts"
+import { getAdminMembershipDowngradeRequestUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
 import styles from "./ActionsCell.module.scss"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
@@ -19,7 +19,7 @@ const reviewMembershipTypeChangeRequest = async ({
     action,
     adminComment,
 }: ReviewMembershipTypeChangeRequestPayload) => {
-    const response = await api.patch(getMembershipDowngradeRequestByIdUrl(requestId), {
+    const response = await api.patch(getAdminMembershipDowngradeRequestUrl(requestId), {
         action,
         admin_comment: adminComment,
     })

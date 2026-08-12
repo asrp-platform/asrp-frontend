@@ -11,6 +11,7 @@ import useNotification from "antd/es/notification/useNotification"
 import styles from "@/app/(auth)/password-reset/PasswordResetPage.module.scss"
 import api from "@/axios.ts"
 import { PASSWORD_RESET_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import { useReturnToLoginHref } from "@shared/hooks/useReturnToLoginHref.ts"
 
 const { Title, Paragraph } = Typography
 
@@ -20,6 +21,7 @@ type FieldType = {
 
 const Page = () => {
     const router = useRouter()
+    const loginHref = useReturnToLoginHref("/login")
 
     const [loading, setIsLoading] = useState(false)
     const [success, setSuccess] = useState<boolean>(false)
@@ -96,7 +98,7 @@ const Page = () => {
                         <Button
                             className={styles.backButton}
                             htmlType="submit"
-                            onClick={() => router.push("/login")}
+                            onClick={() => router.push(loginHref)}
                         >
                             <CaretLeftOutlined />
                             Back to sign in

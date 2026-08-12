@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { UserCircle } from "lucide-react"
 
 import { Dropdown, type MenuProps } from "antd"
@@ -17,6 +17,7 @@ import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery
 const AuthStatus = () => {
     const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
     const router = useRouter()
+    const pathname = usePathname()
 
     const isAdmin = useMemo(() => {
         return currentUser?.admin
@@ -55,7 +56,7 @@ const AuthStatus = () => {
                     width={32}
                     height={32}
                     className={styles.userCircle}
-                    onClick={() => onUserLoginClick(router)}
+                    onClick={() => onUserLoginClick(router, pathname)}
                 />
             </div>
         )

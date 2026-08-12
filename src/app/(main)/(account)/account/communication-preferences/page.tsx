@@ -5,7 +5,7 @@ import type { ICommunicationPreferences } from "@/entities/User.ts"
 import { useEffect, useState } from "react"
 import CommunicationSwitchCard from "@/app/(main)/(account)/account/communication-preferences/ui/CommunicationSwitchCard.tsx"
 import Card from "@/widgets/Card/Card.tsx"
-import { getUserUrl } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import { getUserCommunicationPreferencesUrl } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import api from "@/axios.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import { message } from "antd"
@@ -33,7 +33,7 @@ const Page = () => {
             return
         }
         try {
-            await api.patch(`${getUserUrl(currentUser.id)}/communication-preferences`, {
+            await api.patch(getUserCommunicationPreferencesUrl(currentUser.id), {
                 [preferenceKey]: checked,
             })
         } catch (error) {
@@ -51,7 +51,7 @@ const Page = () => {
             try {
                 setIsCommunicationPreferencesLoading(true)
                 const response = await api.get<ChangablePreferences>(
-                    `${getUserUrl(currentUser.id)}/communication-preferences`,
+                    getUserCommunicationPreferencesUrl(currentUser.id),
                 )
                 setCommunicationPreferences(response.data)
             } catch (error) {

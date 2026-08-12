@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { Card, Button, Upload, Typography, Space, message } from "antd"
 import { UploadOutlined, EyeOutlined } from "@ant-design/icons"
-import { BYLAWS_ADMIN_URL } from "@shared/backend/restApiUrls/admin/adminApiUrls.ts"
+import { BYLAWS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios.ts"
 import { isAxiosError } from "axios"
 import { BYLAWS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"

@@ -30,7 +30,7 @@ const SideMenuItemList = ({ setIsOpen, onClick }: IProps) => {
                                 }
                             }}
                         >
-                            <span className={styles.menuIcon}>{item.icon}</span>
+                            <div className={styles.menuIcon}>{item.icon}</div>
 
                             {item.children ? (
                                 <>

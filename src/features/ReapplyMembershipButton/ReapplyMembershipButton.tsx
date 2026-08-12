@@ -8,10 +8,9 @@ import {
     CURRENT_USER_MEMBERSHIP_REQUEST_QUERY_KEY,
     useCurrentUserMembershipRequestQuery,
 } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
-import { isAxiosError } from "axios"
 import api from "@/axios.ts"
-import { CURRENT_USER_MEMBERSHIP_REQUEST_REAPPLIES_URL } from "@shared/backend/restApiUrls/currentUserUrls.ts"
-import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { CURRENT_USER_MEMBERSHIP_REQUEST_REAPPLIES_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
 import { useQueryClient } from "@tanstack/react-query"
 import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
 
@@ -55,21 +54,7 @@ const ReapplyMembershipButton = () => {
 
             setIsModalOpen(false)
         } catch (error: unknown) {
-            if (isAxiosError(error)) {
-                if (error.response?.status === 422) {
-                    setFormFieldsErrors(error, form)
-                    return
-                }
-
-                if (error.response?.status === 401) {
-                    message.error(
-                        "Your session has expired or you are not authorized. Please sign in and try again.",
-                    )
-                    return
-                }
-
-                message.error(error.message)
-            }
+            handleFormError(error, form)
         } finally {
             setIsSubmitting(false)
         }
