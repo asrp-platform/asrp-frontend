@@ -53,6 +53,7 @@ api.interceptors.response.use(
 
                 return api.request(originalRequest)
             } catch (refreshError) {
+                localStorage.removeItem("accessToken")
                 console.log(`User is not authenticated ${refreshError}`)
             }
         }
