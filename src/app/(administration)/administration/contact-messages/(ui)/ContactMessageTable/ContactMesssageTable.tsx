@@ -13,6 +13,7 @@ import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFil
 import ContactMessageReplyButton from "../ContactMessageReply/ContactMessageReplyButton"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 
 interface ITableFilters {
     name__startswith?: string
@@ -184,7 +185,12 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
             title: "Answered",
             render: (_: unknown, record: IContactMessage) => renderBooleanTag(record.answered),
         },
-        { title: "Created", dataIndex: "created_at" },
+        {
+            title: "Created",
+            key: "created_at",
+            dataIndex: "created_at",
+            render: (value: string) => formatDatetime(value),
+        },
         {
             title: "Actions",
             key: "actions",
