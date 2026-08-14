@@ -15,7 +15,7 @@ import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
 import { referralSourceOptions } from "@shared/options.ts"
-import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
+import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
 import MembershipApplicationAvailabilityAlert from "@/features/MembershipApplicationForm/ui/MembershipApplicationAvailabilityAlert.tsx"

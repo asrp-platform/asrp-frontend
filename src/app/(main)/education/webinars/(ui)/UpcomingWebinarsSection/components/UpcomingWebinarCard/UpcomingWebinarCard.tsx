@@ -1,9 +1,9 @@
-import { Clock3, MapPin } from "lucide-react"
+import { Clock3, Globe2, MapPin } from "lucide-react"
 
 import type { IWebinar } from "@entities/News.ts"
 import MemberAccess from "@app/(main)/education/webinars/(ui)/MemberAccess/MemberAccess.tsx"
 import type { WebinarAccessStatus } from "@app/(main)/education/webinars/(ui)/MemberAccess/webinarAccess.ts"
-import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
+import { formatDatetime, formatTimezone } from "@shared/helpers/formatDatetime.ts"
 
 import styles from "./UpcomingWebinarCard.module.scss"
 import DeleteWebinarButton from "../DeleteWebinarButton/DeleteWebinarButton"
@@ -25,7 +25,9 @@ const UpcomingWebinarCard = ({ webinar, accessStatus, canDelete }: IProps) => (
             </div>
         )}
         <div className={styles.topline}>
-            <time>{formatDatetime(webinar.starts_at, ["year", "hour", "minute"])}</time>
+            <time>
+                {formatDatetime(webinar.starts_at, ["year", "hour", "minute"], webinar.timezone)}
+            </time>
             <span>Upcoming</span>
         </div>
         <div className={styles.info}>
@@ -34,10 +36,17 @@ const UpcomingWebinarCard = ({ webinar, accessStatus, canDelete }: IProps) => (
         </div>
         <div className={styles.time}>
             <span>
-                <Clock3 size={15} /> {formatDatetime(webinar.starts_at)}
+                <Clock3 size={15} />
+                {formatDatetime(webinar.starts_at, [], webinar.timezone)}
             </span>
+            {webinar.location && (
+                <span>
+                    <MapPin size={15} /> {webinar.location}
+                </span>
+            )}
             <span>
-                <MapPin size={15} /> Live on Zoom
+                <Globe2 size={15} />
+                {formatTimezone(webinar.starts_at, webinar.timezone)}
             </span>
         </div>
         <WebinarDetailsModal webinar={webinar} accessStatus={accessStatus} />

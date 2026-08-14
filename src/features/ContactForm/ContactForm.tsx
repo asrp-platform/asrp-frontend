@@ -12,7 +12,7 @@ import { isAxiosError } from "axios"
 
 import api from "@/axios.ts"
 import { CONTACT_MESSAGE_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import type { IBackendErrorResponse } from "@/shared/types/interfaces.ts"
+import type { IBackendErrorResponse } from "@shared/interfaces.ts"
 import { ContactMessageType } from "@/entities/ContactMessage.ts"
 
 interface ContactFormFields {

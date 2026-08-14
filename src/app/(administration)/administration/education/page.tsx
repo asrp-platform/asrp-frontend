@@ -13,7 +13,7 @@ const Page = () => {
     ]
 
     return (
-        <Tabs defaultActiveKey="contact" type="card" style={{ marginBottom: 32 }} items={items} />
+        <Tabs defaultActiveKey="webinars" type="card" style={{ marginBottom: 32 }} items={items} />
     )
 }
 

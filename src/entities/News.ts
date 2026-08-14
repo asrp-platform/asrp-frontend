@@ -38,6 +38,10 @@ export interface IWebinar {
     location: string | null
 
     member_only: boolean
+    archived: boolean
+    timezone: string
+    language: string | null
+
     is_registered: boolean
 }
 

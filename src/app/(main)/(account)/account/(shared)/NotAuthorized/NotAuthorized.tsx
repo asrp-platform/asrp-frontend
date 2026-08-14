@@ -1,4 +1,4 @@
-import styles from "@/shared/ui/NotAuthorized/NotAuthorized.module.scss"
+import styles from "@app/(main)/(account)/account/(shared)/NotAuthorized/NotAuthorized.module.scss"
 import { ShieldAlert } from "lucide-react"
 import PrimaryLinkOutlined from "@shared/ui/Buttons/PrimaryLinkOutlined/PrimaryLinkOutlined.tsx"
 import SecondaryLinkOutlined from "@shared/ui/Buttons/SecondaryLinkOutilned/SecondaryLinkOutlined.tsx"

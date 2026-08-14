@@ -1,7 +1,7 @@
 import api from "@/axios.ts"
 import { useQuery } from "@tanstack/react-query"
 import type { QueryKey } from "@tanstack/react-query"
-import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
+import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 
 type TableFilterValue = string | number | boolean | null | undefined
 type TableFilters<Filters> = {

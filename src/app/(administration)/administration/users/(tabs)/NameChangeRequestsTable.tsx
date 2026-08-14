@@ -11,7 +11,7 @@ import {
     getAdminUserNameChangeRequestUrl,
     NAME_CHANGE_REQUESTS_URL,
 } from "@shared/backend/restApiUrls/adminApiUrls.ts"
-import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 import type { INameChangeRequest, NameChangeRequestStatus } from "@/entities/NameChangeRequest.ts"
 
 import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"

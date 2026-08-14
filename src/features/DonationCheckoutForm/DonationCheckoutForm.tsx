@@ -6,7 +6,7 @@ import { useState } from "react"
 import api from "@/axios.ts"
 import { DONATION_CHECKOUT_URL } from "@/shared/backend/restApiUrls/restApiUrls.ts"
 import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
-import type { PaymentCheckoutResponse } from "@/shared/types/interfaces.ts"
+import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 import styles from "./DonationCheckoutForm.module.scss"
 
 interface DonationCheckoutFields {

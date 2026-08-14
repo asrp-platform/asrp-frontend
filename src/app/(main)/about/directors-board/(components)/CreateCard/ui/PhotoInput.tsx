@@ -1,7 +1,7 @@
 import { type ChangeEvent } from "react"
 import styles from "@/app/(main)/about/directors-board/(components)/CreateCard/ui/UI.module.scss"
 import api from "@/axios.ts"
-import type { ImagePathResponse } from "@/shared/types/interfaces.ts"
+import type { ImagePathResponse } from "@shared/interfaces.ts"
 import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
 import { Image } from "lucide-react"

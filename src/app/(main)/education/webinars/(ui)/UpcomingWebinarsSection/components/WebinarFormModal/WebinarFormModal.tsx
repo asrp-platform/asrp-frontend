@@ -2,10 +2,24 @@
 
 import { type ReactNode, useState } from "react"
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons"
-import { Button, Col, DatePicker, Flex, Form, Input, message, Modal, Row, Switch } from "antd"
+import {
+    Button,
+    Col,
+    DatePicker,
+    Flex,
+    Form,
+    Input,
+    message,
+    Modal,
+    Row,
+    Select,
+    Switch,
+} from "antd"
 import { useForm } from "antd/es/form/Form"
 import type { Dayjs } from "dayjs"
 import dayjs from "dayjs"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
 import styles from "./styles.module.scss"
 import {
     getWebinarDetailAdminUrl,
@@ -13,9 +27,32 @@ import {
 } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios"
 import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
+import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import type { IWebinar } from "@entities/News.ts"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import { useQueryClient } from "@tanstack/react-query"
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
+const TIMEZONE_OPTIONS = [
+    { label: "Eastern Time (New York)", value: "America/New_York" },
+    { label: "Central Time (Chicago)", value: "America/Chicago" },
+    { label: "Mountain Time (Denver)", value: "America/Denver" },
+    { label: "Mountain Time — no DST (Phoenix)", value: "America/Phoenix" },
+    { label: "Pacific Time (Los Angeles)", value: "America/Los_Angeles" },
+    { label: "Alaska Time (Anchorage)", value: "America/Anchorage" },
+    { label: "Hawaii Time (Honolulu)", value: "Pacific/Honolulu" },
+    { label: "Moscow Time", value: "Europe/Moscow" },
+    { label: "United Kingdom (London)", value: "Europe/London" },
+    { label: "Central Europe (Berlin)", value: "Europe/Berlin" },
+    { label: "Gulf Time (Dubai)", value: "Asia/Dubai" },
+    { label: "India Time (Kolkata)", value: "Asia/Kolkata" },
+    { label: "Singapore Time", value: "Asia/Singapore" },
+    { label: "Japan Time (Tokyo)", value: "Asia/Tokyo" },
+    { label: "Australian Eastern Time (Sydney)", value: "Australia/Sydney" },
+    { label: "UTC", value: "UTC" },
+]
 
 export type WebinarFormValues = {
     title: string
@@ -26,6 +63,8 @@ export type WebinarFormValues = {
     join_link?: string
     bunny_video_id?: string
     starts_at: Dayjs
+    timezone: string
+    language?: string
     location?: string
     member_only: boolean
 }
@@ -41,6 +80,17 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
     const queryClient = useQueryClient()
 
     const [form] = useForm<WebinarFormValues>()
+    const selectedStartsAt = Form.useWatch("starts_at", form) as Dayjs | undefined
+    const selectedTimezone = Form.useWatch("timezone", form) as string | undefined
+
+    const startsAtPreview =
+        selectedStartsAt && selectedTimezone
+            ? formatDatetime(
+                  selectedStartsAt.tz(selectedTimezone, true).toISOString(),
+                  [],
+                  selectedTimezone,
+              )
+            : null
 
     const isEditing = Boolean(webinar)
     const initialValues: Partial<WebinarFormValues> = webinar
@@ -50,12 +100,26 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
               join_link: webinar.join_link ?? undefined,
               bunny_video_id: webinar.bunny_video_id ?? undefined,
               location: webinar.location ?? undefined,
-              starts_at: dayjs(webinar.starts_at),
+              language: webinar.language ?? undefined,
+              timezone: webinar.timezone,
+              starts_at: dayjs.utc(webinar.starts_at).tz(webinar.timezone),
           }
-        : { member_only: true }
+        : { member_only: true, timezone: "UTC" }
 
     const openModal = () => {
-        form.setFieldsValue(initialValues)
+        const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+        const defaultTimezone = TIMEZONE_OPTIONS.some(({ value }) => value === browserTimezone)
+            ? browserTimezone
+            : "UTC"
+
+        form.setFieldsValue(
+            webinar
+                ? initialValues
+                : {
+                      ...initialValues,
+                      timezone: defaultTimezone,
+                  },
+        )
         setOpen(true)
     }
 
@@ -64,10 +128,11 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
             setIsLoading(true)
             const payload = {
                 ...values,
-                starts_at: values.starts_at.toISOString(),
+                starts_at: values.starts_at.tz(values.timezone, true).toISOString(),
                 speaker_description: values.speaker_description || null,
                 join_link: values.join_link || null,
                 bunny_video_id: values.bunny_video_id || null,
+                language: values.language?.trim() || null,
                 location: values.location || null,
             }
             if (webinar) {
@@ -228,8 +293,32 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                         <Row gutter={16}>
                             <Col xs={24} md={12}>
                                 <Form.Item
+                                    label="Timezone"
+                                    name="timezone"
+                                    extra="Select the timezone before entering the webinar time."
+                                    rules={[{ required: true, message: "Select a timezone" }]}
+                                >
+                                    <Select
+                                        showSearch
+                                        optionFilterProp="label"
+                                        options={TIMEZONE_OPTIONS}
+                                        placeholder="Select a timezone"
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} md={12}>
+                                <Form.Item label="Language" name="language">
+                                    <Input placeholder="e.g. English" maxLength={100} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
+                        <Row gutter={16}>
+                            <Col xs={24} md={12}>
+                                <Form.Item
                                     label="Start date and time"
                                     name="starts_at"
+                                    extra="This time is interpreted in the selected timezone."
                                     rules={[
                                         { required: true, message: "Select start date and time" },
                                     ]}
@@ -239,6 +328,7 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                                         format="MMMM D, YYYY h:mm A"
                                         placeholder="Select date and time"
                                         className={styles.fullWidth}
+                                        disabled={!selectedTimezone}
                                     />
                                 </Form.Item>
                             </Col>
@@ -251,6 +341,13 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                                 </Form.Item>
                             </Col>
                         </Row>
+
+                        {startsAtPreview && (
+                            <div className={styles.timePreview}>
+                                <span>Scheduled webinar time</span>
+                                <strong>{startsAtPreview}</strong>
+                            </div>
+                        )}
 
                         <Form.Item
                             label="Join link"
