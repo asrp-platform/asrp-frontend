@@ -9,7 +9,7 @@ import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCa
 import api from "@/axios.ts"
 import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
 import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import Warning from "@/shared/ui/Warning/Warning.tsx"
+import Warning from "@/features/MembershipApplicationForm/(components)/Warning/Warning.tsx"
 import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
