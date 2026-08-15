@@ -5,7 +5,7 @@ import { Button, Modal, type FormProps, Input, message, Form } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import api from "../../../../../../axios.ts"
 import { getAdminContactMessageAnswerUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
-import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 
 interface ReplyFormValues {
     subject: string
@@ -34,7 +34,7 @@ const ContactMessageReplyButton = ({ messageId, disabled }: IProps) => {
             form.resetFields()
             setIsModalOpen(false)
         } catch (error) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setIsSubmitting(false)
         }

@@ -5,7 +5,7 @@ import { useState } from "react"
 
 import api from "@/axios.ts"
 import { DONATION_CHECKOUT_URL } from "@/shared/backend/restApiUrls/restApiUrls.ts"
-import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
 import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 import styles from "./DonationCheckoutForm.module.scss"
 
@@ -25,7 +25,7 @@ const DonationCheckoutForm = () => {
             const response = await api.post<PaymentCheckoutResponse>(DONATION_CHECKOUT_URL, values)
             window.location.assign(response.data.checkout_session_url)
         } catch (error: unknown) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setIsSubmitting(false)
         }

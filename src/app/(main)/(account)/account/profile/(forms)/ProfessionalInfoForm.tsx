@@ -6,10 +6,9 @@ import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.sc
 import { useEffect, useState } from "react"
 import { isAxiosError } from "axios"
 import { getUserProfessionalInformationUrl } from "@shared/backend/restApiUrls/restApiUrls"
-import { handleFormError } from "@/shared/helpers/setFormFieldsErrors"
 import type { IUserPrivate, IUserProfessionalInformation } from "@/entities/User"
 import api from "@/axios"
-import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
+import { clearFormErrors, handleApiError } from "@shared/helpers/formsHelpers.ts"
 
 type FieldType = {
     medical_school: string
@@ -37,7 +36,7 @@ const ProfessionalInfoForm = ({ user }: IProps) => {
             await api.put(getUserProfessionalInformationUrl(user.id), values)
             message.success("Successfully updated professional information")
         } catch (error: unknown) {
-            handleFormError(error, professionalInfoForm)
+            handleApiError({ error, form: professionalInfoForm })
         } finally {
             setIsLoading(false)
         }

@@ -26,7 +26,7 @@ import {
     WEBINARS_ADMIN_URL,
 } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios"
-import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import type { IWebinar } from "@entities/News.ts"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
@@ -147,7 +147,7 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                 isEditing ? "Webinar updated successfully." : "Webinar created successfully.",
             )
         } catch (error) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setIsLoading(false)
         }

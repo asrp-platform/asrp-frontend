@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import api from "@/axios.ts"
 import type { IWebinar } from "@entities/News.ts"
 import { getWebinarDetailAdminUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
-import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 import styles from "./AttachRecordingLinkButton.module.scss"
@@ -49,7 +49,7 @@ const AttachRecordingButton = ({ webinar }: IProps) => {
             )
         },
         onError: (error: unknown) => {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         },
     })
 

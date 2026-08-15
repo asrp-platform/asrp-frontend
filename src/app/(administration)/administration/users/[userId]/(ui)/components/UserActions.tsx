@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import api from "@/axios.ts"
 import type { IUserPrivate } from "@entities/User.ts"
-import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { getAdminUserBanUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
@@ -39,7 +39,7 @@ const UserActions = ({ user }: IProps) => {
             queryClient.invalidateQueries({ queryKey: ["users", String(user.id)] })
             queryClient.invalidateQueries({ queryKey: ["users", user.id] })
         },
-        onError: (error) => handleRequestError(error),
+        onError: (error) => handleApiError({ error }),
     })
 
     const unbanMutation = useMutation({
@@ -51,7 +51,7 @@ const UserActions = ({ user }: IProps) => {
             queryClient.invalidateQueries({ queryKey: ["users", String(user.id)] })
             queryClient.invalidateQueries({ queryKey: ["users", user.id] })
         },
-        onError: (error) => handleRequestError(error),
+        onError: (error) => handleApiError({ error }),
     })
 
     const handleBanUser = () => {

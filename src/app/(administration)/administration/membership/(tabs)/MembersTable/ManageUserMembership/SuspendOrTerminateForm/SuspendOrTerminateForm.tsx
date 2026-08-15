@@ -12,12 +12,11 @@ import {
     Space,
     Typography,
 } from "antd"
-import { isAxiosError } from "axios"
 import type { Dayjs } from "dayjs"
 import type { IUserMembership } from "@entities/Membership.ts"
 import api from "@/axios.ts"
 import { getAdminMembershipRestrictionUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
-import { setFormFieldsErrors } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 
 type ManageMembershipFormValues = {
@@ -76,24 +75,17 @@ const SuspendOrTerminateForm = ({ userMembership, setOpen }: IProps) => {
             )
             setOpen(false)
         },
-        onError: (error) => {
-            if (isAxiosError(error)) {
-                if (setFormFieldsErrors(error, form)) {
-                    return
-                }
-
-                if (error.response?.status === 409) {
-                    message.error(error.response?.data?.detail || "Something went wrong.")
-                    return
-                }
-            }
-
-            message.error(
-                temporarySuspension
-                    ? "Could not suspend membership."
-                    : "Could not terminate membership.",
-            )
-        },
+        onError: (error) =>
+            handleApiError({
+                error,
+                form,
+                statusMessages: {
+                    409: "Something went wrong.",
+                    500: temporarySuspension
+                        ? "Could not suspend membership."
+                        : "Could not terminate membership.",
+                },
+            }),
     })
 
     const handleSubmit = (values: ManageMembershipFormValues) => {

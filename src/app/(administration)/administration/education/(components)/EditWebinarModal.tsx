@@ -26,8 +26,7 @@ import { Archive, ArchiveRestore, Trash2 } from "lucide-react"
 import api from "@/axios.ts"
 import type { IWebinar } from "@entities/News.ts"
 import { getWebinarDetailAdminUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
-import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
-import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 
 import styles from "./EditWebinarModal.module.scss"
 import { WEBINAR_LANGUAGE_OPTIONS, WEBINAR_TIMEZONE_OPTIONS } from "@shared/options.ts"
@@ -115,7 +114,7 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
             message.success("Webinar updated successfully.")
             onClose()
         },
-        onError: (error: unknown) => handleFormError(error, form),
+        onError: (error: unknown) => handleApiError({ error, form }),
     })
 
     const archiveMutation = useMutation({
@@ -129,7 +128,7 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
             )
             onClose()
         },
-        onError: (error: unknown) => handleRequestError(error),
+        onError: (error: unknown) => handleApiError({ error }),
     })
 
     const deleteMutation = useMutation({
@@ -141,7 +140,7 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
             message.success("Webinar deleted successfully.")
             onClose()
         },
-        onError: (error: unknown) => handleRequestError(error),
+        onError: (error: unknown) => handleApiError({ error }),
     })
 
     const isPending =

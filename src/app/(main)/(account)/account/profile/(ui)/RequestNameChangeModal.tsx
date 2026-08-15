@@ -1,6 +1,5 @@
 import { Modal, Form, Input, message } from "antd"
-import { setFormFieldsErrors } from "@/shared/helpers/setFormFieldsErrors.ts"
-import { isAxiosError } from "axios"
+import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
 import { useState } from "react"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import api from "@/axios.ts"
@@ -32,28 +31,15 @@ const ChangeNameModal = ({ open, setNameChangeModalOpen }: IProps) => {
             form.resetFields()
             setNameChangeModalOpen(false)
         } catch (error) {
-            if (isAxiosError(error)) {
-                if (setFormFieldsErrors(error, form)) {
-                    return
-                }
-
-                const status = error.response?.status
-                const detail = error.response?.data?.detail
-
-                if (status === 409) {
-                    messageApi.error(detail ?? "Name change request already exists")
-                } else if (status === 429) {
-                    messageApi.warning(
-                        detail ?? "You are sending requests too quickly. Please try again later.",
-                    )
-                } else if (status === 500) {
-                    messageApi.error("Something went wrong on the server. Please try again later.")
-                } else {
-                    messageApi.error(detail ?? "Failed to submit name change request")
-                }
-            } else {
-                messageApi.error("Unexpected error occurred")
-            }
+            handleApiError({
+                error,
+                form,
+                statusMessages: {
+                    409: "Name change request already exists.",
+                    429: "You are sending requests too quickly. Please try again later.",
+                    500: "Something went wrong on the server. Please try again later.",
+                },
+            })
         } finally {
             setIsLoading(false)
         }

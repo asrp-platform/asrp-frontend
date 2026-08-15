@@ -7,7 +7,7 @@ import type { FieldType, MembershipKey } from "@/features/MembershipApplicationF
 import { useMemo, useState } from "react"
 import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCard/MembershipCard.tsx"
 import api from "@/axios.ts"
-import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
 import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import Warning from "@/features/MembershipApplicationForm/(components)/Warning/Warning.tsx"
 import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
@@ -114,7 +114,7 @@ const MembershipApplicationForm = () => {
             )
             window.location.href = response.data.checkout_session_url
         } catch (error: unknown) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setIsFormSubmitting(false)
         }

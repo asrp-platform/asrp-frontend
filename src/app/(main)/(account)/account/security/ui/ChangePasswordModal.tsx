@@ -3,7 +3,7 @@
 import { Modal, Form, Input, message } from "antd"
 import { useState } from "react"
 import api from "@/axios.ts"
-import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
 import { CURRENT_USER_CHANGE_PASSWORD_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 interface Props {
@@ -40,7 +40,7 @@ const ChangePasswordModal = ({ open, onClose }: Props) => {
             form.resetFields()
             onClose()
         } catch (error: unknown) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setLoading(false)
         }

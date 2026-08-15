@@ -5,7 +5,7 @@ import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membershi
 import { useMembershipTypesQuery } from "@shared/backend/queries/membership/useMembershipTypesQuery.ts"
 import api from "@/axios.ts"
 import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { useQueryClient } from "@tanstack/react-query"
 import { CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_QUERY_KEY } from "@shared/backend/queries/membership/useCurrentUserMembershipDowngradeRequestQuery.ts"
 
@@ -59,8 +59,12 @@ const DowngradeMembership = ({ disabled }: DowngradeMembershipProps) => {
             form.resetFields()
             setIsModalOpen(false)
         } catch (error: unknown) {
-            handleFormError(error, form, {
-                409: "You already have a pending membership type change request.",
+            handleApiError({
+                error,
+                form,
+                statusMessages: {
+                    409: "You already have a pending membership type change request.",
+                },
             })
         } finally {
             setIsSubmitting(false)
