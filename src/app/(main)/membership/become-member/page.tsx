@@ -1,4 +1,4 @@
-import PageTitleCard from "@/shared/ui/PageTitleCard/PageTitleCard.tsx"
+import PageTitleCard from "@app/(main)/membership/(ui)/PageTitleCard/PageTitleCard.tsx"
 import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
 import styles from "@/app/(main)/membership/become-member/styles.module.scss"
 import MembershipApplicationForm from "@/features/MembershipApplicationForm/MembershipApplicationForm.tsx"

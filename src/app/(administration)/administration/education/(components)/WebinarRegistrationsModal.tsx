@@ -11,6 +11,7 @@ import type { IWebinar } from "@entities/News.ts"
 import { getWebinarRegistrationsAdminUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
 interface IRegistrantUser {
     id: number
@@ -107,7 +108,7 @@ const WebinarRegistrationsModal = ({ webinar }: IProps) => {
                         columns={columns}
                         dataSource={data ?? []}
                         loading={isLoading}
-                        pagination={{ pageSize: 10, showSizeChanger: false }}
+                        pagination={{ pageSize: DEFAULT_PAGE_SIZE, showSizeChanger: false }}
                         locale={{
                             emptyText: <Tag>No registrations yet</Tag>,
                         }}

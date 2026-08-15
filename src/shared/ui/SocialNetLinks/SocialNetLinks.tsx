@@ -1,4 +1,4 @@
-import styles from "@/shared/ui/social-net-links/styles.module.scss"
+import styles from "@shared/ui/SocialNetLinks/styles.module.scss"
 import Link from "next/link"
 import Image from "next/image"
 

@@ -1,14 +1,12 @@
 "use client"
 
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useState } from "react"
 import { ADMIN_USERS_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import type { IUserPrivate } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { Button, Input, type InputRef, Table, Tag } from "antd"
-import type { FilterDropdownProps } from "antd/es/table/interface"
+import { Table, Tag } from "antd"
 
 import styles from "@/app/(administration)/administration/users/styles.module.scss"
-import type { Key } from "react"
 import type { ColumnsType } from "antd/lib/table"
 import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"
 import { getBooleanColumnSearchProps } from "@/widgets/TableDropdown/BooleanTableFilterDropdown/getTableBooleanFilterDropdown.tsx"
@@ -18,6 +16,8 @@ import Link from "next/link"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import { useQueryClient } from "@tanstack/react-query"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
+import { getInputColumnSearchProps } from "@widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
 
 interface ITableFilters {
     firstname__startswith?: string
@@ -32,10 +32,8 @@ const USERS_ADMIN_QUERY_KEY = ["users-admin"]
 
 const UsersTable = () => {
     const [currentPage, setCurrentPage] = useState<number>(1)
-    const [pageSize] = useState<number>(10)
     const [filters, setFilters] = useState<ITableFilters>({})
     const [ordering, setOrdering] = useState<string[]>(["-id"])
-    const searchInput = useRef<InputRef>(null)
 
     const queryClient = useQueryClient()
 
@@ -44,7 +42,7 @@ const UsersTable = () => {
         url: ADMIN_USERS_URL,
         queryKey: USERS_ADMIN_QUERY_KEY,
         page: currentPage,
-        pageSize,
+        pageSize: DEFAULT_PAGE_SIZE,
         ordering,
         filters,
     })
@@ -54,73 +52,6 @@ const UsersTable = () => {
     }, [permissions])
     const canPromoteAdminRole = permissionsActions.includes("admin.create")
     const canRevokeAdminRole = permissionsActions.includes("admin.delete")
-
-    const getColumnSearchProps = <T extends keyof IUserPrivate>(dataIndex: T) => {
-        const filterKey = `${String(dataIndex)}__startswith` as keyof ITableFilters
-        const value = filters[filterKey]
-
-        return {
-            filteredValue: value ? ([value as Key] as Key[]) : null,
-
-            filterDropdown: ({
-                setSelectedKeys,
-                selectedKeys,
-                confirm,
-                clearFilters,
-                close,
-            }: FilterDropdownProps) => (
-                <div className={styles.searchFilterDropdown}>
-                    <Input
-                        ref={searchInput}
-                        placeholder={`Search ${String(dataIndex)}`}
-                        value={selectedKeys[0] as string}
-                        onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                        onPressEnter={() => {
-                            confirm()
-                            setFilters((prev) => ({
-                                ...prev,
-                                [filterKey]: selectedKeys[0] as string,
-                            }))
-                            close()
-                        }}
-                    />
-
-                    <div className={styles.searchFilterDropdownButtonContainer}>
-                        <Button
-                            type="primary"
-                            size="small"
-                            onClick={() => {
-                                confirm()
-                                setFilters((prev) => ({
-                                    ...prev,
-                                    [filterKey]: selectedKeys[0] as string,
-                                }))
-                                close()
-                            }}
-                        >
-                            Search
-                        </Button>
-
-                        <Button
-                            size="small"
-                            onClick={() => {
-                                clearFilters?.()
-                                setFilters((prev) => {
-                                    const updated = { ...prev }
-                                    delete updated[filterKey]
-                                    return updated
-                                })
-                                confirm()
-                                close()
-                            }}
-                        >
-                            Reset
-                        </Button>
-                    </div>
-                </div>
-            ),
-        }
-    }
 
     const columns: ColumnsType<IUserPrivate> = [
         {
@@ -166,7 +97,7 @@ const UsersTable = () => {
             key: "firstname",
             sorter: true,
             sortOrder: getSortOrder("firstname", ordering),
-            ...getColumnSearchProps("firstname"),
+            ...getInputColumnSearchProps("firstname", filters, setFilters),
         },
         {
             title: "Middlename",
@@ -180,13 +111,13 @@ const UsersTable = () => {
             key: "lastname",
             sorter: true,
             sortOrder: getSortOrder("lastname", ordering),
-            ...getColumnSearchProps("lastname"),
+            ...getInputColumnSearchProps("lastname", filters, setFilters),
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
-            ...getColumnSearchProps("email"),
+            ...getInputColumnSearchProps("email", filters, setFilters),
             render: (value: string, record: IUserPrivate) => (
                 <Link href={`/administration/users/${record.id}`}>{value}</Link>
             ),
@@ -281,7 +212,7 @@ const UsersTable = () => {
                 columns={columns}
                 pagination={{
                     current: currentPage,
-                    pageSize: pageSize,
+                    pageSize: DEFAULT_PAGE_SIZE,
                     total: tableData?.count,
                     onChange: (page) => setCurrentPage(page),
                 }}

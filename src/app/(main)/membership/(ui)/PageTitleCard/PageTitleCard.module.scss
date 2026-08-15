@@ -1,4 +1,4 @@
-@use "../../mixins" as m;
+@use "../../../../../shared/mixins" as m;
 
 .cardTitleSection {
     @include m.heading-card-container;
@@ -6,9 +6,9 @@
 }
 
 .cardTitle {
+    margin-bottom: 1rem;
     font-size: 2.25rem;
     font-weight: 600;
-    margin-bottom: 1rem;
 }
 
 .cardContent {

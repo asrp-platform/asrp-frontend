@@ -1,10 +1,12 @@
 "use client"
 
 import Image from "next/image"
-import MembershipInfoCard from "@/app/(main)/membership/(ui)/MembershipInfoCard.tsx"
-import styles from "@/app/(main)/membership/styles.module.scss"
+
 import { MembershipTypeEnum, type IMembershipType } from "@/entities/Membership.ts"
 import { useMembershipTypesQuery } from "@/shared/backend/queries/membership/useMembershipTypesQuery.ts"
+
+import MembershipInfoCard from "../MembershipInfoCard/MembershipInfoCard"
+import styles from "./MembershipTypesCards.module.scss"
 
 interface MembershipCardContent {
     title: string

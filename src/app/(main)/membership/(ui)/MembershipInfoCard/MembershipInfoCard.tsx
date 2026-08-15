@@ -1,6 +1,7 @@
-import styles from "@/app/(main)/membership/(ui)/styles.module.scss"
-import type { ReactNode } from "react"
 import Link from "next/link"
+import type { ReactNode } from "react"
+
+import styles from "./MembershipInfoCard.module.scss"
 
 interface IProps {
     title: string
@@ -23,20 +24,12 @@ const MembershipInfoCard = ({
     renderButton = true,
     icon,
 }: IProps) => {
-    const getVotingColor = () => {
-        switch (votingColor) {
-            case "red":
-                return styles.votingStatusRed
-            case "blue":
-                return styles.votingStatusBlue
-            default:
-                return styles.votingStatusBlue
-        }
-    }
+    const votingStatusColor =
+        votingColor === "red" ? styles.votingStatusRed : styles.votingStatusBlue
 
     return (
         <div className={styles.card}>
-            <div className={`${styles.votingStatus} ${getVotingColor()}`}>{votingStatus}</div>
+            <div className={`${styles.votingStatus} ${votingStatusColor}`}>{votingStatus}</div>
             <h3>
                 {icon} {title}
             </h3>
@@ -44,7 +37,7 @@ const MembershipInfoCard = ({
             <span className={styles.price}>${price} / year</span>
             <div className={styles.subdescription}>{subDescription}</div>
             {renderButton && (
-                <Link href={"/membership/become-member"} className={styles.secondaryLink}>
+                <Link href="/membership/become-member" className={styles.secondaryLink}>
                     Join
                 </Link>
             )}

@@ -11,6 +11,7 @@ import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import ActionsCell from "@app/(administration)/administration/membership/(tabs)/MembershipDowngradeRequestsTable/ActionsCell/ActionsCell.tsx"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import { MEMBERSHIP_DOWNGRADE_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
 interface MembershipTypeChangeRequestsFilters {
     pending?: boolean
@@ -24,7 +25,7 @@ const MembershipDowngradeRequestsTable = () => {
     const [page, setPage] = useState<number>(1)
     const [ordering, setOrdering] = useState<string[]>([])
     const [filters, setFilters] = useState<MembershipTypeChangeRequestsFilters>(initialFilters)
-    const pageSize = 25
+    const pageSize = DEFAULT_PAGE_SIZE
 
     const { data, isLoading } = useTableDataQuery<
         AdminMembershipDowngradeRequest,

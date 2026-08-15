@@ -14,6 +14,7 @@ import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import { getSortOrder } from "@shared/helpers/getSortOrder.ts"
 import { getInputColumnSearchProps } from "@widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
 interface IFilters {
     status?: WebinarStatus
@@ -34,7 +35,7 @@ const WebinarsTable = () => {
     const [ordering, setOrdering] = useState<string[]>(["-id"])
     const [filters, setFilters] = useState<IFilters>(initialFilters)
     const [selectedWebinar, setSelectedWebinar] = useState<IWebinar | null>(null)
-    const pageSize = 10
+    const pageSize = DEFAULT_PAGE_SIZE
 
     const { data: webinars, isLoading } = useTableDataQuery<IWebinar, IFilters>({
         url: WEBINARS_ADMIN_URL,

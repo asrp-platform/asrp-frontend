@@ -1,5 +1,7 @@
 import type { Country, Credentials } from "@features/MembershipApplicationForm/types.ts"
 
+export const DEFAULT_PAGE_SIZE = 10
+
 export const practiceSettingOptions = [
     { value: "academic", label: "Academic medical center" },
     { value: "community", label: "Community hospital" },
