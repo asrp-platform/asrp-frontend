@@ -1,10 +1,15 @@
 "use client"
 
-import { Modal, Form, Input, message } from "antd"
+import { Form, Input, message, Modal } from "antd"
+import { LockKeyhole, ShieldCheck } from "lucide-react"
 import { useState } from "react"
+
 import api from "@/axios.ts"
-import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
 import { CURRENT_USER_CHANGE_PASSWORD_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
+import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
+
+import styles from "./ChangePasswordModal.module.scss"
 
 interface Props {
     open: boolean
@@ -12,88 +17,107 @@ interface Props {
 }
 
 interface ChangePasswordPayload {
-    old_password: "string"
-    new_password: "string"
-    confirm_new_password: "string"
+    old_password: string
+    new_password: string
+    confirm_new_password: string
 }
 
 const ChangePasswordModal = ({ open, onClose }: Props) => {
-    const [form] = Form.useForm()
-    const [loading, setLoading] = useState(false)
+    const [form] = Form.useForm<ChangePasswordPayload>()
+    const [isLoading, setIsLoading] = useState(false)
 
-    const handleSubmit = async () => {
+    const handleClose = () => {
+        if (isLoading) return
+
+        form.resetFields()
+        onClose()
+    }
+
+    const handleSubmit = async (values: ChangePasswordPayload) => {
         try {
-            const values = await form.validateFields()
-
-            const payload: ChangePasswordPayload = {
-                old_password: values.old_password,
-                new_password: values.new_password,
-                confirm_new_password: values.confirm_new_password,
-            }
-
-            setLoading(true)
-
-            await api.post(CURRENT_USER_CHANGE_PASSWORD_URL, payload)
+            setIsLoading(true)
+            await api.post(CURRENT_USER_CHANGE_PASSWORD_URL, values)
 
             message.success("Password changed successfully")
-
             form.resetFields()
             onClose()
         } catch (error: unknown) {
             handleApiError({ error, form })
         } finally {
-            setLoading(false)
+            setIsLoading(false)
         }
     }
 
     return (
         <Modal
-            title="Change Password"
+            title={null}
             open={open}
-            onCancel={() => {
-                form.resetFields()
-                onClose()
-            }}
-            onOk={handleSubmit}
-            confirmLoading={loading}
-            okText="Update Password"
+            footer={null}
+            centered
             getContainer={false}
+            closable={!isLoading}
+            maskClosable={!isLoading}
+            onCancel={handleClose}
         >
-            <Form form={form} layout="vertical">
+            <div className={styles.heading}>
+                <span className={styles.icon}>
+                    <LockKeyhole size={24} aria-hidden />
+                </span>
+                <div>
+                    <h2>Change password</h2>
+                    <p>Use a strong password that you do not use for another account.</p>
+                </div>
+            </div>
+
+            <div className={styles.securityNote}>
+                <ShieldCheck size={18} aria-hidden />
+                <span>Your new password takes effect immediately after saving.</span>
+            </div>
+
+            <Form form={form} layout="vertical" disabled={isLoading} onFinish={handleSubmit}>
                 <Form.Item
-                    label="Current Password"
+                    label="Current password"
                     name="old_password"
-                    rules={[{ required: true, message: "Please enter current password" }]}
+                    rules={[{ required: true, message: "Please enter your current password." }]}
                 >
-                    <Input.Password />
+                    <Input.Password size="large" autoComplete="current-password" />
                 </Form.Item>
 
                 <Form.Item
-                    label="New Password"
+                    label="New password"
                     name="new_password"
-                    rules={[{ required: true, message: "Please enter new password" }]}
+                    rules={[{ required: true, message: "Please enter a new password." }]}
                 >
-                    <Input.Password />
+                    <Input.Password size="large" autoComplete="new-password" />
                 </Form.Item>
 
                 <Form.Item
-                    label="Confirm New Password"
+                    label="Confirm new password"
                     name="confirm_new_password"
                     dependencies={["new_password"]}
                     rules={[
-                        { required: true, message: "Please complete password" },
+                        { required: true, message: "Please confirm your new password." },
                         ({ getFieldValue }) => ({
                             validator(_, value) {
                                 if (!value || getFieldValue("new_password") === value) {
                                     return Promise.resolve()
                                 }
-                                return Promise.reject(new Error("Passwords do not match"))
+                                return Promise.reject(new Error("Passwords do not match."))
                             },
                         }),
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password size="large" autoComplete="new-password" />
                 </Form.Item>
+
+                <div className={styles.actions}>
+                    <CustomButton disabled={isLoading} onClick={handleClose}>
+                        Cancel
+                    </CustomButton>
+                    <CustomButton variant="primary-filled" htmlType="submit" loading={isLoading}>
+                        Update password
+                    </CustomButton>
+                </div>
             </Form>
         </Modal>
     )

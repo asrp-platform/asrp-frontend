@@ -1,113 +1,125 @@
 "use client"
 
-import { useForm } from "antd/es/form/Form"
-import { Button, Form, type FormProps, Input, Result, Spin, Typography } from "antd"
-import { CaretLeftOutlined } from "@ant-design/icons"
+import { Form, type FormProps, Input, Result } from "antd"
+import { ArrowLeft, Mail, ShieldCheck } from "lucide-react"
 import { useRouter } from "next/navigation"
-
-import { isAxiosError } from "axios"
 import { useState } from "react"
-import useNotification from "antd/es/notification/useNotification"
-import styles from "@/app/(auth)/password-reset/PasswordResetPage.module.scss"
-import api from "@/axios.ts"
-import { PASSWORD_RESET_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import { useReturnToLoginHref } from "@shared/hooks/useReturnToLoginHref.ts"
 
-const { Title, Paragraph } = Typography
+import api from "@/axios.ts"
+import styles from "@/app/(auth)/password-reset/PasswordResetPage.module.scss"
+import { PASSWORD_RESET_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
+import { useReturnToLoginHref } from "@shared/hooks/useReturnToLoginHref.ts"
+import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 type FieldType = {
     email: string
 }
 
-const Page = () => {
+const PasswordResetPage = () => {
     const router = useRouter()
     const loginHref = useReturnToLoginHref("/login")
-
-    const [loading, setIsLoading] = useState(false)
-    const [success, setSuccess] = useState<boolean>(false)
-
-    const [form] = useForm()
-
-    const [notification, contextHolder] = useNotification()
-
-    const openNotification = (pauseOnHover: boolean) => {
-        notification.error({
-            title: "Server Error",
-            description: "An unexpected error occurred on the server. Please try again later.",
-            showProgress: true,
-            pauseOnHover,
-        })
-    }
+    const [form] = Form.useForm<FieldType>()
+    const [isLoading, setIsLoading] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
         try {
             setIsLoading(true)
             await api.post(PASSWORD_RESET_URL, values)
-            setSuccess(true)
+            setIsSuccess(true)
         } catch (error) {
-            if (isAxiosError(error)) {
-                if (error.response?.status === 401) {
-                    form.setFieldsValue({
-                        email: "",
-                        errors: ["Input should be a valid email address"],
-                    })
-                }
-            } else {
-                openNotification(false)
-            }
+            handleApiError({ error, form })
         } finally {
             setIsLoading(false)
         }
     }
 
-    if (success) {
-        return (
-            <Result
-                status="success"
-                title="Password reset link has been sent"
-                subTitle="We sent a password reset link to your email. Please check your inbox and follow the instructions."
-                extra={[
-                    <Button type="primary" key="home" onClick={() => router.push("/")}>
-                        Go Home
-                    </Button>,
-                ]}
-            />
-        )
-    }
-
     return (
-        <div className={styles.pageContainer}>
-            <div className={styles.innerContainer}>
-                {contextHolder}
-                <Title level={2}>Recover Password</Title>
-                <Paragraph className={styles.resetMessage}>
-                    Enter the email address you used to register and we'll send you the instruction
-                </Paragraph>
-                <Spin spinning={loading}>
-                    <Form form={form} onFinish={onFinish}>
-                        <Form.Item
-                            label="Email"
-                            name="email"
-                            rules={[{ required: true, message: "Please enter your email" }]}
+        <main className={styles.page}>
+            <section className={styles.card}>
+                {isSuccess ? (
+                    <Result
+                        className={styles.result}
+                        status="success"
+                        title="Check your inbox"
+                        subTitle="If an account exists for this email, we have sent password reset instructions."
+                        extra={
+                            <CustomButton
+                                variant="primary-filled"
+                                onClick={() => router.push(loginHref)}
+                            >
+                                Back to sign in
+                            </CustomButton>
+                        }
+                    />
+                ) : (
+                    <>
+                        <div className={styles.iconWrapper}>
+                            <ShieldCheck size={30} aria-hidden />
+                        </div>
+
+                        <div className={styles.heading}>
+                            <span>Account recovery</span>
+                            <h1>Reset your password</h1>
+                            <p>
+                                Enter the email connected to your ASRP account. We will send you a
+                                secure link to create a new password.
+                            </p>
+                        </div>
+
+                        <Form
+                            form={form}
+                            layout="vertical"
+                            onFinish={onFinish}
+                            disabled={isLoading}
                         >
-                            <Input />
-                        </Form.Item>
-                        <Button type="primary" htmlType="submit" className={styles.resetButton}>
-                            Reset Password
-                        </Button>
-                        <Button
+                            <Form.Item
+                                label="Email address"
+                                name="email"
+                                rules={[
+                                    { required: true, message: "Please enter your email address." },
+                                    {
+                                        type: "email",
+                                        message: "Please enter a valid email address.",
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    size="large"
+                                    prefix={<Mail size={17} aria-hidden />}
+                                    placeholder="you@example.com"
+                                    autoComplete="email"
+                                />
+                            </Form.Item>
+
+                            <CustomButton
+                                className={styles.submitButton}
+                                variant="primary-filled"
+                                htmlType="submit"
+                                loading={isLoading}
+                            >
+                                Send reset link
+                            </CustomButton>
+                        </Form>
+
+                        <button
+                            type="button"
                             className={styles.backButton}
-                            htmlType="submit"
                             onClick={() => router.push(loginHref)}
                         >
-                            <CaretLeftOutlined />
+                            <ArrowLeft size={16} aria-hidden />
                             Back to sign in
-                        </Button>
-                    </Form>
-                </Spin>
-            </div>
-        </div>
+                        </button>
+
+                        <p className={styles.securityNote}>
+                            For your security, the reset link will expire after a limited time.
+                        </p>
+                    </>
+                )}
+            </section>
+        </main>
     )
 }
 
-export default Page
+export default PasswordResetPage

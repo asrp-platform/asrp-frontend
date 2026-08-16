@@ -1,3 +1,5 @@
+"use client"
+
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import { Alert, Form, Input, message, Modal, Select } from "antd"
 import { useState } from "react"

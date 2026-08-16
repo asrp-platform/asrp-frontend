@@ -1,0 +1,164 @@
+.content {
+    min-height: 310px;
+    padding: 8px 0 4px;
+}
+
+.loader {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 12px 0;
+}
+
+.intro {
+    display: flex;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #f5f9ff;
+
+    h4,
+    p {
+        margin: 0;
+    }
+
+    h4 {
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    p {
+        color: #526071;
+        line-height: 1.5;
+    }
+}
+
+.icon {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    place-items: center;
+    border-radius: 50%;
+    color: #1677ff;
+    background: #e6f4ff;
+}
+
+.comparison {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.membershipCard {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fafafa;
+
+    span,
+    strong,
+    p {
+        display: block;
+    }
+
+    span {
+        margin-bottom: 6px;
+        color: #6b7280;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    strong {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    p {
+        margin: 5px 0 0;
+        color: #4b5563;
+    }
+}
+
+.targetCard {
+    border-color: #b7ebc6;
+    background: #f6ffed;
+}
+
+.arrow {
+    color: #8c8c8c;
+}
+
+.selectLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.select {
+    width: 100%;
+}
+
+.summary {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 12px;
+    color: #14532d;
+    background: #f0fdf4;
+
+    > div {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    > strong {
+        display: block;
+        margin-top: 6px;
+        font-size: 24px;
+    }
+
+    p {
+        margin: 10px 0 0;
+        color: #3f6212;
+        line-height: 1.45;
+    }
+}
+
+.checkoutNote {
+    margin: 14px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 20px;
+}
+
+@media (max-width: 520px) {
+    .comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .arrow {
+        margin: -4px auto;
+        transform: rotate(90deg);
+    }
+
+    .actions {
+        flex-direction: column-reverse;
+
+        button {
+            width: 100%;
+        }
+    }
+}
