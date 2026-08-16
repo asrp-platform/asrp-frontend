@@ -1,11 +1,11 @@
 "use client"
 
-import { Alert, Modal, Select, Skeleton } from "antd"
-import { ArrowRight, CreditCard, Sparkles } from "lucide-react"
+import { Modal } from "antd"
 import { useMutation } from "@tanstack/react-query"
 import { useMemo, useState } from "react"
 
 import api from "@/axios.ts"
+import UpgradeMembershipContent from "@app/(main)/(account)/account/membership/(ui)/QuickActions/components/UpgradeMembership/(ui)/UpgradeMembershipContent/UpgradeMembershipContent.tsx"
 import type { IMembershipType } from "@entities/Membership.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useMembershipTypesQuery } from "@shared/backend/queries/membership/useMembershipTypesQuery.ts"
@@ -16,40 +16,24 @@ import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 import styles from "./UpgradeMembership.module.scss"
 
-const formatPrice = (price: number) =>
-    new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2,
-    }).format(price)
-
 const UpgradeMembership = () => {
     const [open, setOpen] = useState(false)
     const [selectedTypeId, setSelectedTypeId] = useState<number>()
 
-    const {
-        data: membership,
-        isLoading: isMembershipLoading,
-        isError: isMembershipError,
-        isFetching: isMembershipFetching,
-        refetch: refetchMembership,
-    } = useCurrentUserMembershipQuery()
-    const {
-        data: membershipTypes,
-        isLoading: isMembershipTypesLoading,
-        isError: isMembershipTypesError,
-        isFetching: isMembershipTypesFetching,
-        refetch: refetchMembershipTypes,
-    } = useMembershipTypesQuery({ is_purchasable: true }, open && !!membership)
+    const membershipQuery = useCurrentUserMembershipQuery()
+    const membershipTypesQuery = useMembershipTypesQuery(
+        { is_purchasable: true },
+        open && !!membershipQuery.data,
+    )
 
-    const currentType = membership?.membership_type
+    const currentType = membershipQuery.data?.membership_type
     const availableTypes = useMemo(() => {
         if (!currentType) return []
 
-        return (membershipTypes ?? []).filter(
+        return (membershipTypesQuery.data ?? []).filter(
             (type) => type.id !== currentType.id && type.price_usd > currentType.price_usd,
         )
-    }, [currentType, membershipTypes])
+    }, [currentType, membershipTypesQuery.data])
 
     const selectedType = availableTypes.find((type) => type.id === selectedTypeId)
     const priceDifference =
@@ -92,135 +76,11 @@ const UpgradeMembership = () => {
         }
     }
 
-    const renderContent = () => {
-        if (isMembershipLoading || isMembershipTypesLoading) {
-            return (
-                <div className={styles.loader} role="status" aria-label="Loading upgrade options">
-                    <Skeleton active title={{ width: "45%" }} paragraph={{ rows: 4 }} />
-                    <Skeleton.Input active block />
-                </div>
-            )
-        }
-
-        if (isMembershipError || !membership) {
-            return (
-                <Alert
-                    showIcon
-                    type="error"
-                    title="Unable to load your membership"
-                    description="We could not retrieve your current membership details. Please try again."
-                    action={
-                        <CustomButton
-                            loading={isMembershipFetching}
-                            onClick={() => void refetchMembership()}
-                        >
-                            Try again
-                        </CustomButton>
-                    }
-                />
-            )
-        }
-
-        if (isMembershipTypesError) {
-            return (
-                <Alert
-                    showIcon
-                    type="error"
-                    title="Unable to load upgrade options"
-                    description="We could not retrieve the available membership types. Please try again."
-                    action={
-                        <CustomButton
-                            loading={isMembershipTypesFetching}
-                            onClick={() => void refetchMembershipTypes()}
-                        >
-                            Try again
-                        </CustomButton>
-                    }
-                />
-            )
-        }
-
-        if (!availableTypes.length) {
-            return (
-                <Alert
-                    showIcon
-                    type="info"
-                    title="You already have the highest available membership"
-                    description="There are no purchasable membership types above your current plan."
-                />
-            )
-        }
-
-        return (
-            <>
-                <div className={styles.intro}>
-                    <span className={styles.icon}>
-                        <Sparkles size={22} aria-hidden />
-                    </span>
-                    <div>
-                        <h4>Unlock a higher membership level</h4>
-                        <p>
-                            Choose a new membership type and pay only the difference in price. Your
-                            upgrade becomes active after payment is completed.
-                        </p>
-                    </div>
-                </div>
-
-                <div className={styles.comparison}>
-                    <div className={styles.membershipCard}>
-                        <span>Current membership</span>
-                        <strong>{membership.membership_type.name}</strong>
-                        <p>{formatPrice(membership.membership_type.price_usd)}</p>
-                    </div>
-                    <ArrowRight className={styles.arrow} size={22} aria-hidden />
-                    <div className={`${styles.membershipCard} ${styles.targetCard}`}>
-                        <span>New membership</span>
-                        <strong>{selectedType?.name ?? "Select a type"}</strong>
-                        <p>{selectedType ? formatPrice(selectedType.price_usd) : "—"}</p>
-                    </div>
-                </div>
-
-                <label className={styles.selectLabel} htmlFor="membership-upgrade-type">
-                    Membership type
-                </label>
-                <Select
-                    id="membership-upgrade-type"
-                    className={styles.select}
-                    size="large"
-                    value={selectedTypeId}
-                    placeholder="Select a higher membership type"
-                    options={availableTypes.map((type) => ({
-                        value: type.id,
-                        label: `${type.name} · ${formatPrice(type.price_usd)}`,
-                    }))}
-                    onChange={setSelectedTypeId}
-                />
-
-                {selectedType && (
-                    <div className={styles.summary}>
-                        <div>
-                            <CreditCard size={20} aria-hidden />
-                            <span>Amount due now</span>
-                        </div>
-                        <strong>{formatPrice(priceDifference)}</strong>
-                        {selectedType.description && <p>{selectedType.description}</p>}
-                    </div>
-                )}
-
-                <p className={styles.checkoutNote}>
-                    You will be redirected to Stripe to complete the secure payment.
-                </p>
-            </>
-        )
-    }
-
-    const canSubmit = !!selectedType && !isMembershipTypesError
-
     return (
         <>
             <CustomButton
                 variant="green"
-                loading={isMembershipLoading}
+                loading={membershipQuery.isLoading}
                 onClick={() => setOpen(true)}
             >
                 Upgrade membership
@@ -236,7 +96,24 @@ const UpgradeMembership = () => {
                 maskClosable={!upgradeMutation.isPending}
                 onCancel={handleClose}
             >
-                <div className={styles.content}>{renderContent()}</div>
+                <div className={styles.content}>
+                    <UpgradeMembershipContent
+                        currentType={currentType}
+                        availableTypes={availableTypes}
+                        selectedType={selectedType}
+                        selectedTypeId={selectedTypeId}
+                        priceDifference={priceDifference}
+                        isMembershipLoading={membershipQuery.isLoading}
+                        isMembershipError={membershipQuery.isError}
+                        isMembershipFetching={membershipQuery.isFetching}
+                        isMembershipTypesLoading={membershipTypesQuery.isLoading}
+                        isMembershipTypesError={membershipTypesQuery.isError}
+                        isMembershipTypesFetching={membershipTypesQuery.isFetching}
+                        onSelectType={setSelectedTypeId}
+                        onRetryMembership={() => void membershipQuery.refetch()}
+                        onRetryMembershipTypes={() => void membershipTypesQuery.refetch()}
+                    />
+                </div>
 
                 <div className={styles.actions}>
                     <CustomButton disabled={upgradeMutation.isPending} onClick={handleClose}>
@@ -245,7 +122,7 @@ const UpgradeMembership = () => {
                     <CustomButton
                         variant="green"
                         loading={upgradeMutation.isPending}
-                        disabled={!canSubmit}
+                        disabled={!selectedType || membershipTypesQuery.isError}
                         onClick={handleUpgrade}
                     >
                         Continue to payment
