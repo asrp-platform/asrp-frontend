@@ -27,7 +27,7 @@ const PhotoInput = ({ setUploadedImageUrl, uploadedImageUrl }: IProps) => {
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } },
             )
-            setUploadedImageUrl(res.data.path)
+            setUploadedImageUrl(res.data.file_url)
         } catch (error) {
             if (isAxiosError(error)) {
                 if (error.response?.status === 415) {

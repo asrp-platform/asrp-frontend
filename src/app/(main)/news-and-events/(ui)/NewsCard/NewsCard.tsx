@@ -72,12 +72,12 @@ const NewsCard = ({ news, canUpdate, canDelete }: IProps) => {
         <article
             className={clsx(
                 styles.card,
-                !news.cover_key && (canUpdate || canDelete) && styles.cardWithUncoveredActions,
+                !news.cover_url && (canUpdate || canDelete) && styles.cardWithUncoveredActions,
             )}
         >
-            {news.cover_key && (
+            {news.cover_url && (
                 <div className={styles.cover}>
-                    <img src={news.cover_key} alt="" />
+                    <img src={news.cover_url} alt="" />
                     <div className={styles.coverCaption}>
                         <strong>{news.when || news.where || "Community update"}</strong>
                     </div>
@@ -90,7 +90,7 @@ const NewsCard = ({ news, canUpdate, canDelete }: IProps) => {
                 <div
                     className={clsx(
                         styles.adminActions,
-                        !news.cover_key && styles.adminActionsWithoutCover,
+                        !news.cover_url && styles.adminActionsWithoutCover,
                     )}
                 >
                     {canUpdate && (

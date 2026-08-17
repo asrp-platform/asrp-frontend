@@ -24,7 +24,8 @@ export interface IPaginatedBackendResponse<T> {
 }
 
 export interface ImagePathResponse {
-    path: string
+    file_url: string
+    object_key: string
 }
 
 export interface IValidationError {

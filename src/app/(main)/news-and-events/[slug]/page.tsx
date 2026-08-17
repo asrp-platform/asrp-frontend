@@ -49,8 +49,8 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 
     const description = getDescription(news)
     const canonicalPath = `/news-and-events/${news.slug}`
-    const images = news.cover_key
-        ? [{ url: news.cover_key, alt: news.title }]
+    const images = news.cover_url
+        ? [{ url: news.cover_url, alt: news.title }]
         : [{ url: "/opengraph-image", width: 1200, height: 630, alt: "ASRP" }]
 
     return {
@@ -104,7 +104,7 @@ const NewsArticlePage = async ({ params }: PageProps) => {
         dateModified: news.updated_at,
         mainEntityOfPage: articleUrl,
         url: articleUrl,
-        ...(news.cover_key ? { image: [news.cover_key] } : {}),
+        ...(news.cover_url ? { image: [news.cover_url] } : {}),
         author: {
             "@type": "Organization",
             name: "American Society of Russian-Speaking Pathologists",
@@ -179,9 +179,9 @@ const NewsArticlePage = async ({ params }: PageProps) => {
                         </div>
                     </header>
 
-                    {news.cover_key && (
+                    {news.cover_url && (
                         <div className={styles.cover}>
-                            <img src={news.cover_key} alt={news.title} />
+                            <img src={news.cover_url} alt={news.title} />
                         </div>
                     )}
 

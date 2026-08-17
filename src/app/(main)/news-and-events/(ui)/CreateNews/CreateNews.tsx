@@ -77,7 +77,7 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
             is_published: news.is_published,
         })
         editor.commands.setContent(news.body)
-        setCoverPreviewUrl(news.cover_key)
+        setCoverPreviewUrl(news.cover_url)
     }, [editor, form, news])
 
     if (!editor) return null
@@ -114,10 +114,10 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
             const response = await api.post<ImagePathResponse>(NEWS_IMAGES_ADMIN_URL, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
-            form.setFieldValue("cover_key", response.data.path)
+            form.setFieldValue("cover_key", response.data.object_key)
         } catch (error) {
             form.setFieldValue("cover_key", news?.cover_key ?? null)
-            setCoverPreviewUrl(news?.cover_key ?? null)
+            setCoverPreviewUrl(news?.cover_url ?? null)
             setCoverName(null)
             handleApiError({
                 error,
@@ -193,7 +193,7 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
                 open={open}
                 onCancel={closeModal}
                 closable={!isSubmitting}
-                maskClosable={!isSubmitting}
+                mask={!isSubmitting}
                 footer={null}
                 width={760}
                 className={styles.modal}

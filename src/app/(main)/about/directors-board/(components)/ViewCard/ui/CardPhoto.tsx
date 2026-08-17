@@ -8,10 +8,7 @@ import api from "@/axios.ts"
 import { DIRECTORS_BOARD_MEMBER_IMAGES_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { isAxiosError } from "axios"
 import { message } from "antd"
-
-interface ImagePathResponse {
-    path: string
-}
+import type { ImagePathResponse } from "@shared/interfaces.ts"
 
 interface Props {
     member: IDirectorsBoardMember
@@ -47,7 +44,7 @@ const CardPhoto = ({ member, editable = false, onPhotoChange }: Props) => {
                 { headers: { "Content-Type": "multipart/form-data" } },
             )
 
-            const newPhotoUrl = res.data.path
+            const newPhotoUrl = res.data.file_url
 
             setPhotoUrl(newPhotoUrl)
             setIsPhotoLoading(true)

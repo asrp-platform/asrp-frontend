@@ -1,7 +1,7 @@
 "use client"
 
 import { Alert, Skeleton } from "antd"
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
 import api from "@/axios.ts"
 import type { News } from "@entities/News.ts"
@@ -14,6 +14,8 @@ import CreateNews from "../CreateNews/CreateNews.tsx"
 import NewsCard from "../NewsCard/NewsCard.tsx"
 
 import styles from "./styles.module.scss"
+
+const NEWS_PAGE_SIZE = 8
 
 const NewsSection = () => {
     const {
@@ -30,22 +32,39 @@ const NewsSection = () => {
     const canDelete = hasPermission("news.delete")
 
     const {
-        data: news = [],
+        data,
         isLoading,
         isError,
         isFetching,
+        isFetchingNextPage,
+        hasNextPage,
+        fetchNextPage,
         refetch,
-    } = useQuery({
+    } = useInfiniteQuery({
         queryKey: ["news", canViewAdminNews ? "admin" : "public"],
-        queryFn: async () => {
+        queryFn: async ({ pageParam }) => {
             const response = await api.get<IPaginatedBackendResponse<News>>(
                 canViewAdminNews ? NEWS_ADMIN_URL : NEWS_URL,
-                { params: { ordering: "-created_at", page_size: 100 } },
+                {
+                    params: {
+                        ordering: "-created_at",
+                        page: pageParam,
+                        page_size: NEWS_PAGE_SIZE,
+                    },
+                },
             )
-            return response.data.data
+            return response.data
+        },
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) => {
+            const loadedCount = lastPage.page * lastPage.page_size
+            return loadedCount < lastPage.count ? lastPage.page + 1 : undefined
         },
         enabled: !isPermissionsLoading,
     })
+
+    const news = data?.pages.flatMap((page) => page.data) ?? []
+    const totalNews = data?.pages[0]?.count ?? 0
 
     return (
         <section className={styles.section}>
@@ -100,6 +119,20 @@ const NewsSection = () => {
                             <NewsCard news={item} canUpdate={canUpdate} canDelete={canDelete} />
                         </div>
                     ))}
+                    {hasNextPage && (
+                        <div className={styles.loadMoreContainer}>
+                            <span>
+                                Showing {news.length} of {totalNews}
+                            </span>
+                            <CustomButton
+                                variant="secondary"
+                                loading={isFetchingNextPage}
+                                onClick={() => void fetchNextPage()}
+                            >
+                                Load more
+                            </CustomButton>
+                        </div>
+                    )}
                 </div>
             )}
         </section>

@@ -97,6 +97,19 @@
     transform: translateX(-50%);
 }
 
+.loadMoreContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 14px 0 2px;
+
+    > span {
+        color: var(--text-muted-color-dark);
+        font-size: 12px;
+    }
+}
+
 .skeletonCard {
     overflow: hidden;
     padding: 0 18px 18px;
@@ -158,5 +171,11 @@
 
     .timelineDot {
         display: none;
+    }
+
+    .loadMoreContainer {
+        align-items: stretch;
+        flex-direction: column;
+        text-align: center;
     }
 }

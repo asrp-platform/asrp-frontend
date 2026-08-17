@@ -5,6 +5,7 @@ export interface News {
     title: string
     slug: string
     cover_key: string | null
+    cover_url: string | null
     body: JSONContent
     when: string | null
     where: string | null
