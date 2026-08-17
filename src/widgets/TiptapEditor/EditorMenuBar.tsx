@@ -1,4 +1,5 @@
 import { type Editor, useEditorState } from "@tiptap/react"
+import type { ReactNode } from "react"
 
 import {
     AlignCenter,
@@ -25,9 +26,18 @@ import { Button } from "antd"
 interface IProps {
     editor: Editor
     show?: boolean
+    extendOptions?: (editor: Editor) => EditorMenuOption[]
 }
 
-const EditorMenuBar = ({ editor, show = true }: IProps) => {
+export interface EditorMenuOption {
+    icon: ReactNode
+    onClick: () => void
+    pressed?: boolean
+    disabled?: boolean
+    title?: string
+}
+
+const EditorMenuBar = ({ editor, show = true, extendOptions }: IProps) => {
     // Read the current editor's state, and re-render the component when it changes
     const editorState = useEditorState({
         editor,
@@ -65,7 +75,7 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
         },
     })
 
-    const options = [
+    const options: EditorMenuOption[] = [
         {
             icon: <Heading3 width={18} />,
             onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
@@ -184,6 +194,9 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
         },
     ]
 
+    const extendedOptions = extendOptions?.(editor) ?? []
+    const menuOptions = [...extendedOptions, ...options]
+
     if (!show) {
         return null
     }
@@ -191,13 +204,14 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
     return (
         <div className="control-group">
             <div className="button-group">
-                {options.map((option, index) => (
+                {menuOptions.map((option, index) => (
                     <Button
                         key={index}
                         type={option.pressed ? "primary" : "default"}
                         onClick={option.onClick}
                         className="editorMenuButton"
-                        disabled={option.disabled}
+                        disabled={option.disabled ?? false}
+                        title={option.title}
                     >
                         {option.icon}
                     </Button>
