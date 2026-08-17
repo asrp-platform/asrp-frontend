@@ -131,6 +131,11 @@ export const handleApiError = ({ error, form, statusMessages }: HandleApiErrorAr
         return
     }
 
+    if (error.code === "ECONNABORTED" || error.code === "ETIMEDOUT") {
+        message.error("The request timed out. Check your connection and try the upload again.")
+        return
+    }
+
     // 3. AxiosError, но error.response === undefined
     // отсутствие responses ===  axios не получил HTTP-ответ
     if (error.response === undefined) {

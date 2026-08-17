@@ -1,10 +1,24 @@
 "use client"
 
-import { useEffect, useState, type ChangeEvent, type ReactNode } from "react"
+import { useEffect, useRef, useState, type ChangeEvent, type ReactNode } from "react"
 import { PlusOutlined } from "@ant-design/icons"
-import { Button, Col, ConfigProvider, Flex, Form, Input, message, Modal, Row, Switch } from "antd"
+import {
+    Button,
+    Col,
+    ConfigProvider,
+    Flex,
+    Form,
+    Input,
+    message,
+    Modal,
+    Popconfirm,
+    Progress,
+    Row,
+    Switch,
+    Tooltip,
+} from "antd"
 import { EditorContent, useEditor, type JSONContent } from "@tiptap/react"
-import { Heading2, ImagePlus, LoaderCircle, MapPin, X } from "lucide-react"
+import { ImageIcon, ImagePlus, LoaderCircle, MapPin, RotateCcw, X } from "lucide-react"
 
 import { createEditorExtensions } from "@app/(main)/about/directors-board/(components)/ViewCard/helpers/editorExtenstions.tsx"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
@@ -22,7 +36,7 @@ import styles from "./styles.module.scss"
 import api from "@/axios"
 import type { ImagePathResponse } from "@shared/interfaces.ts"
 
-const newsEditorExtensions = createEditorExtensions([1, 2, 3, 4, 5])
+const newsEditorExtensions = createEditorExtensions([1, 2, 3, 4, 5], { image: true })
 const MAX_COVER_SIZE = 5 * 1024 * 1024
 
 interface CreateNewsFormValues {
@@ -46,7 +60,11 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
     const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null)
     const [coverName, setCoverName] = useState<string | null>(null)
     const [isCoverUploading, setIsCoverUploading] = useState(false)
+    const [isContentImageUploading, setIsContentImageUploading] = useState(false)
+    const [coverUploadProgress, setCoverUploadProgress] = useState(0)
+    const [contentImageUploadProgress, setContentImageUploadProgress] = useState(0)
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const contentImageInputRef = useRef<HTMLInputElement>(null)
     const isEditing = Boolean(news)
 
     const editor = useEditor({
@@ -109,10 +127,15 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
         setCoverPreviewUrl(localPreviewUrl)
         setCoverName(file.name)
         setIsCoverUploading(true)
+        setCoverUploadProgress(0)
 
         try {
             const response = await api.post<ImagePathResponse>(NEWS_IMAGES_ADMIN_URL, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
+                timeout: 60_000,
+                onUploadProgress: ({ loaded, total }) => {
+                    if (total) setCoverUploadProgress(Math.round((loaded / total) * 100))
+                },
             })
             form.setFieldValue("cover_key", response.data.object_key)
         } catch (error) {
@@ -121,7 +144,10 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
             setCoverName(null)
             handleApiError({
                 error,
-                statusMessages: { 415: "This image format is not supported." },
+                statusMessages: {
+                    413: "This image is too large to upload.",
+                    415: "This image format is not supported.",
+                },
             })
         } finally {
             setIsCoverUploading(false)
@@ -130,6 +156,85 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
 
     const closeModal = () => {
         setOpen(false)
+    }
+
+    const resetForm = () => {
+        clearFormErrors(form)
+
+        if (news) {
+            form.setFieldsValue({
+                title: news.title,
+                cover_key: news.cover_key,
+                body: news.body,
+                when: news.when,
+                where: news.where,
+                is_published: news.is_published,
+            })
+            editor.commands.setContent(news.body)
+            setCoverPreviewUrl(news.cover_url)
+            setCoverName(null)
+        } else {
+            form.resetFields()
+            editor.commands.clearContent()
+            removeCover()
+        }
+
+        message.success(isEditing ? "Changes discarded." : "Form cleared.")
+    }
+
+    const handleContentImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]
+        event.target.value = ""
+
+        if (!file) return
+        if (!file.type.startsWith("image/")) {
+            message.error("Please choose an image file")
+            return
+        }
+        if (file.size > MAX_COVER_SIZE) {
+            message.error("Content image must be smaller than 5 MB")
+            return
+        }
+
+        const formData = new FormData()
+        formData.append("file", file)
+        setIsContentImageUploading(true)
+        setContentImageUploadProgress(0)
+
+        try {
+            const response = await api.post<ImagePathResponse>(NEWS_IMAGES_ADMIN_URL, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+                timeout: 60_000,
+                onUploadProgress: ({ loaded, total }) => {
+                    if (total) setContentImageUploadProgress(Math.round((loaded / total) * 100))
+                },
+            })
+            editor
+                .chain()
+                .focus()
+                .insertContent({
+                    type: "image",
+                    attrs: {
+                        src: response.data.file_url,
+                        objectKey: response.data.object_key,
+                        alt: file.name,
+                        title: file.name,
+                        width: "100%",
+                    },
+                })
+                .run()
+            message.success("Image added to the article.")
+        } catch (error) {
+            handleApiError({
+                error,
+                statusMessages: {
+                    413: "This image is too large to upload.",
+                    415: "This image format is not supported.",
+                },
+            })
+        } finally {
+            setIsContentImageUploading(false)
+        }
     }
 
     const handleFinish = async (values: CreateNewsFormValues) => {
@@ -192,7 +297,7 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
                 }
                 open={open}
                 onCancel={closeModal}
-                closable={!isSubmitting}
+                closable={!isSubmitting && !isContentImageUploading}
                 mask={!isSubmitting}
                 footer={null}
                 width={760}
@@ -275,7 +380,12 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
                                 )}
                                 {isCoverUploading && (
                                     <div className={styles.coverLoader}>
-                                        <LoaderCircle size={30} />
+                                        <Progress
+                                            type="circle"
+                                            percent={coverUploadProgress}
+                                            size={58}
+                                            strokeColor="#dc2626"
+                                        />
                                         <span>Uploading cover…</span>
                                     </div>
                                 )}
@@ -324,20 +434,58 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
                                     editor={editor}
                                     extendOptions={(currentEditor) => [
                                         {
-                                            icon: <Heading2 width={18} />,
-                                            title: "Heading 2",
+                                            icon: isContentImageUploading ? (
+                                                <LoaderCircle
+                                                    className={styles.inlineLoader}
+                                                    width={18}
+                                                />
+                                            ) : (
+                                                <ImageIcon width={18} />
+                                            ),
+                                            title: "Upload image",
+                                            onClick: () => contentImageInputRef.current?.click(),
+                                            disabled: isContentImageUploading || isSubmitting,
+                                        },
+                                        ...(["50%", "75%", "100%"] as const).map((width) => ({
+                                            icon: (
+                                                <span className={styles.imageSizeLabel}>
+                                                    {width.replace("%", "")}
+                                                </span>
+                                            ),
+                                            title: `Set selected image width to ${width}`,
                                             onClick: () =>
                                                 currentEditor
                                                     .chain()
                                                     .focus()
-                                                    .toggleHeading({ level: 2 })
+                                                    .updateAttributes("image", { width })
                                                     .run(),
-                                            pressed: currentEditor.isActive("heading", {
-                                                level: 2,
-                                            }),
-                                        },
+                                            disabled: !currentEditor.isActive("image"),
+                                            pressed:
+                                                currentEditor.isActive("image") &&
+                                                (currentEditor.getAttributes("image").width ??
+                                                    "100%") === width,
+                                        })),
                                     ]}
                                 />
+                                <span hidden style={{ display: "none" }}>
+                                    <input
+                                        ref={contentImageInputRef}
+                                        type="file"
+                                        accept="image/png,image/jpeg,image/webp,image/gif"
+                                        onChange={handleContentImageChange}
+                                        disabled={isContentImageUploading || isSubmitting}
+                                    />
+                                </span>
+                                {isContentImageUploading && (
+                                    <div className={styles.contentUploadProgress}>
+                                        <span>Uploading image…</span>
+                                        <Progress
+                                            percent={contentImageUploadProgress}
+                                            size="small"
+                                            strokeColor="#dc2626"
+                                        />
+                                    </div>
+                                )}
                                 <EditorContent editor={editor} className={styles.editorContent} />
                             </div>
                         </Form.Item>
@@ -367,24 +515,47 @@ const CreateNews = ({ news, renderTrigger }: IProps) => {
                     </div>
 
                     <div className={styles.actions}>
-                        <CustomButton
-                            onClick={closeModal}
-                            variant="secondary"
-                            className={styles.actionButton}
-                            disabled={isSubmitting}
+                        <Popconfirm
+                            title={isEditing ? "Discard all changes?" : "Clear the entire form?"}
+                            description="This action cannot be undone."
+                            okText="Reset"
+                            cancelText="Keep editing"
+                            okButtonProps={{ danger: true }}
+                            onConfirm={resetForm}
                         >
-                            Cancel
-                        </CustomButton>
-                        <CustomButton
-                            htmlType="submit"
-                            variant="primary-filled"
-                            className={styles.actionButton}
-                            loading={isSubmitting}
-                            disabled={isCoverUploading}
-                        >
-                            {!isSubmitting && <PlusOutlined />}
-                            {isEditing ? "Save changes" : "Create news"}
-                        </CustomButton>
+                            <Tooltip title={isEditing ? "Discard changes" : "Reset form"}>
+                                <Button
+                                    className={styles.resetButton}
+                                    type="text"
+                                    danger
+                                    icon={<RotateCcw size={17} />}
+                                    aria-label={isEditing ? "Discard changes" : "Reset form"}
+                                    disabled={
+                                        isSubmitting || isCoverUploading || isContentImageUploading
+                                    }
+                                />
+                            </Tooltip>
+                        </Popconfirm>
+                        <div className={styles.actionButtons}>
+                            <CustomButton
+                                onClick={closeModal}
+                                variant="secondary"
+                                className={styles.actionButton}
+                                disabled={isSubmitting}
+                            >
+                                Cancel
+                            </CustomButton>
+                            <CustomButton
+                                htmlType="submit"
+                                variant="primary-filled"
+                                className={styles.actionButton}
+                                loading={isSubmitting}
+                                disabled={isCoverUploading || isContentImageUploading}
+                            >
+                                {!isSubmitting && <PlusOutlined />}
+                                {isEditing ? "Save changes" : "Create news"}
+                            </CustomButton>
+                        </div>
                     </div>
                 </Form>
             </Modal>

@@ -9,6 +9,7 @@ import {
     SettingOutlined,
     CreditCardOutlined,
     BookOutlined,
+    ReadOutlined,
 } from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useEffect, useMemo, useState } from "react"
@@ -43,6 +44,11 @@ const menuItems = [
         key: "/administration/education",
         icon: <BookOutlined />,
         label: "Education",
+    },
+    {
+        key: "/administration/news-and-events",
+        icon: <ReadOutlined />,
+        label: "News & Events",
     },
     {
         key: "/administration/contact-messages",

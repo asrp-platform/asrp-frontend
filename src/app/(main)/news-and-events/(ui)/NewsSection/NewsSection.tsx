@@ -7,7 +7,6 @@ import api from "@/axios.ts"
 import type { News } from "@entities/News.ts"
 import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
-import { NEWS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { NEWS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import CreateNews from "../CreateNews/CreateNews.tsx"
@@ -26,7 +25,6 @@ const NewsSection = () => {
     const hasPermission = (action: string) =>
         isAdmin && permissions.some((permission) => permission.action === action)
 
-    const canViewAdminNews = hasPermission("news.view")
     const canCreate = hasPermission("news.create")
     const canUpdate = hasPermission("news.update")
     const canDelete = hasPermission("news.delete")
@@ -41,18 +39,15 @@ const NewsSection = () => {
         fetchNextPage,
         refetch,
     } = useInfiniteQuery({
-        queryKey: ["news", canViewAdminNews ? "admin" : "public"],
+        queryKey: ["news", "public"],
         queryFn: async ({ pageParam }) => {
-            const response = await api.get<IPaginatedBackendResponse<News>>(
-                canViewAdminNews ? NEWS_ADMIN_URL : NEWS_URL,
-                {
-                    params: {
-                        ordering: "-created_at",
-                        page: pageParam,
-                        page_size: NEWS_PAGE_SIZE,
-                    },
+            const response = await api.get<IPaginatedBackendResponse<News>>(NEWS_URL, {
+                params: {
+                    ordering: "-created_at",
+                    page: pageParam,
+                    page_size: NEWS_PAGE_SIZE,
                 },
-            )
+            })
             return response.data
         },
         initialPageParam: 1,

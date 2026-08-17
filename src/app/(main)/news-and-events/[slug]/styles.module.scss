@@ -225,8 +225,9 @@
         blockquote {
             margin: 1.4em 0;
             padding: 0.8em 1.2em;
-            border-left: 4px solid var(--text-primary-color-red);
-            background: #fef2f2;
+            border-left: 4px solid #1677ff;
+            border-radius: 0 10px 10px 0;
+            background: rgb(22 119 255 / 6%);
         }
 
         img {

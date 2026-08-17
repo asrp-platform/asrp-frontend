@@ -73,6 +73,33 @@ const renderNode = (node: JSONContent, key: number | string): ReactNode => {
             return <br key={key} />
         case "horizontalRule":
             return <hr key={key} />
+        case "image": {
+            const imageWidth = ["50%", "75%", "100%"].includes(String(node.attrs?.width))
+                ? String(node.attrs?.width)
+                : "100%"
+            const imageAlignment = ["left", "center", "right"].includes(
+                String(node.attrs?.textAlign),
+            )
+                ? String(node.attrs?.textAlign)
+                : "left"
+            return (
+                <img
+                    key={key}
+                    src={String(node.attrs?.src ?? "")}
+                    alt={String(node.attrs?.alt ?? "")}
+                    title={node.attrs?.title ? String(node.attrs.title) : undefined}
+                    loading="lazy"
+                    decoding="async"
+                    style={{
+                        width: imageWidth,
+                        marginLeft:
+                            imageAlignment === "center" || imageAlignment === "right" ? "auto" : 0,
+                        marginRight:
+                            imageAlignment === "center" || imageAlignment === "left" ? "auto" : 0,
+                    }}
+                />
+            )
+        }
         default:
             return <div key={key}>{children}</div>
     }

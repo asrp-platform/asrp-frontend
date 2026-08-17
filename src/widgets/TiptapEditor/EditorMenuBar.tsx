@@ -7,6 +7,7 @@ import {
     AlignRight,
     Bold,
     Code,
+    Heading2,
     Heading3,
     Highlighter,
     Italic,
@@ -18,6 +19,7 @@ import {
     SeparatorHorizontal,
     CornerDownLeft,
     Link,
+    Quote,
     Heading4,
     Heading5,
 } from "lucide-react"
@@ -71,25 +73,39 @@ const EditorMenuBar = ({ editor, show = true, extendOptions }: IProps) => {
                 canAlign: ctx.editor.can().chain().setTextAlign("center").run(),
                 isHighlight: ctx.editor.isActive("highlight") ?? false,
                 isLink: ctx.editor.isActive("link") ?? false,
+                isImage: ctx.editor.isActive("image") ?? false,
+                imageWidth: ctx.editor.isActive("image")
+                    ? (ctx.editor.getAttributes("image").width ?? "100%")
+                    : null,
             }
         },
     })
 
     const options: EditorMenuOption[] = [
         {
+            icon: <Heading2 width={18} />,
+            title: "Heading 2",
+            onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+            pressed: editorState.isHeading2,
+            disabled: false,
+        },
+        {
             icon: <Heading3 width={18} />,
+            title: "Heading 3",
             onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
             pressed: editorState.isHeading3,
             disabled: false,
         },
         {
             icon: <Heading4 width={18} />,
+            title: "Heading 4",
             onClick: () => editor.chain().focus().toggleHeading({ level: 4 }).run(),
             pressed: editorState.isHeading4,
             disabled: false,
         },
         {
             icon: <Heading5 width={18} />,
+            title: "Heading 5",
             onClick: () => editor.chain().focus().toggleHeading({ level: 5 }).run(),
             pressed: editorState.isHeading5,
             disabled: false,
@@ -143,6 +159,13 @@ const EditorMenuBar = ({ editor, show = true, extendOptions }: IProps) => {
             icon: <ListOrdered width={18} />,
             onClick: () => editor.chain().focus().toggleOrderedList().run(),
             pressed: editorState.isOrderedList,
+            disabled: false,
+        },
+        {
+            icon: <Quote width={18} />,
+            title: "Quote",
+            onClick: () => editor.chain().focus().toggleBlockquote().run(),
+            pressed: editorState.isBlockquote,
             disabled: false,
         },
         {
