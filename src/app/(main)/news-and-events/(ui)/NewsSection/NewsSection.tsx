@@ -50,6 +50,7 @@ const NewsSection = () => {
     return (
         <section className={styles.section}>
             <div className={styles.hero}>
+                <span className={styles.heroEyebrow}>ASRP NEWSROOM</span>
                 <h1>News &amp; Events</h1>
                 <div className={styles.heroBottomline}>
                     <p>
@@ -94,12 +95,10 @@ const NewsSection = () => {
             ) : (
                 <div className={styles.grid}>
                     {news.map((item) => (
-                        <NewsCard
-                            key={item.id}
-                            news={item}
-                            canUpdate={canUpdate}
-                            canDelete={canDelete}
-                        />
+                        <div className={styles.timelineItem} key={item.id}>
+                            <span className={styles.timelineDot} aria-hidden="true" />
+                            <NewsCard news={item} canUpdate={canUpdate} canDelete={canDelete} />
+                        </div>
                     ))}
                 </div>
             )}

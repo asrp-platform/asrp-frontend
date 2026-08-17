@@ -2,7 +2,16 @@
 
 import { message, Modal, Popconfirm, Tooltip } from "antd"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CalendarDays, EyeOff, LoaderCircle, MapPin, Pencil, Trash2 } from "lucide-react"
+import {
+    CalendarDays,
+    Clock3,
+    EyeOff,
+    LoaderCircle,
+    MapPin,
+    Newspaper,
+    Pencil,
+    Trash2,
+} from "lucide-react"
 import type { JSONContent } from "@tiptap/react"
 import clsx from "clsx"
 import Link from "next/link"
@@ -52,6 +61,7 @@ const NewsCard = ({ news, canUpdate, canDelete }: IProps) => {
     })
 
     const summary = getPlainText(news.body)
+    const readingMinutes = Math.max(1, Math.ceil(summary.split(/\s+/).filter(Boolean).length / 200))
     const displayDate = new Intl.DateTimeFormat("en-US", {
         month: "long",
         day: "numeric",
@@ -59,7 +69,12 @@ const NewsCard = ({ news, canUpdate, canDelete }: IProps) => {
     }).format(new Date(news.created_at))
 
     return (
-        <article className={styles.card}>
+        <article
+            className={clsx(
+                styles.card,
+                !news.cover_key && (canUpdate || canDelete) && styles.cardWithUncoveredActions,
+            )}
+        >
             {news.cover_key && (
                 <div className={styles.cover}>
                     <img src={news.cover_key} alt="" />
@@ -151,6 +166,14 @@ const NewsCard = ({ news, canUpdate, canDelete }: IProps) => {
             )}
 
             <div className={styles.content}>
+                <div className={styles.categoryRow}>
+                    <span className={styles.categoryBadge}>
+                        <Newspaper size={13} /> Community news
+                    </span>
+                    <span className={styles.readingTime}>
+                        <Clock3 size={13} /> {readingMinutes} min read
+                    </span>
+                </div>
                 <div className={styles.meta}>
                     <span>
                         <CalendarDays size={14} /> Posted on {displayDate}

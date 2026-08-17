@@ -1,4 +1,5 @@
 .section {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 38px;
@@ -8,7 +9,25 @@
 }
 
 .hero {
-    padding-top: 6px;
+    position: relative;
+    overflow: hidden;
+    padding: 30px 34px;
+    border: 1px solid #fee2e2;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 88% 20%, rgb(220 38 38 / 10%), transparent 24%),
+        linear-gradient(135deg, #fff 55%, #fff7f7);
+
+    &::after {
+        position: absolute;
+        top: -42px;
+        right: 60px;
+        width: 120px;
+        height: 120px;
+        border: 1px solid rgb(220 38 38 / 12%);
+        border-radius: 50%;
+        content: "";
+    }
 
     h1 {
         margin: 0 0 14px;
@@ -17,6 +36,15 @@
         line-height: 1.1;
         letter-spacing: -0.035em;
     }
+}
+
+.heroEyebrow {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--text-primary-color-red);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
 }
 
 .heroBottomline {
@@ -34,9 +62,39 @@
 }
 
 .grid {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;
+    padding-left: 34px;
+
+    &::before {
+        position: absolute;
+        top: 18px;
+        bottom: 18px;
+        left: 6px;
+        width: 1px;
+        background: linear-gradient(#fecaca, #dc2626 45%, #fecaca);
+        content: "";
+    }
+}
+
+.timelineItem {
+    position: relative;
+}
+
+.timelineDot {
+    position: absolute;
+    z-index: 2;
+    top: 34px;
+    left: -28px;
+    width: 13px;
+    height: 13px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--text-primary-color-red);
+    box-shadow: 0 0 0 1px #fecaca;
+    transform: translateX(-50%);
 }
 
 .skeletonCard {
@@ -84,5 +142,21 @@
 
     .heroBottomline > :last-child:not(p) {
         align-self: flex-start;
+    }
+
+    .hero {
+        padding: 22px 20px;
+    }
+
+    .grid {
+        padding-left: 0;
+
+        &::before {
+            display: none;
+        }
+    }
+
+    .timelineDot {
+        display: none;
     }
 }
