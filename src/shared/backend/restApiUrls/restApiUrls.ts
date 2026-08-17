@@ -67,6 +67,8 @@ export const CONTACT_MESSAGE_URL = "/contact-messages"
 export const DONATION_CHECKOUT_URL = "/payments/donations"
 
 export const DIRECTORS_BOARD_URL = "/directors-board"
+export const NEWS_URL = "/news"
+export const getNewsDetailUrl = (slug: string) => `${NEWS_URL}/${slug}`
 
 export const BYLAWS_URL = "/legal-documents/bylaws"
 export const SPONSORS_URL = `/legal-documents/sponsors`

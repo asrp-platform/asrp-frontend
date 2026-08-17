@@ -149,6 +149,32 @@
     box-shadow: 0 3px 12px rgb(15 23 42 / 16%);
 }
 
+.coverLoader {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgb(15 23 42 / 62%);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+
+    svg {
+        animation: cover-spin 0.8s linear infinite;
+    }
+}
+
+@keyframes cover-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .coverName {
     display: block;
     overflow: hidden;
@@ -229,8 +255,22 @@
             padding-left: 1.6rem;
         }
 
+        ul {
+            list-style-type: disc;
+
+            li::marker {
+                color: #111827;
+                font-size: 1.05em;
+            }
+        }
+
+        ol {
+            list-style-type: decimal;
+        }
+
         li {
             margin: 0.25em 0;
+            padding-left: 0.3em;
         }
 
         blockquote {

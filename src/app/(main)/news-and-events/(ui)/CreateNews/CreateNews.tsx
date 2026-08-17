@@ -1,14 +1,22 @@
 "use client"
 
-import { useEffect, useState, type ChangeEvent } from "react"
+import { useEffect, useState, type ChangeEvent, type ReactNode } from "react"
 import { PlusOutlined } from "@ant-design/icons"
 import { Button, Col, ConfigProvider, Flex, Form, Input, message, Modal, Row, Switch } from "antd"
 import { EditorContent, useEditor, type JSONContent } from "@tiptap/react"
-import { Heading2, ImagePlus, MapPin, X } from "lucide-react"
+import { Heading2, ImagePlus, LoaderCircle, MapPin, X } from "lucide-react"
 
 import { createEditorExtensions } from "@app/(main)/about/directors-board/(components)/ViewCard/helpers/editorExtenstions.tsx"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import EditorMenuBar from "@widgets/TiptapEditor/EditorMenuBar.tsx"
+import type { News } from "@entities/News.ts"
+import {
+    getNewsDetailAdminUrl,
+    NEWS_ADMIN_URL,
+    NEWS_IMAGES_ADMIN_URL,
+} from "@shared/backend/restApiUrls/adminApiUrls.ts"
+import { clearFormErrors, handleApiError } from "@shared/helpers/formsHelpers.ts"
+import { useQueryClient } from "@tanstack/react-query"
 
 import styles from "./styles.module.scss"
 import api from "@/axios"
@@ -26,11 +34,20 @@ interface CreateNewsFormValues {
     is_published: boolean
 }
 
-const CreateNews = () => {
+interface IProps {
+    news?: News
+    renderTrigger?: (openModal: () => void) => ReactNode
+}
+
+const CreateNews = ({ news, renderTrigger }: IProps) => {
     const [form] = Form.useForm<CreateNewsFormValues>()
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null)
     const [coverName, setCoverName] = useState<string | null>(null)
+    const [isCoverUploading, setIsCoverUploading] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const isEditing = Boolean(news)
 
     const editor = useEditor({
         extensions: newsEditorExtensions,
@@ -44,9 +61,24 @@ const CreateNews = () => {
 
     useEffect(() => {
         return () => {
-            if (coverPreviewUrl) URL.revokeObjectURL(coverPreviewUrl)
+            if (coverPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(coverPreviewUrl)
         }
     }, [coverPreviewUrl])
+
+    useEffect(() => {
+        if (!news || !editor) return
+
+        form.setFieldsValue({
+            title: news.title,
+            cover_key: news.cover_key,
+            body: news.body,
+            when: news.when,
+            where: news.where,
+            is_published: news.is_published,
+        })
+        editor.commands.setContent(news.body)
+        setCoverPreviewUrl(news.cover_key)
+    }, [editor, form, news])
 
     if (!editor) return null
 
@@ -73,12 +105,27 @@ const CreateNews = () => {
         const formData = new FormData()
         formData.append("file", file)
 
-        setCoverPreviewUrl(URL.createObjectURL(file))
+        const localPreviewUrl = URL.createObjectURL(file)
+        setCoverPreviewUrl(localPreviewUrl)
         setCoverName(file.name)
-        const response = await api.put<ImagePathResponse>("admin/news/images", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        })
-        form.setFieldValue("cover_key", response.data.path)
+        setIsCoverUploading(true)
+
+        try {
+            const response = await api.post<ImagePathResponse>(NEWS_IMAGES_ADMIN_URL, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            form.setFieldValue("cover_key", response.data.path)
+        } catch (error) {
+            form.setFieldValue("cover_key", news?.cover_key ?? null)
+            setCoverPreviewUrl(news?.cover_key ?? null)
+            setCoverName(null)
+            handleApiError({
+                error,
+                statusMessages: { 415: "This image format is not supported." },
+            })
+        } finally {
+            setIsCoverUploading(false)
+        }
     }
 
     const closeModal = () => {
@@ -94,26 +141,59 @@ const CreateNews = () => {
             where: values.where || null,
         }
 
-        await api.post("admin/news", payload)
+        clearFormErrors(form)
+        setIsSubmitting(true)
+
+        try {
+            if (news) {
+                await api.patch(getNewsDetailAdminUrl(news.id), payload)
+            } else {
+                await api.post(NEWS_ADMIN_URL, payload)
+            }
+
+            await queryClient.invalidateQueries({ queryKey: ["news"] })
+            setOpen(false)
+            message.success(isEditing ? "News updated successfully." : "News created successfully.")
+
+            if (!news) {
+                form.resetFields()
+                editor.commands.clearContent()
+                removeCover()
+            }
+        } catch (error) {
+            handleApiError({ error, form })
+        } finally {
+            setIsSubmitting(false)
+        }
     }
+
+    const defaultTrigger = (
+        <CustomButton
+            onClick={() => setOpen(true)}
+            variant="primary-filled"
+            className={styles.triggerButton}
+        >
+            <Flex gap={5} align="center">
+                <PlusOutlined />
+                <span className={styles.createNewsButtonText}>Create Post</span>
+            </Flex>
+        </CustomButton>
+    )
 
     return (
         <>
-            <CustomButton
-                onClick={() => setOpen(true)}
-                variant="primary-filled"
-                className={styles.triggerButton}
-            >
-                <Flex gap={5} align="center">
-                    <PlusOutlined />
-                    <span className={styles.createNewsButtonText}>Create news</span>
-                </Flex>
-            </CustomButton>
+            {renderTrigger ? renderTrigger(() => setOpen(true)) : defaultTrigger}
 
             <Modal
-                title={<h2 className={styles.formTitle}>Create new post</h2>}
+                title={
+                    <h2 className={styles.formTitle}>
+                        {isEditing ? "Edit news post" : "Create new post"}
+                    </h2>
+                }
                 open={open}
                 onCancel={closeModal}
+                closable={!isSubmitting}
+                maskClosable={!isSubmitting}
                 footer={null}
                 width={760}
                 className={styles.modal}
@@ -179,6 +259,7 @@ const CreateNews = () => {
                                     type="file"
                                     accept="image/png,image/jpeg,image/webp"
                                     onChange={handleCoverChange}
+                                    disabled={isCoverUploading || isSubmitting}
                                 />
 
                                 {coverPreviewUrl && (
@@ -189,7 +270,14 @@ const CreateNews = () => {
                                         icon={<X size={18} />}
                                         aria-label="Remove cover"
                                         onClick={removeCover}
+                                        disabled={isCoverUploading}
                                     />
+                                )}
+                                {isCoverUploading && (
+                                    <div className={styles.coverLoader}>
+                                        <LoaderCircle size={30} />
+                                        <span>Uploading cover…</span>
+                                    </div>
                                 )}
                             </div>
                             {coverName && <span className={styles.coverName}>{coverName}</span>}
@@ -283,6 +371,7 @@ const CreateNews = () => {
                             onClick={closeModal}
                             variant="secondary"
                             className={styles.actionButton}
+                            disabled={isSubmitting}
                         >
                             Cancel
                         </CustomButton>
@@ -290,9 +379,11 @@ const CreateNews = () => {
                             htmlType="submit"
                             variant="primary-filled"
                             className={styles.actionButton}
+                            loading={isSubmitting}
+                            disabled={isCoverUploading}
                         >
-                            <PlusOutlined />
-                            Create news
+                            {!isSubmitting && <PlusOutlined />}
+                            {isEditing ? "Save changes" : "Create news"}
                         </CustomButton>
                     </div>
                 </Form>

@@ -23,6 +23,11 @@ export const DIRECTORS_BOARD_MEMBER_REORDER_URL = `${DIRECTORS_BOARD_ADMIN_URL}/
 export const getAdminDirectorsBoardMemberUrl = (userId: string | number) =>
     `${DIRECTORS_BOARD_ADMIN_URL}/${userId}`
 
+// News
+export const NEWS_ADMIN_URL = `${ADMIN_URL}/news`
+export const NEWS_IMAGES_ADMIN_URL = `${NEWS_ADMIN_URL}/images`
+export const getNewsDetailAdminUrl = (newsId: string | number) => `${NEWS_ADMIN_URL}/${newsId}`
+
 // Legal documents
 export const LEGAL_DOCUMENTS_ADMIN_URL = `${ADMIN_URL}/legal-documents`
 export const BYLAWS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/bylaws`

@@ -1,0 +1,88 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+}
+
+.hero {
+    padding-top: 6px;
+
+    h1 {
+        margin: 0 0 14px;
+        color: var(--text-heading-color-dark);
+        font-size: clamp(28px, 3vw, 34px);
+        line-height: 1.1;
+        letter-spacing: -0.035em;
+    }
+}
+
+.heroBottomline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+
+    p {
+        max-width: 720px;
+        color: var(--text-secondary-color-dark);
+        font-size: 15px;
+        line-height: 1.6;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+}
+
+.skeletonCard {
+    overflow: hidden;
+    padding: 0 18px 18px;
+    border: var(--light-border);
+    border-radius: 20px;
+    background: #fff;
+}
+
+.skeletonImage {
+    width: calc(100% + 36px) !important;
+    height: 260px !important;
+    margin: 0 -18px 18px;
+}
+
+.emptyState {
+    padding: 56px 24px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 20px;
+    background: #f8fafc;
+    text-align: center;
+
+    h3 {
+        color: var(--text-heading-color-dark);
+        font-size: 20px;
+    }
+
+    p {
+        margin-top: 7px;
+        color: var(--text-muted-color-dark);
+    }
+}
+
+@media (max-width: 640px) {
+    .section {
+        gap: 28px;
+    }
+
+    .heroBottomline {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .heroBottomline > :last-child:not(p) {
+        align-self: flex-start;
+    }
+}
