@@ -10,6 +10,9 @@ import ActionsCell from "@app/(administration)/administration/membership/(tabs)/
 import MembershipTypeTag from "@shared/ui/Tags/MembershipTypeTag/MembershipTypeTag.tsx"
 import MembershipRequestStatusTag from "@shared/ui/Tags/MembershipRequestStatusTag/MembershipRequestStatusTag.tsx"
 import { MEMBERSHIP_REQUESTS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
+import { getSortOrder } from "@shared/helpers/getSortOrder.ts"
+import { getSelectTableFilterDropdown } from "@widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
 interface IFilters {
     status?: MembershipRequestStatusEnum
@@ -17,11 +20,34 @@ interface IFilters {
 
 const initialFilters: IFilters = {}
 
+const membershipRequestStatusOptions = [
+    {
+        label: "Payment pending",
+        value: MembershipRequestStatusEnum.PAYMENT_PENDING,
+    },
+    {
+        label: "Paid",
+        value: MembershipRequestStatusEnum.PAID,
+    },
+    {
+        label: "Approved",
+        value: MembershipRequestStatusEnum.APPROVED,
+    },
+    {
+        label: "Rejected",
+        value: MembershipRequestStatusEnum.REJECTED,
+    },
+    {
+        label: "Payment failed",
+        value: MembershipRequestStatusEnum.PAYMENT_FAILED,
+    },
+]
+
 const MembershipRequestsTable = () => {
     const [page, setPage] = useState<number>(1)
-    const [ordering, setOrdering] = useState<string[]>([])
+    const [ordering, setOrdering] = useState<string[]>(["-id"])
     const [filters, setFilters] = useState<IFilters>(initialFilters)
-    const pageSize = 25
+    const pageSize = DEFAULT_PAGE_SIZE
 
     const { data, isLoading } = useTableDataQuery<IMembershipRequest, IFilters>({
         url: MEMBERSHIP_REQUESTS_ADMIN_URL,
@@ -50,6 +76,7 @@ const MembershipRequestsTable = () => {
             key: "id",
             width: 90,
             sorter: true,
+            sortOrder: getSortOrder("id", ordering),
         },
         {
             title: "User",
@@ -72,9 +99,14 @@ const MembershipRequestsTable = () => {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            sorter: true,
             render: (value: MembershipRequestStatusEnum) => (
                 <MembershipRequestStatusTag status={value} />
+            ),
+            ...getSelectTableFilterDropdown(
+                "status",
+                filters,
+                setFilters,
+                membershipRequestStatusOptions,
             ),
         },
         {
@@ -105,7 +137,6 @@ const MembershipRequestsTable = () => {
             title: "Reviewed At",
             dataIndex: "reviewed_at",
             key: "reviewed_at",
-            sorter: true,
             render: (value: string | null) => (value ? new Date(value).toLocaleString() : "—"),
         },
         {
@@ -119,7 +150,6 @@ const MembershipRequestsTable = () => {
             title: "Created At",
             dataIndex: "created_at",
             key: "created_at",
-            sorter: true,
             render: (value: string) => new Date(value).toLocaleString(),
         },
     ]

@@ -1,7 +1,7 @@
 "use client"
 
 import styles from "@/widgets/Header/Header.module.scss"
-import Logo from "@/shared/ui/LogoPlaceholder/Logo.tsx"
+import Logo from "@shared/ui/Logo/Logo.tsx"
 import AuthStatus from "@/widgets/Header/ui/AuthStatus.tsx"
 
 import { type HeaderMenuItem, headerMenuItems } from "@/widgets/Header/headerMenuItems.tsx"

@@ -17,10 +17,6 @@ const MembershipRequestStatusTag = ({ status }: IProps) => {
             return <Tag color="gold">Payment pending</Tag>
         case MembershipRequestStatusEnum.PAYMENT_FAILED:
             return <Tag color="red">Payment failed</Tag>
-        case MembershipRequestStatusEnum.PAYMENT_EXPIRED:
-            return <Tag color="volcano">Payment expired</Tag>
-        case MembershipRequestStatusEnum.SUBMITTED:
-            return <Tag color="default">Submitted</Tag>
         default:
             return <Tag>{status}</Tag>
     }

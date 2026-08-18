@@ -1,4 +1,4 @@
-import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 import type { IPayment } from "@/entities/Payments.ts"
 import { useQuery } from "@tanstack/react-query"
 import api from "@/axios.ts"

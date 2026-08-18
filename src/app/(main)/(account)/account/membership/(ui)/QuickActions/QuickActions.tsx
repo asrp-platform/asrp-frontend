@@ -1,14 +1,15 @@
 import ProfileInfoCard from "@/shared/ui/Cards/ProfileInfoCard/ProfileInfoCard"
-import DowngradeMembership from "@app/(main)/(account)/account/membership/(ui)/DowngradeMembership/DowngradeMembership.tsx"
+import DowngradeMembership from "@app/(main)/(account)/account/membership/(ui)/QuickActions/components/DowngradeMembership/DowngradeMembership.tsx"
 
 import styles from "./QuickActions.module.scss"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import { useState } from "react"
 import api from "@/axios.ts"
 import { CURRENT_USER_MEMBERSHIP_RENEW_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
+import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 import { isAxiosError } from "axios"
 import { message } from "antd"
+import UpgradeMembership from "@app/(main)/(account)/account/membership/(ui)/QuickActions/components/UpgradeMembership/UpgradeMembership.tsx"
 
 interface QuickActionsProps {
     variant: "active" | "expired"
@@ -48,6 +49,7 @@ const QuickActions = ({ variant }: QuickActionsProps) => {
                     Renew membership
                 </CustomButton>
                 {!isExpired && <DowngradeMembership />}
+                {!isExpired && <UpgradeMembership />}
                 <CustomButton variant={"secondary"}>Download confirmation</CustomButton>
             </div>
         </ProfileInfoCard>

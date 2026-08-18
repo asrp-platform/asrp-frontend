@@ -2,12 +2,17 @@ import type { JSONContent } from "@tiptap/react"
 
 export interface News {
     id: number
+    title: string
+    slug: string
+    cover_key: string | null
+    cover_url: string | null
     body: JSONContent
+    when: string | null
+    where: string | null
     created_at: string
     updated_at: string
     author_id: number
     is_published: boolean
-    is_deleted: boolean
 }
 
 /* eslint-disable */
@@ -38,6 +43,10 @@ export interface IWebinar {
     location: string | null
 
     member_only: boolean
+    archived: boolean
+    timezone: string
+    language: string | null
+
     is_registered: boolean
 }
 

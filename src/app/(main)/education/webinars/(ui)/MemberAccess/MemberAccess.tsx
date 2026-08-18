@@ -7,7 +7,7 @@ import { WebinarAccessStatus } from "./webinarAccess"
 import { getWebinarRegistrationUrl } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import api from "@/axios.ts"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
-import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import type { IWebinar } from "@entities/News.ts"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { message } from "antd"
@@ -32,7 +32,7 @@ const MemberAccess = ({ compact = false, webinar, status }: IProps) => {
             message.success("Successfully registered for the webinar")
         },
         onError: (error: unknown) => {
-            handleRequestError(error)
+            handleApiError({ error })
         },
     })
 

@@ -34,6 +34,29 @@
     width: 100%;
 }
 
+.timePreview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 13px 15px;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    background: #eff6ff;
+
+    span {
+        color: var(--text-secondary-color-dark);
+        font-size: 13px;
+    }
+
+    strong {
+        color: var(--text-heading-color-dark);
+        font-size: 14px;
+        text-align: right;
+    }
+}
+
 .objectivesList {
     display: flex;
     flex-direction: column;
@@ -77,6 +100,16 @@
 @media (max-width: 575px) {
     .formSection {
         padding: 16px;
+    }
+
+    .timePreview {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+
+        strong {
+            text-align: left;
+        }
     }
 }
 

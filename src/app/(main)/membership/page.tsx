@@ -1,9 +1,9 @@
 import styles from "@/app/(main)/membership/styles.module.scss"
-import MembershipTypesCards from "@/app/(main)/membership/(ui)/MembershipTypesCards.tsx"
-import PageTitleCard from "@/shared/ui/PageTitleCard/PageTitleCard.tsx"
+import MembershipTypesCards from "@app/(main)/membership/(ui)/MembershipTypesCards/MembershipTypesCards.tsx"
+import PageTitleCard from "@app/(main)/membership/(ui)/PageTitleCard/PageTitleCard.tsx"
 import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
 import Link from "next/link"
-import ReturnToLoginLink from "@shared/ui/ReturnToLoginLink/ReturnToLoginLink.tsx"
+import { getLoginUrl } from "@shared/helpers/authRedirect.ts"
 
 const MembershipPage = () => {
     return (
@@ -83,9 +83,9 @@ const MembershipPage = () => {
                         <Link href="/membership/become-member" className={styles.primaryLink}>
                             Become a Member
                         </Link>
-                        <ReturnToLoginLink className={styles.memberLoginLink}>
+                        <Link href={getLoginUrl("/membership")} className={styles.memberLoginLink}>
                             Member Login
-                        </ReturnToLoginLink>
+                        </Link>
                         <Link href="#" className={styles.renewMembershipLink}>
                             Renew Membership
                         </Link>

@@ -10,9 +10,9 @@ import {
 } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
 import api from "@/axios.ts"
 import { CURRENT_USER_MEMBERSHIP_REQUEST_REAPPLIES_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { useQueryClient } from "@tanstack/react-query"
-import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
+import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 
 type ReapplyMembershipFormValues = {
     primary_affiliation: string
@@ -54,7 +54,7 @@ const ReapplyMembershipButton = () => {
 
             setIsModalOpen(false)
         } catch (error: unknown) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setIsSubmitting(false)
         }

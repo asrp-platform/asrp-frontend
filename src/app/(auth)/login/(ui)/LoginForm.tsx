@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useForm } from "antd/es/form/Form"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import { useQueryClient } from "@tanstack/react-query"
-import { handleFormError } from "@shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { useState } from "react"
 import { getSafeReturnTo } from "@shared/helpers/authRedirect.ts"
 
@@ -48,7 +48,7 @@ const LoginForm = () => {
                     { name: "password", errors: ["Wrong credentials"] },
                 ])
             } else {
-                handleFormError(error, form)
+                handleApiError({ error, form })
             }
         } finally {
             setIsLoading(false)

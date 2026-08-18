@@ -1,7 +1,7 @@
 import { Card, Space, message } from "antd"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 
 import {
     createSponsor,
@@ -70,7 +70,7 @@ const SponsorsManagement = () => {
                 return
             }
 
-            handleRequestError(error)
+            handleApiError({ error })
         },
     })
 
@@ -81,7 +81,7 @@ const SponsorsManagement = () => {
             queryClient.invalidateQueries({ queryKey: SPONSORS_QUERY_KEY })
             queryClient.invalidateQueries({ queryKey: ["sponsors"] })
         },
-        onError: (error) => handleRequestError(error),
+        onError: (error) => handleApiError({ error }),
     })
 
     const handleCreateSponsor = async (values: SponsorFormValues, logoFile: File | null) => {

@@ -10,7 +10,7 @@ import styles from "./DeleteWebinarButton.module.scss"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { getWebinarDetailAdminUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios.ts"
-import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 
 interface IProps {
     webinar: IWebinar
@@ -30,7 +30,7 @@ const DeleteWebinarButton = ({ webinar }: IProps) => {
             setIsOpen(false)
         },
         onError: async (error: Error) => {
-            handleRequestError(error)
+            handleApiError({ error })
         },
     })
 
