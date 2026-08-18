@@ -2,7 +2,11 @@
 
 ## Getting Started
 
-For local development NEXT_PUBLIC_API_URL must be provided.
+For local development `NEXT_PUBLIC_API_URL` must be provided.
+
+`SERVER_API_URL` can be provided at runtime for requests made by Next.js on the server. It must be an absolute URL,
+for example `http://backend:8000/api`. If it is omitted and `NEXT_PUBLIC_API_URL` is relative, server requests use the
+production site origin as a fallback.
 
 ## Development
 
@@ -59,5 +63,9 @@ docker pull max31ru12/asrp-prod-frontend:latest
 ### Run container
 
 ```bash
-docker run -d -p 3000:3000 --name asrp_frontend --network asrp-backend_default max31ru12/asrp-prod-frontend:latest
+docker run -d -p 3000:3000 --name asrp_frontend --network asrp-backend_default \
+  -e SERVER_API_URL=http://backend:8000/api \
+  max31ru12/asrp-prod-frontend:latest
 ```
+
+Replace `backend` with the backend container's DNS name on the Docker network.

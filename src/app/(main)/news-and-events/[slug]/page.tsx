@@ -14,12 +14,18 @@ import styles from "./styles.module.scss"
 
 const SITE_URL = "https://asrpath.org"
 
+const getServerApiUrl = () => {
+    const configuredUrl = process.env.SERVER_API_URL?.trim() || REST_API_URL
+
+    return new URL(configuredUrl, SITE_URL).toString().replace(/\/$/, "")
+}
+
 interface PageProps {
     params: Promise<{ slug: string }>
 }
 
 const getNews = cache(async (slug: string): Promise<News | null> => {
-    const response = await fetch(`${REST_API_URL}${getNewsDetailUrl(slug)}`, {
+    const response = await fetch(`${getServerApiUrl()}${getNewsDetailUrl(slug)}`, {
         cache: "no-store",
         headers: { Accept: "application/json" },
     })
