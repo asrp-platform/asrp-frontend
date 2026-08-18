@@ -9,7 +9,7 @@ import { type IWebinar, WebinarStatus } from "@entities/News.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import { WEBINARS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
+import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 
 import PastWebinarCard from "./components/PastWebinarCard/PastWebinarCard"
 import PastWebinarsModal from "./components/PastWebinarsModal/PastWebinarsModal"
@@ -30,6 +30,7 @@ const PastWebinarsSection = () => {
                     status: WebinarStatus.PAST,
                     ordering: "-starts_at",
                     page_size: 100,
+                    archived: false,
                 },
             })
             return response.data

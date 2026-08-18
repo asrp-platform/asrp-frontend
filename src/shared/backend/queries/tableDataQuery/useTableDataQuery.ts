@@ -1,7 +1,7 @@
 import api from "@/axios.ts"
 import { useQuery } from "@tanstack/react-query"
 import type { QueryKey } from "@tanstack/react-query"
-import type { IPaginatedBackendResponse } from "@shared/types/interfaces.ts"
+import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 
 type TableFilterValue = string | number | boolean | null | undefined
 type TableFilters<Filters> = {
@@ -15,6 +15,7 @@ interface TableQueryParams<Filters extends TableFilters<Filters>> {
     pageSize?: number
     ordering?: string[]
     filters?: Filters
+    enabled?: boolean
 }
 
 const fetchData = async <T, F extends TableFilters<F>>({
@@ -42,11 +43,13 @@ export const useTableDataQuery = <T, F extends TableFilters<F> = Record<string, 
     pageSize,
     ordering = [],
     filters,
+    enabled = true,
 }: TableQueryParams<F>) => {
     return useQuery<IPaginatedBackendResponse<T>>({
         queryKey: [...queryKey, page, pageSize, ordering, { filters: filters ?? {} }],
         queryFn: () => fetchData<T, F>({ url, page, pageSize, filters, ordering }),
         placeholderData: (prev) => prev,
         staleTime: 1000 * 60 * 10,
+        enabled,
     })
 }

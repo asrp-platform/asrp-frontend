@@ -2,8 +2,7 @@ import { Button, Checkbox, Col, Flex, Form, Input, Modal, Row, Tooltip } from "a
 import { useEffect, useState } from "react"
 
 import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.scss"
-import { handleFormError } from "@/shared/helpers/setFormFieldsErrors"
-import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
+import { clearFormErrors, handleApiError } from "@shared/helpers/formsHelpers.ts"
 
 export interface IExperienceFormValues {
     institution: string
@@ -64,7 +63,7 @@ const ExperienceForm = ({
             await onSubmit(values)
             setMode("view")
         } catch (error) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setIsLoading(false)
         }

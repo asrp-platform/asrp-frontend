@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button, Form, Input } from "antd"
 
-import type { IValidationError } from "@/shared/types/interfaces.ts"
+import type { IValidationError } from "@shared/interfaces.ts"
 import { DIRECTORS_BOARD_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { isAxiosError } from "axios"
 

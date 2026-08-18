@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import api from "@/axios.ts"
 import type { IMemberDirectoryItem, IMembersDirectoryFilters } from "@/entities/MemberDirectory.ts"
 import { MEMBERS_URL } from "@/shared/backend/restApiUrls/restApiUrls.ts"
-import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 
 export const MEMBERS_DIRECTORY_QUERY_KEY = ["members-directory"]
 

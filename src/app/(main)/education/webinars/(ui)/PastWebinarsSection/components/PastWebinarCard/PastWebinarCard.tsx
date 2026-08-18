@@ -21,7 +21,7 @@ const PastWebinarCard = ({
     <article className={styles.row}>
         <div className={styles.date}>
             <span>COMPLETED</span>
-            <time>{formatDatetime(webinar.starts_at, ["hour", "minute"])}</time>
+            <time>{formatDatetime(webinar.starts_at, ["hour", "minute"], webinar.timezone)}</time>
         </div>
         <div className={styles.info}>
             <h3>{webinar.title}</h3>

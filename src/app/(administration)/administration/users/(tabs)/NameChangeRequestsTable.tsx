@@ -11,7 +11,7 @@ import {
     getAdminUserNameChangeRequestUrl,
     NAME_CHANGE_REQUESTS_URL,
 } from "@shared/backend/restApiUrls/adminApiUrls.ts"
-import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
+import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 import type { INameChangeRequest, NameChangeRequestStatus } from "@/entities/NameChangeRequest.ts"
 
 import { getSortOrder } from "@/shared/helpers/getSortOrder.ts"
@@ -21,6 +21,7 @@ import NameChangeStatusModal from "@/features/NameChangeRequestModal/NameChangeR
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 import Link from "next/link"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
 interface ITableFilters {
     status?: NameChangeRequestStatus
@@ -51,7 +52,6 @@ const NameChangeRequestsTable = () => {
 
     const [filters, setFilters] = useState<ITableFilters>({})
     const [currentPage, setCurrentPage] = useState<number>(1)
-    const [pageSize] = useState<number>(10)
     const [ordering, setOrdering] = useState<string[]>([])
     const [statusModalOpen, setStatusModalOpen] = useState(false)
     const [selectedRow, setSelectedRow] = useState<INameChangeRequest | null>(null)
@@ -114,7 +114,7 @@ const NameChangeRequestsTable = () => {
                     {
                         params: {
                             page: currentPage,
-                            page_size: pageSize,
+                            page_size: DEFAULT_PAGE_SIZE,
                             ordering: ordering.length ? ordering.join(",") : null,
                             ...filters,
                         },
@@ -131,7 +131,7 @@ const NameChangeRequestsTable = () => {
         if (canView) {
             fetchRequests()
         }
-    }, [currentPage, pageSize, ordering, filters, canView])
+    }, [currentPage, ordering, filters, canView])
 
     const columns: ColumnsType<INameChangeRequest> = [
         {
@@ -219,7 +219,7 @@ const NameChangeRequestsTable = () => {
                 columns={columns}
                 pagination={{
                     current: currentPage,
-                    pageSize: pageSize,
+                    pageSize: DEFAULT_PAGE_SIZE,
                     total: tableData?.count,
                     onChange: (page) => setCurrentPage(page),
                 }}

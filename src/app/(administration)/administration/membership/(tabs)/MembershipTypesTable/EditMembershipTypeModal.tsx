@@ -5,7 +5,7 @@ import type { IMembershipType } from "@entities/Membership.ts"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "antd/es/form/Form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { getAdminMembershipTypeUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios.ts"
 
@@ -42,7 +42,7 @@ const EditMembershipTypeModal = ({ membershipType }: IProps) => {
             message.success(`${membershipType.type} membership type updated`)
         },
         onError: (error) => {
-            handleRequestError(error)
+            handleApiError({ error })
         },
     })
 

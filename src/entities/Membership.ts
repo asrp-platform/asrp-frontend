@@ -15,13 +15,11 @@ export enum MembershipTypeEnum {
 
 // @ts-ignore
 export enum MembershipRequestStatusEnum {
-    SUBMITTED = "SUBMITTED",
     PAYMENT_PENDING = "PAYMENT_PENDING",
     PAID = "PAID",
     APPROVED = "APPROVED",
     REJECTED = "REJECTED",
     PAYMENT_FAILED = "PAYMENT_FAILED",
-    PAYMENT_EXPIRED = "PAYMENT_EXPIRED",
 }
 
 export interface IMembershipType {

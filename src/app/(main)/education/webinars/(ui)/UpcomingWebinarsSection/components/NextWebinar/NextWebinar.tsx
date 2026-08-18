@@ -1,9 +1,9 @@
-import { CalendarDays, Clock3, MapPin } from "lucide-react"
+import { CalendarDays, Clock3, Globe2, MapPin } from "lucide-react"
 import MemberAccess from "@app/(main)/education/webinars/(ui)/MemberAccess/MemberAccess.tsx"
 
 import styles from "./NextWebinar.module.scss"
 import type { IWebinar } from "@entities/News.ts"
-import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
+import { formatDatetime, formatTimezone } from "@shared/helpers/formatDatetime.ts"
 import type { WebinarAccessStatus } from "@app/(main)/education/webinars/(ui)/MemberAccess/webinarAccess.ts"
 import DeleteWebinarButton from "../DeleteWebinarButton/DeleteWebinarButton"
 import EditWebinarButton from "../EditWebinarButton/EditWebinarButton"
@@ -38,14 +38,24 @@ const NextWebinar = ({ webinar, accessStatus, canDelete }: IProps) => {
                 <div className={styles.metaRow}>
                     <span>
                         <CalendarDays size={16} />{" "}
-                        {formatDatetime(webinar.starts_at, ["hour", "minute"])}
+                        {formatDatetime(webinar.starts_at, ["hour", "minute"], webinar.timezone)}
                     </span>
                     <span>
                         <Clock3 size={16} />{" "}
-                        {formatDatetime(webinar.starts_at, ["day", "month", "year"])}
+                        {formatDatetime(
+                            webinar.starts_at,
+                            ["day", "month", "year"],
+                            webinar.timezone,
+                        )}
                     </span>
+                    {webinar.location && (
+                        <span>
+                            <MapPin size={16} /> {webinar.location}
+                        </span>
+                    )}
                     <span>
-                        <MapPin size={16} /> {webinar.location}
+                        <Globe2 size={16} />
+                        {formatTimezone(webinar.starts_at, webinar.timezone)}
                     </span>
                 </div>
                 <div className={styles.divider} />

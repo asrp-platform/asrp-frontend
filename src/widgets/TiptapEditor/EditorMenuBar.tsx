@@ -1,4 +1,5 @@
 import { type Editor, useEditorState } from "@tiptap/react"
+import type { ReactNode } from "react"
 
 import {
     AlignCenter,
@@ -6,6 +7,7 @@ import {
     AlignRight,
     Bold,
     Code,
+    Heading2,
     Heading3,
     Highlighter,
     Italic,
@@ -17,6 +19,7 @@ import {
     SeparatorHorizontal,
     CornerDownLeft,
     Link,
+    Quote,
     Heading4,
     Heading5,
 } from "lucide-react"
@@ -25,9 +28,18 @@ import { Button } from "antd"
 interface IProps {
     editor: Editor
     show?: boolean
+    extendOptions?: (editor: Editor) => EditorMenuOption[]
 }
 
-const EditorMenuBar = ({ editor, show = true }: IProps) => {
+export interface EditorMenuOption {
+    icon: ReactNode
+    onClick: () => void
+    pressed?: boolean
+    disabled?: boolean
+    title?: string
+}
+
+const EditorMenuBar = ({ editor, show = true, extendOptions }: IProps) => {
     // Read the current editor's state, and re-render the component when it changes
     const editorState = useEditorState({
         editor,
@@ -61,25 +73,39 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
                 canAlign: ctx.editor.can().chain().setTextAlign("center").run(),
                 isHighlight: ctx.editor.isActive("highlight") ?? false,
                 isLink: ctx.editor.isActive("link") ?? false,
+                isImage: ctx.editor.isActive("image") ?? false,
+                imageWidth: ctx.editor.isActive("image")
+                    ? (ctx.editor.getAttributes("image").width ?? "100%")
+                    : null,
             }
         },
     })
 
-    const options = [
+    const options: EditorMenuOption[] = [
+        {
+            icon: <Heading2 width={18} />,
+            title: "Heading 2",
+            onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+            pressed: editorState.isHeading2,
+            disabled: false,
+        },
         {
             icon: <Heading3 width={18} />,
+            title: "Heading 3",
             onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
             pressed: editorState.isHeading3,
             disabled: false,
         },
         {
             icon: <Heading4 width={18} />,
+            title: "Heading 4",
             onClick: () => editor.chain().focus().toggleHeading({ level: 4 }).run(),
             pressed: editorState.isHeading4,
             disabled: false,
         },
         {
             icon: <Heading5 width={18} />,
+            title: "Heading 5",
             onClick: () => editor.chain().focus().toggleHeading({ level: 5 }).run(),
             pressed: editorState.isHeading5,
             disabled: false,
@@ -136,6 +162,13 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
             disabled: false,
         },
         {
+            icon: <Quote width={18} />,
+            title: "Quote",
+            onClick: () => editor.chain().focus().toggleBlockquote().run(),
+            pressed: editorState.isBlockquote,
+            disabled: false,
+        },
+        {
             icon: <Highlighter width={18} />,
             onClick: () => editor.chain().focus().toggleHighlight().run(),
             pressed: editorState.isHighlight,
@@ -184,6 +217,9 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
         },
     ]
 
+    const extendedOptions = extendOptions?.(editor) ?? []
+    const menuOptions = [...extendedOptions, ...options]
+
     if (!show) {
         return null
     }
@@ -191,13 +227,14 @@ const EditorMenuBar = ({ editor, show = true }: IProps) => {
     return (
         <div className="control-group">
             <div className="button-group">
-                {options.map((option, index) => (
+                {menuOptions.map((option, index) => (
                     <Button
                         key={index}
                         type={option.pressed ? "primary" : "default"}
                         onClick={option.onClick}
                         className="editorMenuButton"
-                        disabled={option.disabled}
+                        disabled={option.disabled ?? false}
+                        title={option.title}
                     >
                         {option.icon}
                     </Button>

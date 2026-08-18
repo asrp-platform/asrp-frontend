@@ -5,7 +5,7 @@ import { type ReactNode } from "react"
 import styles from "@/app/(main)/(account)/account/layout.module.scss"
 import Link from "next/link"
 
-import NotAuthorized from "@/shared/ui/NotAuthorized/NotAuthorized.tsx"
+import NotAuthorized from "@app/(main)/(account)/account/(shared)/NotAuthorized/NotAuthorized.tsx"
 import clsx from "clsx"
 import { usePathname } from "next/navigation"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"

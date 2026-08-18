@@ -116,6 +116,9 @@
 }
 
 .note {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding: 20px 24px;
     border: var(--red-border);
     border-radius: var(--card-border-radius);

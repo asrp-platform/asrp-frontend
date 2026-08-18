@@ -1,5 +1,7 @@
 import type { Country, Credentials } from "@features/MembershipApplicationForm/types.ts"
 
+export const DEFAULT_PAGE_SIZE = 10
+
 export const practiceSettingOptions = [
     { value: "academic", label: "Academic medical center" },
     { value: "community", label: "Community hospital" },
@@ -64,3 +66,27 @@ export const referralSourceOptions = [
     { value: "web_search", label: "Web search" },
     { value: "other", label: "Other" },
 ]
+
+export const WEBINAR_TIMEZONE_OPTIONS = [
+    { label: "Eastern Time (New York)", value: "America/New_York" },
+    { label: "Central Time (Chicago)", value: "America/Chicago" },
+    { label: "Mountain Time (Denver)", value: "America/Denver" },
+    { label: "Mountain Time - no DST (Phoenix)", value: "America/Phoenix" },
+    { label: "Pacific Time (Los Angeles)", value: "America/Los_Angeles" },
+    { label: "Alaska Time (Anchorage)", value: "America/Anchorage" },
+    { label: "Hawaii Time (Honolulu)", value: "Pacific/Honolulu" },
+    { label: "Moscow Time", value: "Europe/Moscow" },
+    { label: "United Kingdom (London)", value: "Europe/London" },
+    { label: "Central Europe (Berlin)", value: "Europe/Berlin" },
+    { label: "Gulf Time (Dubai)", value: "Asia/Dubai" },
+    { label: "India Time (Kolkata)", value: "Asia/Kolkata" },
+    { label: "Singapore Time", value: "Asia/Singapore" },
+    { label: "Japan Time (Tokyo)", value: "Asia/Tokyo" },
+    { label: "Australian Eastern Time (Sydney)", value: "Australia/Sydney" },
+    { label: "UTC", value: "UTC" },
+] as const
+
+export const WEBINAR_LANGUAGE_OPTIONS = [
+    { label: "English", value: "English" },
+    { label: "Russian", value: "Russian" },
+] as const

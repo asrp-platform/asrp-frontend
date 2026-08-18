@@ -4,13 +4,12 @@ import styles from "@/app/(main)/(account)/account/profile/(ui)/styles.module.sc
 import { Button, Col, Form, type FormProps, Input, message, Row, Select } from "antd"
 import type { IUserPrivate } from "@/entities/User.ts"
 import { useEffect, useMemo, useState } from "react"
-import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
 import api from "@/axios.ts"
-import ChangeNameModal from "@/app/(main)/(account)/account/profile/(ui)/RequestNameChangeModal.tsx"
+import ChangeNameModal from "@/app/(main)/(account)/account/profile/(ui)/ChangeNameModal.tsx"
 import { CURRENT_USER_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { credentialsOptions } from "@shared/options.ts"
 import type { Credentials } from "@features/MembershipApplicationForm/types.ts"
-import { clearFormErrors } from "@shared/helpers/formsHelpers.ts"
+import { clearFormErrors, handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { useCountriesQuery } from "@shared/backend/queries/useCountriesQuery.ts"
 
 interface IProps {
@@ -106,7 +105,7 @@ const PersonalInfoForm = ({ user }: IProps) => {
             })
             message.success("Successfully updated user data")
         } catch (error) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setIsLoading(false)
         }

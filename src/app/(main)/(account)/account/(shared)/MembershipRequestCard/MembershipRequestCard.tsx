@@ -8,7 +8,7 @@ import { CURRENT_USER_RETRY_MEMBERSHIP_REQUEST_PAYMENT_URL } from "@shared/backe
 import { useState } from "react"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 import ReapplyMembershipButton from "@features/ReapplyMembershipButton/ReapplyMembershipButton.tsx"
-import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
+import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 
 type MembershipStatusMeta = {
     label: string

@@ -7,15 +7,15 @@ import type { FieldType, MembershipKey } from "@/features/MembershipApplicationF
 import { useMemo, useState } from "react"
 import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCard/MembershipCard.tsx"
 import api from "@/axios.ts"
-import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
 import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import Warning from "@/shared/ui/Warning/Warning.tsx"
+import Warning from "@/features/MembershipApplicationForm/(components)/Warning/Warning.tsx"
 import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
 import { referralSourceOptions } from "@shared/options.ts"
-import type { PaymentCheckoutResponse } from "@shared/types/interfaces.ts"
+import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
 import MembershipApplicationAvailabilityAlert from "@/features/MembershipApplicationForm/ui/MembershipApplicationAvailabilityAlert.tsx"
@@ -114,7 +114,7 @@ const MembershipApplicationForm = () => {
             )
             window.location.href = response.data.checkout_session_url
         } catch (error: unknown) {
-            handleFormError(error, form)
+            handleApiError({ error, form })
         } finally {
             setIsFormSubmitting(false)
         }

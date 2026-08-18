@@ -6,7 +6,9 @@ import {
     ArrowLeft,
     CalendarDays,
     CircleAlert,
+    Globe2,
     LoaderCircle,
+    Languages,
     RotateCcw,
     UserRound,
 } from "lucide-react"
@@ -19,7 +21,7 @@ import {
     getWebinarDetailUrl,
     getWebinarPlaybackUrl,
 } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
+import { formatDatetime, formatTimezone } from "@shared/helpers/formatDatetime.ts"
 import CustomLink from "@shared/ui/Buttons/CustomLink/CustomLink.tsx"
 
 import styles from "./styles.module.scss"
@@ -83,7 +85,16 @@ const WebinarWatchPage = () => {
                         </span>
                         <span>
                             <CalendarDays size={17} />
-                            {formatDatetime(webinar.starts_at)}
+                            {formatDatetime(webinar.starts_at, [], webinar.timezone)}
+                        </span>
+                        {webinar.language && (
+                            <span>
+                                <Languages size={17} /> {webinar.language}
+                            </span>
+                        )}
+                        <span>
+                            <Globe2 size={17} />
+                            {formatTimezone(webinar.starts_at, webinar.timezone)}
                         </span>
                     </div>
                 )}

@@ -11,7 +11,7 @@ import { useState } from "react"
 
 import api from "@/axios.ts"
 import { ContactMessageType } from "@/entities/ContactMessage.ts"
-import { handleFormError } from "@/shared/helpers/setFormFieldsErrors.ts"
+import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
 import { CONTACT_MESSAGE_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 interface DonationFormFields {
@@ -52,7 +52,7 @@ const DonationContactForm = () => {
                 message.success("Your message has been sent successfully.")
                 form.resetFields()
             } catch (error) {
-                handleFormError(error, form)
+                handleApiError({ error, form })
             } finally {
                 setLoading(false)
             }

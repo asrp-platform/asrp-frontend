@@ -1,0 +1,21 @@
+.content {
+    min-height: 310px;
+    padding: 8px 0 4px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 20px;
+}
+
+@media (max-width: 520px) {
+    .actions {
+        flex-direction: column-reverse;
+
+        button {
+            width: 100%;
+        }
+    }
+}

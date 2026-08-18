@@ -1,0 +1,57 @@
+.loader {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 12px 0;
+}
+
+.intro {
+    display: flex;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #f5f9ff;
+
+    h4,
+    p {
+        margin: 0;
+    }
+
+    h4 {
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    p {
+        color: #526071;
+        line-height: 1.5;
+    }
+}
+
+.icon {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    place-items: center;
+    border-radius: 50%;
+    color: #1677ff;
+    background: #e6f4ff;
+}
+
+.selectLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.select {
+    width: 100%;
+}
+
+.checkoutNote {
+    margin: 14px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+}

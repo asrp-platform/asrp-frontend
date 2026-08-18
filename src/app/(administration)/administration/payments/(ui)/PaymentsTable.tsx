@@ -21,9 +21,9 @@ import { PAYMENTS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { getSortOrder } from "@shared/helpers/getSortOrder.ts"
 import styles from "@app/(administration)/administration/users/styles.module.scss"
 import { getSelectTableFilterDropdown } from "@/widgets/TableDropdown/SelectTableFilterDropdown/getSelectTableFilterDropdown.tsx"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
 const PAYMENTS_ADMIN_QUERY_KEY = ["payments-admin"]
-const PAGE_SIZE = 25
 
 interface ITableFilters {
     user_id?: number
@@ -80,7 +80,7 @@ const PaymentsTable = () => {
         url: PAYMENTS_ADMIN_URL,
         queryKey: PAYMENTS_ADMIN_QUERY_KEY,
         page,
-        pageSize: PAGE_SIZE,
+        pageSize: DEFAULT_PAGE_SIZE,
         ordering,
         filters,
     })
@@ -273,7 +273,7 @@ const PaymentsTable = () => {
             onChange={handleTableChange}
             pagination={{
                 current: page,
-                pageSize: PAGE_SIZE,
+                pageSize: DEFAULT_PAGE_SIZE,
                 total: data?.count ?? 0,
                 showSizeChanger: false,
             }}

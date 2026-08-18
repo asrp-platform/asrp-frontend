@@ -9,6 +9,8 @@ import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import ManageUserMembership from "@app/(administration)/administration/membership/(tabs)/MembersTable/ManageUserMembership/ManageUserMembership.tsx"
 import MembershipStatusTag from "@app/(administration)/administration/membership/(tabs)/MembersTable/MembershipStatusTag.tsx"
 import Link from "next/link"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
+import { getSortOrder } from "@shared/helpers/getSortOrder.ts"
 
 interface IFilters {
     user_id: string | null
@@ -20,9 +22,9 @@ const initialFilters: IFilters = {
 
 const MembersTable = () => {
     const [page, setPage] = useState<number>(1)
-    const [ordering, setOrdering] = useState<string[]>([])
+    const [ordering, setOrdering] = useState<string[]>(["-id"])
     const [filters] = useState<IFilters>(initialFilters)
-    const pageSize = 25
+    const pageSize = DEFAULT_PAGE_SIZE
 
     const { data, isLoading } = useTableDataQuery<IUserMembership, IFilters>({
         url: MEMBERS_ADMIN_URL,
@@ -39,6 +41,8 @@ const MembersTable = () => {
             dataIndex: "id",
             key: "id",
             width: 80,
+            sorter: true,
+            sortOrder: getSortOrder("id", ordering),
         },
         {
             title: "User email",
@@ -55,10 +59,16 @@ const MembersTable = () => {
             render: (_, record) => <MembershipStatusTag membership={record} />,
         },
         {
+            title: "Member since",
+            dataIndex: "created_at",
+            key: "created_at",
+            render: (value: string) => formatDatetime(value),
+        },
+        {
             title: "Expires at",
             dataIndex: "expires_at",
             key: "expires_at",
-            render: (value: string) => <span>{formatDatetime(value)}</span>,
+            render: (value: string) => formatDatetime(value),
         },
         {
             title: "Actions",

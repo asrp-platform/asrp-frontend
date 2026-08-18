@@ -5,7 +5,6 @@ import type { ColumnsType } from "antd/es/table"
 import { useEffect, useMemo, useState } from "react"
 import { isAxiosError } from "axios"
 import api from "@/axios.ts"
-import type { IPaginatedBackendResponse } from "@/shared/types/interfaces.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import { CONTACT_MESSAGES_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { ContactMessageType, type IContactMessage } from "@/entities/ContactMessage.ts"
@@ -13,6 +12,8 @@ import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFil
 import ContactMessageReplyButton from "../ContactMessageReply/ContactMessageReplyButton"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
+import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 
 interface ITableFilters {
     name__startswith?: string
@@ -184,7 +185,12 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
             title: "Answered",
             render: (_: unknown, record: IContactMessage) => renderBooleanTag(record.answered),
         },
-        { title: "Created", dataIndex: "created_at" },
+        {
+            title: "Created",
+            key: "created_at",
+            dataIndex: "created_at",
+            render: (value: string) => formatDatetime(value),
+        },
         {
             title: "Actions",
             key: "actions",

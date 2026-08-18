@@ -20,7 +20,7 @@ import styles from "@app/(administration)/administration/users/(tabs)/ui/AdminCa
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
-import { handleRequestError } from "@shared/helpers/handleStatusError.ts"
+import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { CloseOutlined } from "@ant-design/icons"
 
 interface ITableFilters {
@@ -72,8 +72,11 @@ const AdministratorsPermissions = () => {
             const response = await api.get<IPermission[]>(getAdminUserPermissionsUrl(user.id))
             setCheckedPermissions(response.data.map((p) => p.id))
         } catch (error) {
-            handleRequestError(error, {
-                404: "User with provided ID not found",
+            handleApiError({
+                error,
+                statusMessages: {
+                    404: "User with provided ID not found",
+                },
             })
         }
     }
@@ -85,8 +88,11 @@ const AdministratorsPermissions = () => {
         },
         onSuccess: () => message.success("Permissions updated successfully."),
         onError: (error) => {
-            handleRequestError(error, {
-                404: "User with provided ID not found",
+            handleApiError({
+                error,
+                statusMessages: {
+                    404: "User with provided ID not found",
+                },
             })
         },
     })

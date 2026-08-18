@@ -1,6 +1,6 @@
 import styles from "@/app/(main)/about/styles.module.scss"
 import type { Metadata } from "next"
-import SocialNetLinks from "@/shared/ui/social-net-links/SocialNetLinks.tsx"
+import SocialNetLinks from "@shared/ui/SocialNetLinks/SocialNetLinks.tsx"
 import BylawsLink from "@/app/(main)/about/ui/BylawsLink.tsx"
 
 // eslint-disable-next-line react-refresh/only-export-components

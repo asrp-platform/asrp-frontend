@@ -59,6 +59,7 @@ export const CURRENT_USER_MEMBERSHIP_REQUEST_REAPPLIES_URL = `${CURRENT_USER_MEM
 export const CURRENT_USER_PAYMENTS_URL = `${CURRENT_USER_URL}/payments`
 export const CURRENT_USER_MEMBERSHIP_URL = `${CURRENT_USER_URL}/membership`
 export const CURRENT_USER_MEMBERSHIP_DOWNGRADE_REQUEST_URL = `${CURRENT_USER_MEMBERSHIP_URL}/downgrade-request`
+export const CURRENT_USER_MEMBERSHIP_UPGRADE_URL = `${CURRENT_USER_MEMBERSHIP_URL}/upgrade`
 export const CURRENT_USER_MEMBERSHIP_RENEW_REQUEST_URL = `${CURRENT_USER_MEMBERSHIP_URL}/renewal`
 
 // Feedback
@@ -66,6 +67,8 @@ export const CONTACT_MESSAGE_URL = "/contact-messages"
 export const DONATION_CHECKOUT_URL = "/payments/donations"
 
 export const DIRECTORS_BOARD_URL = "/directors-board"
+export const NEWS_URL = "/news"
+export const getNewsDetailUrl = (slug: string) => `${NEWS_URL}/${encodeURIComponent(slug)}`
 
 export const BYLAWS_URL = "/legal-documents/bylaws"
 export const SPONSORS_URL = `/legal-documents/sponsors`
