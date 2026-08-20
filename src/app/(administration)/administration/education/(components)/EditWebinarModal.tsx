@@ -50,6 +50,7 @@ interface IFormValues {
     speaker_name: string
     speaker_description?: string
     join_link?: string
+    registration_link?: string
     bunny_video_id?: string
     starts_at: Dayjs
     location?: string
@@ -63,6 +64,7 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
     const [openedAt] = useState(() => Date.now())
     const queryClient = useQueryClient()
     const selectedTimezone = Form.useWatch("timezone", form) as string | undefined
+    const memberOnly = Form.useWatch("member_only", form) as boolean | undefined
     const isPast = new Date(webinar.ends_at || webinar.starts_at).getTime() <= openedAt
 
     const invalidateWebinars = async () => {
@@ -84,6 +86,7 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
             speaker_name: webinar.speaker_name,
             speaker_description: webinar.speaker_description ?? undefined,
             join_link: webinar.join_link ?? undefined,
+            registration_link: webinar.registration_link ?? undefined,
             bunny_video_id: webinar.bunny_video_id ?? undefined,
             starts_at: dayjs.utc(webinar.starts_at).tz(webinar.timezone),
             location: webinar.location ?? undefined,
@@ -103,6 +106,9 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
                 speaker_name: values.speaker_name.trim(),
                 speaker_description: values.speaker_description?.trim() || null,
                 join_link: values.join_link?.trim() || null,
+                registration_link: values.member_only
+                    ? null
+                    : values.registration_link?.trim() || null,
                 bunny_video_id: values.bunny_video_id?.trim() || null,
                 starts_at: values.starts_at.tz(values.timezone, true).toISOString(),
                 location: values.location?.trim() || null,
@@ -317,6 +323,17 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
                         </Form.Item>
                     </Col>
                 </Row>
+
+                {memberOnly === false && (
+                    <Form.Item
+                        label="External registration link"
+                        name="registration_link"
+                        extra="Public webinars use an external registration form. Joining remains available to everyone."
+                        rules={[{ type: "url", message: "Please enter a valid URL" }]}
+                    >
+                        <Input placeholder="https://forms.google.com/..." />
+                    </Form.Item>
+                )}
 
                 <Form.Item
                     label="Bunny video ID"

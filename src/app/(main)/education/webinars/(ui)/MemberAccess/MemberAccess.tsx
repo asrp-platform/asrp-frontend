@@ -36,6 +36,25 @@ const MemberAccess = ({ compact = false, webinar, status }: IProps) => {
         },
     })
 
+    if (!webinar.member_only) {
+        if (!webinar.registration_link && !webinar.join_link) return null
+
+        return (
+            <div className={compact ? styles.registrationCompact : styles.registrationAction}>
+                {webinar.registration_link && (
+                    <CustomLink href={webinar.registration_link} variant="primary">
+                        Register for the webinar
+                    </CustomLink>
+                )}
+                {webinar.join_link && (
+                    <CustomLink href={webinar.join_link} variant="primary-filled">
+                        Join webinar
+                    </CustomLink>
+                )}
+            </div>
+        )
+    }
+
     if (status === WebinarAccessStatus.AVAILABLE) {
         if (webinar.is_registered && webinar.join_link) {
             return (
