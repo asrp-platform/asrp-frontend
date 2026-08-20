@@ -26,6 +26,7 @@ const UpcomingWebinarsSection = () => {
         refetch: refetchWebinars,
     } = useQuery({
         queryKey: ["upcomingWebinars"],
+        refetchInterval: 30_000,
         queryFn: async () => {
             const response = await api.get<IPaginatedBackendResponse<IWebinar>>(WEBINARS_URL, {
                 params: {

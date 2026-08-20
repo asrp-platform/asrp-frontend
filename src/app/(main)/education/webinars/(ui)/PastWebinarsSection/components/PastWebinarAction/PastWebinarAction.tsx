@@ -25,7 +25,7 @@ const PastWebinarAction = ({ webinar, isAuthenticated, hasActiveMembership }: IP
         )
     }
 
-    if (webinar.member_only && !hasActiveMembership) {
+    if (!hasActiveMembership) {
         return (
             <div className={styles.restriction}>
                 <LockKeyhole size={16} />

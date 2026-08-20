@@ -81,6 +81,23 @@ const WebinarRegistrationsModal = ({ webinar }: IProps) => {
         },
     ]
 
+    if (!webinar.member_only) {
+        return webinar.registration_link ? (
+            <Button
+                href={webinar.registration_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                icon={<Users size={15} />}
+            >
+                External registrations
+            </Button>
+        ) : (
+            <Button disabled icon={<Users size={15} />}>
+                No registration form
+            </Button>
+        )
+    }
+
     return (
         <>
             <Button icon={<Users size={15} />} onClick={() => setOpen(true)}>

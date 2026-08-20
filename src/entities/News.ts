@@ -36,6 +36,7 @@ export interface IWebinar {
     speaker_description: string | null
 
     join_link?: string | null
+    registration_link?: string | null
     bunny_video_id?: string | null
 
     starts_at: string

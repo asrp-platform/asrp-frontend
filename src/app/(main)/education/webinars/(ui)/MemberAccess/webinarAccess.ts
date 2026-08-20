@@ -19,11 +19,15 @@ export const getWebinarAccessStatus = ({
     isAuthenticated,
     hasActiveMembership,
 }: IGetWebinarAccessStatusParams): WebinarAccessStatus => {
+    if (!webinar.member_only) {
+        return WebinarAccessStatus.AVAILABLE
+    }
+
     if (!isAuthenticated) {
         return WebinarAccessStatus.SIGN_IN_REQUIRED
     }
 
-    if (webinar.member_only && !hasActiveMembership) {
+    if (!hasActiveMembership) {
         return WebinarAccessStatus.MEMBERSHIP_REQUIRED
     }
 

@@ -61,6 +61,7 @@ export type WebinarFormValues = {
     speaker_name: string
     speaker_description?: string
     join_link?: string
+    registration_link?: string
     bunny_video_id?: string
     starts_at: Dayjs
     timezone: string
@@ -82,6 +83,7 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
     const [form] = useForm<WebinarFormValues>()
     const selectedStartsAt = Form.useWatch("starts_at", form) as Dayjs | undefined
     const selectedTimezone = Form.useWatch("timezone", form) as string | undefined
+    const memberOnly = Form.useWatch("member_only", form) as boolean | undefined
 
     const startsAtPreview =
         selectedStartsAt && selectedTimezone
@@ -98,6 +100,7 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
               ...webinar,
               speaker_description: webinar.speaker_description ?? undefined,
               join_link: webinar.join_link ?? undefined,
+              registration_link: webinar.registration_link ?? undefined,
               bunny_video_id: webinar.bunny_video_id ?? undefined,
               location: webinar.location ?? undefined,
               language: webinar.language ?? undefined,
@@ -106,21 +109,43 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
           }
         : { member_only: true, timezone: "UTC" }
 
-    const openModal = () => {
+    const openModal = async () => {
         const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
         const defaultTimezone = TIMEZONE_OPTIONS.some(({ value }) => value === browserTimezone)
             ? browserTimezone
             : "UTC"
 
-        form.setFieldsValue(
-            webinar
-                ? initialValues
-                : {
-                      ...initialValues,
-                      timezone: defaultTimezone,
-                  },
-        )
         setOpen(true)
+
+        if (!webinar) {
+            form.setFieldsValue({
+                ...initialValues,
+                timezone: defaultTimezone,
+            })
+            return
+        }
+
+        try {
+            setIsLoading(true)
+            const response = await api.get<IWebinar>(getWebinarDetailAdminUrl(webinar.id))
+            const fullWebinar = response.data
+
+            form.setFieldsValue({
+                ...fullWebinar,
+                speaker_description: fullWebinar.speaker_description ?? undefined,
+                join_link: fullWebinar.join_link ?? undefined,
+                registration_link: fullWebinar.registration_link ?? undefined,
+                bunny_video_id: fullWebinar.bunny_video_id ?? undefined,
+                location: fullWebinar.location ?? undefined,
+                language: fullWebinar.language ?? undefined,
+                starts_at: dayjs.utc(fullWebinar.starts_at).tz(fullWebinar.timezone),
+            })
+        } catch (error) {
+            setOpen(false)
+            handleApiError({ error })
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const onFinish = async (values: WebinarFormValues) => {
@@ -131,6 +156,9 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                 starts_at: values.starts_at.tz(values.timezone, true).toISOString(),
                 speaker_description: values.speaker_description || null,
                 join_link: values.join_link || null,
+                registration_link: values.member_only
+                    ? null
+                    : values.registration_link?.trim() || null,
                 bunny_video_id: values.bunny_video_id || null,
                 language: values.language?.trim() || null,
                 location: values.location || null,
@@ -356,6 +384,17 @@ const WebinarFormModal = ({ webinar, renderTrigger }: IProps) => {
                         >
                             <Input placeholder="https://zoom.us/j/..." />
                         </Form.Item>
+
+                        {memberOnly === false && (
+                            <Form.Item
+                                label="External registration link"
+                                name="registration_link"
+                                extra="Public webinars use an external registration form. Joining remains available to everyone."
+                                rules={[{ type: "url", message: "Enter a valid URL" }]}
+                            >
+                                <Input placeholder="https://forms.google.com/..." />
+                            </Form.Item>
+                        )}
 
                         <Form.Item label="Bunny video ID" name="bunny_video_id">
                             <Input placeholder="Bunny Stream video ID" />
