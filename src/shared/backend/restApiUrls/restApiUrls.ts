@@ -79,7 +79,7 @@ export const WEBINARS_URL = "/webinars"
 export const getWebinarDetailUrl = (webinarSlug: string): string => `${WEBINARS_URL}/${webinarSlug}`
 
 export const getWebinarRegistrationUrl = (webinarSlug: string): string =>
-    `/webinars/${webinarSlug}/registration`
+    `/webinars/${webinarSlug}/registrations`
 
 export const getWebinarPlaybackUrl = (webinarSlug: string): string =>
     `/webinars/${webinarSlug}/playback`
