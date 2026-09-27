@@ -1,5 +1,6 @@
 import api from "@/axios.ts"
 import { LOGOUT_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
+import { queryClient } from "@/shared/queryClient.ts"
 
 export const handleLogout = async () => {
     try {
@@ -8,6 +9,7 @@ export const handleLogout = async () => {
         console.error("Logout request failed", error)
     } finally {
         localStorage.removeItem("accessToken")
+        queryClient.removeQueries({ queryKey: ["current-user"] })
         window.location.reload()
     }
 }
