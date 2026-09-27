@@ -32,7 +32,6 @@ const LoginForm = () => {
 
     const queryClient = useQueryClient()
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-        localStorage.removeItem("accessToken")
         try {
             setIsLoading(true)
             const response = await api.post<LoginResponse>(LOGIN_URL, values)
@@ -56,7 +55,7 @@ const LoginForm = () => {
     }
 
     return (
-        <Form layout="vertical" form={form} onFinish={onFinish}>
+        <Form layout="vertical" form={form} onFinish={onFinish} initialValues={{ remember: false }}>
             <Form.Item<FieldType>
                 label="Email"
                 name="email"
@@ -89,7 +88,7 @@ const LoginForm = () => {
             </Typography>
             <div className={styles.submitContainer}>
                 <Form.Item<FieldType> name="remember" valuePropName="checked">
-                    <Checkbox checked={false}>Remember me</Checkbox>
+                    <Checkbox>Remember me</Checkbox>
                 </Form.Item>
                 <CustomButton
                     loading={isLoading}

@@ -7,5 +7,12 @@ import { getLoginUrl } from "@shared/helpers/authRedirect.ts"
 export const useReturnToLoginHref = (href: string) => {
     const pathname = usePathname()
 
-    return href === "/login" ? getLoginUrl(pathname) : href
+    const isAuthOnlyPage =
+        pathname === "/login" ||
+        pathname === "/registration" ||
+        pathname.startsWith("/registration/") ||
+        pathname === "/password-reset" ||
+        pathname.startsWith("/password-reset/")
+
+    return href === "/login" && !isAuthOnlyPage ? getLoginUrl(pathname) : href
 }

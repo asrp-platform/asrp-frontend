@@ -7,6 +7,25 @@ export const REST_API_URL = rawApiUrl || "http://127.0.0.1:8000/api"
 export const ADMIN_URL = "/admin"
 export const REFRESH_URL = `${REST_API_URL}/auth/refresh`
 
+let refreshPromise: Promise<string> | null = null
+
+const refreshAccessToken = async () => {
+    if (!refreshPromise) {
+        refreshPromise = axios
+            .post<IRefreshResponse>(REFRESH_URL, {}, { withCredentials: true })
+            .then((response) => {
+                const accessToken = response.data.access_token
+                localStorage.setItem("accessToken", accessToken)
+                return accessToken
+            })
+            .finally(() => {
+                refreshPromise = null
+            })
+    }
+
+    return refreshPromise
+}
+
 const api = axios.create({
     baseURL: REST_API_URL,
     withCredentials: true,
@@ -33,28 +52,32 @@ api.interceptors.response.use(
     },
     async (error) => {
         const originalRequest = error.config
+        const requestUrl: string = originalRequest?.url ?? ""
 
-        if (error.response?.status === 401 && originalRequest && !originalRequest._isRetry) {
+        const isAuthRequest =
+            /\/auth\/login(?:\?|$)/.test(requestUrl) || /\/auth\/refresh(?:\?|$)/.test(requestUrl)
+
+        if (
+            error.response?.status === 401 &&
+            originalRequest &&
+            !originalRequest._isRetry &&
+            !isAuthRequest
+        ) {
             originalRequest._isRetry = true
 
             try {
-                const response = await axios.post<IRefreshResponse>(
-                    REFRESH_URL,
-                    {},
-                    {
-                        withCredentials: true,
-                    },
-                )
-
-                localStorage.setItem("accessToken", response.data.access_token)
+                const accessToken = await refreshAccessToken()
 
                 originalRequest.headers = originalRequest.headers ?? {}
-                originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`
+                originalRequest.headers.Authorization = `Bearer ${accessToken}`
 
                 return api.request(originalRequest)
             } catch (refreshError) {
                 localStorage.removeItem("accessToken")
-                console.log(`User is not authenticated ${refreshError}`)
+                if (window.location.pathname !== "/login") {
+                    window.location.assign("/login")
+                }
+                return Promise.reject(refreshError)
             }
         }
 
