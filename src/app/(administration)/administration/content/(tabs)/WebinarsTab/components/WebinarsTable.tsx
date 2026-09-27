@@ -1,28 +1,32 @@
 "use client"
 
-import { Button, Flex, Select, Space, Table, Tag, Tooltip } from "antd"
+import { Button, Table, Tag, Tooltip } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { Pencil } from "lucide-react"
-import { useState } from "react"
+import { useState, type SetStateAction } from "react"
 
-import EditWebinarModal from "@app/(administration)/administration/content/(components)/EditWebinarModal.tsx"
-import WebinarRegistrationsModal from "@app/(administration)/administration/content/(components)/WebinarRegistrationsModal.tsx"
-import { type IWebinar, WebinarStatus } from "@entities/News.ts"
-import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import { WEBINARS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
+import EditWebinarModal from "@app/(administration)/administration/content/(tabs)/WebinarsTab/components/EditWebinarModal/EditWebinarModal.tsx"
+import WebinarRegistrationsModal from "@app/(administration)/administration/content/(tabs)/WebinarsTab/components/WebinarRegistrationsModal.tsx"
+import type { IWebinar } from "@entities/News.ts"
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import { getSortOrder } from "@shared/helpers/getSortOrder.ts"
 import { getInputColumnSearchProps } from "@widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
-import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
-interface IFilters {
-    status?: WebinarStatus
-    title__startswith?: string
-    archived?: boolean
+import type { WebinarFilterValues } from "../types.ts"
+
+interface WebinarsTableProps {
+    data: IWebinar[]
+    filters: WebinarFilterValues
+    page: number
+    pageSize: number
+    total: number
+    ordering: string[]
+    loading: boolean
+    onPageChange: (page: number) => void
+    onOrderingChange: (ordering: string[]) => void
+    onFiltersChange: (filters: WebinarFilterValues) => void
 }
-
-const initialFilters: IFilters = {}
 
 const isPastWebinar = (webinar: IWebinar) =>
     new Date(webinar.ends_at || webinar.starts_at).getTime() <= Date.now()
@@ -30,25 +34,26 @@ const isPastWebinar = (webinar: IWebinar) =>
 const renderMemberOnlyTag = (value: boolean) =>
     value ? <Tag color="red">Member only</Tag> : <Tag>Public webinar</Tag>
 
-const WebinarsTable = () => {
-    const [page, setPage] = useState(1)
-    const [ordering, setOrdering] = useState<string[]>(["-id"])
-    const [filters, setFilters] = useState<IFilters>(initialFilters)
+const WebinarsTable = ({
+    data,
+    filters,
+    page,
+    pageSize,
+    total,
+    ordering,
+    loading,
+    onPageChange,
+    onOrderingChange,
+    onFiltersChange,
+}: WebinarsTableProps) => {
     const [selectedWebinar, setSelectedWebinar] = useState<IWebinar | null>(null)
-    const pageSize = DEFAULT_PAGE_SIZE
 
-    const { data: webinars, isLoading } = useTableDataQuery<IWebinar, IFilters>({
-        url: WEBINARS_ADMIN_URL,
-        queryKey: ["admin-webinars"],
-        page,
-        pageSize,
-        ordering,
-        filters,
-    })
+    const applyFilters = (next: SetStateAction<WebinarFilterValues>) => {
+        onFiltersChange(typeof next === "function" ? next(filters) : next)
+    }
 
-    const updateFilters = (nextFilters: Partial<IFilters>) => {
-        setPage(1)
-        setFilters((current) => ({ ...current, ...nextFilters }))
+    const applyOrdering = (next: SetStateAction<string[]>) => {
+        onOrderingChange(typeof next === "function" ? next(ordering) : next)
     }
 
     const columns: ColumnsType<IWebinar> = [
@@ -65,7 +70,7 @@ const WebinarsTable = () => {
             dataIndex: "title",
             key: "title",
             width: 280,
-            ...getInputColumnSearchProps("title", filters, setFilters),
+            ...getInputColumnSearchProps("title", filters, applyFilters),
         },
         {
             title: "Status",
@@ -124,48 +129,20 @@ const WebinarsTable = () => {
 
     return (
         <>
-            <Flex gap={12} wrap="wrap" justify="space-between" style={{ marginBottom: 16 }}>
-                <Space wrap>
-                    <Select
-                        value={filters.status}
-                        allowClear
-                        placeholder="All statuses"
-                        style={{ width: 180 }}
-                        options={[
-                            { label: "Upcoming", value: WebinarStatus.UPCOMING },
-                            { label: "Past", value: WebinarStatus.PAST },
-                        ]}
-                        onChange={(status) => updateFilters({ status })}
-                    />
-                    <Select
-                        value={filters.archived}
-                        allowClear
-                        placeholder="All archive states"
-                        style={{ width: 190 }}
-                        options={[
-                            { label: "Active", value: false },
-                            { label: "Archived", value: true },
-                        ]}
-                        onChange={(archived) => updateFilters({ archived })}
-                    />
-                </Space>
-                <Tag>{webinars?.count ?? 0} webinars</Tag>
-            </Flex>
-
             <Table
                 columns={columns}
-                dataSource={webinars?.data ?? []}
+                dataSource={data}
                 pagination={{
                     current: page,
                     pageSize,
-                    total: webinars?.count,
-                    onChange: setPage,
+                    total,
+                    onChange: onPageChange,
                 }}
                 scroll={{ x: "max-content" }}
                 rowKey="id"
-                loading={isLoading}
+                loading={loading}
                 onChange={(pagination, tableFilters, sorter) =>
-                    handleTableChange(pagination, tableFilters, sorter, setOrdering)
+                    handleTableChange(pagination, tableFilters, sorter, applyOrdering)
                 }
             />
 

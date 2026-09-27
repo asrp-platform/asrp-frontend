@@ -1,121 +1,64 @@
 "use client"
 
-import {
-    Button,
-    DatePicker,
-    Flex,
-    message,
-    Popconfirm,
-    Select,
-    Space,
-    Table,
-    Tag,
-    Tooltip,
-} from "antd"
+import { Button, Popconfirm, Table, Tag, Tooltip } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import type { TablePaginationConfig } from "antd/es/table/interface"
-import { useQueryClient } from "@tanstack/react-query"
-import type { Dayjs } from "dayjs"
 import { EyeOff, ExternalLink, Trash2 } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
+import { type SetStateAction } from "react"
 
-import api from "@/axios.ts"
 import type { News } from "@entities/News.ts"
-import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
-import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
-import { getNewsDetailAdminUrl, NEWS_ADMIN_URL } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { handleTableChange } from "@shared/helpers/antdTableHelpers.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import { getSortOrder } from "@shared/helpers/getSortOrder.ts"
-import { handleApiError } from "@shared/helpers/formsHelpers.ts"
-import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
-import PermissionGuard from "@shared/ui/PermissionGuard/PermissionGuard.tsx"
 import { getInputColumnSearchProps } from "@widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
 
-import styles from "./styles.module.scss"
+import type { NewsFilterValues } from "../types.ts"
+import styles from "./NewsTable.module.scss"
 
-interface NewsFilters {
-    title__startswith?: string
-    where__startswith?: string
-    when__startswith?: string
-    is_published?: boolean
-    created_at__gte?: string
-    created_at__lte?: string
+interface NewsTableProps {
+    data: News[]
+    filters: NewsFilterValues
+    page: number
+    pageSize: number
+    total: number
+    ordering: string[]
+    loading: boolean
+    canUpdate: boolean
+    canDelete: boolean
+    deletingId: number | null
+    unpublishingId: number | null
+    onPageChange: (page: number) => void
+    onOrderingChange: (ordering: string[]) => void
+    onFiltersChange: (filters: NewsFilterValues) => void
+    onDelete: (news: News) => void
+    onUnpublish: (news: News) => void
 }
 
-const QUERY_KEY = ["admin-news-management"]
-
-const NewsTable = () => {
-    const queryClient = useQueryClient()
-    const [page, setPage] = useState(1)
-    const [ordering, setOrdering] = useState<string[]>(["-created_at"])
-    const [filters, setFilters] = useState<NewsFilters>({})
-    const [deletingId, setDeletingId] = useState<number | null>(null)
-    const [unpublishingId, setUnpublishingId] = useState<number | null>(null)
-    const { data: permissions = [], isLoading: permissionsLoading } =
-        useCurrentUserPermissionsQuery()
-    const permissionActions = useMemo(() => permissions.map(({ action }) => action), [permissions])
-    const canView = permissionActions.includes("news.view")
-    const canUpdate = permissionActions.includes("news.update")
-    const canDelete = permissionActions.includes("news.delete")
-
-    const { data, isLoading, isFetching } = useTableDataQuery<News, NewsFilters>({
-        url: NEWS_ADMIN_URL,
-        queryKey: QUERY_KEY,
-        page,
-        pageSize: DEFAULT_PAGE_SIZE,
-        ordering,
-        filters,
-        enabled: canView,
-    })
-
-    useEffect(() => setPage(1), [filters])
-
-    const setCreatedRange = (dates: null | [Dayjs | null, Dayjs | null]) => {
-        setFilters((current) => {
-            const next = { ...current }
-            if (dates?.[0] && dates[1]) {
-                next.created_at__gte = dates[0].startOf("day").toISOString()
-                next.created_at__lte = dates[1].endOf("day").toISOString()
-            } else {
-                delete next.created_at__gte
-                delete next.created_at__lte
-            }
-            return next
-        })
+const NewsTable = ({
+    data,
+    filters,
+    page,
+    pageSize,
+    total,
+    ordering,
+    loading,
+    canUpdate,
+    canDelete,
+    deletingId,
+    unpublishingId,
+    onPageChange,
+    onOrderingChange,
+    onFiltersChange,
+    onDelete,
+    onUnpublish,
+}: NewsTableProps) => {
+    const applyFilters = (next: SetStateAction<NewsFilterValues>) => {
+        onFiltersChange(typeof next === "function" ? next(filters) : next)
     }
 
-    const deleteNews = async (news: News) => {
-        setDeletingId(news.id)
-        try {
-            await api.delete(getNewsDetailAdminUrl(news.id))
-            await Promise.all([
-                queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
-                queryClient.invalidateQueries({ queryKey: ["news"] }),
-            ])
-            message.success(`“${news.title}” deleted.`)
-        } catch (error) {
-            handleApiError({ error })
-        } finally {
-            setDeletingId(null)
-        }
-    }
-
-    const unpublishNews = async (news: News) => {
-        setUnpublishingId(news.id)
-        try {
-            await api.patch(getNewsDetailAdminUrl(news.id), { is_published: false })
-            await Promise.all([
-                queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
-                queryClient.invalidateQueries({ queryKey: ["news"] }),
-            ])
-            message.success(`“${news.title}” is now a draft.`)
-        } catch (error) {
-            handleApiError({ error })
-        } finally {
-            setUnpublishingId(null)
-        }
+    const applyOrdering = (next: SetStateAction<string[]>) => {
+        onOrderingChange(typeof next === "function" ? next(ordering) : next)
     }
 
     const columns: ColumnsType<News> = [
@@ -146,7 +89,7 @@ const NewsTable = () => {
             width: 320,
             sorter: true,
             sortOrder: getSortOrder("title", ordering),
-            ...getInputColumnSearchProps("title", filters, setFilters),
+            ...getInputColumnSearchProps("title", filters, applyFilters),
             render: (title: string) => <strong className={styles.title}>{title}</strong>,
         },
         {
@@ -164,7 +107,7 @@ const NewsTable = () => {
             dataIndex: "when",
             key: "when",
             width: 180,
-            ...getInputColumnSearchProps("when", filters, setFilters),
+            ...getInputColumnSearchProps("when", filters, applyFilters),
             render: (value: string | null) => value || "—",
         },
         {
@@ -172,7 +115,7 @@ const NewsTable = () => {
             dataIndex: "where",
             key: "where",
             width: 180,
-            ...getInputColumnSearchProps("where", filters, setFilters),
+            ...getInputColumnSearchProps("where", filters, applyFilters),
             render: (value: string | null) => value || "—",
         },
         {
@@ -229,7 +172,7 @@ const NewsTable = () => {
                                   okText="Unpublish"
                                   cancelText="Cancel"
                                   okButtonProps={{ danger: true }}
-                                  onConfirm={() => unpublishNews(news)}
+                                  onConfirm={() => onUnpublish(news)}
                               >
                                   <Tooltip title="Unpublish article">
                                       <Button
@@ -257,7 +200,7 @@ const NewsTable = () => {
                               okText="Delete"
                               cancelText="Cancel"
                               okButtonProps={{ danger: true }}
-                              onConfirm={() => deleteNews(news)}
+                              onConfirm={() => onDelete(news)}
                           >
                               <Tooltip title="Delete article">
                                   <Button
@@ -274,50 +217,24 @@ const NewsTable = () => {
             : []),
     ]
 
-    if (!permissionsLoading && !canView) return <PermissionGuard allowed={false} />
-
     return (
         <div className={styles.tableCard}>
-            <Flex gap={12} wrap="wrap" justify="space-between" className={styles.toolbar}>
-                <Space wrap>
-                    <Select
-                        value={filters.is_published}
-                        allowClear
-                        placeholder="All publication states"
-                        className={styles.statusFilter}
-                        options={[
-                            { label: "Published", value: true },
-                            { label: "Draft", value: false },
-                        ]}
-                        onChange={(is_published) =>
-                            setFilters((current) => ({ ...current, is_published }))
-                        }
-                    />
-                    <DatePicker.RangePicker
-                        allowClear
-                        placeholder={["Created from", "Created to"]}
-                        onChange={(dates) => setCreatedRange(dates)}
-                    />
-                </Space>
-                <Tag>{data?.count ?? 0} articles</Tag>
-            </Flex>
-
             <Table
                 columns={columns}
-                dataSource={data?.data ?? []}
+                dataSource={data}
                 rowKey="id"
-                loading={permissionsLoading || isLoading || isFetching}
+                loading={loading}
                 scroll={{ x: "max-content" }}
                 pagination={{
                     current: page,
-                    pageSize: DEFAULT_PAGE_SIZE,
-                    total: data?.count,
+                    pageSize,
+                    total,
                     showSizeChanger: false,
-                    showTotal: (total, range) => `${range[0]}–${range[1]} of ${total}`,
-                    onChange: setPage,
+                    showTotal: (rangeTotal, range) => `${range[0]}–${range[1]} of ${rangeTotal}`,
+                    onChange: onPageChange,
                 }}
                 onChange={(pagination: TablePaginationConfig, tableFilters, sorter) =>
-                    handleTableChange(pagination, tableFilters, sorter, setOrdering)
+                    handleTableChange(pagination, tableFilters, sorter, applyOrdering)
                 }
             />
         </div>

@@ -14,7 +14,7 @@ import {
 } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 
-import styles from "./caseOfTheMonth.module.scss"
+import styles from "./CaseOfTheMonth.module.scss"
 
 type CaseTagsResponse = CaseTag[] | IPaginatedBackendResponse<CaseTag>
 

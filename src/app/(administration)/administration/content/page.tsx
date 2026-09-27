@@ -2,30 +2,16 @@
 
 import { Tabs, Typography } from "antd"
 
-import CaseOfTheMonthTab from "@app/(administration)/administration/content/CaseOfTheMonthTab.tsx"
-import WebinarsTable from "@app/(administration)/administration/content/(components)/WebinarsTable.tsx"
-import NewsTable from "@app/(administration)/administration/content/NewsTable.tsx"
-import newsStyles from "@app/(administration)/administration/content/styles.module.scss"
-
-const NewsAndEventsTab = () => (
-    <section className={newsStyles.page}>
-        <header className={newsStyles.header}>
-            <div>
-                <span className={newsStyles.eyebrow}>Content management</span>
-                <h1>News &amp; Events</h1>
-                <p>Review publication status, find articles and open their public pages.</p>
-            </div>
-        </header>
-        <NewsTable />
-    </section>
-)
+import CaseOfTheMonthTab from "@app/(administration)/administration/content/(tabs)/CaseOfTheMonthTab/CaseOfTheMonthTab.tsx"
+import NewsAndEventsTab from "@app/(administration)/administration/content/(tabs)/NewsAndEventsTab/NewsAndEventsTab.tsx"
+import WebinarsTab from "@app/(administration)/administration/content/(tabs)/WebinarsTab/WebinarsTab.tsx"
 
 const Page = () => {
     const items = [
         {
             key: "education",
             label: "Education",
-            children: <WebinarsTable />,
+            children: <WebinarsTab />,
         },
         {
             key: "news-and-events",
