@@ -1,0 +1,87 @@
+.uploadZone {
+    position: relative;
+    overflow: hidden;
+    min-height: 98px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+        border-color: #94a3b8;
+        outline: none;
+        background: linear-gradient(145deg, #f1f5f9, #eaf0f6);
+    }
+}
+
+.placeholder {
+    display: flex;
+    min-height: 98px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #334155;
+    font-size: 16px;
+}
+
+.preview {
+    display: block;
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+}
+
+.input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.removeButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 90%);
+    box-shadow: 0 3px 12px rgb(15 23 42 / 16%);
+    color: #334155;
+    cursor: pointer;
+
+    &:hover {
+        background: #fff;
+        color: #dc2626;
+    }
+}
+
+.loader {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgb(248 250 252 / 86%);
+    color: #334155;
+    font-size: 13px;
+}
+
+.fileName {
+    display: block;
+    margin-top: 6px;
+    color: var(--text-muted-color-dark);
+    font-size: 12px;
+}

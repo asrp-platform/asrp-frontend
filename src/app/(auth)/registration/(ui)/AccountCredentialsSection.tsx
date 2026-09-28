@@ -5,8 +5,11 @@ import { credentialsOptions } from "@shared/options.ts"
 
 const AccountCredentialsSection = () => {
     return (
-        <>
-            <h2>Credentials</h2>
+        <section className={styles.formSection}>
+            <div className={styles.sectionHeading}>
+                <h2>Credentials</h2>
+                <p>Use an email and password to secure your account.</p>
+            </div>
             <Form.Item<RegisterFormFields>
                 label="Email"
                 name="email"
@@ -55,7 +58,7 @@ const AccountCredentialsSection = () => {
                     ))}
                 </Select>
             </Form.Item>
-        </>
+        </section>
     )
 }
 

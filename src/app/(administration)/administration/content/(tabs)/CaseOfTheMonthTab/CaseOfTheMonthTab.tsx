@@ -5,20 +5,30 @@ import { message } from "antd"
 import { useState } from "react"
 
 import api from "@/axios.ts"
-import type { CaseTag } from "@entities/CaseOfTheMonth.ts"
+import type { CaseOfTheMonth, CaseTag } from "@entities/CaseOfTheMonth.ts"
 import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import {
+    CASE_OF_THE_MONTH_CASES_URL,
     CASE_OF_THE_MONTH_TAGS_URL,
+    getCaseOfTheMonthByIdUrl,
     getCaseTagByIdUrl,
 } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
+import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
+import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
 import CaseTagsCard from "./components/CaseTagsCard/CaseTagsCard.tsx"
 import CasesCard from "./components/CasesCard/CasesCard.tsx"
+import CreateCaseModal from "./components/CreateCaseModal/CreateCaseModal.tsx"
 import CreateCaseTagModal from "./components/CreateCaseTagModal/CreateCaseTagModal.tsx"
 import EditCaseTagModal from "./components/EditCaseTagModal/EditCaseTagModal.tsx"
 import styles from "./CaseOfTheMonth.module.scss"
-import type { CaseTagForm, CaseTagFormValues } from "./types.ts"
+import type {
+    CaseOfTheMonthForm,
+    CaseOfTheMonthFormValues,
+    CaseTagForm,
+    CaseTagFormValues,
+} from "./types.ts"
 
 type CaseTagsResponse = CaseTag[] | IPaginatedBackendResponse<CaseTag>
 
@@ -32,11 +42,43 @@ interface UpdateTagMutationVariables extends CreateTagMutationVariables {
 }
 
 const CASE_TAGS_QUERY_KEY = ["admin-case-of-the-month-tags"]
+const CASES_QUERY_KEY = ["admin-case-of-the-month-cases"]
+
+interface CaseMutationVariables {
+    caseId: number | null
+    values: CaseOfTheMonthFormValues
+    form: CaseOfTheMonthForm
+}
+
+const toCasePayload = (values: CaseOfTheMonthFormValues) => ({
+    title: values.title.trim(),
+    cover_key: values.cover_key || null,
+    history: values.history,
+    case_findings: values.case_findings,
+    virtual_slides: (values.virtual_slides ?? []).map((slide) => slide.trim()).filter(Boolean),
+    questions: (values.questions ?? []).map((question) => question.trim()).filter(Boolean),
+    publication_month: values.publication_month.format("YYYY-MM-DD"),
+    answer: values.answer,
+    tag_ids: values.tag_ids ?? [],
+})
 
 const CaseOfTheMonthTab = () => {
+    const [isCaseModalOpen, setIsCaseModalOpen] = useState(false)
+    const [selectedCase, setSelectedCase] = useState<CaseOfTheMonth | null>(null)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [editingTag, setEditingTag] = useState<CaseTag | null>(null)
+    const [page, setPage] = useState(1)
+    const [ordering, setOrdering] = useState<string[]>(["-publication_month", "-id"])
     const queryClient = useQueryClient()
+    const pageSize = DEFAULT_PAGE_SIZE
+
+    const casesQuery = useTableDataQuery<CaseOfTheMonth>({
+        url: CASE_OF_THE_MONTH_CASES_URL,
+        queryKey: CASES_QUERY_KEY,
+        page,
+        pageSize,
+        ordering,
+    })
 
     const tagsQuery = useQuery({
         queryKey: CASE_TAGS_QUERY_KEY,
@@ -88,6 +130,30 @@ const CaseOfTheMonthTab = () => {
         onError: (error) => handleApiError({ error }),
     })
 
+    const saveCaseMutation = useMutation({
+        mutationFn: async ({ caseId, values }: CaseMutationVariables) => {
+            const payload = toCasePayload(values)
+
+            if (caseId) {
+                const response = await api.patch<CaseOfTheMonth>(
+                    getCaseOfTheMonthByIdUrl(caseId),
+                    payload,
+                )
+                return response.data
+            }
+
+            const response = await api.post<CaseOfTheMonth>(CASE_OF_THE_MONTH_CASES_URL, payload)
+            return response.data
+        },
+        onSuccess: async (_, variables) => {
+            message.success(variables.caseId ? "Case updated" : "Case created")
+            setIsCaseModalOpen(false)
+            setSelectedCase(null)
+            await queryClient.invalidateQueries({ queryKey: CASES_QUERY_KEY })
+        },
+        onError: (error, variables) => handleApiError({ error, form: variables.form }),
+    })
+
     const handleCreateModalClose = () => {
         if (createTagMutation.isPending) return
 
@@ -100,9 +166,33 @@ const CaseOfTheMonthTab = () => {
         setEditingTag(null)
     }
 
+    const handleCaseModalClose = () => {
+        if (saveCaseMutation.isPending) return
+
+        setIsCaseModalOpen(false)
+        setSelectedCase(null)
+    }
+
     return (
         <div className={styles.caseOfMonthTab}>
-            <CasesCard />
+            <CasesCard
+                data={casesQuery.data?.data ?? []}
+                page={page}
+                pageSize={pageSize}
+                total={casesQuery.data?.count ?? 0}
+                ordering={ordering}
+                loading={casesQuery.isLoading || casesQuery.isFetching}
+                onCreateCase={() => {
+                    setSelectedCase(null)
+                    setIsCaseModalOpen(true)
+                }}
+                onPageChange={setPage}
+                onOrderingChange={setOrdering}
+                onEditCase={(caseItem) => {
+                    setSelectedCase(caseItem)
+                    setIsCaseModalOpen(true)
+                }}
+            />
             <CaseTagsCard
                 tags={tagsQuery.data ?? []}
                 loading={tagsQuery.isLoading}
@@ -115,6 +205,21 @@ const CaseOfTheMonthTab = () => {
                 loading={createTagMutation.isPending}
                 onCancel={handleCreateModalClose}
                 onSubmit={(values, form) => createTagMutation.mutate({ values, form })}
+            />
+
+            <CreateCaseModal
+                open={isCaseModalOpen}
+                tags={tagsQuery.data ?? []}
+                caseItem={selectedCase}
+                submitting={saveCaseMutation.isPending}
+                onCancel={handleCaseModalClose}
+                onSubmit={(values, form) =>
+                    saveCaseMutation.mutate({
+                        caseId: selectedCase?.id ?? null,
+                        values,
+                        form,
+                    })
+                }
             />
 
             <EditCaseTagModal

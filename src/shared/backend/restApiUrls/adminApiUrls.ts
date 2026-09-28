@@ -76,6 +76,7 @@ export const getAdminMembershipRequestUrl = (membershipRequestId: string | numbe
 
 export const CASE_OF_THE_MONTH_URL = `${ADMIN_URL}/case-of-the-month`
 export const CASE_OF_THE_MONTH_CASES_URL = `${CASE_OF_THE_MONTH_URL}/cases`
+export const CASE_OF_THE_MONTH_IMAGES_URL = `${CASE_OF_THE_MONTH_URL}/images`
 export const CASE_OF_THE_MONTH_TAGS_URL = `${CASE_OF_THE_MONTH_URL}/tags`
 
 export const getCaseOfTheMonthByIdUrl = (caseId: string | number) =>

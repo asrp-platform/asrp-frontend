@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 import { Form, type FormProps, Typography } from "antd"
 import { LeftOutlined } from "@ant-design/icons"
 import { useForm } from "antd/es/form/Form"
@@ -12,6 +11,7 @@ import { useState } from "react"
 import styles from "@app/(auth)/registration/styles.module.scss"
 import api from "@/axios.ts"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
+import CustomLink from "@shared/ui/Buttons/CustomLink/CustomLink.tsx"
 import type { RegisterFormFields } from "@app/(auth)/registration/(ui)/types.ts"
 import NameSection from "@app/(auth)/registration/(ui)/NameSection.tsx"
 import AccountCredentialsSection from "@app/(auth)/registration/(ui)/AccountCredentialsSection.tsx"
@@ -98,16 +98,16 @@ const RegisterForm = () => {
     return (
         <>
             <header className={styles.header}>
-                <h1>Create an account</h1>
+                <div className={styles.headerCopy}>
+                    <span className={styles.eyebrow}>ASRP MEMBERSHIP</span>
+                    <h1>Create an account</h1>
+                    <p>Join the ASRP community and get access to member benefits.</p>
+                </div>
                 <Typography>
-                    <Link
-                        href={loginHref}
-                        aria-label="Return to login page"
-                        className={styles.returnButton}
-                    >
+                    <CustomLink href={loginHref} variant="default" className={styles.returnButton}>
                         <LeftOutlined />
-                        Back
-                    </Link>
+                        Back to login
+                    </CustomLink>
                 </Typography>
             </header>
             <Form layout="vertical" onFinish={onFinish} form={form} className={styles.registerForm}>
@@ -117,8 +117,11 @@ const RegisterForm = () => {
                 <LocationSection countries={countries} isCountriesLoading={isCountriesLoading} />
 
                 <div className={styles.submitButtonContainer}>
+                    <p>
+                        By creating an account, you agree to keep your profile information accurate.
+                    </p>
                     <CustomButton variant="primary-filled" htmlType="submit">
-                        Submit
+                        Create account
                     </CustomButton>
                 </div>
             </Form>

@@ -70,6 +70,11 @@ export const headerMenuItems: HeaderMenuItem[] = [
                 to: "/education/webinars",
                 label: "Webinars",
             },
+            {
+                key: "2-3",
+                to: "/education/case-of-the-month",
+                label: "Case of the Month",
+            },
         ],
     },
     {

@@ -21,8 +21,11 @@ const LocationSection = ({ countries, isCountriesLoading }: IProps) => {
     }, [form, isUsaSelected, selectedCountryCode])
 
     return (
-        <>
-            <h2>Location</h2>
+        <section className={styles.formSection}>
+            <div className={styles.sectionHeading}>
+                <h2>Location</h2>
+                <p>Help us keep your member profile up to date.</p>
+            </div>
             <div className={styles.twoFieldContainer}>
                 <Form.Item<RegisterFormFields>
                     label="Country"
@@ -79,7 +82,7 @@ const LocationSection = ({ countries, isCountriesLoading }: IProps) => {
                     </Form.Item>
                 </div>
             )}
-        </>
+        </section>
     )
 }
 

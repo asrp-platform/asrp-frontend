@@ -28,27 +28,69 @@
     flex-direction: column;
     padding-inline: 20px;
     border-radius: 10px;
-    width: 100vw;
-    height: 100vh;
-    padding-top: 20vh;
+    box-shadow: 0 20px 60px rgb(15 23 42 / 14%);
+    width: min(100%, 520px);
+    min-height: auto;
+    padding-block: 40px;
 
     .submitContainer {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 16px;
+    }
+
+    .backHomeContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: var(--light-border);
     }
 
     h2 {
-        margin-bottom: 20px;
+        margin-bottom: 24px;
+        color: var(--text-heading-color-dark);
+        font-size: 28px;
+        line-height: 1.2;
     }
 
     label {
         color: var(--text-secondary-color-dark) !important;
+        font-size: 13px !important;
+        font-weight: 600;
     }
 
     .antdInput {
-        height: 40px;
+        min-height: 44px;
+        border: 1px solid var(--border-color-light);
+        border-radius: 10px;
+        background: var(--surface-muted-color);
         color: var(--text-secondary-color-dark);
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background-color 0.2s ease;
+
+        &:hover {
+            border-color: var(--border-color-red);
+        }
+
+        &:focus,
+        &:focus-within {
+            border-color: var(--text-secondary-color-red);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgb(255 100 103 / 12%);
+        }
+    }
+
+    :global(.ant-form-item) {
+        margin-bottom: 16px;
+    }
+
+    :global(.ant-checkbox-wrapper) {
+        color: var(--text-secondary-color-dark);
+        font-size: 13px;
     }
 
     @media (width >= 480px) {
@@ -61,6 +103,23 @@
         padding: 5vh 5vw;
         width: 40vw;
         height: auto;
+    }
+
+    @media (width <= 520px) {
+        padding: 24px 16px;
+
+        .submitContainer {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .submitContainer > button {
+            width: 100%;
+        }
+
+        .backHomeContainer button {
+            width: 100%;
+        }
     }
 
     @media (width >= 1200px) {

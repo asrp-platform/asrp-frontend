@@ -46,7 +46,7 @@ const CorporateSponsorsSection = () => (
                     </p>
                 </div>
                 <LinkButton className={styles.corporateCardLink} href="#" variant="red">
-                    Contact&nbsp;us
+                    Contact us
                 </LinkButton>
             </div>
             <ul className={styles.corporateOptionsList}>

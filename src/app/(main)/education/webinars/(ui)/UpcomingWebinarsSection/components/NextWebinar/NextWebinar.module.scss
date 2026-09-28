@@ -167,17 +167,46 @@
 
 @media (max-width: 760px) {
     .featuredVisual {
-        min-height: 260px;
+        min-height: 220px;
     }
 
     .visualContent {
-        padding: 30px;
+        padding: 24px;
+    }
+
+    .slideMark {
+        top: 24px;
+        left: 24px;
     }
 }
 
 @media (max-width: 480px) {
+    .featuredCard {
+        border-radius: 18px;
+    }
+
     .featuredContent {
-        padding: 22px;
+        padding: 20px 16px;
+
+        > h2 {
+            margin: 12px 0;
+            font-size: 25px;
+            overflow-wrap: anywhere;
+        }
+    }
+
+    .metaRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+
+        span {
+            font-size: 12px;
+        }
+    }
+
+    .divider {
+        margin: 18px 0;
     }
 
     .speaker span {

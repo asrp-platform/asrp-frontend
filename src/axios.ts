@@ -74,9 +74,6 @@ api.interceptors.response.use(
                 return api.request(originalRequest)
             } catch (refreshError) {
                 localStorage.removeItem("accessToken")
-                if (window.location.pathname !== "/login") {
-                    window.location.assign("/login")
-                }
                 return Promise.reject(refreshError)
             }
         }

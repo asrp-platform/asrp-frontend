@@ -81,5 +81,10 @@ export const getWebinarDetailUrl = (webinarSlug: string): string => `${WEBINARS_
 export const getWebinarRegistrationUrl = (webinarSlug: string): string =>
     `/webinars/${webinarSlug}/registrations`
 
+// Case of the month
+export const CASE_OF_THE_MONTH_URL = "/case-of-the-month"
+export const CASE_OF_THE_MONTH_CASES_URL = `${CASE_OF_THE_MONTH_URL}/cases`
+export const CASE_OF_THE_MONTH_TAGS_URL = `${CASE_OF_THE_MONTH_URL}/tags`
+
 export const getWebinarPlaybackUrl = (webinarSlug: string): string =>
     `/webinars/${webinarSlug}/playback`

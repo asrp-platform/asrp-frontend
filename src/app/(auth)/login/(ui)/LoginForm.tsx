@@ -90,12 +90,14 @@ const LoginForm = () => {
                 <Form.Item<FieldType> name="remember" valuePropName="checked">
                     <Checkbox>Remember me</Checkbox>
                 </Form.Item>
-                <CustomButton
-                    loading={isLoading}
-                    variant={"primary-filled"}
-                    htmlType="submit"
-                    children={"Submit"}
-                />
+                <CustomButton loading={isLoading} variant="primary-filled" htmlType="submit">
+                    Submit
+                </CustomButton>
+            </div>
+            <div className={styles.backHomeContainer}>
+                <CustomButton variant="secondary" onClick={() => router.push("/")}>
+                    Continue without signing in
+                </CustomButton>
             </div>
         </Form>
     )

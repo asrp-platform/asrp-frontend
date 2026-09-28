@@ -1,0 +1,35 @@
+.mainFields {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr);
+    gap: 16px;
+}
+
+.titleField {
+    grid-column: 1 / -1;
+}
+
+.publicationMonthField,
+.tagsField {
+    grid-column: span 1;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.questions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.question {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+    .mainFields {
+        display: block;
+    }
+}
