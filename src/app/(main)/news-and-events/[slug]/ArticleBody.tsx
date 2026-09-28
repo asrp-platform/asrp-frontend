@@ -91,7 +91,9 @@ const renderNode = (node: JSONContent, key: number | string): ReactNode => {
                     loading="lazy"
                     decoding="async"
                     style={{
+                        display: "block",
                         width: imageWidth,
+                        height: "auto",
                         marginLeft:
                             imageAlignment === "center" || imageAlignment === "right" ? "auto" : 0,
                         marginRight:

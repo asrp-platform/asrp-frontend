@@ -3,16 +3,16 @@
 import { Tabs } from "antd"
 import { Suspense } from "react"
 
-import { BylawsFileCard } from "@app/(administration)/administration/site-settings/ui/Bylaws.tsx"
+import LegalDocuments from "@app/(administration)/administration/site-settings/ui/LegalDocuments.tsx"
 import SponsorsManagement from "@app/(administration)/administration/site-settings/ui/SponsorsManagement"
 import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 import { useQueryParamTab } from "@shared/hooks/useQueryParamTab.ts"
 
 const items = [
     {
-        key: "bylaws",
-        label: "Bylaws",
-        children: <BylawsFileCard />,
+        key: "legal-documents",
+        label: "Legal Documents",
+        children: <LegalDocuments />,
     },
     {
         key: "sponsors",
@@ -23,7 +23,7 @@ const items = [
 
 const SiteSettingsTabs = () => {
     const { activeTab, setActiveTab } = useQueryParamTab({
-        defaultTab: "bylaws",
+        defaultTab: "legal-documents",
         tabKeys: items.map(({ key }) => key),
     })
 

@@ -49,6 +49,30 @@
     min-height: 180px;
     padding: 12px;
 
+    :global(.tiptap) {
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1em auto;
+
+            &[style*="text-align: left"] {
+                margin-right: auto;
+                margin-left: 0;
+            }
+
+            &[style*="text-align: center"] {
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            &[style*="text-align: right"] {
+                margin-right: 0;
+                margin-left: auto;
+            }
+        }
+    }
+
     &:empty::before {
         color: var(--text-muted-color-dark);
         content: attr(data-placeholder);

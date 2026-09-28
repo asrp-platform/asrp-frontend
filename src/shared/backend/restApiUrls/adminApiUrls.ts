@@ -31,6 +31,7 @@ export const getNewsDetailAdminUrl = (newsId: string | number) => `${NEWS_ADMIN_
 // Legal documents
 export const LEGAL_DOCUMENTS_ADMIN_URL = `${ADMIN_URL}/legal-documents`
 export const BYLAWS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/bylaws`
+export const SUBMISSION_GUIDELINES_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/submission-guidelines`
 export const SPONSORS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/sponsors`
 export const SPONSORS_LOGOS_ADMIN_URL = `${SPONSORS_ADMIN_URL}/logos`
 export const getAdminSponsorUrl = (sponsorId: number | string) =>

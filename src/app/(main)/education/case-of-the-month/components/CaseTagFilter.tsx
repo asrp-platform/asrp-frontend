@@ -1,6 +1,6 @@
 import type { CaseTag } from "@entities/CaseOfTheMonth.ts"
 
-import styles from "../../styles.module.scss"
+import styles from "../styles.module.scss"
 
 interface IProps {
     tags: CaseTag[]

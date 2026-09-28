@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss"
-import CaseOfTheMonthPage from "./CaseOfTheMonthPage.tsx"
+import CaseOfTheMonthPage from "./components/CaseOfTheMonthPage.tsx"
 import PageHero from "@widgets/PageHero/PageHero.tsx"
 
 const Page = () => {

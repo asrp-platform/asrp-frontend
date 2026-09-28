@@ -1,8 +1,9 @@
 import type { JSONContent } from "@tiptap/react"
+import Link from "next/link"
 
 import type { CaseOfTheMonth } from "@entities/CaseOfTheMonth.ts"
 
-import styles from "../../styles.module.scss"
+import styles from "../styles.module.scss"
 
 interface IProps {
     caseItem: CaseOfTheMonth
@@ -60,9 +61,12 @@ const CaseCard = ({ caseItem }: IProps) => {
                     {caseItem.virtual_slides.length > 0 && (
                         <span className={styles.slideStatus}>● Virtual slide available</span>
                     )}
-                    <button type="button" className={styles.viewButton}>
+                    <Link
+                        href={`/education/case-of-the-month/${encodeURIComponent(caseItem.slug)}`}
+                        className={styles.viewButton}
+                    >
                         View Case <span aria-hidden="true">→</span>
-                    </button>
+                    </Link>
                 </div>
             </div>
         </article>

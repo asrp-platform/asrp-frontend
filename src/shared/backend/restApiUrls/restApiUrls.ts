@@ -71,6 +71,7 @@ export const NEWS_URL = "/news"
 export const getNewsDetailUrl = (slug: string) => `${NEWS_URL}/${encodeURIComponent(slug)}`
 
 export const BYLAWS_URL = "/legal-documents/bylaws"
+export const SUBMISSION_GUIDELINES_URL = "/legal-documents/submission-guidelines"
 export const SPONSORS_URL = `/legal-documents/sponsors`
 
 // Webinars url
@@ -85,6 +86,8 @@ export const getWebinarRegistrationUrl = (webinarSlug: string): string =>
 export const CASE_OF_THE_MONTH_URL = "/case-of-the-month"
 export const CASE_OF_THE_MONTH_CASES_URL = `${CASE_OF_THE_MONTH_URL}/cases`
 export const CASE_OF_THE_MONTH_TAGS_URL = `${CASE_OF_THE_MONTH_URL}/tags`
+export const getCaseOfTheMonthDetailUrl = (caseSlug: string): string =>
+    `${CASE_OF_THE_MONTH_CASES_URL}/${encodeURIComponent(caseSlug)}`
 
 export const getWebinarPlaybackUrl = (webinarSlug: string): string =>
     `/webinars/${webinarSlug}/playback`

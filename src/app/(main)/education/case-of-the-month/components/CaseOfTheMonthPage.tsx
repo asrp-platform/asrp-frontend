@@ -10,12 +10,14 @@ import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTab
 import {
     CASE_OF_THE_MONTH_CASES_URL,
     CASE_OF_THE_MONTH_TAGS_URL,
+    SUBMISSION_GUIDELINES_URL,
 } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
+import LegalDocumentLink from "@shared/ui/LegalDocumentLink/LegalDocumentLink.tsx"
 
-import CaseCard from "./components/CaseCard/CaseCard.tsx"
-import CaseTagFilter from "./components/CaseTagFilter/CaseTagFilter.tsx"
-import styles from "./styles.module.scss"
+import CaseCard from "./CaseCard.tsx"
+import CaseTagFilter from "./CaseTagFilter.tsx"
+import styles from "../styles.module.scss"
 
 interface CaseFilters {
     tag_id?: number
@@ -54,9 +56,11 @@ const CaseOfTheMonthPage = () => {
                     <h2>Have an interesting case to share?</h2>
                     <p>We welcome educational pathology cases from ASRP members.</p>
                 </div>
-                <button type="button" className={styles.guidelinesButton}>
-                    View Case Preparation &amp; Submission Guidelines ↗
-                </button>
+                <LegalDocumentLink
+                    endpoint={SUBMISSION_GUIDELINES_URL}
+                    label="View Case Preparation & Submission Guidelines ↗"
+                    className={styles.guidelinesButton}
+                />
             </section>
 
             <section className={styles.librarySection}>
