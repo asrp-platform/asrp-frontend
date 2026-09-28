@@ -56,7 +56,7 @@ const ChangePasswordModal = ({ open, onClose }: Props) => {
             centered
             getContainer={false}
             closable={!isLoading}
-            maskClosable={!isLoading}
+            mask={{ closable: !isLoading }}
             onCancel={handleClose}
         >
             <div className={styles.heading}>

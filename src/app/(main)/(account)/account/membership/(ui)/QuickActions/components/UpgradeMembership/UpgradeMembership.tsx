@@ -93,7 +93,7 @@ const UpgradeMembership = () => {
                 centered
                 getContainer={false}
                 closable={!upgradeMutation.isPending}
-                maskClosable={!upgradeMutation.isPending}
+                mask={{ closable: !upgradeMutation.isPending }}
                 onCancel={handleClose}
             >
                 <div className={styles.content}>

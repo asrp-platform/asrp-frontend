@@ -1,9 +1,8 @@
 "use client"
 
-import { PlusOutlined } from "@ant-design/icons"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Button, Card, Empty, Flex, Form, Input, message, Modal, Popconfirm, Spin, Tag } from "antd"
-import { useEffect, useState } from "react"
+import { message } from "antd"
+import { useState } from "react"
 
 import api from "@/axios.ts"
 import type { CaseTag } from "@entities/CaseOfTheMonth.ts"
@@ -14,12 +13,22 @@ import {
 } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 
+import CaseTagsCard from "./components/CaseTagsCard/CaseTagsCard.tsx"
+import CasesCard from "./components/CasesCard/CasesCard.tsx"
+import CreateCaseTagModal from "./components/CreateCaseTagModal/CreateCaseTagModal.tsx"
+import EditCaseTagModal from "./components/EditCaseTagModal/EditCaseTagModal.tsx"
 import styles from "./CaseOfTheMonth.module.scss"
+import type { CaseTagForm, CaseTagFormValues } from "./types.ts"
 
 type CaseTagsResponse = CaseTag[] | IPaginatedBackendResponse<CaseTag>
 
-interface CreateCaseTagFormValues {
-    name: string
+interface CreateTagMutationVariables {
+    values: CaseTagFormValues
+    form: CaseTagForm
+}
+
+interface UpdateTagMutationVariables extends CreateTagMutationVariables {
+    id: number
 }
 
 const CASE_TAGS_QUERY_KEY = ["admin-case-of-the-month-tags"]
@@ -27,8 +36,6 @@ const CASE_TAGS_QUERY_KEY = ["admin-case-of-the-month-tags"]
 const CaseOfTheMonthTab = () => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [editingTag, setEditingTag] = useState<CaseTag | null>(null)
-    const [form] = Form.useForm<CreateCaseTagFormValues>()
-    const [editForm] = Form.useForm<CreateCaseTagFormValues>()
     const queryClient = useQueryClient()
 
     const tagsQuery = useQuery({
@@ -40,35 +47,33 @@ const CaseOfTheMonthTab = () => {
     })
 
     const createTagMutation = useMutation({
-        mutationFn: async ({ name }: CreateCaseTagFormValues) => {
+        mutationFn: async ({ values }: CreateTagMutationVariables) => {
             const response = await api.post<CaseTag>(CASE_OF_THE_MONTH_TAGS_URL, {
-                name: name.trim(),
+                name: values.name.trim(),
             })
             return response.data
         },
         onSuccess: () => {
             message.success("Case tag created")
-            form.resetFields()
             setIsCreateModalOpen(false)
             queryClient.invalidateQueries({ queryKey: CASE_TAGS_QUERY_KEY })
         },
-        onError: (error) => handleApiError({ error, form }),
+        onError: (error, variables) => handleApiError({ error, form: variables.form }),
     })
 
     const updateTagMutation = useMutation({
-        mutationFn: async ({ id, name }: CreateCaseTagFormValues & { id: number }) => {
+        mutationFn: async ({ id, values }: UpdateTagMutationVariables) => {
             const response = await api.patch<CaseTag>(getCaseTagByIdUrl(id), {
-                name: name.trim(),
+                name: values.name.trim(),
             })
             return response.data
         },
         onSuccess: () => {
             message.success("Case tag updated")
-            editForm.resetFields()
             setEditingTag(null)
             queryClient.invalidateQueries({ queryKey: CASE_TAGS_QUERY_KEY })
         },
-        onError: (error) => handleApiError({ error, form: editForm }),
+        onError: (error, variables) => handleApiError({ error, form: variables.form }),
     })
 
     const deleteTagMutation = useMutation({
@@ -77,183 +82,55 @@ const CaseOfTheMonthTab = () => {
         },
         onSuccess: () => {
             message.success("Case tag deleted")
-            editForm.resetFields()
             setEditingTag(null)
             queryClient.invalidateQueries({ queryKey: CASE_TAGS_QUERY_KEY })
         },
         onError: (error) => handleApiError({ error }),
     })
 
-    useEffect(() => {
-        if (editingTag) {
-            editForm.setFieldsValue({ name: editingTag.name })
-        } else {
-            editForm.resetFields()
-        }
-    }, [editForm, editingTag])
-
-    const handleModalClose = () => {
+    const handleCreateModalClose = () => {
         if (createTagMutation.isPending) return
 
-        form.resetFields()
         setIsCreateModalOpen(false)
     }
 
     const handleEditModalClose = () => {
         if (updateTagMutation.isPending || deleteTagMutation.isPending) return
 
-        editForm.resetFields()
         setEditingTag(null)
     }
 
     return (
         <div className={styles.caseOfMonthTab}>
-            <Card className={styles.casesCard} title="Cases">
-                <Empty
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description="The cases table will be added here."
-                />
-            </Card>
+            <CasesCard />
+            <CaseTagsCard
+                tags={tagsQuery.data ?? []}
+                loading={tagsQuery.isLoading}
+                onAddTag={() => setIsCreateModalOpen(true)}
+                onEditTag={setEditingTag}
+            />
 
-            <Card
-                className={styles.tagsCard}
-                title="Case tags"
-                extra={
-                    <Button
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={() => setIsCreateModalOpen(true)}
-                    >
-                        Add tag
-                    </Button>
-                }
-            >
-                <Spin spinning={tagsQuery.isLoading}>
-                    {tagsQuery.data?.length ? (
-                        <Flex gap={8} wrap="wrap">
-                            {tagsQuery.data.map((tag) => (
-                                <Tag
-                                    key={tag.id}
-                                    role="button"
-                                    tabIndex={0}
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => setEditingTag(tag)}
-                                    onKeyDown={(event) => {
-                                        if (event.key === "Enter" || event.key === " ") {
-                                            event.preventDefault()
-                                            setEditingTag(tag)
-                                        }
-                                    }}
-                                >
-                                    {tag.name}
-                                </Tag>
-                            ))}
-                        </Flex>
-                    ) : (
-                        <Empty
-                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                            description="No case tags yet"
-                        />
-                    )}
-                </Spin>
-            </Card>
-
-            <Modal
-                title="Create case tag"
+            <CreateCaseTagModal
                 open={isCreateModalOpen}
-                footer={null}
-                onCancel={handleModalClose}
-                closable={!createTagMutation.isPending}
-                destroyOnHidden
-            >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    disabled={createTagMutation.isPending}
-                    onFinish={(values) => createTagMutation.mutate(values)}
-                >
-                    <Form.Item
-                        label="Name"
-                        name="name"
-                        rules={[
-                            { required: true, whitespace: true, message: "Enter a tag name" },
-                            { max: 255, message: "Tag name must be 255 characters or fewer" },
-                        ]}
-                    >
-                        <Input placeholder="For example, Breast pathology" maxLength={255} />
-                    </Form.Item>
+                loading={createTagMutation.isPending}
+                onCancel={handleCreateModalClose}
+                onSubmit={(values, form) => createTagMutation.mutate({ values, form })}
+            />
 
-                    <Flex justify="flex-end" gap={8}>
-                        <Button onClick={handleModalClose}>Cancel</Button>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            loading={createTagMutation.isPending}
-                        >
-                            Create tag
-                        </Button>
-                    </Flex>
-                </Form>
-            </Modal>
-
-            <Modal
-                title="Edit case tag"
-                open={Boolean(editingTag)}
-                footer={null}
+            <EditCaseTagModal
+                tag={editingTag}
+                updating={updateTagMutation.isPending}
+                deleting={deleteTagMutation.isPending}
                 onCancel={handleEditModalClose}
-                closable={!updateTagMutation.isPending && !deleteTagMutation.isPending}
-                destroyOnHidden
-            >
-                <Form
-                    form={editForm}
-                    layout="vertical"
-                    disabled={updateTagMutation.isPending || deleteTagMutation.isPending}
-                    onFinish={(values) => {
-                        if (!editingTag) return
+                onSubmit={(values, form) => {
+                    if (!editingTag) return
 
-                        updateTagMutation.mutate({ ...values, id: editingTag.id })
-                    }}
-                >
-                    <Form.Item
-                        label="Name"
-                        name="name"
-                        rules={[
-                            { required: true, whitespace: true, message: "Enter a tag name" },
-                            { max: 255, message: "Tag name must be 255 characters or fewer" },
-                        ]}
-                    >
-                        <Input maxLength={255} />
-                    </Form.Item>
-
-                    <Flex justify="space-between" align="center" gap={8}>
-                        <Popconfirm
-                            title="Delete this case tag?"
-                            description="This action cannot be undone."
-                            okText="Delete"
-                            okButtonProps={{ danger: true }}
-                            cancelText="Cancel"
-                            onConfirm={() => {
-                                if (editingTag) deleteTagMutation.mutate(editingTag.id)
-                            }}
-                        >
-                            <Button danger loading={deleteTagMutation.isPending}>
-                                Delete
-                            </Button>
-                        </Popconfirm>
-
-                        <Flex gap={8}>
-                            <Button onClick={handleEditModalClose}>Cancel</Button>
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                loading={updateTagMutation.isPending}
-                            >
-                                Save
-                            </Button>
-                        </Flex>
-                    </Flex>
-                </Form>
-            </Modal>
+                    updateTagMutation.mutate({ id: editingTag.id, values, form })
+                }}
+                onDelete={() => {
+                    if (editingTag) deleteTagMutation.mutate(editingTag.id)
+                }}
+            />
         </div>
     )
 }
