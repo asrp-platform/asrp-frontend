@@ -1,46 +1,61 @@
 "use client"
 
-import MembershipRequestsTable from "@app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/MembershipRequestsTable.tsx"
 import { Tabs } from "antd"
+import { Suspense } from "react"
+
+import MembershipRequestsTable from "@app/(administration)/administration/membership/(tabs)/MembershipRequestsTable/MembershipRequestsTable.tsx"
 import MembershipDowngradeRequestsTable from "@app/(administration)/administration/membership/(tabs)/MembershipDowngradeRequestsTable/MembershipDowngradeRequestsTable.tsx"
 import MembersTable from "@app/(administration)/administration/membership/(tabs)/MembersTable/MembersTable.tsx"
-import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 import MembershipTypesTable from "@app/(administration)/administration/membership/(tabs)/MembershipTypesTable/MembershipTypesTable.tsx"
+import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
+import { useQueryParamTab } from "@shared/hooks/useQueryParamTab.ts"
 
 const items = [
     {
-        label: `Members`,
+        label: "Members",
         key: "members",
         children: <MembersTable />,
     },
     {
-        label: `Membership Requests`,
+        label: "Membership Requests",
         key: "membership-requests",
         children: <MembershipRequestsTable />,
     },
     {
-        label: `Membership Downgrade Requests`,
+        label: "Membership Downgrade Requests",
         key: "downgrade-requests",
         children: <MembershipDowngradeRequestsTable />,
     },
     {
-        label: `Membership Types`,
+        label: "Membership Types",
         key: "membership-types",
         children: <MembershipTypesTable />,
     },
 ]
 
-const Page = () => {
+const MembershipTabs = () => {
+    const { activeTab, setActiveTab } = useQueryParamTab({
+        defaultTab: "members",
+        tabKeys: items.map(({ key }) => key),
+    })
+
     return (
-        <AdminPermissionGuard permission={"memberships.view"}>
+        <AdminPermissionGuard permission="memberships.view">
             <Tabs
-                defaultActiveKey="members"
-                type={"card"}
+                activeKey={activeTab}
+                onChange={setActiveTab}
+                type="card"
                 style={{ marginBottom: 32 }}
                 items={items}
             />
         </AdminPermissionGuard>
     )
 }
+
+const Page = () => (
+    <Suspense fallback={null}>
+        <MembershipTabs />
+    </Suspense>
+)
 
 export default Page

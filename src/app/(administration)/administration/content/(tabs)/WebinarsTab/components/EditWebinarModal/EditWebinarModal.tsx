@@ -165,7 +165,7 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
             width={820}
             footer={null}
             closable={!isPending}
-            maskClosable={!isPending}
+            mask={{ closable: !isPending }}
             destroyOnHidden
             onCancel={closeModal}
         >
