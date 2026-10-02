@@ -11,11 +11,14 @@ import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
 import type { WebinarFilterValues } from "./types.ts"
 import { Flex, Tag } from "antd"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
+import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 
 const initialFilters: WebinarFilterValues = {}
 const webinarsQueryKey = ["admin-webinars"]
 
 const WebinarsTab = () => {
+    const { can } = useAdminPermissions()
     const [page, setPage] = useState(1)
     const [ordering, setOrdering] = useState<string[]>(["-id"])
     const [filters, setFilters] = useState<WebinarFilterValues>(initialFilters)
@@ -40,7 +43,7 @@ const WebinarsTab = () => {
     }
 
     return (
-        <>
+        <AdminPermissionGuard permission="webinars.view">
             <Flex gap={12} wrap="wrap" justify="space-between" style={{ marginBottom: 16 }}>
                 <WebinarFilters filters={filters} onChange={updateFilters} />
                 <Tag style={{ display: "flex", alignItems: "center" }}>
@@ -56,11 +59,13 @@ const WebinarsTab = () => {
                 total={webinars?.count ?? 0}
                 ordering={ordering}
                 loading={isLoading || isFetching}
+                canUpdate={can("webinars.update")}
+                canDelete={can("webinars.delete")}
                 onPageChange={setPage}
                 onOrderingChange={setOrdering}
                 onFiltersChange={updateFilters}
             />
-        </>
+        </AdminPermissionGuard>
     )
 }
 

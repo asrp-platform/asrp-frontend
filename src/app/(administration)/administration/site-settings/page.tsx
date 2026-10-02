@@ -12,12 +12,20 @@ const items = [
     {
         key: "legal-documents",
         label: "Legal Documents",
-        children: <LegalDocuments />,
+        children: (
+            <AdminPermissionGuard permission="legal_documents.view">
+                <LegalDocuments />
+            </AdminPermissionGuard>
+        ),
     },
     {
         key: "sponsors",
         label: "Sponsors",
-        children: <SponsorsManagement />,
+        children: (
+            <AdminPermissionGuard permission="legal_documents.view">
+                <SponsorsManagement />
+            </AdminPermissionGuard>
+        ),
     },
 ]
 

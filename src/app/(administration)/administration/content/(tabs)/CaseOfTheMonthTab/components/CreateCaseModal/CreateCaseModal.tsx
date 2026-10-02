@@ -22,6 +22,8 @@ interface IProps {
     submitting: boolean
     onCancel: () => void
     onSubmit: (values: CaseOfTheMonthFormValues, form: CaseOfTheMonthForm) => void
+    canCreate: boolean
+    canUpdate: boolean
 }
 
 const hasEditorText = (value?: CaseOfTheMonthFormValues["history"]) =>
@@ -33,7 +35,16 @@ const hasEditorText = (value?: CaseOfTheMonthFormValues["history"]) =>
 
 const emptyDocument = { type: "doc" as const, content: [{ type: "paragraph" as const }] }
 
-const CreateCaseModal = ({ open, tags, caseItem, submitting, onCancel, onSubmit }: IProps) => {
+const CreateCaseModal = ({
+    open,
+    tags,
+    caseItem,
+    submitting,
+    onCancel,
+    onSubmit,
+    canCreate,
+    canUpdate,
+}: IProps) => {
     const [form] = Form.useForm<CaseOfTheMonthFormValues>()
     const [coverUploading, setCoverUploading] = useState(false)
     const isEditing = Boolean(caseItem)
@@ -215,7 +226,12 @@ const CreateCaseModal = ({ open, tags, caseItem, submitting, onCancel, onSubmit 
 
                 <Flex justify="flex-end" gap={8}>
                     <Button onClick={onCancel}>Cancel</Button>
-                    <Button type="primary" htmlType="submit" loading={submitting}>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        loading={submitting}
+                        disabled={isEditing ? !canUpdate : !canCreate}
+                    >
                         {isEditing ? "Save changes" : "Create case"}
                     </Button>
                 </Flex>

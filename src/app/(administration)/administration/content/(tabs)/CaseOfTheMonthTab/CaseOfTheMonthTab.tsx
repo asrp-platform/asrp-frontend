@@ -16,6 +16,7 @@ import {
 import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 import { useTableDataQuery } from "@shared/backend/queries/tableDataQuery/useTableDataQuery.ts"
 import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 import CaseTagsCard from "./components/CaseTagsCard/CaseTagsCard.tsx"
 import CasesCard from "./components/CasesCard/CasesCard.tsx"
@@ -63,6 +64,7 @@ const toCasePayload = (values: CaseOfTheMonthFormValues) => ({
 })
 
 const CaseOfTheMonthTab = () => {
+    const { can } = useAdminPermissions()
     const [isCaseModalOpen, setIsCaseModalOpen] = useState(false)
     const [selectedCase, setSelectedCase] = useState<CaseOfTheMonth | null>(null)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -78,6 +80,7 @@ const CaseOfTheMonthTab = () => {
         page,
         pageSize,
         ordering,
+        enabled: can("case_of_the_month.view"),
     })
 
     const tagsQuery = useQuery({
@@ -86,6 +89,7 @@ const CaseOfTheMonthTab = () => {
             const response = await api.get<CaseTagsResponse>(CASE_OF_THE_MONTH_TAGS_URL)
             return Array.isArray(response.data) ? response.data : response.data.data
         },
+        enabled: can("case_of_the_month.view"),
     })
 
     const createTagMutation = useMutation({
@@ -192,50 +196,64 @@ const CaseOfTheMonthTab = () => {
                     setSelectedCase(caseItem)
                     setIsCaseModalOpen(true)
                 }}
+                canCreate={can("case_of_the_month.create")}
+                canUpdate={can("case_of_the_month.update")}
             />
             <CaseTagsCard
                 tags={tagsQuery.data ?? []}
                 loading={tagsQuery.isLoading}
                 onAddTag={() => setIsCreateModalOpen(true)}
                 onEditTag={setEditingTag}
+                canCreate={can("case_of_the_month.create")}
+                canUpdate={can("case_of_the_month.update")}
             />
 
-            <CreateCaseTagModal
-                open={isCreateModalOpen}
-                loading={createTagMutation.isPending}
-                onCancel={handleCreateModalClose}
-                onSubmit={(values, form) => createTagMutation.mutate({ values, form })}
-            />
+            {can("case_of_the_month.create") && (
+                <CreateCaseTagModal
+                    open={isCreateModalOpen}
+                    loading={createTagMutation.isPending}
+                    onCancel={handleCreateModalClose}
+                    onSubmit={(values, form) => createTagMutation.mutate({ values, form })}
+                />
+            )}
 
-            <CreateCaseModal
-                open={isCaseModalOpen}
-                tags={tagsQuery.data ?? []}
-                caseItem={selectedCase}
-                submitting={saveCaseMutation.isPending}
-                onCancel={handleCaseModalClose}
-                onSubmit={(values, form) =>
-                    saveCaseMutation.mutate({
-                        caseId: selectedCase?.id ?? null,
-                        values,
-                        form,
-                    })
-                }
-            />
+            {(can("case_of_the_month.create") || can("case_of_the_month.update")) && (
+                <CreateCaseModal
+                    open={isCaseModalOpen}
+                    tags={tagsQuery.data ?? []}
+                    caseItem={selectedCase}
+                    submitting={saveCaseMutation.isPending}
+                    canCreate={can("case_of_the_month.create")}
+                    canUpdate={can("case_of_the_month.update")}
+                    onCancel={handleCaseModalClose}
+                    onSubmit={(values, form) =>
+                        saveCaseMutation.mutate({
+                            caseId: selectedCase?.id ?? null,
+                            values,
+                            form,
+                        })
+                    }
+                />
+            )}
 
-            <EditCaseTagModal
-                tag={editingTag}
-                updating={updateTagMutation.isPending}
-                deleting={deleteTagMutation.isPending}
-                onCancel={handleEditModalClose}
-                onSubmit={(values, form) => {
-                    if (!editingTag) return
+            {(can("case_of_the_month.update") || can("case_of_the_month.delete")) && (
+                <EditCaseTagModal
+                    tag={editingTag}
+                    updating={updateTagMutation.isPending}
+                    deleting={deleteTagMutation.isPending}
+                    canUpdate={can("case_of_the_month.update")}
+                    canDelete={can("case_of_the_month.delete")}
+                    onCancel={handleEditModalClose}
+                    onSubmit={(values, form) => {
+                        if (!editingTag) return
 
-                    updateTagMutation.mutate({ id: editingTag.id, values, form })
-                }}
-                onDelete={() => {
-                    if (editingTag) deleteTagMutation.mutate(editingTag.id)
-                }}
-            />
+                        updateTagMutation.mutate({ id: editingTag.id, values, form })
+                    }}
+                    onDelete={() => {
+                        if (editingTag) deleteTagMutation.mutate(editingTag.id)
+                    }}
+                />
+            )}
         </div>
     )
 }

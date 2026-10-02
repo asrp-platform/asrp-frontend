@@ -34,3 +34,25 @@ export const useCurrentUserPermissionsQuery = () => {
         isLoading: isCurrentUserLoading || (isAdmin && permissionsQuery.isLoading),
     }
 }
+
+/**
+ * Centralised permission helpers for the administration UI. Keeping the
+ * checks here prevents individual screens from accidentally treating an
+ * administrator as all-powerful or forgetting to require the `view` action.
+ */
+export const useAdminPermissions = () => {
+    const query = useCurrentUserPermissionsQuery()
+    const actions = query.data?.map(({ action }) => action) ?? []
+
+    const can = (permission: string) => query.isAdmin && actions.includes(permission)
+    const canAny = (permissions: string[]) => permissions.some(can)
+    const canAll = (permissions: string[]) => permissions.every(can)
+
+    return {
+        ...query,
+        actions,
+        can,
+        canAny,
+        canAll,
+    }
+}

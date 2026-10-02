@@ -8,6 +8,7 @@ import PageSection from "@/shared/ui/PageSection/PageSection"
 import { type IWebinar, WebinarStatus } from "@entities/News.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { WEBINARS_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
 
@@ -37,15 +38,17 @@ const PastWebinarsSection = () => {
         },
     })
     const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const { can, isLoading: isPermissionsLoading } = useAdminPermissions()
     const { data: membership, isLoading: isMembershipLoading } = useCurrentUserMembershipQuery(
         Boolean(currentUser),
     )
 
     const webinars = data?.data ?? []
     const isAuthenticated = Boolean(currentUser)
-    const canManageRecording = Boolean(currentUser?.admin)
+    const canManageRecording = can("webinars.update")
     const hasActiveMembership = Boolean(membership?.is_active)
-    const isAccessLoading = isCurrentUserLoading || (isAuthenticated && isMembershipLoading)
+    const isAccessLoading =
+        isCurrentUserLoading || isPermissionsLoading || (isAuthenticated && isMembershipLoading)
     const isLoading = isWebinarsLoading || isAccessLoading
 
     return (

@@ -22,6 +22,7 @@ interface IProps {
     onPageChange: (page: number) => void
     onOrderingChange: (ordering: string[]) => void
     onEdit: (caseItem: CaseOfTheMonth) => void
+    canUpdate: boolean
 }
 
 const formatPublicationMonth = (value: string) =>
@@ -41,6 +42,7 @@ const CasesTable = ({
     onPageChange,
     onOrderingChange,
     onEdit,
+    canUpdate,
 }: IProps) => {
     const applyOrdering = (next: SetStateAction<string[]>) => {
         onOrderingChange(typeof next === "function" ? next(ordering) : next)
@@ -119,15 +121,16 @@ const CasesTable = ({
             key: "edit",
             fixed: "right",
             width: 58,
-            render: (_, caseItem) => (
-                <Tooltip title="Edit case">
-                    <Button
-                        aria-label={`Edit ${caseItem.title}`}
-                        icon={<Pencil size={15} />}
-                        onClick={() => onEdit(caseItem)}
-                    />
-                </Tooltip>
-            ),
+            render: (_, caseItem) =>
+                canUpdate ? (
+                    <Tooltip title="Edit case">
+                        <Button
+                            aria-label={`Edit ${caseItem.title}`}
+                            icon={<Pencil size={15} />}
+                            onClick={() => onEdit(caseItem)}
+                        />
+                    </Tooltip>
+                ) : null,
         },
     ]
 

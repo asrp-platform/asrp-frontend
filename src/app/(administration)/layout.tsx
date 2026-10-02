@@ -45,9 +45,9 @@ const menuItems = [
         label: "Content",
     },
     {
-        key: "/administration/contact-messages",
+        key: "/administration/feedback",
         icon: <MailOutlined />,
-        label: "Contact Messages",
+        label: "Feedback",
     },
     {
         key: "/administration/payments",

@@ -26,6 +26,8 @@ interface WebinarsTableProps {
     onPageChange: (page: number) => void
     onOrderingChange: (ordering: string[]) => void
     onFiltersChange: (filters: WebinarFilterValues) => void
+    canUpdate: boolean
+    canDelete: boolean
 }
 
 const isPastWebinar = (webinar: IWebinar) =>
@@ -45,6 +47,8 @@ const WebinarsTable = ({
     onPageChange,
     onOrderingChange,
     onFiltersChange,
+    canUpdate,
+    canDelete,
 }: WebinarsTableProps) => {
     const [selectedWebinar, setSelectedWebinar] = useState<IWebinar | null>(null)
 
@@ -115,15 +119,16 @@ const WebinarsTable = ({
             title: "",
             key: "edit",
             fixed: "right",
-            render: (record: IWebinar) => (
-                <Tooltip title="Edit webinar">
-                    <Button
-                        aria-label={`Edit ${record.title}`}
-                        icon={<Pencil size={15} />}
-                        onClick={() => setSelectedWebinar(record)}
-                    />
-                </Tooltip>
-            ),
+            render: (record: IWebinar) =>
+                canUpdate ? (
+                    <Tooltip title="Edit webinar">
+                        <Button
+                            aria-label={`Edit ${record.title}`}
+                            icon={<Pencil size={15} />}
+                            onClick={() => setSelectedWebinar(record)}
+                        />
+                    </Tooltip>
+                ) : null,
         },
     ]
 
@@ -151,6 +156,8 @@ const WebinarsTable = ({
                     open
                     webinar={selectedWebinar}
                     onClose={() => setSelectedWebinar(null)}
+                    canUpdate={canUpdate}
+                    canDelete={canDelete}
                 />
             )}
         </>

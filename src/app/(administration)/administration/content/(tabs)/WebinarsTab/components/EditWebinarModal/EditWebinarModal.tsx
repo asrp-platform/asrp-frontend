@@ -41,6 +41,8 @@ interface IProps {
     open: boolean
     webinar: IWebinar
     onClose: () => void
+    canUpdate: boolean
+    canDelete: boolean
 }
 
 interface IFormValues {
@@ -59,7 +61,7 @@ interface IFormValues {
     language?: string
 }
 
-const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
+const EditWebinarModal = ({ open, webinar, onClose, canUpdate, canDelete }: IProps) => {
     const [form] = Form.useForm<IFormValues>()
     const [openedAt] = useState(() => Date.now())
     const queryClient = useQueryClient()
@@ -172,7 +174,7 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
             <Form<IFormValues>
                 form={form}
                 layout="vertical"
-                disabled={isPending}
+                disabled={isPending || !canUpdate}
                 onFinish={(values) => updateMutation.mutate(values)}
             >
                 <div className={styles.grid}>
@@ -360,13 +362,18 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
 
                 <Flex justify="space-between" className={styles.actions}>
                     <Button onClick={closeModal}>Cancel</Button>
-                    <Button type="primary" htmlType="submit" loading={updateMutation.isPending}>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        loading={updateMutation.isPending}
+                        disabled={!canUpdate}
+                    >
                         Save changes
                     </Button>
                 </Flex>
             </Form>
 
-            {isPast && (
+            {isPast && (canUpdate || canDelete) && (
                 <section className={styles.dangerZone}>
                     <div>
                         <strong>Webinar management</strong>
@@ -377,47 +384,51 @@ const EditWebinarModal = ({ open, webinar, onClose }: IProps) => {
                         </p>
                     </div>
                     <Flex gap={10} wrap="wrap">
-                        <Popconfirm
-                            title={webinar.archived ? "Restore webinar?" : "Archive webinar?"}
-                            description={
-                                webinar.archived
-                                    ? "The webinar will appear in the public archive again."
-                                    : "The webinar will be hidden from the public archive."
-                            }
-                            okText={webinar.archived ? "Restore" : "Archive"}
-                            onConfirm={() => archiveMutation.mutate(!webinar.archived)}
-                        >
-                            <Button
-                                icon={
-                                    webinar.archived ? (
-                                        <ArchiveRestore size={16} />
-                                    ) : (
-                                        <Archive size={16} />
-                                    )
+                        {canUpdate && (
+                            <Popconfirm
+                                title={webinar.archived ? "Restore webinar?" : "Archive webinar?"}
+                                description={
+                                    webinar.archived
+                                        ? "The webinar will appear in the public archive again."
+                                        : "The webinar will be hidden from the public archive."
                                 }
-                                loading={archiveMutation.isPending}
-                                disabled={isPending && !archiveMutation.isPending}
+                                okText={webinar.archived ? "Restore" : "Archive"}
+                                onConfirm={() => archiveMutation.mutate(!webinar.archived)}
                             >
-                                {webinar.archived ? "Unarchive webinar" : "Archive webinar"}
-                            </Button>
-                        </Popconfirm>
+                                <Button
+                                    icon={
+                                        webinar.archived ? (
+                                            <ArchiveRestore size={16} />
+                                        ) : (
+                                            <Archive size={16} />
+                                        )
+                                    }
+                                    loading={archiveMutation.isPending}
+                                    disabled={isPending && !archiveMutation.isPending}
+                                >
+                                    {webinar.archived ? "Unarchive webinar" : "Archive webinar"}
+                                </Button>
+                            </Popconfirm>
+                        )}
 
-                        <Popconfirm
-                            title="Delete webinar permanently?"
-                            description="This action cannot be undone."
-                            okText="Delete"
-                            okButtonProps={{ danger: true }}
-                            onConfirm={() => deleteMutation.mutate()}
-                        >
-                            <Button
-                                danger
-                                icon={<Trash2 size={16} />}
-                                loading={deleteMutation.isPending}
-                                disabled={isPending && !deleteMutation.isPending}
+                        {canDelete && (
+                            <Popconfirm
+                                title="Delete webinar permanently?"
+                                description="This action cannot be undone."
+                                okText="Delete"
+                                okButtonProps={{ danger: true }}
+                                onConfirm={() => deleteMutation.mutate()}
                             >
-                                Delete webinar
-                            </Button>
-                        </Popconfirm>
+                                <Button
+                                    danger
+                                    icon={<Trash2 size={16} />}
+                                    loading={deleteMutation.isPending}
+                                    disabled={isPending && !deleteMutation.isPending}
+                                >
+                                    Delete webinar
+                                </Button>
+                            </Popconfirm>
+                        )}
                     </Flex>
                 </section>
             )}

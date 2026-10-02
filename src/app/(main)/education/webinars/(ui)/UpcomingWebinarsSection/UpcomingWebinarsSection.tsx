@@ -11,6 +11,7 @@ import NextWebinar from "@app/(main)/education/webinars/(ui)/UpcomingWebinarsSec
 import { Alert } from "antd"
 import UpcomingWebinarsSkeleton from "./components/UpcomingWebinarsSkeleton/UpcomingWebinarsSkeleton"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { getWebinarAccessStatus } from "../MemberAccess/webinarAccess"
 import UpcomingWebinarCard from "./components/UpcomingWebinarCard/UpcomingWebinarCard"
@@ -38,12 +39,18 @@ const UpcomingWebinarsSection = () => {
         },
     })
     const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const { can, isLoading: isPermissionsLoading } = useAdminPermissions()
     const { data: membership, isLoading: isMembershipLoading } =
         useCurrentUserMembershipQuery(!!currentUser)
 
-    const showCreateButton = !isCurrentUserLoading && currentUser && currentUser.admin
+    const canCreate = !isCurrentUserLoading && Boolean(currentUser) && can("webinars.create")
+    const canUpdate = can("webinars.update")
+    const canDelete = can("webinars.delete")
     const hasActiveMembership = Boolean(membership?.is_active)
-    const isAccessLoading = isCurrentUserLoading || (Boolean(currentUser) && isMembershipLoading)
+    const isAccessLoading =
+        isCurrentUserLoading ||
+        isPermissionsLoading ||
+        (Boolean(currentUser) && isMembershipLoading)
 
     const [nextWebinar, ...otherUpcomingWebinars] = upcomingWebinars
 
@@ -55,7 +62,7 @@ const UpcomingWebinarsSection = () => {
         <PageSection className={styles.upcomingSection}>
             <UpcomingWebinarsSectionHeader
                 webinarsCount={upcomingWebinars.length}
-                showCreateButton={Boolean(showCreateButton)}
+                showCreateButton={canCreate}
             />
 
             {isWebinarsError ? (
@@ -85,7 +92,8 @@ const UpcomingWebinarsSection = () => {
                 <>
                     <NextWebinar
                         webinar={nextWebinar}
-                        canDelete={Boolean(showCreateButton)}
+                        canUpdate={canUpdate}
+                        canDelete={canDelete}
                         accessStatus={getWebinarAccessStatus({
                             webinar: nextWebinar,
                             isAuthenticated: Boolean(currentUser),
@@ -106,7 +114,8 @@ const UpcomingWebinarsSection = () => {
                                     key={webinar.id}
                                     webinar={webinar}
                                     accessStatus={accessStatus}
-                                    canDelete={Boolean(showCreateButton)}
+                                    canUpdate={canUpdate}
+                                    canDelete={canDelete}
                                 />
                             )
                         })}

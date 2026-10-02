@@ -13,9 +13,20 @@ interface IProps {
     onCancel: () => void
     onSubmit: (values: CaseTagFormValues, form: FormInstance<CaseTagFormValues>) => void
     onDelete: () => void
+    canUpdate: boolean
+    canDelete: boolean
 }
 
-const EditCaseTagModal = ({ tag, updating, deleting, onCancel, onSubmit, onDelete }: IProps) => {
+const EditCaseTagModal = ({
+    tag,
+    updating,
+    deleting,
+    onCancel,
+    onSubmit,
+    onDelete,
+    canUpdate,
+    canDelete,
+}: IProps) => {
     const [form] = Form.useForm<CaseTagFormValues>()
     const loading = updating || deleting
 
@@ -54,22 +65,29 @@ const EditCaseTagModal = ({ tag, updating, deleting, onCancel, onSubmit, onDelet
                 </Form.Item>
 
                 <Flex justify="space-between" align="center" gap={8}>
-                    <Popconfirm
-                        title="Delete this case tag?"
-                        description="This action cannot be undone."
-                        okText="Delete"
-                        okButtonProps={{ danger: true }}
-                        cancelText="Cancel"
-                        onConfirm={onDelete}
-                    >
-                        <Button danger loading={deleting}>
-                            Delete
-                        </Button>
-                    </Popconfirm>
+                    {canDelete && (
+                        <Popconfirm
+                            title="Delete this case tag?"
+                            description="This action cannot be undone."
+                            okText="Delete"
+                            okButtonProps={{ danger: true }}
+                            cancelText="Cancel"
+                            onConfirm={onDelete}
+                        >
+                            <Button danger loading={deleting}>
+                                Delete
+                            </Button>
+                        </Popconfirm>
+                    )}
 
                     <Flex gap={8}>
                         <Button onClick={onCancel}>Cancel</Button>
-                        <Button type="primary" htmlType="submit" loading={updating}>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            loading={updating}
+                            disabled={!canUpdate}
+                        >
                             Save
                         </Button>
                     </Flex>

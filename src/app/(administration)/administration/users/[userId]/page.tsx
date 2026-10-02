@@ -7,6 +7,7 @@ import UserDataCard from "@app/(administration)/administration/users/[userId]/(u
 import MembershipInformationCard from "@app/(administration)/administration/users/[userId]/(ui)/MembershipInformationCard.tsx"
 import UserProfessionalProfileCard from "@app/(administration)/administration/users/[userId]/(ui)/UserProfessionalProfileCard.tsx"
 import { LeftOutlined } from "@ant-design/icons"
+import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 
 const { Title } = Typography
 
@@ -26,10 +27,14 @@ const Page = () => {
             <UserDataCard userId={userId} />
 
             <Title level={2}>User professional profile</Title>
-            <UserProfessionalProfileCard userId={userId} />
+            <AdminPermissionGuard permission="admin.view">
+                <UserProfessionalProfileCard userId={userId} />
+            </AdminPermissionGuard>
 
             <Title level={2}>User membership information</Title>
-            <MembershipInformationCard userId={userId} />
+            <AdminPermissionGuard permission="memberships.view">
+                <MembershipInformationCard userId={userId} />
+            </AdminPermissionGuard>
         </Flex>
     )
 }

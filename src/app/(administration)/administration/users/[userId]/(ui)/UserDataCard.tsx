@@ -14,12 +14,16 @@ import AccountInformationDescription from "@app/(administration)/administration/
 import MainInformation from "@app/(administration)/administration/users/[userId]/(ui)/components/MainInformation.tsx"
 import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 import UserActions from "@app/(administration)/administration/users/[userId]/(ui)/components/UserActions.tsx"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
+import AccessDenied from "@shared/ui/PermissionGuard/AccessDenied.tsx"
 
 interface IProps {
     userId: string
 }
 
 const UserDataCard = ({ userId }: IProps) => {
+    const { can, isLoading: permissionsLoading } = useAdminPermissions()
+    const canView = can("admin.view")
     const {
         data: user,
         isLoading,
@@ -33,7 +37,14 @@ const UserDataCard = ({ userId }: IProps) => {
         },
         staleTime: 1000 * 60 * 5,
         retry: false,
+        enabled: canView,
     })
+
+    if (permissionsLoading) return <Loading />
+
+    if (!canView) {
+        return <AccessDenied />
+    }
 
     if (isLoading) {
         return <Loading />

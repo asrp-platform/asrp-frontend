@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
                 destination: "/administration/content",
                 permanent: false,
             },
+            {
+                source: "/administration/contact-messages",
+                destination: "/administration/feedback",
+                permanent: false,
+            },
         ]
     },
 }

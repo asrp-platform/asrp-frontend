@@ -7,22 +7,35 @@ import CaseOfTheMonthTab from "@app/(administration)/administration/content/(tab
 import NewsAndEventsTab from "@app/(administration)/administration/content/(tabs)/NewsAndEventsTab/NewsAndEventsTab.tsx"
 import WebinarsTab from "@app/(administration)/administration/content/(tabs)/WebinarsTab/WebinarsTab.tsx"
 import { useQueryParamTab } from "@shared/hooks/useQueryParamTab.ts"
+import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 
 const tabsItems = [
     {
         key: "webinars",
         label: "Webinars",
-        children: <WebinarsTab />,
+        children: (
+            <AdminPermissionGuard permission="webinars.view">
+                <WebinarsTab />
+            </AdminPermissionGuard>
+        ),
     },
     {
         key: "news-and-events",
         label: "News & Events",
-        children: <NewsAndEventsTab />,
+        children: (
+            <AdminPermissionGuard permission="news.view">
+                <NewsAndEventsTab />
+            </AdminPermissionGuard>
+        ),
     },
     {
         key: "case-of-the-month",
         label: "Case of the Month",
-        children: <CaseOfTheMonthTab />,
+        children: (
+            <AdminPermissionGuard permission="case_of_the_month.view">
+                <CaseOfTheMonthTab />
+            </AdminPermissionGuard>
+        ),
     },
 ]
 

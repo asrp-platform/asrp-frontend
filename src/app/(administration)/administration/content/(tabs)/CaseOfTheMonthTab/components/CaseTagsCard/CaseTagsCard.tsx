@@ -10,16 +10,20 @@ interface IProps {
     loading: boolean
     onAddTag: () => void
     onEditTag: (tag: CaseTag) => void
+    canCreate: boolean
+    canUpdate: boolean
 }
 
-const CaseTagsCard = ({ tags, loading, onAddTag, onEditTag }: IProps) => (
+const CaseTagsCard = ({ tags, loading, onAddTag, onEditTag, canCreate, canUpdate }: IProps) => (
     <Card
         className={styles.tagsCard}
         title="Case tags"
         extra={
-            <Button type="primary" icon={<PlusOutlined />} onClick={onAddTag}>
-                Add tag
-            </Button>
+            canCreate && (
+                <Button type="primary" icon={<PlusOutlined />} onClick={onAddTag}>
+                    Add tag
+                </Button>
+            )
         }
     >
         <Spin spinning={loading}>
@@ -31,11 +35,11 @@ const CaseTagsCard = ({ tags, loading, onAddTag, onEditTag }: IProps) => (
                             role="button"
                             tabIndex={0}
                             style={{ cursor: "pointer" }}
-                            onClick={() => onEditTag(tag)}
+                            onClick={() => canUpdate && onEditTag(tag)}
                             onKeyDown={(event) => {
                                 if (event.key === "Enter" || event.key === " ") {
                                     event.preventDefault()
-                                    onEditTag(tag)
+                                    if (canUpdate) onEditTag(tag)
                                 }
                             }}
                         >

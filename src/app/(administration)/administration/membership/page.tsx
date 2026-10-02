@@ -14,22 +14,38 @@ const items = [
     {
         label: "Members",
         key: "members",
-        children: <MembersTable />,
+        children: (
+            <AdminPermissionGuard permission="memberships.view">
+                <MembersTable />
+            </AdminPermissionGuard>
+        ),
     },
     {
         label: "Membership Requests",
         key: "membership-requests",
-        children: <MembershipRequestsTable />,
+        children: (
+            <AdminPermissionGuard permission="memberships.view">
+                <MembershipRequestsTable />
+            </AdminPermissionGuard>
+        ),
     },
     {
         label: "Membership Downgrade Requests",
         key: "downgrade-requests",
-        children: <MembershipDowngradeRequestsTable />,
+        children: (
+            <AdminPermissionGuard permission="memberships.view">
+                <MembershipDowngradeRequestsTable />
+            </AdminPermissionGuard>
+        ),
     },
     {
         label: "Membership Types",
         key: "membership-types",
-        children: <MembershipTypesTable />,
+        children: (
+            <AdminPermissionGuard permission="memberships.view">
+                <MembershipTypesTable />
+            </AdminPermissionGuard>
+        ),
     },
 ]
 
