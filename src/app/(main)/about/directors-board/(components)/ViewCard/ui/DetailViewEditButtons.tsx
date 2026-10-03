@@ -8,26 +8,37 @@ interface IProps {
     onSave?: () => void
     onDelete?: () => void
     editable: boolean
+    canDelete?: boolean
 }
 
-const DetailViewEditButtons = ({ onCancel, onSave, onDelete, editable }: IProps) => {
-    if (!editable) return null
+const DetailViewEditButtons = ({
+    onCancel,
+    onSave,
+    onDelete,
+    editable,
+    canDelete = true,
+}: IProps) => {
+    if (!editable && !canDelete) return null
 
     return (
         <div className={styles.buttonContainer}>
             <div className={styles.leftContainer}>
-                <Button danger onClick={onDelete}>
-                    Delete
-                </Button>
+                {canDelete && (
+                    <Button danger onClick={onDelete}>
+                        Delete
+                    </Button>
+                )}
             </div>
-            <div className={styles.rightContainer}>
-                <Button htmlType={"button"} onClick={onCancel}>
-                    Cancel
-                </Button>
-                <Button type="primary" htmlType={"submit"} onClick={onSave}>
-                    Save
-                </Button>
-            </div>
+            {editable && (
+                <div className={styles.rightContainer}>
+                    <Button htmlType={"button"} onClick={onCancel}>
+                        Cancel
+                    </Button>
+                    <Button type="primary" htmlType={"submit"} onClick={onSave}>
+                        Save
+                    </Button>
+                </div>
+            )}
         </div>
     )
 }

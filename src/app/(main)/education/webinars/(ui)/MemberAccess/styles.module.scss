@@ -99,3 +99,35 @@
     width: 100%;
     margin-top: auto;
 }
+
+@media (max-width: 480px) {
+    .memberAccessCard {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .memberAccessText {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .memberAccessActions,
+    .memberAccessCompact .memberAccessActions {
+        width: 100%;
+        margin-left: 0;
+        flex-wrap: wrap;
+    }
+
+    .memberAccessActions a,
+    .memberAccessActions button,
+    .registrationAction a,
+    .registrationCompact a,
+    .registrationAction button,
+    .registrationCompact button {
+        flex: 1 1 180px;
+        min-height: 44px;
+    }
+}

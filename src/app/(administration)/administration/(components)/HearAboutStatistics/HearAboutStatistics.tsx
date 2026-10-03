@@ -9,10 +9,14 @@ import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/
 import { Column } from "@ant-design/plots"
 
 import styles from "@app/(administration)/administration/(components)/HearAboutStatistics/styles.module.scss"
+import AccessDenied from "@shared/ui/PermissionGuard/AccessDenied.tsx"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 const { Title } = Typography
 
 const HearAboutStatistics = () => {
+    const { can, isLoading: isPermissionsLoading } = useAdminPermissions()
+    const canView = can("feedback.view")
     const { data, isLoading } = useQuery({
         queryKey: ["hear-about-statistics"],
         queryFn: async () => {
@@ -20,6 +24,7 @@ const HearAboutStatistics = () => {
             return response.data
         },
         staleTime: 1000 * 60 * 5,
+        enabled: canView,
     })
 
     const chartData =
@@ -30,8 +35,12 @@ const HearAboutStatistics = () => {
             tooltipValue: `${stat.percentage}% (${stat.count})`,
         })) ?? []
 
-    if (isLoading) {
+    if (isPermissionsLoading || isLoading) {
         return <Loading />
+    }
+
+    if (!canView) {
+        return <AccessDenied compact message="You do not have permission to view this statistic." />
     }
 
     if (!data || data.total_responses === 0) {

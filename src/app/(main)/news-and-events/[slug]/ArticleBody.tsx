@@ -82,7 +82,8 @@ const renderNode = (node: JSONContent, key: number | string): ReactNode => {
             )
                 ? String(node.attrs?.textAlign)
                 : "left"
-            return (
+            const caption = String(node.attrs?.caption ?? "").trim()
+            const image = (
                 <img
                     key={key}
                     src={String(node.attrs?.src ?? "")}
@@ -91,13 +92,51 @@ const renderNode = (node: JSONContent, key: number | string): ReactNode => {
                     loading="lazy"
                     decoding="async"
                     style={{
-                        width: imageWidth,
-                        marginLeft:
-                            imageAlignment === "center" || imageAlignment === "right" ? "auto" : 0,
-                        marginRight:
-                            imageAlignment === "center" || imageAlignment === "left" ? "auto" : 0,
+                        display: "block",
+                        width: caption ? "100%" : imageWidth,
+                        height: "auto",
+                        marginLeft: caption
+                            ? 0
+                            : imageAlignment === "center" || imageAlignment === "right"
+                              ? "auto"
+                              : 0,
+                        marginRight: caption
+                            ? 0
+                            : imageAlignment === "center" || imageAlignment === "left"
+                              ? "auto"
+                              : 0,
                     }}
                 />
+            )
+
+            if (!caption) return image
+
+            return (
+                <figure
+                    key={key}
+                    className="articleImage"
+                    style={{
+                        width: imageWidth,
+                        maxWidth: "100%",
+                        marginTop: "1.2em",
+                        marginBottom: "1.2em",
+                        marginLeft: imageAlignment === "left" ? 0 : "auto",
+                        marginRight: imageAlignment === "right" ? 0 : "auto",
+                    }}
+                >
+                    {image}
+                    <figcaption
+                        className="articleImageCaption"
+                        style={{
+                            width: "100%",
+                            marginTop: 8,
+                            color: "var(--text-muted-color-dark)",
+                            textAlign: "center",
+                        }}
+                    >
+                        {caption}
+                    </figcaption>
+                </figure>
             )
         }
         default:

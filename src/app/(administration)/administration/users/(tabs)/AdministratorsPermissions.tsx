@@ -9,7 +9,7 @@ import {
 import api from "@/axios.ts"
 import type { IUserPrivate } from "@/entities/User.ts"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import { Button, Card, Flex, message, Table, Tag } from "antd"
+import { Button, Card, Flex, message, Table, Tag, Tooltip } from "antd"
 import Link from "next/link"
 import type { ColumnsType } from "antd/lib/table"
 import { getInputColumnSearchProps } from "@/widgets/TableDropdown/InputTableFilterDropdown/getInputTableFilterDropdown.tsx"
@@ -106,15 +106,25 @@ const AdministratorsPermissions = () => {
             render: (_, record) => {
                 if (isCurrentUserPermissionsLoading) return
                 return (
-                    <Button
-                        disabled={!canManagePermissions}
-                        onClick={() => {
-                            setSelectedUser(record)
-                            fetchPermissions(record)
-                        }}
+                    <Tooltip
+                        title={
+                            !canManagePermissions
+                                ? "У ВАС НЕТ ПРАВ НА ВЫПОЛНЕНИЕ ЭТОГО ДЕЙСТВИЯ"
+                                : undefined
+                        }
                     >
-                        Manage
-                    </Button>
+                        <span>
+                            <Button
+                                disabled={!canManagePermissions}
+                                onClick={() => {
+                                    setSelectedUser(record)
+                                    fetchPermissions(record)
+                                }}
+                            >
+                                Manage
+                            </Button>
+                        </span>
+                    </Tooltip>
                 )
             },
         },

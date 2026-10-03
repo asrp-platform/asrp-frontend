@@ -1,0 +1,18 @@
+.cover {
+    display: block;
+    width: 88px;
+    height: 50px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.coverPlaceholder {
+    color: var(--text-muted-color-dark);
+    font-size: 12px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}

@@ -12,7 +12,7 @@ import Skeleton from "@mui/material/Skeleton"
 import ViewCard from "@/app/(main)/about/directors-board/(components)/ViewCard/ViewCard.tsx"
 import { useIsMobile } from "@/shared/hooks/useIsMobile.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
-import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { DIRECTORS_BOARD_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 
 const SKELETON_CARDS_COUNT = 4
@@ -36,8 +36,7 @@ const DirectorsBoardSkeleton = () => (
 const DirectorsBoard = () => {
     const queryClient = useQueryClient()
     const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
-    const { data: permissions = [], isLoading: isPermissionsLoading } =
-        useCurrentUserPermissionsQuery()
+    const { can, isLoading: isPermissionsLoading } = useAdminPermissions()
     const { data: fetchedDirectorMembers = [], isLoading: isDirectorMembersLoading } = useQuery({
         queryKey: DIRECTORS_BOARD_QUERY_KEY,
         queryFn: async () => {
@@ -54,14 +53,9 @@ const DirectorsBoard = () => {
         queryClient.setQueryData(DIRECTORS_BOARD_QUERY_KEY, members)
     }
 
-    const canManageDirectorMembers = Boolean(
-        currentUser?.admin && permissions.some(({ action }) => action === "directors_board.update"),
-    )
-    const canCreate = Boolean(
-        currentUser?.admin &&
-        permissions.some(({ action }) => action === "directors_board.create") &&
-        !isMobile,
-    )
+    const canManageDirectorMembers = can("directors_board.update")
+    const canDeleteDirectorMembers = can("directors_board.delete")
+    const canCreate = can("directors_board.create") && !isMobile
 
     const isAccessContextPending =
         isCurrentUserLoading || (Boolean(currentUser?.admin) && isPermissionsLoading)
@@ -81,6 +75,7 @@ const DirectorsBoard = () => {
                     draggingCard={draggingCard}
                     setDraggingCard={setDraggingCard}
                     canManageDirectorMembers={canManageDirectorMembers}
+                    canDeleteDirectorMember={canDeleteDirectorMembers}
                 />
             ))}
             {canCreate && <CreateDirectorMemberCard />}

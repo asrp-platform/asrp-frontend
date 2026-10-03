@@ -1,0 +1,19 @@
+.libraryHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.caseCount {
+    flex-shrink: 0;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+@media (max-width: 720px) {
+    .libraryHeader {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

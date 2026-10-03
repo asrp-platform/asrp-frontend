@@ -3,7 +3,7 @@
 import { type ReactNode } from "react"
 import Loading from "@/app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
-import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 interface Props {
     permission: string | string[]
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const AdminPermissionGuard = ({ permission, children, fallback, requireAll = true }: Props) => {
-    const { data: permissions = [], isAdmin, isLoading } = useCurrentUserPermissionsQuery()
+    const { isLoading, can } = useAdminPermissions()
 
     if (isLoading) {
         return <Loading />
@@ -21,15 +21,11 @@ const AdminPermissionGuard = ({ permission, children, fallback, requireAll = tru
 
     const requiredPermissions = Array.isArray(permission) ? permission : [permission]
     const hasRequiredPermissions = requireAll
-        ? requiredPermissions.every((item) =>
-              permissions.some((permission) => permission.action === item),
-          )
-        : requiredPermissions.some((item) =>
-              permissions.some((permission) => permission.action === item),
-          )
+        ? requiredPermissions.every(can)
+        : requiredPermissions.some(can)
 
     return (
-        <PermissionGuard allowed={isAdmin && hasRequiredPermissions} fallback={fallback}>
+        <PermissionGuard allowed={hasRequiredPermissions} fallback={fallback}>
             {children}
         </PermissionGuard>
     )

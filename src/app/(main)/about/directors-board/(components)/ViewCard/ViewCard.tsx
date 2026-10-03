@@ -23,6 +23,7 @@ interface IProps {
     draggingCard: IDirectorsBoardMember | null
     setDraggingCard: (_newDragging: IDirectorsBoardMember | null) => void
     canManageDirectorMembers?: boolean
+    canDeleteDirectorMember?: boolean
 }
 
 type DetailViewMode = "view" | "edit"
@@ -34,6 +35,7 @@ const ViewCard = ({
     draggingCard,
     setDraggingCard,
     canManageDirectorMembers = false,
+    canDeleteDirectorMember = false,
 }: IProps) => {
     // Used for updating view card after sending patch request via detail view
     const [currentMember, setCurrentMember] = useState<IDirectorsBoardMember>(member)
@@ -164,6 +166,7 @@ const ViewCard = ({
                 onSaved={onSaved}
                 onDeleted={onDeleted}
                 canManageDirectorMembers={canManageDirectorMembers}
+                canDeleteDirectorMember={canDeleteDirectorMember}
                 mode={detailMode}
             />
         </div>

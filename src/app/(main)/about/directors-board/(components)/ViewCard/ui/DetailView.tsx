@@ -24,6 +24,7 @@ interface IProps {
     onSaved: (_updated: IDirectorsBoardMember) => void
     onDeleted: (_deletedCardId: number) => void
     canManageDirectorMembers: boolean
+    canDeleteDirectorMember: boolean
     mode: "view" | "edit"
 }
 
@@ -34,6 +35,7 @@ const DetailView = ({
     onSaved,
     onDeleted,
     canManageDirectorMembers,
+    canDeleteDirectorMember,
     mode,
 }: IProps) => {
     const [resetModalOpen, setResetModalOpen] = useState(false)
@@ -92,7 +94,7 @@ const DetailView = ({
     }
 
     const handleSave = async () => {
-        if (!editable) return
+        if (!canDeleteDirectorMember) return
 
         try {
             setIsLoading(true)
@@ -194,6 +196,7 @@ const DetailView = ({
                             onChangeName={(value) => updateForm("name", value)}
                             onFinish={handleSave}
                             onDelete={handleDelete}
+                            canDelete={canDeleteDirectorMember}
                             onCancel={onResetModalCancel}
                             editor={
                                 <>

@@ -8,8 +8,7 @@ import {
     DashboardOutlined,
     SettingOutlined,
     CreditCardOutlined,
-    BookOutlined,
-    ReadOutlined,
+    FolderOpenOutlined,
 } from "@ant-design/icons"
 import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useEffect, useMemo, useState } from "react"
@@ -41,19 +40,14 @@ const menuItems = [
         label: "Membership",
     },
     {
-        key: "/administration/education",
-        icon: <BookOutlined />,
-        label: "Education",
+        key: "/administration/content",
+        icon: <FolderOpenOutlined />,
+        label: "Content",
     },
     {
-        key: "/administration/news-and-events",
-        icon: <ReadOutlined />,
-        label: "News & Events",
-    },
-    {
-        key: "/administration/contact-messages",
+        key: "/administration/feedback",
         icon: <MailOutlined />,
-        label: "Contact Messages",
+        label: "Feedback",
     },
     {
         key: "/administration/payments",

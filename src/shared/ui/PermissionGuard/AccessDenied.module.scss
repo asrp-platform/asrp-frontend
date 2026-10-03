@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+    width: min(100%, 960px);
+    min-height: calc(100vh - 190px);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 64px 48px;
+    color: #1f2937;
+    text-align: center;
+}
+
+.compact {
+    margin: 16px auto;
+    min-height: 140px;
+    padding: 18px 22px;
+    gap: 10px;
+}
+
+.icon {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.compact .icon {
+    width: 42px;
+    height: 42px;
+}
+
+.title {
+    margin: 0 0 8px;
+    color: inherit;
+    font-size: 30px;
+    line-height: 1.25;
+}
+
+.compact .title {
+    font-size: 18px;
+}
+
+.message {
+    margin: 0;
+    color: #64748b;
+    font-size: 18px;
+    line-height: 1.5;
+}

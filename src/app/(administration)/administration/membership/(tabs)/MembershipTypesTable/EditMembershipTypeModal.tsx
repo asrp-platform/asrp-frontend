@@ -8,6 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 import { getAdminMembershipTypeUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import api from "@/axios.ts"
+import { useAdminPermissions } from "@shared/backend/queries/usePermissionsQuery.ts"
 
 interface IProps {
     membershipType: IMembershipType
@@ -21,6 +22,8 @@ type FieldType = {
 
 const EditMembershipTypeModal = ({ membershipType }: IProps) => {
     const queryClient = useQueryClient()
+    const { can } = useAdminPermissions()
+    const canUpdate = can("memberships.update")
     const [open, setOpen] = useState<boolean>(false)
     const [form] = useForm<FieldType>()
 
@@ -67,7 +70,7 @@ const EditMembershipTypeModal = ({ membershipType }: IProps) => {
 
     return (
         <>
-            <Button onClick={() => setOpen(!open)}>Edit</Button>
+            {canUpdate && <Button onClick={() => setOpen(!open)}>Edit</Button>}
 
             <Modal
                 open={open}
@@ -126,7 +129,12 @@ const EditMembershipTypeModal = ({ membershipType }: IProps) => {
                     </Form.Item>
 
                     <Flex justify={"flex-end"}>
-                        <Button loading={updateMutation.isPending} type="primary" htmlType="submit">
+                        <Button
+                            loading={updateMutation.isPending}
+                            type="primary"
+                            htmlType="submit"
+                            disabled={!canUpdate}
+                        >
                             Save
                         </Button>
                     </Flex>

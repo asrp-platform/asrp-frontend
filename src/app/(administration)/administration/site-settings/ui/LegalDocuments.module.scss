@@ -1,0 +1,32 @@
+.documents {
+    display: flex;
+    flex-direction: column;
+}
+
+.documentRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 18px 0;
+
+    & + & {
+        border-top: var(--light-border);
+    }
+}
+
+.documentInfo {
+    min-width: 0;
+
+    :global(.ant-typography) {
+        margin: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .documentRow {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+}

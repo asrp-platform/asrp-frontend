@@ -19,6 +19,7 @@ interface Props {
     onFinish: () => void
     onDelete: () => void
     onCancel: () => void
+    canDelete: boolean
     editor: ReactNode
 }
 
@@ -32,6 +33,7 @@ const DetailViewHeader = ({
     onFinish,
     onDelete,
     onCancel,
+    canDelete,
     editor,
 }: Props) => {
     const [form] = Form.useForm()
@@ -41,6 +43,7 @@ const DetailViewHeader = ({
             <>
                 <DetailViewTitle member={member} />
                 {editor}
+                <DetailViewEditButtons editable={false} canDelete={canDelete} onDelete={onDelete} />
             </>
         )
     }
@@ -75,6 +78,7 @@ const DetailViewHeader = ({
                     onCancel={onCancel}
                     onSave={onFinish}
                     onDelete={onDelete}
+                    canDelete={canDelete}
                 />
             </Form>
         </div>
