@@ -3,6 +3,7 @@ import { CalendarDays, Clock3 } from "lucide-react"
 import type { CaseOfTheMonth } from "@entities/CaseOfTheMonth.ts"
 
 import styles from "../styles.module.scss"
+import clsx from "clsx"
 
 interface IProps {
     caseItem: CaseOfTheMonth
@@ -19,7 +20,7 @@ const CaseDetailHeader = ({ caseItem, publicationMonth, readingMinutes }: IProps
                 </span>
             ))}
             {caseItem.virtual_slides.length > 0 && (
-                <span className={styles.tag}>Virtual slide available</span>
+                <span className={clsx(styles.tag, styles.slidesTag)}>Virtual slide available</span>
             )}
         </div>
         <span className={styles.headerLabel}>Case of the Month · {publicationMonth}</span>

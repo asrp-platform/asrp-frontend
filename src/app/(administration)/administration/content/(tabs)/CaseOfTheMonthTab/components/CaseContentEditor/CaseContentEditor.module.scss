@@ -71,6 +71,21 @@
                 margin-left: auto;
             }
         }
+
+        :global(.tiptapImageNode) {
+            margin: 1em 0;
+        }
+
+        :global(.tiptapImageCaptionInput) {
+            display: block;
+            width: min(100%, 640px);
+            margin: 8px auto 0;
+            padding: 7px 10px;
+            border: 1px solid var(--border-color-light);
+            border-radius: 6px;
+            color: var(--text-secondary-color-dark);
+            font-size: 13px;
+        }
     }
 
     &:empty::before {

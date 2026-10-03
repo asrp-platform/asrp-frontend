@@ -38,7 +38,6 @@ const CaseContentEditor = ({ value, onChange, placeholder, disabled = false }: I
         content: value ?? emptyDocument,
         onUpdate: ({ editor: currentEditor }) => onChange?.(currentEditor.getJSON()),
     })
-
     useEffect(() => {
         if (!editor || !value) return
 

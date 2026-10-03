@@ -39,23 +39,27 @@
     gap: 8px;
 }
 
-.tag {
+.tag,
+.slidesTag {
     display: inline-flex;
     align-items: center;
     min-height: 32px;
     padding: 5px 14px;
-    border: 1px solid var(--border-color-light);
     border-radius: var(--pill-border-radius);
-    background: #fff;
-    color: var(--text-secondary-color-dark);
     font-size: 13px;
     font-weight: 600;
 }
 
-.tag:first-child {
-    border-color: var(--border-color-red);
+.tag {
+    border: 1px solid var(--border-color-red);
     background: var(--button-secondary-red-hover);
     color: var(--text-secondary-color-red);
+}
+
+.slidesTag {
+    background: #fff;
+    color: var(--text-secondary-color-dark);
+    border: 1px solid var(--border-color-light);
 }
 
 .headerLabel {
@@ -183,6 +187,20 @@
             border-radius: 14px;
         }
 
+        .articleImage {
+            max-width: 100%;
+            margin: 1.2em 0;
+        }
+
+        .articleImageCaption {
+            width: 100%;
+            margin-top: 8px;
+            color: var(--text-muted-color-dark);
+            font-size: 0.82em;
+            line-height: 1.45;
+            text-align: center;
+        }
+
         a {
             color: var(--text-secondary-color-red);
             text-decoration: underline;
@@ -211,6 +229,11 @@
 }
 
 .slideSection {
+    .slideInfo {
+        flex: 1 1 50%;
+        min-width: 50%;
+    }
+
     h2,
     p {
         margin: 0;
@@ -229,6 +252,8 @@
 }
 
 .slideLinks {
+    flex: 0 1 auto;
+    max-width: 50%;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -273,6 +298,7 @@
     }
 
     ol {
+        list-style: decimal;
         display: flex;
         flex-direction: column;
         gap: 14px;
@@ -281,6 +307,11 @@
         color: var(--text-secondary-color-dark);
         font-size: 18px;
         line-height: 1.55;
+
+        li::marker {
+            color: inherit;
+            font-weight: 700;
+        }
     }
 }
 
@@ -349,9 +380,14 @@
         flex-direction: column;
         padding: 24px 20px;
         border-radius: 18px;
+
+        .slideInfo {
+            min-width: 0;
+        }
     }
 
     .slideLinks {
+        max-width: none;
         justify-content: stretch;
         flex-direction: column;
     }

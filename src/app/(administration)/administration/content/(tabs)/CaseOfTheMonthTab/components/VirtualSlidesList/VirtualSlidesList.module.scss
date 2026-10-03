@@ -4,7 +4,34 @@
     gap: 8px;
 }
 
+.row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
 .item {
-    flex: 1;
+    flex: 1 1 50%;
+    min-width: 50%;
     margin-bottom: 0;
+}
+
+.removeButton {
+    flex: 0 0 auto;
+    margin-top: 4px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+    .row {
+        gap: 6px;
+    }
+
+    .item {
+        min-width: 0;
+    }
 }

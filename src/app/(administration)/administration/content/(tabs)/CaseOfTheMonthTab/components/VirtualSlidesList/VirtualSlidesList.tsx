@@ -1,5 +1,5 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons"
-import { Button, Flex, Form, Input } from "antd"
+import { Button, Form, Input } from "antd"
 
 import styles from "./VirtualSlidesList.module.scss"
 
@@ -9,7 +9,7 @@ const VirtualSlidesList = () => (
             {(fields, { add, remove }) => (
                 <div className={styles.list}>
                     {fields.map((field, index) => (
-                        <Flex key={field.key} gap={8} align="start">
+                        <div key={field.key} className={styles.row}>
                             <Form.Item
                                 {...field}
                                 className={styles.item}
@@ -24,17 +24,20 @@ const VirtualSlidesList = () => (
                                 <Input placeholder={`Virtual slide ${index + 1}`} />
                             </Form.Item>
                             <Button
+                                className={styles.removeButton}
                                 type="text"
                                 danger
                                 icon={<MinusCircleOutlined />}
                                 aria-label={`Remove virtual slide ${index + 1}`}
                                 onClick={() => remove(field.name)}
                             />
-                        </Flex>
+                        </div>
                     ))}
-                    <Button type="dashed" icon={<PlusOutlined />} onClick={() => add()}>
-                        Add virtual slide
-                    </Button>
+                    <div className={styles.actions}>
+                        <Button type="dashed" icon={<PlusOutlined />} onClick={() => add()}>
+                            Add virtual slide
+                        </Button>
+                    </div>
                 </div>
             )}
         </Form.List>

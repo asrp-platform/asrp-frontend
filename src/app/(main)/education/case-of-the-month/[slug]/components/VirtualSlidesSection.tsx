@@ -11,7 +11,7 @@ const VirtualSlidesSection = ({ slides }: IProps) => {
 
     return (
         <section className={styles.slideSection} aria-labelledby="virtual-slides-title">
-            <div>
+            <div className={styles.slideInfo}>
                 <h2 id="virtual-slides-title">Whole-slide image available</h2>
                 <p>Explore the case using an external virtual-slide viewer.</p>
             </div>
