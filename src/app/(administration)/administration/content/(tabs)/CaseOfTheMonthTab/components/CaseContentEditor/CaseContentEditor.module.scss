@@ -1,0 +1,96 @@
+.editor {
+    overflow: hidden;
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+    background: var(--surface-card-color);
+}
+
+.toolbar {
+    margin: 12px 12px 0;
+    padding: 8px;
+    border: 1px solid #f1e7ef;
+    border-radius: 8px;
+    background: #fff8fc;
+}
+
+.input {
+    display: none !important;
+}
+
+.uploadProgress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px 0;
+    color: var(--text-muted-color-dark);
+    font-size: 12px;
+
+    :global(.ant-progress) {
+        flex: 1;
+    }
+}
+
+.inlineLoader {
+    animation: spin 1s linear infinite;
+}
+
+.imageSizeLabel {
+    font-size: 11px;
+    line-height: 1;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.editorContent {
+    min-height: 180px;
+    padding: 12px;
+
+    :global(.tiptap) {
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1em auto;
+
+            &[style*="text-align: left"] {
+                margin-right: auto;
+                margin-left: 0;
+            }
+
+            &[style*="text-align: center"] {
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            &[style*="text-align: right"] {
+                margin-right: 0;
+                margin-left: auto;
+            }
+        }
+
+        :global(.tiptapImageNode) {
+            margin: 1em 0;
+        }
+
+        :global(.tiptapImageCaptionInput) {
+            display: block;
+            width: min(100%, 640px);
+            margin: 8px auto 0;
+            padding: 7px 10px;
+            border: 1px solid var(--border-color-light);
+            border-radius: 6px;
+            color: var(--text-secondary-color-dark);
+            font-size: 13px;
+        }
+    }
+
+    &:empty::before {
+        color: var(--text-muted-color-dark);
+        content: attr(data-placeholder);
+        pointer-events: none;
+    }
+}

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { IUserMembership } from "@entities/Membership.ts"
-import { Button, Modal, Tabs } from "antd"
+import { Button, Modal, Tabs, Tooltip } from "antd"
 import SuspendOrTerminateForm from "@app/(administration)/administration/membership/(tabs)/MembersTable/ManageUserMembership/SuspendOrTerminateForm/SuspendOrTerminateForm.tsx"
 import ComingSoon from "@widgets/ComingSoon/ComingSoon.tsx"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
@@ -18,9 +18,17 @@ const ManageUserMembership = ({ userMembership }: IProps) => {
 
     return (
         <>
-            <Button disabled={!canManageMembership} onClick={() => setOpen(true)}>
-                Manage membership
-            </Button>
+            <Tooltip
+                title={
+                    !canManageMembership ? "У ВАС НЕТ ПРАВ НА ВЫПОЛНЕНИЕ ЭТОГО ДЕЙСТВИЯ" : undefined
+                }
+            >
+                <span>
+                    <Button disabled={!canManageMembership} onClick={() => setOpen(true)}>
+                        Manage membership
+                    </Button>
+                </span>
+            </Tooltip>
             <Modal
                 title="Manage membership"
                 open={open}

@@ -31,6 +31,7 @@ export const getNewsDetailAdminUrl = (newsId: string | number) => `${NEWS_ADMIN_
 // Legal documents
 export const LEGAL_DOCUMENTS_ADMIN_URL = `${ADMIN_URL}/legal-documents`
 export const BYLAWS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/bylaws`
+export const SUBMISSION_GUIDELINES_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/submission-guidelines`
 export const SPONSORS_ADMIN_URL = `${LEGAL_DOCUMENTS_ADMIN_URL}/sponsors`
 export const SPONSORS_LOGOS_ADMIN_URL = `${SPONSORS_ADMIN_URL}/logos`
 export const getAdminSponsorUrl = (sponsorId: number | string) =>
@@ -73,3 +74,13 @@ export const getAdminMembershipTypeUrl = (membershipTypeId: string | number) =>
 
 export const getAdminMembershipRequestUrl = (membershipRequestId: string | number) =>
     `${MEMBERSHIP_REQUESTS_ADMIN_URL}/${membershipRequestId}`
+
+export const CASE_OF_THE_MONTH_URL = `${ADMIN_URL}/case-of-the-month`
+export const CASE_OF_THE_MONTH_CASES_URL = `${CASE_OF_THE_MONTH_URL}/cases`
+export const CASE_OF_THE_MONTH_IMAGES_URL = `${CASE_OF_THE_MONTH_URL}/images`
+export const CASE_OF_THE_MONTH_TAGS_URL = `${CASE_OF_THE_MONTH_URL}/tags`
+
+export const getCaseOfTheMonthByIdUrl = (caseId: string | number) =>
+    `${CASE_OF_THE_MONTH_CASES_URL}/${caseId}`
+export const getCaseTagByIdUrl = (tagId: string | number) =>
+    `${CASE_OF_THE_MONTH_TAGS_URL}/${tagId}`

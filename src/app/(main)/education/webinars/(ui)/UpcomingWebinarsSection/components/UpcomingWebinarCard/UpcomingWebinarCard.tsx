@@ -13,15 +13,16 @@ import WebinarDetailsModal from "../WebinarDetailsModal/WebinarDetailsModal"
 interface IProps {
     webinar: IWebinar
     accessStatus: WebinarAccessStatus
+    canUpdate: boolean
     canDelete: boolean
 }
 
-const UpcomingWebinarCard = ({ webinar, accessStatus, canDelete }: IProps) => (
+const UpcomingWebinarCard = ({ webinar, accessStatus, canUpdate, canDelete }: IProps) => (
     <article className={styles.card}>
-        {canDelete && (
+        {(canUpdate || canDelete) && (
             <div className={styles.adminActions}>
-                <DeleteWebinarButton webinar={webinar} />
-                <EditWebinarButton webinar={webinar} />
+                {canDelete && <DeleteWebinarButton webinar={webinar} />}
+                {canUpdate && <EditWebinarButton webinar={webinar} />}
             </div>
         )}
         <div className={styles.topline}>

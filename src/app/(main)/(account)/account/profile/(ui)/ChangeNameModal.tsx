@@ -58,7 +58,7 @@ const ChangeNameModal = ({ open, setNameChangeModalOpen }: IProps) => {
             onCancel={handleCancel}
             footer={null}
             closable={!isLoading}
-            maskClosable={!isLoading}
+            mask={{ closable: !isLoading }}
             getContainer={false}
         >
             <Form<ChangeNameFormValues> form={form} layout="vertical" onFinish={handleFinish}>

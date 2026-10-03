@@ -4,8 +4,11 @@ import type { RegisterFormFields } from "@app/(auth)/registration/(ui)/types.ts"
 
 const NameSection = () => {
     return (
-        <>
-            <h2>Name</h2>
+        <section className={styles.formSection}>
+            <div className={styles.sectionHeading}>
+                <h2>Name</h2>
+                <p>Tell us how we should address you.</p>
+            </div>
             <div className={styles.twoFieldContainer}>
                 <Form.Item<RegisterFormFields>
                     label="First name"
@@ -23,7 +26,7 @@ const NameSection = () => {
                     <Input />
                 </Form.Item>
             </div>
-        </>
+        </section>
     )
 }
 

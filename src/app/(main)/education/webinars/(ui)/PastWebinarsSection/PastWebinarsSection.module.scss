@@ -46,3 +46,21 @@
         align-items: flex-start;
     }
 }
+
+@media (max-width: 480px) {
+    .section {
+        gap: 18px;
+    }
+
+    .header h2 {
+        font-size: 27px;
+    }
+
+    .header p {
+        font-size: 14px;
+    }
+
+    .list {
+        border-radius: 16px;
+    }
+}

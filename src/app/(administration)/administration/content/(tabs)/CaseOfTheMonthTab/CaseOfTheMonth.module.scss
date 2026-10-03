@@ -1,0 +1,38 @@
+.caseOfMonthTab {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.tagsCard,
+.casesCard {
+    min-height: 0;
+}
+
+.casesCard {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 520px;
+}
+
+.tagsCard {
+    overflow: hidden;
+    flex: 0 0 20%;
+    min-width: 220px;
+}
+
+@media (max-width: 640px) {
+    .caseOfMonthTab {
+        flex-direction: column;
+    }
+
+    .tagsCard {
+        order: -1;
+        flex-basis: auto;
+        min-width: 0;
+    }
+
+    .casesCard {
+        min-height: 360px;
+    }
+}
