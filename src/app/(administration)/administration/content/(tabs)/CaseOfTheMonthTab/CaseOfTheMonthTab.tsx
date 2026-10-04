@@ -134,6 +134,17 @@ const CaseOfTheMonthTab = () => {
         onError: (error) => handleApiError({ error }),
     })
 
+    const deleteCaseMutation = useMutation({
+        mutationFn: async (caseId: number) => {
+            await api.delete(getCaseOfTheMonthByIdUrl(caseId))
+        },
+        onSuccess: async () => {
+            message.success("Case deleted")
+            await queryClient.invalidateQueries({ queryKey: CASES_QUERY_KEY })
+        },
+        onError: (error) => handleApiError({ error }),
+    })
+
     const saveCaseMutation = useMutation({
         mutationFn: async ({ caseId, values }: CaseMutationVariables) => {
             const payload = toCasePayload(values)
@@ -196,8 +207,13 @@ const CaseOfTheMonthTab = () => {
                     setSelectedCase(caseItem)
                     setIsCaseModalOpen(true)
                 }}
+                onDeleteCase={(caseItem) => deleteCaseMutation.mutate(caseItem.id)}
                 canCreate={can("case_of_the_month.create")}
                 canUpdate={can("case_of_the_month.update")}
+                canDelete={can("case_of_the_month.delete")}
+                deletingCaseId={
+                    deleteCaseMutation.isPending ? deleteCaseMutation.variables : undefined
+                }
             />
             <CaseTagsCard
                 tags={tagsQuery.data ?? []}

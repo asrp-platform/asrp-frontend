@@ -1,8 +1,8 @@
 "use client"
 
-import { Button, Table, Tag, Tooltip } from "antd"
+import { Button, Popconfirm, Space, Table, Tag, Tooltip } from "antd"
 import type { ColumnsType } from "antd/es/table"
-import { Pencil } from "lucide-react"
+import { Pencil, Trash2 } from "lucide-react"
 import type { SetStateAction } from "react"
 
 import type { CaseOfTheMonth } from "@entities/CaseOfTheMonth.ts"
@@ -22,7 +22,10 @@ interface IProps {
     onPageChange: (page: number) => void
     onOrderingChange: (ordering: string[]) => void
     onEdit: (caseItem: CaseOfTheMonth) => void
+    onDelete: (caseItem: CaseOfTheMonth) => void
     canUpdate: boolean
+    canDelete: boolean
+    deletingCaseId?: number
 }
 
 const formatPublicationMonth = (value: string) =>
@@ -42,7 +45,10 @@ const CasesTable = ({
     onPageChange,
     onOrderingChange,
     onEdit,
+    onDelete,
     canUpdate,
+    canDelete,
+    deletingCaseId,
 }: IProps) => {
     const applyOrdering = (next: SetStateAction<string[]>) => {
         onOrderingChange(typeof next === "function" ? next(ordering) : next)
@@ -120,16 +126,42 @@ const CasesTable = ({
             title: "",
             key: "edit",
             fixed: "right",
-            width: 58,
+            width: canUpdate && canDelete ? 104 : 58,
             render: (_, caseItem) =>
-                canUpdate ? (
-                    <Tooltip title="Edit case">
-                        <Button
-                            aria-label={`Edit ${caseItem.title}`}
-                            icon={<Pencil size={15} />}
-                            onClick={() => onEdit(caseItem)}
-                        />
-                    </Tooltip>
+                canUpdate || canDelete ? (
+                    <Space size={4}>
+                        {canUpdate && (
+                            <Tooltip title="Edit case">
+                                <Button
+                                    aria-label={`Edit ${caseItem.title}`}
+                                    icon={<Pencil size={15} />}
+                                    onClick={() => onEdit(caseItem)}
+                                />
+                            </Tooltip>
+                        )}
+                        {canDelete && (
+                            <Popconfirm
+                                title="Delete this case?"
+                                description="This action cannot be undone."
+                                okText="Delete"
+                                cancelText="Cancel"
+                                okButtonProps={{ danger: true }}
+                                onConfirm={() => onDelete(caseItem)}
+                                disabled={deletingCaseId !== undefined}
+                            >
+                                <Tooltip title="Delete case">
+                                    <Button
+                                        danger
+                                        type="text"
+                                        aria-label={`Delete ${caseItem.title}`}
+                                        icon={<Trash2 size={15} />}
+                                        loading={deletingCaseId === caseItem.id}
+                                        disabled={deletingCaseId !== undefined}
+                                    />
+                                </Tooltip>
+                            </Popconfirm>
+                        )}
+                    </Space>
                 ) : null,
         },
     ]
