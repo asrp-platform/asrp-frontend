@@ -16,8 +16,11 @@ interface IProps {
     onPageChange: (page: number) => void
     onOrderingChange: (ordering: string[]) => void
     onEditCase: (caseItem: CaseOfTheMonth) => void
+    onDeleteCase: (caseItem: CaseOfTheMonth) => void
     canCreate: boolean
     canUpdate: boolean
+    canDelete: boolean
+    deletingCaseId?: number
 }
 
 const CasesCard = ({
@@ -31,8 +34,11 @@ const CasesCard = ({
     onPageChange,
     onOrderingChange,
     onEditCase,
+    onDeleteCase,
     canCreate,
     canUpdate,
+    canDelete,
+    deletingCaseId,
 }: IProps) => (
     <Card
         className={styles.casesCard}
@@ -55,7 +61,10 @@ const CasesCard = ({
             onPageChange={onPageChange}
             onOrderingChange={onOrderingChange}
             onEdit={onEditCase}
+            onDelete={onDeleteCase}
             canUpdate={canUpdate}
+            canDelete={canDelete}
+            deletingCaseId={deletingCaseId}
         />
     </Card>
 )
