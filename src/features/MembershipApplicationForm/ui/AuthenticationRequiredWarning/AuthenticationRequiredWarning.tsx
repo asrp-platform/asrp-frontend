@@ -1,3 +1,4 @@
+import alertStyles from "../alertStyles.module.scss"
 import LinkButton from "@shared/ui/Buttons/LinkButton.tsx"
 import styles from "@features/MembershipApplicationForm/ui/AuthenticationRequiredWarning/AuthenticationRequiredWarning.module.scss"
 import { Alert } from "antd"
@@ -11,7 +12,7 @@ const Description = () => (
             Once signed in, you’ll be able to fill out the form and proceed with your application.
         </p>
         <LinkButton href="/login" variant="default">
-            Sign Up
+            Sign in
         </LinkButton>
     </div>
 )
@@ -25,7 +26,7 @@ const AuthenticationRequiredWarning = () => {
                 description={<Description />}
                 type="warning"
                 showIcon
-                className={styles.alert}
+                className={alertStyles.alert}
             />
         </div>
     )

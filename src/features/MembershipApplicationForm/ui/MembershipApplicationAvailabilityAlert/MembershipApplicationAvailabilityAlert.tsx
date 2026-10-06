@@ -1,3 +1,4 @@
+import alertStyles from "../alertStyles.module.scss"
 import { Alert } from "antd"
 
 import type { IUserMembership, IMembershipRequest } from "@entities/Membership.ts"
@@ -15,6 +16,7 @@ const MembershipApplicationAvailabilityAlert = ({ membership, membershipRequest 
         return (
             <div className={styles.availabilityAlert}>
                 <Alert
+                    className={alertStyles.alert}
                     type="success"
                     showIcon
                     title="You already have an active membership."
@@ -32,6 +34,7 @@ const MembershipApplicationAvailabilityAlert = ({ membership, membershipRequest 
         return (
             <div className={styles.availabilityAlert}>
                 <Alert
+                    className={alertStyles.alert}
                     type="warning"
                     showIcon
                     title="Your membership payment is pending."
@@ -52,6 +55,7 @@ const MembershipApplicationAvailabilityAlert = ({ membership, membershipRequest 
         return (
             <div className={styles.availabilityAlert}>
                 <Alert
+                    className={alertStyles.alert}
                     type="info"
                     showIcon
                     title="Your membership application is awaiting approval."
@@ -65,6 +69,7 @@ const MembershipApplicationAvailabilityAlert = ({ membership, membershipRequest 
         return (
             <div className={styles.availabilityAlert}>
                 <Alert
+                    className={alertStyles.alert}
                     type="error"
                     showIcon
                     title="Your membership application was rejected."

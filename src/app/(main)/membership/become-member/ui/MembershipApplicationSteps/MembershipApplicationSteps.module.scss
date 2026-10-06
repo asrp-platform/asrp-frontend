@@ -1,0 +1,46 @@
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    list-style: none;
+    padding: 24px 0;
+    margin: 4px 0 0;
+    border-top: 1px solid var(--border-color-light);
+    border-bottom: 1px solid var(--border-color-light);
+    gap: 28px;
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    h2 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        line-height: 1.5;
+        font-weight: 600;
+    }
+    p {
+        margin: 0;
+        max-width: 34ch;
+        color: var(--text-secondary-color-dark);
+        font-size: 14px;
+        line-height: 1.65;
+    }
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+.stepNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fcebec;
+    color: #a92732;
+    font-size: 14px;
+    font-weight: 600;
+}

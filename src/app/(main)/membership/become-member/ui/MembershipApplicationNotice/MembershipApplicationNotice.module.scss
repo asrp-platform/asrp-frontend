@@ -1,0 +1,28 @@
+.notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background: #eef2f7;
+    color: var(--text-secondary-color-dark);
+    svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+    p {
+        margin: 0;
+        max-width: 110ch;
+        font-size: 13px;
+        line-height: 1.75;
+    }
+    strong {
+        color: var(--text-primary-color-dark);
+        font-weight: 600;
+    }
+    @media (max-width: 767px) {
+        padding: 16px;
+    }
+}

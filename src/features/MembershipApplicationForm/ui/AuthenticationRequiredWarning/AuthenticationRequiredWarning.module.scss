@@ -2,12 +2,9 @@
     margin: 0 auto 40px;
 }
 
-.alert {
-    border-radius: 12px;
-}
-
 .warningContent {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 16px;
 }

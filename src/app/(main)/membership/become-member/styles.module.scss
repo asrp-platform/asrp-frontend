@@ -16,57 +16,7 @@ $container-desktop-inline-padding: 3vw;
 .pageContainer {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-}
-
-.pageTitleContainer {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 5vh $container-mobile-inline-padding;
-    gap: 20px;
-
-    @media (min-width: 1200px) {
-        padding: 8vh $container-desktop-inline-padding 5vh;
-    }
-}
-
-.titleContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 12px;
-
-    h1 {
-        text-align: left;
-        @media (min-width: 1200px) {
-            font-size: 36px;
-        }
-    }
-
-    span {
-        text-align: left;
-        letter-spacing: 0.2rem;
-        color: var(--text-primary-color-red);
-        font-weight: 600;
-        font-size: 12px;
-    }
-}
-
-.pageTitleContent {
-    p {
-        margin: 0;
-        text-align: left;
-        line-height: 1.6;
-        font-size: 14px;
-
-        @media (min-width: 1200px) {
-            font-size: 16px;
-        }
-    }
+    gap: 32px;
 }
 
 .personalInformationSection {
