@@ -1,0 +1,35 @@
+.ready {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: clamp(24px, 3vw, 48px);
+    border: 1px solid #eadbdd;
+    border-radius: 24px;
+    background: #fcf5f5;
+}
+.readyTitle {
+    margin: 0;
+    max-width: 700px;
+    font-size: clamp(26px, 2.5vw, 36px);
+    font-weight: 600;
+    line-height: 1.25;
+    text-wrap: balance;
+}
+.readyText {
+    margin: 0;
+    max-width: 65ch;
+    color: var(--text-secondary-color-dark);
+    font-size: 15px;
+    line-height: 1.75;
+}
+.readyButtonsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    @media (max-width: 600px) {
+        flex-direction: column;
+        width: 100%;
+    }
+}
