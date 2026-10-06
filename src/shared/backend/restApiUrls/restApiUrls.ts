@@ -91,3 +91,5 @@ export const getCaseOfTheMonthDetailUrl = (caseSlug: string): string =>
 
 export const getWebinarPlaybackUrl = (webinarSlug: string): string =>
     `/webinars/${webinarSlug}/playback`
+
+export const hearAboutOptionsUrl = `/feedback-additional-info/hear-about-options`

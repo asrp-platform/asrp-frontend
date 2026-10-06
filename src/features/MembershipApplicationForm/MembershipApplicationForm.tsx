@@ -8,17 +8,19 @@ import { useMemo, useState } from "react"
 import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCard/MembershipCard.tsx"
 import api from "@/axios.ts"
 import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
-import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import Warning from "@/features/MembershipApplicationForm/(components)/Warning/Warning.tsx"
-import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
+import {
+    CURRENT_USER_MEMBERSHIP_REQUEST_URL,
+    hearAboutOptionsUrl,
+} from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
 import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
-import { referralSourceOptions } from "@shared/options.ts"
 import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
-import MembershipApplicationAvailabilityAlert from "@/features/MembershipApplicationForm/ui/MembershipApplicationAvailabilityAlert.tsx"
+import MembershipApplicationAvailabilityAlert from "@features/MembershipApplicationForm/ui/MembershipApplicationAvailabilityAlert/MembershipApplicationAvailabilityAlert.tsx"
+import { useQuery } from "@tanstack/react-query"
+import AuthenticationRequiredWarning from "@features/MembershipApplicationForm/ui/AuthenticationRequiredWarning/AuthenticationRequiredWarning.tsx"
 
 type TrainingState = {
     isUsBoardCertified?: boolean
@@ -31,8 +33,19 @@ const initialValues = {
 }
 
 const MembershipApplicationForm = () => {
+    const { data: referralSourceOptions = [] } = useQuery({
+        queryKey: ["hear-about-options"],
+        queryFn: async () => {
+            const response = await api.get<Array<Record<string, string>>>(hearAboutOptionsUrl)
+            return response.data
+        },
+        staleTime: 1000 * 60 * 60,
+    })
+
     const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+
     const isAuthorized = Boolean(currentUser)
+
     const { data: currentUserMembership, isLoading: isCurrentUserMembershipLoading } =
         useCurrentUserMembershipQuery(isAuthorized)
     const { data: currentUserMembershipRequest, isLoading: isCurrentUserMembershipRequestLoading } =
@@ -48,8 +61,6 @@ const MembershipApplicationForm = () => {
             !currentUser || Boolean(currentUserMembership) || Boolean(currentUserMembershipRequest),
         [currentUser, currentUserMembership, currentUserMembershipRequest],
     )
-
-    console.log(currentUser, currentUserMembership, currentUserMembershipRequest)
 
     const [form] = useForm<FieldType>()
 
@@ -120,6 +131,9 @@ const MembershipApplicationForm = () => {
         }
     }
 
+    const formAlreadySubmitted =
+        currentUser && (currentUserMembership || currentUserMembershipRequest)
+
     if (
         isCurrentUserLoading ||
         isCurrentUserMembershipLoading ||
@@ -139,27 +153,13 @@ const MembershipApplicationForm = () => {
             initialValues={initialValues}
             scrollToFirstError
         >
-            {!currentUser && (
-                <Warning>
-                    <p>
-                        To complete your membership application, please sign in to your account.
-                        <br />
-                        Once signed in, you’ll be able to fill out the form and proceed with your
-                        application.
-                    </p>
-                    <LinkButton href="/login" variant="default">
-                        Sign Up
-                    </LinkButton>
-                </Warning>
-            )}
+            {!currentUser && <AuthenticationRequiredWarning />}
 
-            {currentUser && (currentUserMembership || currentUserMembershipRequest) && (
-                <div className={styles.availabilityAlert}>
-                    <MembershipApplicationAvailabilityAlert
-                        membership={currentUserMembership}
-                        membershipRequest={currentUserMembershipRequest}
-                    />
-                </div>
+            {formAlreadySubmitted && (
+                <MembershipApplicationAvailabilityAlert
+                    membership={currentUserMembership}
+                    membershipRequest={currentUserMembershipRequest}
+                />
             )}
 
             <div className={styles.blockInfoContainer}>
