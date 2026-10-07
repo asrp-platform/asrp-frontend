@@ -1,0 +1,29 @@
+@use "../home" as h;
+.connectContainer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    @media (min-width: 1024px) {
+        grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
+        gap: 64px;
+    }
+}
+.connectInfoContainer {
+    @include h.info;
+}
+.eyebrow {
+    @include h.eyebrow;
+}
+.connectForm {
+    min-width: 0;
+}
+
+.connectForm > div {
+    min-height: 0;
+    padding: clamp(20px, 2.5vw, 32px);
+    border: 1px solid var(--border-color-light);
+    border-radius: 20px;
+    box-shadow: none;
+    background: white;
+}

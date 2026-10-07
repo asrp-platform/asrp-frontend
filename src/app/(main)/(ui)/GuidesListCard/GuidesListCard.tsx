@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react"
 import styles from "@/app/(main)/(ui)/GuidesListCard/GuidesListCard.module.scss"
 import Link from "next/link"
 
@@ -18,8 +19,9 @@ const GuidesListCard = () => {
                     </li>
                 ))}
             </ul>
-            <Link type="button" href="/about" className={styles.aboutLinkButton}>
+            <Link href="/about" className={styles.aboutLinkButton}>
                 Learn about ASRP
+                <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
         </div>
     )

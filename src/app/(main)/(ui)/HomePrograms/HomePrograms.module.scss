@@ -1,0 +1,21 @@
+@use "../home" as h;
+.programsContainer {
+    @include h.info;
+}
+.programsCardContainer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin-top: 12px;
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+.programCard {
+    @include h.card;
+}
+.cardIcon {
+    @include h.icon;
+    background: #edf3fa;
+    color: #425b7c;
+}

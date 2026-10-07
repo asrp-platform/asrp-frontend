@@ -1,0 +1,18 @@
+@use "../home" as h;
+.visionInnerContainer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    @media (min-width: 1024px) {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
+        gap: clamp(40px, 5vw, 80px);
+    }
+}
+.visionInfoContainer {
+    @include h.info;
+    gap: 20px;
+}
+.eyebrow {
+    @include h.eyebrow;
+}
