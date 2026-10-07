@@ -4,7 +4,7 @@ import { SUBMISSION_GUIDELINES_URL } from "@shared/backend/restApiUrls/restApiUr
 
 const ShareSection = () => {
     return (
-        <section className={styles.shareCard}>
+        <section id={"share-a-case"} className={styles.shareCard}>
             <div>
                 <h2>Have an interesting case to share?</h2>
                 <p>We welcome educational pathology cases from ASRP members.</p>

@@ -29,10 +29,13 @@ const CaseOfTheMonth = () => {
                     skills.
                 </p>
                 <div className={styles.caseOfMonthButtons}>
-                    <Link href="#" className={styles.viewCasesButton}>
+                    <Link href="/education/case-of-the-month" className={styles.viewCasesButton}>
                         View cases
                     </Link>
-                    <Link href="#" className={styles.submitCaseButton}>
+                    <Link
+                        href="/education/case-of-the-month#share-a-case"
+                        className={styles.submitCaseButton}
+                    >
                         Submit a case
                     </Link>
                 </div>
