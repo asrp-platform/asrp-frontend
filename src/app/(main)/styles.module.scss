@@ -19,10 +19,20 @@
             position: absolute;
             top: -1px;
             left: 0;
-            width: 48px;
+            width: 72px;
             height: 2px;
             background: #ae2838;
             border-radius: 2px;
+            transform: translateX(calc(var(--divider-step, 0) * 100%));
         }
+    }
+    > section:nth-child(4) {
+        --divider-step: 1;
+    }
+    > section:nth-child(5) {
+        --divider-step: 2;
+    }
+    > section:nth-child(6) {
+        --divider-step: 3;
     }
 }
