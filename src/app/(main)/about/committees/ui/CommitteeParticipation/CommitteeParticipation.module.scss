@@ -1,0 +1,55 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+    h2 {
+        margin: 0;
+        max-width: 24ch;
+        font-size: clamp(26px, 2.5vw, 34px);
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+        color: var(--text-primary-color-dark);
+    }
+    p {
+        margin: 0;
+        color: var(--text-secondary-color-dark);
+        font-size: 15px;
+        line-height: 1.8;
+    }
+    .note {
+        max-width: 50ch;
+        font-size: 14px;
+    }
+}
+.opportunities {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--border-color-light);
+        color: var(--text-primary-color-dark);
+        font-size: 15px;
+        line-height: 1.65;
+        &:first-child {
+            padding-top: 0;
+        }
+    }
+}
+.icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    padding: 12px;
+    border-radius: 14px;
+    background: #f9e9ec;
+    color: #ae2838;
+}

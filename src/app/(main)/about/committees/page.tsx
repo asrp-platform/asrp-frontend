@@ -1,37 +1,15 @@
-import styles from "@/app/(main)/about/committees/styles.module.scss"
-import GetInvolvedCommitteesForm from "@/features/GetInvolvedCommitteesForm/GetInvolvedCommitteesForm.tsx"
-import PageSection from "@/shared/ui/PageSection/PageSection.tsx"
+import styles from "./styles.module.scss"
+import CommitteesHero from "./ui/CommitteesHero/CommitteesHero"
+import CommitteeParticipation from "./ui/CommitteeParticipation/CommitteeParticipation"
+import GetInvolvedCommitteesForm from "@/features/GetInvolvedCommitteesForm/GetInvolvedCommitteesForm"
 
 export default function ASRPCommitteesPage() {
     return (
         <div className={styles.pageContainer} id="top">
-            <PageSection className={styles.headingCardContainer}>
-                <h1>ASRP Committees</h1>
-                <p>
-                    Our committee structure is currently being developed. In the coming months, ASRP
-                    plans to establish dedicated committees in education, membership, research,
-                    communications, and governance.
-                </p>
-                <p>
-                    We warmly invite members and pathology trainees who are interested in building
-                    ASRP from the ground up to get involved.
-                </p>
-            </PageSection>
-
+            <CommitteesHero />
             <section className={styles.involved}>
-                <div className={styles.involvedGrid}>
-                    <div className={styles.involvedText}>
-                        <h2>Get Involved in Future Committees</h2>
-                        <p>If you are interested in:</p>
-                        <ul>
-                            <li>Sharing ideas for future ASRP committees</li>
-                            <li>Volunteering to serve as a committee member or chair</li>
-                            <li>Helping design educational or research programs</li>
-                        </ul>
-                        <p>Please use the form to let us know how you would like to contribute.</p>
-                    </div>
-                    <GetInvolvedCommitteesForm />
-                </div>
+                <CommitteeParticipation />
+                <GetInvolvedCommitteesForm />
             </section>
         </div>
     )

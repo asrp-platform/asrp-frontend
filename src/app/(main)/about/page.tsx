@@ -1,7 +1,9 @@
-import styles from "@/app/(main)/about/styles.module.scss"
+import styles from "./styles.module.scss"
 import type { Metadata } from "next"
-import SocialNetLinks from "@shared/ui/SocialNetLinks/SocialNetLinks.tsx"
-import BylawsLink from "@/app/(main)/about/ui/BylawsLink.tsx"
+import PageHero from "@widgets/PageHero/PageHero"
+import AboutMission from "./ui/AboutMission/AboutMission"
+import AboutInitiatives from "./ui/AboutInitiatives/AboutInitiatives"
+import AboutLinks from "./ui/AboutLinks/AboutLinks"
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
@@ -9,62 +11,22 @@ export const metadata: Metadata = {
     title: "About Us",
 }
 
-const Page = () => {
-    return (
-        <div className={styles.pageContainer}>
-            <section>
-                <div className={styles.headingCardContainer}>
-                    <h1>About the American Society of Russian-Speaking Pathologists (ASRP)</h1>
-                    <p>
-                        The American Society of Russian-Speaking Pathologists (ASRP) is a
-                        not-for-profit professional organization established in 2025 to create a
-                        supportive environment fostering networking, collaboration, and professional
-                        development. Our goal is to unite pathologists in the United States with
-                        similar educational, cultural, and language backgrounds.
-                    </p>
-                </div>
-            </section>
-            <section>
-                <div className={styles.sectionContainer}>
-                    <div className={styles.missionContainer}>
-                        <div className={styles.missionInfoContainer}>
-                            <h2>Our Mission</h2>
-                            <p>
-                                ASRP strives to build a dynamic, welcoming, and academically rich
-                                community for Russian-speaking pathologists, trainees, and pathology
-                                aspirants across the United States. Through mentorship, scientific
-                                collaboration, and educational events, we aim to promote
-                                professional growth and integration within the broader pathology
-                                community.
-                            </p>
-                            <p>
-                                We envision ASRP as a platform that connects members through shared
-                                values, mutual respect, and commitment to advancing pathology as a
-                                discipline.
-                            </p>
-                        </div>
-                        <div className={styles.initiativesContainer}>
-                            <h3>Key initiatives</h3>
-                            <ul>
-                                <li>
-                                    Unite Russian-speaking pathologists across the United States
-                                </li>
-                                <li>Launch high-quality educational programs</li>
-                                <li>Obtain the ability to offer CME credits</li>
-                                <li>Achieve recognition as a USCAP Companion Society</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className={styles.linksContainer}>
-                        <h2>Quick Links</h2>
-                        <BylawsLink className={styles.byLawsLink} />
-                        <h3>Our Social Media:</h3>
-                        <SocialNetLinks withLabels />
-                    </div>
-                </div>
-            </section>
+const Page = () => (
+    <div className={styles.pageContainer}>
+        <div className={styles.hero}>
+            <PageHero subTitle="ABOUT THE SOCIETY" pageTitle="About ASRP" contentMaxWidth={880}>
+                The American Society of Russian-Speaking Pathologists (ASRP) is a not-for-profit
+                professional organization established in 2025 to create a supportive environment
+                fostering networking, collaboration, and professional development. Our goal is to
+                unite pathologists in the United States with similar educational, cultural, and
+                language backgrounds.
+            </PageHero>
         </div>
-    )
-}
-
+        <div className={styles.content}>
+            <AboutMission />
+            <AboutLinks />
+        </div>
+        <AboutInitiatives />
+    </div>
+)
 export default Page

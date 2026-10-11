@@ -1,68 +1,22 @@
-@use "../../../../shared/mixins" as m;
-
 .pageContainer {
-    @media (width >= 1200px) {
-        margin: 48px var(--mobile-container-margin-inline);
-    }
-}
-
-.headingCardContainer {
-    margin: var(--mobile-container-margin-vertical) var(--mobile-container-margin-inline);
-    @include m.heading-card-container;
-
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 4vw, 56px);
+    padding: 5vh var(--mobile-layout-padding-inline) 64px;
+    color: var(--text-primary-color-dark);
     @media (min-width: 1200px) {
-        margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
+        padding: 8vh var(--page-container-horizontal-margin) 96px;
     }
 }
-
 .involved {
-    margin-top: 20px;
-    padding: 0 var(--mobile-container-margin-inline);
-}
-
-.involvedGrid {
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-
-    @media (min-width: 1200px) {
-        flex-direction: row;
-        margin: var(--page-container-vertical-margin) var(--page-container-horizontal-margin);
-    }
-}
-
-.involvedText {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    color: #334155;
-    flex: 1;
-
-    h2 {
-        font-size: 1.75rem;
-        font-weight: 600;
-        color: #0f172a;
-        margin-bottom: 0.25rem;
-    }
-
-    p {
-        font-size: 1rem;
-        line-height: 1.6;
-        color: #475569;
-    }
-
-    ul {
-        margin: 0.5rem 0 0.75rem;
-        padding-left: 1.25rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    li {
-        position: relative;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        color: #334155;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+    padding-top: clamp(32px, 4vw, 48px);
+    border-top: 1px solid var(--border-color-light);
+    @media (min-width: 1024px) {
+        grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
+        gap: clamp(32px, 4vw, 64px);
     }
 }

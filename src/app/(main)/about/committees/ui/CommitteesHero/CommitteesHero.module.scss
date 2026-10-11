@@ -1,0 +1,40 @@
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    h1 {
+        margin-bottom: 24px;
+    }
+}
+.areas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border: 1px solid var(--border-color-light);
+        border-radius: 12px;
+        background: white;
+        color: var(--text-secondary-color-dark);
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    svg {
+        color: #ae2838;
+        flex-shrink: 0;
+    }
+}
+.invitation {
+    margin: 0;
+    max-width: 76ch;
+    color: var(--text-secondary-color-dark);
+    font-size: 15px;
+    line-height: 1.8;
+}
