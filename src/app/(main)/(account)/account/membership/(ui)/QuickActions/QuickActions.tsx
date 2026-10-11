@@ -10,6 +10,7 @@ import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 import { isAxiosError } from "axios"
 import { message } from "antd"
 import UpgradeMembership from "@app/(main)/(account)/account/membership/(ui)/QuickActions/components/UpgradeMembership/UpgradeMembership.tsx"
+import DownloadConfirmation from "@app/(main)/(account)/account/membership/(ui)/QuickActions/components/DownloadConfirmation.tsx"
 
 interface QuickActionsProps {
     variant: "active" | "expired"
@@ -50,7 +51,7 @@ const QuickActions = ({ variant }: QuickActionsProps) => {
                 </CustomButton>
                 {!isExpired && <DowngradeMembership />}
                 {!isExpired && <UpgradeMembership />}
-                <CustomButton variant={"secondary"}>Download confirmation</CustomButton>
+                <DownloadConfirmation />
             </div>
         </ProfileInfoCard>
     )
