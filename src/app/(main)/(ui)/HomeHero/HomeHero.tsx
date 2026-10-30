@@ -1,28 +1,31 @@
 import Link from "next/link"
-import Image from "next/image"
+import HomeCommunityVisual from "./HomeCommunityVisual"
 import styles from "./HomeHero.module.scss"
 
 const HomeHero = () => (
-    <section className={styles.hero}>
-        <div className={styles.mainTitleContainer}>
-            <h1>A professional home for Russian-speaking pathologists in the U.S.</h1>
-            <p className={styles.eyebrow}>OUR MISSION</p>
-            <p>
-                To create and support a platform for a professional community for Russian-speaking
-                pathologists in the United States. Join our members in building a network dedicated
-                to mentorship, education, and collaborative excellence.
-            </p>
-            <div className={styles.mainTitleButtonContainer}>
-                <Link href="/membership/become-member" className={styles.becomeMemberButton}>
+    <section className={styles.hero} aria-labelledby="home-title">
+        <div className={styles.intro}>
+            <p className={styles.identity}>American Society of Russian-Speaking Pathologists</p>
+            <h1 id="home-title">
+                A <span>professional home</span> for Russian-speaking pathologists in the U.S.
+            </h1>
+            <div className={styles.actions}>
+                <Link href="/membership/become-member" className={styles.primaryLink}>
                     Become a member
                 </Link>
-                <Link href="/about" className={styles.learnMoreButton}>
+                <Link href="/about" className={styles.secondaryLink}>
                     Learn more
                 </Link>
             </div>
         </div>
-        <div className={styles.heroEmblem} aria-hidden="true">
-            <Image src="/logo/png/LogoLightVertical.png" alt="" width={320} height={320} priority />
+        <HomeCommunityVisual />
+        <div className={styles.mission}>
+            <p className={styles.eyebrow}>OUR MISSION</p>
+            <p className={styles.missionText}>
+                To create and support a platform for a professional community for Russian-speaking
+                pathologists in the United States. Join our members in building a network dedicated
+                to mentorship, education, and collaborative excellence.
+            </p>
         </div>
     </section>
 )

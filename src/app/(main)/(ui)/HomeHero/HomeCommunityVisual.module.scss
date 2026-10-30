@@ -1,0 +1,23 @@
+.visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 380px;
+    justify-self: end;
+    padding: 32px;
+    box-sizing: border-box;
+
+    img {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+
+    @media (max-width: 1023px) {
+        justify-self: start;
+        max-width: 280px;
+        padding: 16px;
+    }
+}
