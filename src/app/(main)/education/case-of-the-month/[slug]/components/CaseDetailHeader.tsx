@@ -26,7 +26,7 @@ const CaseDetailHeader = ({ caseItem, publicationMonth, readingMinutes }: IProps
         <span className={styles.headerLabel}>Case of the Month · {publicationMonth}</span>
         <h1>{caseItem.title}</h1>
         <div className={styles.headerMeta}>
-            <span>Contributed by ASRP Education Committee</span>
+            <span>{caseItem.authors.join(", ")}</span>
             <span>
                 <CalendarDays size={16} /> {publicationMonth}
             </span>

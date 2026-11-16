@@ -12,6 +12,7 @@ export interface CaseOfTheMonth {
     created_at: string
     updated_at: string
     title: string
+    authors: string[]
     slug: string
     cover_key: string | null
     cover_url: string | null

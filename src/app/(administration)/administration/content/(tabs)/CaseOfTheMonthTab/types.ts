@@ -10,6 +10,7 @@ export type CaseTagForm = FormInstance<CaseTagFormValues>
 
 export interface CaseOfTheMonthFormValues {
     title: string
+    authors: string[]
     cover_key: string | null
     history: JSONContent
     case_findings: JSONContent
