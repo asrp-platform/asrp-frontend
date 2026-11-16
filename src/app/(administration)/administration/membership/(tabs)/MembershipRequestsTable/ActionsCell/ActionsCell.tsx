@@ -8,6 +8,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { getAdminMembershipRequestUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 
+import { ADMIN_ATTENTION_QUERY_KEY } from "@shared/backend/queries/useAdminAttentionQuery"
+
 type UpdateMembershipRequestPayload = {
     requestId: number | string
     status: MembershipRequestStatusEnum.APPROVED | MembershipRequestStatusEnum.REJECTED
@@ -48,6 +50,7 @@ const ActionsCell = ({ membershipRequestId }: IProps) => {
     const mutation = useMutation({
         mutationFn: updateMembershipRequest,
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ADMIN_ATTENTION_QUERY_KEY })
             queryClient.invalidateQueries({
                 queryKey: ["membership-requests"],
             })

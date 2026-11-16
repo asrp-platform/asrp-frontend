@@ -7,6 +7,7 @@ import { useState } from "react"
 import api from "@/axios.ts"
 import { CURRENT_USER_CHANGE_PASSWORD_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { handleApiError } from "@shared/helpers/formsHelpers.ts"
+import { isCurrentPasswordError } from "@shared/helpers/isCurrentPasswordError"
 import CustomButton from "@shared/ui/Buttons/CustomButton.tsx"
 
 import styles from "./ChangePasswordModal.module.scss"
@@ -42,6 +43,13 @@ const ChangePasswordModal = ({ open, onClose }: Props) => {
             form.resetFields()
             onClose()
         } catch (error: unknown) {
+            if (isCurrentPasswordError(error)) {
+                form.setFields([
+                    { name: "old_password", errors: ["The current password is incorrect."] },
+                ])
+                form.scrollToField("old_password", { focus: true, block: "nearest" })
+                return
+            }
             handleApiError({ error, form })
         } finally {
             setIsLoading(false)

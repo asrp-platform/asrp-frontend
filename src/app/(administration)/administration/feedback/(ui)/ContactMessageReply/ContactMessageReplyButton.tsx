@@ -7,6 +7,9 @@ import api from "../../../../../../axios.ts"
 import { getAdminContactMessageAnswerUrl } from "@shared/backend/restApiUrls/adminApiUrls.ts"
 import { handleApiError } from "@shared/helpers/formsHelpers.ts"
 
+import { useQueryClient } from "@tanstack/react-query"
+import { ADMIN_ATTENTION_QUERY_KEY } from "@shared/backend/queries/useAdminAttentionQuery"
+
 interface ReplyFormValues {
     subject: string
     answerMessage: string
@@ -15,9 +18,11 @@ interface ReplyFormValues {
 interface IProps {
     messageId: number
     disabled?: boolean
+    onAnswered?: () => void
 }
 
-const ContactMessageReplyButton = ({ messageId, disabled }: IProps) => {
+const ContactMessageReplyButton = ({ messageId, disabled, onAnswered }: IProps) => {
+    const queryClient = useQueryClient()
     const [form] = Form.useForm()
 
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -30,6 +35,8 @@ const ContactMessageReplyButton = ({ messageId, disabled }: IProps) => {
                 subject: values.subject,
                 answer_message: values.answerMessage,
             })
+            onAnswered?.()
+            queryClient.invalidateQueries({ queryKey: ADMIN_ATTENTION_QUERY_KEY })
             message.success("Your reply has been sent successfully.")
             form.resetFields()
             setIsModalOpen(false)

@@ -10,6 +10,9 @@ import MembershipTypesTable from "@app/(administration)/administration/membershi
 import AdminPermissionGuard from "@shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 import { useQueryParamTab } from "@shared/hooks/useQueryParamTab.ts"
 
+import { useAdminAttentionQuery } from "@shared/backend/queries/useAdminAttentionQuery"
+import AdminAttentionLabel from "@shared/ui/AdminAttentionLabel/AdminAttentionLabel"
+
 const items = [
     {
         label: "Members",
@@ -50,6 +53,12 @@ const items = [
 ]
 
 const MembershipTabs = () => {
+    const { membershipCount } = useAdminAttentionQuery()
+    const counts: Record<string, number | undefined> = { "membership-requests": membershipCount }
+    const tabs = items.map((item) => ({
+        ...item,
+        label: <AdminAttentionLabel count={counts[item.key]}>{item.label}</AdminAttentionLabel>,
+    }))
     const { activeTab, setActiveTab } = useQueryParamTab({
         defaultTab: "members",
         tabKeys: items.map(({ key }) => key),
@@ -62,7 +71,7 @@ const MembershipTabs = () => {
                 onChange={setActiveTab}
                 type="card"
                 style={{ marginBottom: 32 }}
-                items={items}
+                items={tabs}
             />
         </AdminPermissionGuard>
     )

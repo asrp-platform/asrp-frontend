@@ -1,6 +1,6 @@
 "use client"
 
-import { Layout, Menu } from "antd"
+import { Badge, Layout, Menu } from "antd"
 import {
     UserOutlined,
     TeamOutlined,
@@ -16,6 +16,9 @@ import styles from "@/app/(administration)/layout.module.scss"
 import BackToMainSiteButton from "@/shared/ui/Buttons/BackToMainSiteButton.tsx"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
 import { getLoginUrl } from "@shared/helpers/authRedirect.ts"
+
+import { useAdminAttentionQuery } from "@shared/backend/queries/useAdminAttentionQuery"
+import AdminAttentionLabel from "@shared/ui/AdminAttentionLabel/AdminAttentionLabel"
 
 const { Header, Sider, Content } = Layout
 
@@ -70,6 +73,27 @@ const AdminLayout = ({ children }: IProps) => {
     const pathname = usePathname()
     const [collapsed, setCollapsed] = useState(false)
 
+    const { membershipCount, nameChangeCount, feedbackCount } = useAdminAttentionQuery()
+    const attentionCounts: Record<string, number | undefined> = {
+        "/administration/users": nameChangeCount,
+        "/administration/membership": membershipCount,
+        "/administration/feedback": feedbackCount,
+    }
+    const items = menuItems.map((item) => ({
+        ...item,
+        label: (
+            <AdminAttentionLabel count={collapsed ? undefined : attentionCounts[item.key]}>
+                {item.label}
+            </AdminAttentionLabel>
+        ),
+        icon:
+            collapsed && (attentionCounts[item.key] ?? 0) > 0 ? (
+                <Badge dot>{item.icon}</Badge>
+            ) : (
+                item.icon
+            ),
+    }))
+
     const selectedKey = useMemo(() => {
         return (
             menuKeys.find((key) => pathname === key || pathname.startsWith(`${key}/`)) ??
@@ -96,7 +120,7 @@ const AdminLayout = ({ children }: IProps) => {
                     theme="dark"
                     mode="inline"
                     selectedKeys={selectedKeys}
-                    items={menuItems}
+                    items={items}
                     onClick={({ key }) => router.push(key)}
                 />
             </Sider>
