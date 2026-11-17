@@ -95,6 +95,32 @@
     font-size: 15px;
     line-height: 1.85;
 }
+@media (width < 1024px) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr) clamp(70px, 21vw, 144px);
+        column-gap: clamp(18px, 4vw, 32px);
+        row-gap: 16px;
+    }
+    .intro {
+        display: contents;
+    }
+    .identity {
+        grid-area: 1 / 1;
+        margin: 0;
+    }
+    .intro h1 {
+        grid-area: 2 / 1;
+        font-size: clamp(26px, 6.5vw, 44px);
+        text-wrap: wrap;
+    }
+    .actions {
+        grid-area: 3 / 1 / 4 / -1;
+        margin: 8px 0 0;
+    }
+    .mission {
+        margin-top: 16px;
+    }
+}
 @media (max-width: 480px) {
     .actions {
         gap: 8px 20px;
