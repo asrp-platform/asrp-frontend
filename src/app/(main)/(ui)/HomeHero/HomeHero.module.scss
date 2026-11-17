@@ -94,6 +94,11 @@
     color: var(--text-secondary-color-dark);
     font-size: 15px;
     line-height: 1.85;
+
+    @media (min-width: 1024px) {
+        // Account for the 150px label and 32px gap to end near the midpoint of the Hero.
+        max-width: clamp(250px, calc((100% - 182px) / 2), 86ch);
+    }
 }
 @media (width < 1024px) {
     .hero {
