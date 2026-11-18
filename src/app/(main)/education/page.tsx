@@ -13,7 +13,7 @@ const Page = () => {
                 <Alert
                     type="info"
                     showIcon
-                    message="Educational content is under development"
+                    title="Educational content is under development"
                     description="Please note that the educational sections listed below are currently under development. We are actively working on adding content and making these resources available. Thank you for your patience."
                 />
             </PageSection>

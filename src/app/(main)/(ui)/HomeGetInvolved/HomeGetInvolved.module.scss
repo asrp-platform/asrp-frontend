@@ -1,0 +1,52 @@
+@use "../home" as h;
+.getInvolvedContainer {
+    @include h.info;
+}
+.getInvolvedCardContainer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin-top: 12px;
+    @media (min-width: 900px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+.getInvolvedCard {
+    @include h.card;
+    p {
+        margin-bottom: 8px;
+    }
+}
+.cardIcon {
+    @include h.icon;
+}
+.membershipFormLink,
+.helpLink,
+.donationsLink {
+    @include h.link;
+    width: 100%;
+    margin-top: auto;
+}
+.membershipFormLink {
+    background: var(--button-primary-red);
+    color: white;
+    &:visited {
+        color: white;
+    }
+    &:hover {
+        color: white;
+        background: var(--button-primary-red-hover);
+    }
+}
+.helpLink,
+.donationsLink {
+    border: 1px solid #d5dce5;
+    color: var(--text-primary-color-dark);
+    &:visited {
+        color: var(--text-primary-color-dark);
+    }
+    &:hover {
+        color: var(--text-primary-color-dark);
+        background: #f1f5f9;
+    }
+}

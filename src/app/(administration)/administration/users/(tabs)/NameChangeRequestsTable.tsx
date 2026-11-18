@@ -23,6 +23,9 @@ import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermi
 import Link from "next/link"
 import { DEFAULT_PAGE_SIZE } from "@shared/options.ts"
 
+import { useQueryClient } from "@tanstack/react-query"
+import { ADMIN_ATTENTION_QUERY_KEY } from "@shared/backend/queries/useAdminAttentionQuery"
+
 interface ITableFilters {
     status?: NameChangeRequestStatus
 }
@@ -36,6 +39,7 @@ const statusOptions = [
 ]
 
 const NameChangeRequestsTable = () => {
+    const queryClient = useQueryClient()
     const { data: permissions = [] } = useCurrentUserPermissionsQuery()
 
     const permissionsActions = useMemo(() => {
@@ -72,7 +76,9 @@ const NameChangeRequestsTable = () => {
                 ({
                     ...prev,
                     data: prev?.data.map((row) =>
-                        row.id === selectedRow.id ? { ...row, status: action } : row,
+                        row.id === selectedRow.id
+                            ? { ...row, status: action === "approve" ? "APPROVED" : "REJECTED" }
+                            : row,
                     ),
                 }) as IPaginatedBackendResponse<INameChangeRequest>,
         )
@@ -90,6 +96,7 @@ const NameChangeRequestsTable = () => {
                     data,
                 )
                 updateStatusInTable(selectedRow, data.action)
+                queryClient.invalidateQueries({ queryKey: ADMIN_ATTENTION_QUERY_KEY })
             }
             if (data.action === "reject") {
                 await api.patch(
@@ -97,6 +104,7 @@ const NameChangeRequestsTable = () => {
                     data,
                 )
                 updateStatusInTable(selectedRow, data.action)
+                queryClient.invalidateQueries({ queryKey: ADMIN_ATTENTION_QUERY_KEY })
             }
         } catch (error) {
             console.error(error)

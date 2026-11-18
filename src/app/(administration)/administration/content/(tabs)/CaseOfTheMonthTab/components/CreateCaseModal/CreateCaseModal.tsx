@@ -58,6 +58,7 @@ const CreateCaseModal = ({
 
         form.setFieldsValue({
             title: caseItem?.title ?? "",
+            authors: caseItem?.authors ?? [],
             cover_key: caseItem?.cover_key ?? null,
             history: caseItem?.history ?? emptyDocument,
             case_findings: caseItem?.case_findings ?? emptyDocument,
@@ -123,6 +124,45 @@ const CreateCaseModal = ({
                         />
                     </Form.Item>
                 </div>
+
+                <Form.Item label="Authors">
+                    <Form.List name="authors">
+                        {(fields, { add, remove }) => (
+                            <div className={styles.questions}>
+                                {fields.map(({ key, name }, index) => (
+                                    <Flex key={key} gap={8} align="start">
+                                        <Form.Item
+                                            name={name}
+                                            className={styles.question}
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    whitespace: true,
+                                                    message: "Enter an author name",
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+                                                aria-label={`Author ${index + 1}`}
+                                                placeholder={`Author ${index + 1}`}
+                                            />
+                                        </Form.Item>
+                                        <Button
+                                            type="text"
+                                            danger
+                                            icon={<MinusCircleOutlined />}
+                                            aria-label={`Remove author ${index + 1}`}
+                                            onClick={() => remove(name)}
+                                        />
+                                    </Flex>
+                                ))}
+                                <Button type="dashed" icon={<PlusOutlined />} onClick={() => add()}>
+                                    Add author
+                                </Button>
+                            </div>
+                        )}
+                    </Form.List>
+                </Form.Item>
 
                 <CaseCoverUpload
                     open={open}

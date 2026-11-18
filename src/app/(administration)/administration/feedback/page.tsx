@@ -8,6 +8,9 @@ import { ContactMessageType } from "@/entities/ContactMessage.ts"
 import AdminPermissionGuard from "@/shared/ui/PermissionGuard/AdminPermissionGuard.tsx"
 import { useQueryParamTab } from "@shared/hooks/useQueryParamTab.ts"
 
+import { useAdminAttentionQuery } from "@shared/backend/queries/useAdminAttentionQuery"
+import AdminAttentionLabel from "@shared/ui/AdminAttentionLabel/AdminAttentionLabel"
+
 const items = [
     {
         label: "Contact",
@@ -36,6 +39,21 @@ const items = [
 ]
 
 const ContactMessagesTabs = () => {
+    const { feedbackCounts } = useAdminAttentionQuery()
+    const counts: Record<string, number | undefined> = {
+        contact: feedbackCounts?.CONTACT,
+        "get-involved": feedbackCounts?.GET_INVOLVED,
+        "get-involved-committees": feedbackCounts?.GET_INVOLVED_COMMITTEES,
+        donations: feedbackCounts?.DONATION_SPONSORSHIP,
+    }
+    const tabs = items.map((item) => ({
+        ...item,
+        label: (
+            <AdminAttentionLabel tabMode count={counts[item.key]}>
+                {item.label}
+            </AdminAttentionLabel>
+        ),
+    }))
     const { activeTab, setActiveTab } = useQueryParamTab({
         defaultTab: "contact",
         tabKeys: items.map(({ key }) => key),
@@ -48,7 +66,7 @@ const ContactMessagesTabs = () => {
                 onChange={setActiveTab}
                 type="card"
                 style={{ marginBottom: 32 }}
-                items={items}
+                items={tabs}
             />
         </AdminPermissionGuard>
     )

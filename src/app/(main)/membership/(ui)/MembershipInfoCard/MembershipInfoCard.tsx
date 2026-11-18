@@ -30,8 +30,13 @@ const MembershipInfoCard = ({
     return (
         <div className={styles.card}>
             <div className={`${styles.votingStatus} ${votingStatusColor}`}>{votingStatus}</div>
-            <h3>
-                {icon} {title}
+            <h3 className={styles.title}>
+                {icon && (
+                    <span className={styles.titleIcon} aria-hidden="true">
+                        {icon}
+                    </span>
+                )}
+                <span>{title}</span>
             </h3>
             <p>{info}</p>
             <span className={styles.price}>${price} / year</span>

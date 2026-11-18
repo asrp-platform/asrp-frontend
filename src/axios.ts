@@ -1,4 +1,5 @@
 import axios from "axios"
+import { isCurrentPasswordError } from "@shared/helpers/isCurrentPasswordError"
 import type { IRefreshResponse } from "@shared/interfaces.ts"
 
 const rawApiUrl = process.env.NEXT_PUBLIC_API_URL?.trim()
@@ -61,7 +62,8 @@ api.interceptors.response.use(
             error.response?.status === 401 &&
             originalRequest &&
             !originalRequest._isRetry &&
-            !isAuthRequest
+            !isAuthRequest &&
+            !isCurrentPasswordError(error)
         ) {
             originalRequest._isRetry = true
 

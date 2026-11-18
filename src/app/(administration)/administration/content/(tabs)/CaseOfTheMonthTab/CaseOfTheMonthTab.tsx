@@ -58,6 +58,7 @@ const toCasePayload = (values: CaseOfTheMonthFormValues) => ({
     case_findings: values.case_findings,
     virtual_slides: (values.virtual_slides ?? []).map((slide) => slide.trim()).filter(Boolean),
     questions: (values.questions ?? []).map((question) => question.trim()).filter(Boolean),
+    authors: (values.authors ?? []).map((author) => author.trim()).filter(Boolean),
     publication_month: values.publication_month.format("YYYY-MM-DD"),
     answer: values.answer,
     tag_ids: values.tag_ids ?? [],

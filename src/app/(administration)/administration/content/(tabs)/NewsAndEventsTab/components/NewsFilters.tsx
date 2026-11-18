@@ -60,7 +60,9 @@ const NewsFilters = ({ filters, total, onChange }: NewsFiltersProps) => {
                     onChange={setCreatedRange}
                 />
             </Space>
-            <Tag>{total} articles</Tag>
+            <Tag className={styles.articleCountTag}>
+                <span style={{ verticalAlign: "center" }}>{total} articles</span>
+            </Tag>
         </Flex>
     )
 }

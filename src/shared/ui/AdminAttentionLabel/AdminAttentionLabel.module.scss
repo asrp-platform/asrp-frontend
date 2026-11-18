@@ -1,0 +1,39 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    flex-shrink: 0;
+    :global(.ant-badge-count) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 26px;
+        min-width: 26px;
+        height: 26px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: #d5243f;
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 24px;
+        font-variant-numeric: tabular-nums;
+        box-shadow: 0 1px 3px rgba(90, 10, 20, 0.18);
+    }
+}
+
+.badge.badgeTab :global(.ant-badge-count) {
+    width: 22px;
+    min-width: 22px;
+    height: 22px;
+    font-size: 10px;
+    line-height: 22px;
+
+    :global(.ant-scroll-number-only),
+    :global(.ant-scroll-number-only-unit) {
+        height: 22px;
+        line-height: 22px;
+    }
+}

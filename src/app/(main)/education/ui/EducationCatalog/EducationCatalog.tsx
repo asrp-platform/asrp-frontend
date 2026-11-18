@@ -27,7 +27,7 @@ const catalogItems = [
         badge: "Public",
         badgeType: "public" as const,
         meta: "Open for contributors",
-        href: "#",
+        href: "education/case-of-the-month",
     },
     {
         title: "Board-like Questions",

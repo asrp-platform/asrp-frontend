@@ -1,0 +1,32 @@
+.mission {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    p {
+        margin: 0;
+        max-width: 70ch;
+        color: var(--text-secondary-color-dark);
+        font-size: 15px;
+        line-height: 1.85;
+    }
+}
+.heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    h2 {
+        margin: 0;
+        font-size: clamp(26px, 2.4vw, 32px);
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+    }
+}
+.icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    padding: 12px;
+    border-radius: 14px;
+    background: #f9e9ec;
+    color: #ae2838;
+}

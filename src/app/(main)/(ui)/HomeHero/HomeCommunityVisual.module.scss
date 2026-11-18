@@ -1,0 +1,23 @@
+.visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 380px;
+    justify-self: end;
+    padding: 32px;
+    box-sizing: border-box;
+
+    img {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+
+    @media (width < 1024px) {
+        grid-area: 1 / 2 / 3 / 3;
+        align-self: end;
+        padding: 0;
+    }
+}

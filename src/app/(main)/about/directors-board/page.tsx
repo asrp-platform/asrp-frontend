@@ -1,23 +1,22 @@
-import styles from "@/app/(main)/about/directors-board/styles.module.scss"
-import DirectorsBoard from "@/app/(main)/about/directors-board/(components)/DirectorsBoard/DirectorsBoard.tsx"
+import styles from "./styles.module.scss"
+import DirectorsBoard from "./(components)/DirectorsBoard/DirectorsBoard"
+import PageHero from "@widgets/PageHero/PageHero"
 
-const Page = async () => {
-    return (
-        <div className={styles.pageContainer}>
-            <section>
-                <div className={styles.headingCardContainer}>
-                    <h1>ASRP Board of Directors</h1>
-                    <p>
-                        The leadership team guiding the American Society of Russian-speaking
-                        Pathologists.
-                    </p>
-                </div>
-            </section>
-            <section>
-                <DirectorsBoard />
-            </section>
+const Page = () => (
+    <div className={styles.pageContainer}>
+        <div className={styles.hero}>
+            <PageHero
+                subTitle="LEADERSHIP"
+                pageTitle="ASRP Board of Directors"
+                contentMaxWidth={720}
+            >
+                The leadership team guiding the American Society of Russian-speaking Pathologists.
+            </PageHero>
         </div>
-    )
-}
+        <section className={styles.boardSection} aria-label="Board members">
+            <DirectorsBoard />
+        </section>
+    </div>
+)
 
 export default Page

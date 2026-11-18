@@ -1,6 +1,6 @@
 "use client"
 
-import { message, Table, Tag } from "antd"
+import { message, Table, Tag, Space } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { useEffect, useMemo, useState } from "react"
 import { isAxiosError } from "axios"
@@ -14,6 +14,8 @@ import PermissionGuard from "@/shared/ui/PermissionGuard/PermissionGuard.tsx"
 import { useCurrentUserPermissionsQuery } from "@shared/backend/queries/usePermissionsQuery.ts"
 import { formatDatetime } from "@shared/helpers/formatDatetime.ts"
 import type { IPaginatedBackendResponse } from "@shared/interfaces.ts"
+
+import ContactMessageManualResponseButton from "../ContactMessageReply/ContactMessageManualResponseButton"
 
 interface ITableFilters {
     name__startswith?: string
@@ -194,12 +196,29 @@ export const ContactMessageTable = ({ contactMessageType }: IProps) => {
         {
             title: "Actions",
             key: "actions",
-            render: (_: unknown, record: IContactMessage) => (
-                <ContactMessageReplyButton
-                    messageId={record.id}
-                    disabled={record.answered || !canUpdate}
-                />
-            ),
+            render: (_: unknown, record: IContactMessage) => {
+                const onAnswered = () =>
+                    setData((previous) => ({
+                        ...previous,
+                        data: previous.data.map((row) =>
+                            row.id === record.id ? { ...row, answered: true } : row,
+                        ),
+                    }))
+                return (
+                    <Space wrap>
+                        <ContactMessageReplyButton
+                            messageId={record.id}
+                            onAnswered={onAnswered}
+                            disabled={record.answered || !canUpdate}
+                        />
+                        <ContactMessageManualResponseButton
+                            messageId={record.id}
+                            onAnswered={onAnswered}
+                            disabled={record.answered || !canUpdate}
+                        />
+                    </Space>
+                )
+            },
         },
     ]
 

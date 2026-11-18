@@ -1,7 +1,8 @@
 "use client"
 
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react"
-import CookieBanner from "@/context/CookieConsentProvider/CookieBanner/CookieBanner.tsx"
+import CookieBanner from "./CookieBanner/CookieBanner"
+import { DEFAULT_COOKIE_CONSENT, readCookieConsent, type CookieConsent } from "./cookieConsent"
 
 type CookieConsentContextType = {
     resetConsent: () => void
@@ -9,10 +10,9 @@ type CookieConsentContextType = {
 
 const CookieConsentContext = createContext<CookieConsentContextType | null>(null)
 
-/* eslint-disable */
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCookieConsent = () => {
     const context = useContext(CookieConsentContext)
-
     if (!context) {
         throw new Error("useCookieConsent must be used within CookieConsentProvider")
     }
@@ -20,24 +20,29 @@ export const useCookieConsent = () => {
 }
 
 export const CookieConsentProvider = ({ children }: { children: ReactNode }) => {
-    const [showBanner, setShowBanner] = useState(false)
+    const [bannerConsent, setBannerConsent] = useState<CookieConsent | null>(null)
 
     useEffect(() => {
-        const cookieConsent = window.localStorage.getItem("cookieConsent")
-        if (!cookieConsent) {
-            setShowBanner(true)
+        if (!readCookieConsent()) {
+            // Browser storage is only available after hydration.
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setBannerConsent({ ...DEFAULT_COOKIE_CONSENT })
         }
     }, [])
 
     const resetConsent = () => {
-        window.localStorage.removeItem("cookieConsent")
-        setShowBanner(true)
+        setBannerConsent(readCookieConsent() ?? { ...DEFAULT_COOKIE_CONSENT })
     }
 
     return (
         <CookieConsentContext.Provider value={{ resetConsent }}>
             {children}
-            {showBanner && <CookieBanner onClose={() => setShowBanner(false)} />}
+            {bannerConsent && (
+                <CookieBanner
+                    initialConsent={bannerConsent}
+                    onClose={() => setBannerConsent(null)}
+                />
+            )}
         </CookieConsentContext.Provider>
     )
 }

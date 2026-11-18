@@ -8,17 +8,22 @@ import { useMemo, useState } from "react"
 import MembershipCard from "@/features/MembershipApplicationForm/ui/MembershipCard/MembershipCard.tsx"
 import api from "@/axios.ts"
 import { handleApiError } from "@/shared/helpers/formsHelpers.ts"
-import { CURRENT_USER_MEMBERSHIP_REQUEST_URL } from "@shared/backend/restApiUrls/restApiUrls.ts"
-import Warning from "@/features/MembershipApplicationForm/(components)/Warning/Warning.tsx"
-import LinkButton from "@/shared/ui/Buttons/LinkButton.tsx"
+import {
+    CURRENT_USER_MEMBERSHIP_REQUEST_URL,
+    hearAboutOptionsUrl,
+} from "@shared/backend/restApiUrls/restApiUrls.ts"
 import { useCurrentUserQuery } from "@shared/backend/queries/useCurrentUserQuery.ts"
-import Loading from "@app/(main)/about/directors-board/(components)/ViewCard/ui/Loading.tsx"
-import MembershipApplicationProfessionalInformationFields from "@features/shared/MembershipApplicationProfessionalInformationFields/MembershipApplicationProfessionalInformationFields.tsx"
-import { referralSourceOptions } from "@shared/options.ts"
 import type { PaymentCheckoutResponse } from "@shared/interfaces.ts"
 import { useCurrentUserMembershipQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipQuery.ts"
 import { useCurrentUserMembershipRequestQuery } from "@shared/backend/queries/membership/useCurrentUserMembershipRequestQuery.ts"
-import MembershipApplicationAvailabilityAlert from "@/features/MembershipApplicationForm/ui/MembershipApplicationAvailabilityAlert.tsx"
+import MembershipApplicationAvailabilityAlert from "@features/MembershipApplicationForm/ui/MembershipApplicationAvailabilityAlert/MembershipApplicationAvailabilityAlert.tsx"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import AuthenticationRequiredWarning from "@features/MembershipApplicationForm/ui/AuthenticationRequiredWarning/AuthenticationRequiredWarning.tsx"
+
+import MembershipApplicationSkeleton from "./ui/MembershipApplicationSkeleton/MembershipApplicationSkeleton"
+import FormSectionHeader from "./ui/FormSectionHeader/FormSectionHeader"
+import FormFieldsGrid from "./ui/FormFieldsGrid/FormFieldsGrid"
+import ProfessionalInformationSection from "./ui/ProfessionalInformationSection/ProfessionalInformationSection"
 
 type TrainingState = {
     isUsBoardCertified?: boolean
@@ -31,25 +36,39 @@ const initialValues = {
 }
 
 const MembershipApplicationForm = () => {
-    const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery()
+    const { data: referralSourceOptions = [] } = useQuery({
+        queryKey: ["hear-about-options"],
+        queryFn: async () => {
+            const response = await api.get<Array<Record<string, string>>>(hearAboutOptionsUrl)
+            return response.data
+        },
+        staleTime: 1000 * 60 * 60,
+    })
+
+    const { data: currentUser, isFetching: isCurrentUserFetching } = useCurrentUserQuery()
+
     const isAuthorized = Boolean(currentUser)
-    const { data: currentUserMembership, isLoading: isCurrentUserMembershipLoading } =
+
+    const { data: currentUserMembership, isFetching: isCurrentUserMembershipFetching } =
         useCurrentUserMembershipQuery(isAuthorized)
-    const { data: currentUserMembershipRequest, isLoading: isCurrentUserMembershipRequestLoading } =
-        useCurrentUserMembershipRequestQuery(
-            isAuthorized && !isCurrentUserMembershipLoading && !currentUserMembership,
-        )
+    const {
+        data: currentUserMembershipRequest,
+        isFetching: isCurrentUserMembershipRequestFetching,
+    } = useCurrentUserMembershipRequestQuery(
+        isAuthorized && !isCurrentUserMembershipFetching && !currentUserMembership,
+    )
 
     const [training, setTraining] = useState<TrainingState>({})
-    const [isFormSubmitting, setIsFormSubmitting] = useState(false)
+    const isLoading =
+        isCurrentUserFetching ||
+        isCurrentUserMembershipFetching ||
+        isCurrentUserMembershipRequestFetching
 
     const isFormDisabled = useMemo(
         () =>
             !currentUser || Boolean(currentUserMembership) || Boolean(currentUserMembershipRequest),
         [currentUser, currentUserMembership, currentUserMembershipRequest],
     )
-
-    console.log(currentUser, currentUserMembership, currentUserMembershipRequest)
 
     const [form] = useForm<FieldType>()
 
@@ -84,14 +103,8 @@ const MembershipApplicationForm = () => {
         return [] as MembershipKey[]
     }, [training.isUsBoardCertified, training.isUsTrainee])
 
-    const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-        if (isFormDisabled) {
-            return
-        }
-
-        try {
-            setIsFormSubmitting(true)
-
+    const submitApplication = useMutation({
+        mutationFn: async (values: FieldType) => {
             const data = {
                 membership: {
                     primary_affiliation: values.primary_affiliation,
@@ -112,20 +125,24 @@ const MembershipApplicationForm = () => {
                 CURRENT_USER_MEMBERSHIP_REQUEST_URL,
                 data,
             )
-            window.location.href = response.data.checkout_session_url
-        } catch (error: unknown) {
-            handleApiError({ error, form })
-        } finally {
-            setIsFormSubmitting(false)
-        }
+            return response.data
+        },
+        onSuccess: (data) => {
+            window.location.href = data.checkout_session_url
+        },
+        onError: (error) => handleApiError({ error, form }),
+    })
+
+    const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+        if (isFormDisabled || isLoading || submitApplication.isPending) return
+        submitApplication.mutate(values)
     }
 
-    if (
-        isCurrentUserLoading ||
-        isCurrentUserMembershipLoading ||
-        isCurrentUserMembershipRequestLoading
-    ) {
-        return <Loading />
+    const formAlreadySubmitted =
+        currentUser && (currentUserMembership || currentUserMembershipRequest)
+
+    if (isLoading) {
+        return <MembershipApplicationSkeleton />
     }
 
     return (
@@ -135,50 +152,22 @@ const MembershipApplicationForm = () => {
             className={styles.form}
             onFinish={onFinish}
             onValuesChange={clearChangedFieldErrors}
-            disabled={isFormDisabled}
+            disabled={isFormDisabled || submitApplication.isPending}
             initialValues={initialValues}
             scrollToFirstError
         >
-            {!currentUser && (
-                <Warning>
-                    <p>
-                        To complete your membership application, please sign in to your account.
-                        <br />
-                        Once signed in, you’ll be able to fill out the form and proceed with your
-                        application.
-                    </p>
-                    <LinkButton href="/login" variant="default">
-                        Sign Up
-                    </LinkButton>
-                </Warning>
+            {!currentUser && <AuthenticationRequiredWarning />}
+
+            {formAlreadySubmitted && (
+                <MembershipApplicationAvailabilityAlert
+                    membership={currentUserMembership}
+                    membershipRequest={currentUserMembershipRequest}
+                />
             )}
 
-            {currentUser && (currentUserMembership || currentUserMembershipRequest) && (
-                <div className={styles.availabilityAlert}>
-                    <MembershipApplicationAvailabilityAlert
-                        membership={currentUserMembership}
-                        membershipRequest={currentUserMembershipRequest}
-                    />
-                </div>
-            )}
+            <ProfessionalInformationSection />
 
-            <div className={styles.blockInfoContainer}>
-                <h2>Professional information</h2>
-                <p>
-                    This information helps us understand our membership and tailor programming to
-                    the needs of our community. If you are not currently affiliated with any
-                    institution and are applying for the Pathway member category, please enter N/A
-                    in the field below and select "Other" in the "Job title / Role" field.
-                </p>
-            </div>
-
-            <div className={styles.grid}>
-                <MembershipApplicationProfessionalInformationFields />
-            </div>
-
-            <div className={styles.blockInfoContainer}>
-                <h2>Training in the U.S.</h2>
-            </div>
+            <FormSectionHeader title="Training in the U.S." />
 
             <div className={styles.trainingGrid}>
                 <div>
@@ -226,9 +215,7 @@ const MembershipApplicationForm = () => {
                 )}
             </div>
 
-            <div className={styles.blockInfoContainer}>
-                <h2>Membership category</h2>
-            </div>
+            <FormSectionHeader title="Membership category" />
 
             <Form.Item
                 name="membership_type"
@@ -276,11 +263,9 @@ const MembershipApplicationForm = () => {
                 </Radio.Group>
             </Form.Item>
 
-            <div className={styles.blockInfoContainer}>
-                <h2>Additional details</h2>
-            </div>
+            <FormSectionHeader title="Additional details" />
 
-            <div className={styles.grid}>
+            <FormFieldsGrid>
                 <Form.Item
                     label="How did you hear about ASRP?"
                     name="hear_about_asrp"
@@ -292,7 +277,7 @@ const MembershipApplicationForm = () => {
                 <Form.Item label="Telegram username (optional)" name="tg_username">
                     <Input placeholder="@username" />
                 </Form.Item>
-            </div>
+            </FormFieldsGrid>
 
             <Form.Item
                 label="Briefly tell us about your interest in ASRP (optional)"
@@ -304,9 +289,7 @@ const MembershipApplicationForm = () => {
                 />
             </Form.Item>
 
-            <div className={styles.blockInfoContainer}>
-                <h2>Agreement & communications</h2>
-            </div>
+            <FormSectionHeader title="Agreement & communications" />
 
             <div className={styles.agreementBlock}>
                 <Form.Item<FieldType> noStyle shouldUpdate>
@@ -380,7 +363,7 @@ const MembershipApplicationForm = () => {
                     <Button
                         htmlType="submit"
                         className={styles.submitButton}
-                        loading={isFormSubmitting}
+                        loading={submitApplication.isPending}
                     >
                         Submit & continue to payment
                     </Button>

@@ -1,0 +1,42 @@
+.alert {
+    padding: 24px;
+    border: 1px solid rgba(180, 130, 40, 0.18);
+    border-radius: 16px;
+    background: #fffaf0;
+    box-shadow: 0 4px 20px rgba(25, 35, 50, 0.04);
+    :global(.ant-alert-icon) {
+        font-size: 24px;
+        margin-inline-end: 16px;
+        margin-top: 2px;
+    }
+    :global(.ant-alert-title) {
+        color: var(--text-primary-color-dark);
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+    :global(.ant-alert-description) {
+        color: var(--text-secondary-color-dark);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-top: 8px;
+    }
+    &:global(.ant-alert-success) {
+        background: #f2faf6;
+        border-color: #d4eadd;
+    }
+    &:global(.ant-alert-info) {
+        background: #f3f7fc;
+        border-color: #dce7f5;
+    }
+    &:global(.ant-alert-error) {
+        background: #fff5f5;
+        border-color: #f3dada;
+    }
+    @media (max-width: 600px) {
+        padding: 18px;
+        :global(.ant-alert-title) {
+            font-size: 16px;
+        }
+    }
+}

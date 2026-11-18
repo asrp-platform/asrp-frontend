@@ -1,4 +1,4 @@
-import { Form, Radio } from "antd"
+import { Radio } from "antd"
 import type { MembershipKey } from "@/features/MembershipApplicationForm/types"
 import styles from "@/features/MembershipApplicationForm/ui/MembershipCard/styles.module.scss"
 import clsx from "clsx"
@@ -12,13 +12,6 @@ type MembershipCardProps = {
 }
 
 const MembershipCard = ({ value, title, description, price, disabled }: MembershipCardProps) => {
-    const form = Form.useFormInstance()
-
-    const handleClick = () => {
-        if (disabled) return
-        form.setFieldsValue({ membership: value })
-    }
-
     return (
         <div
             className={clsx(
@@ -26,9 +19,6 @@ const MembershipCard = ({ value, title, description, price, disabled }: Membersh
                 !disabled && styles.activeMembershipCard,
                 disabled && styles.disabledMembershipCard,
             )}
-            onClick={handleClick}
-            role="button"
-            aria-disabled={disabled}
         >
             <Radio value={value} disabled={disabled}>
                 <strong>{title}</strong>

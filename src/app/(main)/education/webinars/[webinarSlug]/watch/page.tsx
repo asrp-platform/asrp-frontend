@@ -2,42 +2,22 @@
 
 import { useQuery } from "@tanstack/react-query"
 import { isAxiosError } from "axios"
-import {
-    ArrowLeft,
-    CalendarDays,
-    CircleAlert,
-    Globe2,
-    LoaderCircle,
-    Languages,
-    RotateCcw,
-    UserRound,
-} from "lucide-react"
+import { ArrowLeft, CircleAlert, LoaderCircle, RotateCcw } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 
 import api from "@/axios.ts"
-import type { IWebinar, IWebinarPlayback } from "@entities/News.ts"
-import {
-    getWebinarDetailUrl,
-    getWebinarPlaybackUrl,
-} from "@shared/backend/restApiUrls/restApiUrls.ts"
-import { formatDatetime, formatTimezone } from "@shared/helpers/formatDatetime.ts"
+import type { IWebinarPlayback } from "@entities/News.ts"
+import { getWebinarPlaybackUrl } from "@shared/backend/restApiUrls/restApiUrls.ts"
+
 import CustomLink from "@shared/ui/Buttons/CustomLink/CustomLink.tsx"
 
 import styles from "./styles.module.scss"
+import { Flex } from "antd"
 
 const WebinarWatchPage = () => {
     const { webinarSlug } = useParams<{ webinarSlug: string }>()
     const slug = decodeURIComponent(webinarSlug)
-
-    const { data: webinar, isError: isWebinarError } = useQuery({
-        queryKey: ["webinar", slug],
-        queryFn: async () => {
-            const response = await api.get<IWebinar>(getWebinarDetailUrl(slug))
-            return response.data
-        },
-        retry: false,
-    })
 
     const {
         data: playback,
@@ -77,30 +57,7 @@ const WebinarWatchPage = () => {
 
             <div className={styles.heading}>
                 <span>WEBINAR PLAYBACK</span>
-                <h1>{webinar?.title ?? "Watch webinar"}</h1>
-                {webinar && (
-                    <div className={styles.meta}>
-                        <span>
-                            <UserRound size={17} /> Presented by {webinar.speaker_name}
-                        </span>
-                        <span>
-                            <CalendarDays size={17} />
-                            {formatDatetime(webinar.starts_at, [], webinar.timezone)}
-                        </span>
-                        {webinar.language && (
-                            <span>
-                                <Languages size={17} /> {webinar.language}
-                            </span>
-                        )}
-                        <span>
-                            <Globe2 size={17} />
-                            {formatTimezone(webinar.starts_at, webinar.timezone)}
-                        </span>
-                    </div>
-                )}
-                {isWebinarError && (
-                    <p className={styles.detailsNotice}>Webinar details could not be loaded.</p>
-                )}
+                <h1>Watch webinar</h1>
             </div>
 
             {isLoading && (
@@ -117,16 +74,18 @@ const WebinarWatchPage = () => {
                     <p>
                         {isError ? errorMessage : "A recording is not available for this webinar."}
                     </p>
-                    {requiresSignIn && (
-                        <CustomLink href="/login" variant="primary-filled">
-                            Sign in
-                        </CustomLink>
-                    )}
-                    {requiresMembership && (
-                        <CustomLink href="/membership/become-member" variant="primary-filled">
-                            Explore membership
-                        </CustomLink>
-                    )}
+                    <Flex>
+                        {requiresSignIn && (
+                            <CustomLink href="/login" variant="primary-filled">
+                                Sign in
+                            </CustomLink>
+                        )}
+                        {requiresMembership && (
+                            <CustomLink href="/membership/become-member" variant="primary-filled">
+                                Explore membership
+                            </CustomLink>
+                        )}
+                    </Flex>
                     {isError && !requiresSignIn && !requiresMembership && !playbackNotFound && (
                         <button
                             type="button"
@@ -145,7 +104,7 @@ const WebinarWatchPage = () => {
                 <div className={styles.player}>
                     <iframe
                         src={playback.embed_url}
-                        title={webinar ? `${webinar.title} video player` : "Webinar video player"}
+                        title={"Webinar video player"}
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                     />

@@ -1,79 +1,141 @@
-@use "../../../shared/mixins" as m;
-
 .outerContainer {
-    @media (width >= 1200px) {
-        padding: var(--general-vertical-padding) var(--page-container-horizontal-margin);
+    padding: clamp(32px, 5vw, 72px) var(--mobile-layout-padding-inline) 64px;
+    color: var(--text-primary-color-dark);
+
+    @media (min-width: 1200px) {
+        padding-inline: var(--page-container-horizontal-margin);
+        padding-bottom: 96px;
     }
 }
 
 .innerContainer {
-    @include m.card-style;
-
-    @media (width >= 1200px) {
-        margin-inline: var(--desktop-layout-padding-inline);
-    }
+    width: 100%;
+    max-width: 1040px;
+    margin-inline: auto;
 }
 
 .legalLayout {
-    background: #fff;
+    background: transparent;
 }
 
-/* mobile first */
+.legalContent {
+    display: grid;
+    gap: clamp(20px, 3vw, 32px);
+
+    > :global(.ant-divider) {
+        display: none;
+    }
+}
+
 .section {
-    margin-bottom: 32px;
+    min-width: 0;
+    padding: clamp(20px, 4vw, 48px);
+    border: 1px solid var(--border-color-light);
+    border-radius: 20px;
+    background: white;
 
-    h2 {
-        font-size: 20px;
+    > :global(.ant-typography) {
+        max-width: 76ch;
+        margin: 0 0 16px;
+        color: var(--text-secondary-color-dark);
+        font-size: 15px;
+        line-height: 1.85;
+        overflow-wrap: anywhere;
     }
 
-    h4 {
-        font-size: 16px;
+    > h2:global(.ant-typography) {
+        max-width: none;
+        margin: 0 0 8px;
+        color: var(--text-primary-color-dark);
+        font-size: clamp(26px, 3vw, 36px);
+        font-weight: 650;
+        line-height: 1.2;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
     }
 
-    p {
-        font-size: 14px;
+    > :global(.ant-typography-secondary) {
+        margin-bottom: 16px;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: 400;
         line-height: 1.6;
     }
-}
 
-/* tablet */
-@media (width >= 768px) {
-    .legalContent {
-        padding: 24px;
+    > :global(.ant-typography-secondary) + :global(.ant-typography) {
+        max-width: 70ch;
+        font-size: 16px;
+        line-height: 1.7;
+        text-wrap: pretty;
     }
 
-    .section {
-        h2 {
-            font-size: 24px;
-        }
-
-        h4 {
-            font-size: 18px;
-        }
-
-        p {
-            font-size: 15px;
-        }
-    }
-}
-
-/* desktop */
-@media (width >= 1200px) {
-    .legalContent {
-        padding: 32px;
+    > h4:global(.ant-typography) {
+        margin: 28px 0 10px;
+        color: var(--text-primary-color-dark);
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 1.45;
     }
 
-    .section {
-        h2 {
-            font-size: 28px;
+    > :last-child {
+        margin-bottom: 0;
+    }
+
+    ul {
+        display: grid;
+        gap: 10px;
+        margin: 12px 0 20px;
+        padding-inline-start: 22px;
+        list-style: disc outside;
+    }
+
+    li::marker {
+        color: #b32838;
+    }
+
+    a {
+        color: #a32332;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        overflow-wrap: anywhere;
+
+        &:hover {
+            color: var(--button-primary-red-hover);
+        }
+    }
+
+    > button {
+        min-height: 44px;
+        margin-top: 8px;
+        padding: 10px 22px;
+        border: 1px solid #d5dce5;
+        border-radius: 999px;
+        color: var(--text-primary-color-dark);
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: none;
+
+        &:hover {
+            border-color: #ae2838;
+            background: #fcf0f1;
+            color: #a32332;
+        }
+    }
+
+    :is(a, button):focus-visible {
+        outline: 2px solid #ae2838;
+        outline-offset: 4px;
+    }
+
+    @media (max-width: 480px) {
+        border-radius: 16px;
+
+        > :global(.ant-typography) {
+            line-height: 1.75;
         }
 
-        h4 {
-            font-size: 20px;
-        }
-
-        p {
-            font-size: 16px;
+        > button {
+            width: 100%;
         }
     }
 }

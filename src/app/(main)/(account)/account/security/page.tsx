@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import ChangePasswordModal from "@/app/(main)/(account)/account/security/ui/ChangePasswordModal.tsx"
 
+import DeleteAccountSection from "./ui/DeleteAccountSection/DeleteAccountSection"
+
 const Page = () => {
     const router = useRouter()
 
@@ -34,6 +36,7 @@ const Page = () => {
                     <button onClick={onResetClick}>Reset Password</button>
                 </div>
             </Card>
+            <DeleteAccountSection />
             <ChangePasswordModal
                 open={changePasswordOpen}
                 onClose={() => setChangePasswordOpen(false)}

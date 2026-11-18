@@ -69,27 +69,28 @@ const GetInvolvedCommitteesForm = () => {
         <div className={styles.involvedForm}>
             <h3>Get Involved</h3>
             <Form form={form} layout="vertical" onFinish={onSubmit} requiredMark={false}>
-                <Form.Item
-                    label="Name"
-                    name="name"
-                    rules={[{ required: true, message: "Please enter your name" }]}
-                    className={styles.formItem}
-                >
-                    <Input placeholder="Your full name" className={styles.input} required />
-                </Form.Item>
+                <div className={styles.contactGrid}>
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        rules={[{ required: true, message: "Please enter your name" }]}
+                        className={styles.formItem}
+                    >
+                        <Input placeholder="Your full name" className={styles.input} required />
+                    </Form.Item>
 
-                <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[
-                        { required: true, message: "Please enter your email" },
-                        { type: "email", message: "Please enter a valid email" },
-                    ]}
-                    className={styles.formItem}
-                >
-                    <Input placeholder="you@example.com" className={styles.input} />
-                </Form.Item>
-
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        rules={[
+                            { required: true, message: "Please enter your email" },
+                            { type: "email", message: "Please enter a valid email" },
+                        ]}
+                        className={styles.formItem}
+                    >
+                        <Input placeholder="you@example.com" className={styles.input} />
+                    </Form.Item>
+                </div>
                 <Form.Item
                     label="Current role / affiliation"
                     name="role_affiliation"
@@ -116,13 +117,12 @@ const GetInvolvedCommitteesForm = () => {
                     />
                 </Form.Item>
 
-                <Form.Item>
+                <Form.Item className={styles.submitItem}>
                     <div className={styles.buttonContainer}>
                         <Button
                             htmlType="submit"
                             type="primary"
                             className={styles.submitButton}
-                            block
                             loading={isLoading}
                         >
                             Submit your message

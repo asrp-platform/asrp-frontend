@@ -1,121 +1,87 @@
 "use client"
 
-import styles from "@/context/CookieConsentProvider/CookieBanner/styles.module.scss"
-import { useState } from "react"
-import { Button, Checkbox, Typography } from "antd"
+import { useId, useState } from "react"
+import { Button, Checkbox, message } from "antd"
 import Link from "next/link"
+import {
+    ALL_COOKIE_CONSENT,
+    COOKIE_CATEGORIES,
+    COOKIE_CONSENT_KEY,
+    DEFAULT_COOKIE_CONSENT,
+    type CookieConsent,
+} from "../cookieConsent"
+import styles from "./styles.module.scss"
 
-const { Title, Paragraph, Text } = Typography
-
-const COOKIE_LABELS: Record<string, string> = {
-    necessary: "Strictly necessary",
-    performance: "Analytics cookies",
-    targeting: "Marketing cookies",
-    functionality: "Functional cookies",
-    unclassified: "Other cookies",
-}
-
-interface IProps {
+interface Props {
+    initialConsent: CookieConsent
     onClose: () => void
 }
 
-const CookieBanner = ({ onClose }: IProps) => {
-    const [consents, setConsents] = useState({
-        necessary: true,
-        performance: false,
-        targeting: false,
-        functionality: false,
-        unclassified: false,
-    })
-    const [dirty, setDirty] = useState(false)
+const CookieBanner = ({ initialConsent, onClose }: Props) => {
+    const [consents, setConsents] = useState<CookieConsent>(initialConsent)
+    const titleId = useId()
+    const descriptionId = useId()
+    const dirty = COOKIE_CATEGORIES.some(({ key }) => consents[key] !== initialConsent[key])
 
-    const acceptAll = () => {
-        const allTrue = {
-            necessary: true,
-            performance: true,
-            targeting: true,
-            functionality: true,
-            unclassified: true,
+    const saveConsent = (value: CookieConsent) => {
+        try {
+            window.localStorage.setItem(
+                COOKIE_CONSENT_KEY,
+                JSON.stringify({ ...value, necessary: true }),
+            )
+            onClose()
+        } catch {
+            message.error("Unable to save cookie preferences. Please try again.")
         }
-        setConsents(allTrue)
-        window.localStorage.setItem("cookieConsent", JSON.stringify(allTrue))
-        onClose()
-    }
-
-    const rejectAll = () => {
-        const allFalse = {
-            necessary: true,
-            performance: false,
-            targeting: false,
-            functionality: false,
-            unclassified: false,
-        }
-        setConsents(allFalse)
-        window.localStorage.setItem("cookieConsent", JSON.stringify(allFalse))
-        onClose()
-    }
-
-    const saveConsent = () => {
-        window.localStorage.setItem("cookieConsent", JSON.stringify(consents))
-        onClose()
-    }
-
-    const handleCheckbox = (key: keyof typeof consents, checked: boolean) => {
-        setConsents({ ...consents, [key]: checked })
-        setDirty(true)
     }
 
     return (
         <div className={styles.outerContainer}>
-            <div className={styles.innerContainer}>
+            <section
+                className={styles.innerContainer}
+                aria-labelledby={titleId}
+                aria-describedby={descriptionId}
+            >
                 <div className={styles.header}>
-                    <Title level={4}>This website uses cookies</Title>
-                    <Paragraph>
+                    <h2 id={titleId}>This website uses cookies</h2>
+                    <p id={descriptionId}>
                         We use cookies to improve user experience. Choose what cookies you allow us
                         to use. You can read more about our Cookie Policy in our{" "}
                         <Link href="/policies">Privacy policy</Link>.
-                    </Paragraph>
+                    </p>
                 </div>
                 <div className={styles.footer}>
                     <div className={styles.choicesContainer}>
-                        {Object.entries(consents).map(([key, value]) => (
-                            <div key={key}>
-                                <Checkbox
-                                    checked={value}
-                                    disabled={key === "necessary"}
-                                    onChange={(event) =>
-                                        handleCheckbox(
-                                            key as keyof typeof consents,
-                                            event.target.checked,
-                                        )
-                                    }
-                                />
-                                <Text className={styles.label}>{COOKIE_LABELS[key]}</Text>
-                            </div>
+                        {COOKIE_CATEGORIES.map(({ key, label }) => (
+                            <Checkbox
+                                key={key}
+                                checked={consents[key]}
+                                disabled={key === "necessary"}
+                                onChange={({ target }) =>
+                                    setConsents((previous) => ({
+                                        ...previous,
+                                        [key]: target.checked,
+                                    }))
+                                }
+                            >
+                                {label}
+                            </Checkbox>
                         ))}
                     </div>
                     <div className={styles.buttonContainer}>
-                        <Button onClick={rejectAll}>Reject all</Button>
-                        {dirty ? (
-                            <Button
-                                className={styles.acceptButton}
-                                type="primary"
-                                onClick={saveConsent}
-                            >
-                                Save preferences
-                            </Button>
-                        ) : (
-                            <Button
-                                className={styles.acceptButton}
-                                type="primary"
-                                onClick={acceptAll}
-                            >
-                                Accept all
-                            </Button>
-                        )}
+                        <Button onClick={() => saveConsent(DEFAULT_COOKIE_CONSENT)}>
+                            Reject all
+                        </Button>
+                        <Button
+                            className={styles.acceptButton}
+                            type="primary"
+                            onClick={() => saveConsent(dirty ? consents : ALL_COOKIE_CONSENT)}
+                        >
+                            {dirty ? "Save preferences" : "Accept all"}
+                        </Button>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     )
 }

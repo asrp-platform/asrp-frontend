@@ -191,7 +191,7 @@ const GetInvolvedForm = () => {
                     />
                 </Form.Item>
 
-                <div className={styles.intentionGrid}>
+                <div className={styles.preferencesStack}>
                     <LeadershipAndCommitteesSection
                         setChecked={setChecked}
                         future_committee_working_checked={intentionChecks.future_committee_working}

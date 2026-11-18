@@ -9,6 +9,9 @@ import NameChangeRequestsTable from "@app/(administration)/administration/users/
 import UsersTable from "@app/(administration)/administration/users/(tabs)/UsersTable.tsx"
 import { useQueryParamTab } from "@shared/hooks/useQueryParamTab.ts"
 
+import { useAdminAttentionQuery } from "@shared/backend/queries/useAdminAttentionQuery"
+import AdminAttentionLabel from "@shared/ui/AdminAttentionLabel/AdminAttentionLabel"
+
 const items = [
     {
         label: "Users",
@@ -40,6 +43,12 @@ const items = [
 ]
 
 const UsersTabs = () => {
+    const { nameChangeCount } = useAdminAttentionQuery()
+    const counts: Record<string, number | undefined> = { "name-changes": nameChangeCount }
+    const tabs = items.map((item) => ({
+        ...item,
+        label: <AdminAttentionLabel count={counts[item.key]}>{item.label}</AdminAttentionLabel>,
+    }))
     const { activeTab, setActiveTab } = useQueryParamTab({
         defaultTab: "users",
         tabKeys: items.map(({ key }) => key),
@@ -51,7 +60,7 @@ const UsersTabs = () => {
             onChange={setActiveTab}
             type="card"
             style={{ marginBottom: 32 }}
-            items={items}
+            items={tabs}
         />
     )
 }

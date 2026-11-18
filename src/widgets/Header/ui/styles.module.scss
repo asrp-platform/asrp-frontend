@@ -110,12 +110,19 @@
     .menuItemContainer {
         display: flex;
         gap: 10px;
-        align-items: center;
+        align-items: flex-start;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--text-primary-color-light);
+        font: inherit;
+        text-align: start;
+        cursor: pointer;
     }
 
     a {
         color: var(--text-primary-color-light);
-        display: inline-block; /* важно */
         transition: transform 0.25s ease;
 
         &:visited {
@@ -124,7 +131,11 @@
     }
 
     .menuIcon {
-        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 18px;
+        height: 1lh;
     }
 }
 
@@ -137,22 +148,26 @@
 }
 
 .subMenu {
-    display: flex;
-    flex-direction: column;
-    padding-left: 32px;
-
-    max-height: 0;
-    overflow: hidden;
+    display: grid;
+    grid-template-rows: 0fr;
     opacity: 0;
 
     transition:
-        max-height 450ms ease,
-        opacity 200ms ease;
+        grid-template-rows 260ms ease-in-out,
+        opacity 260ms ease-in-out;
 }
 
 .open {
-    max-height: 500px; // больше максимальной высоты контента
+    grid-template-rows: 1fr;
     opacity: 1;
+}
+
+.subMenuContent {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    padding-left: 28px;
 }
 
 .subMenuItem {
@@ -164,12 +179,24 @@
 .arrow {
     margin-left: auto;
     font-size: 14px;
+    line-height: 32px;
+    transition: transform 260ms ease-in-out;
+}
+
+.menuItemContainer[aria-expanded="true"] .arrow {
+    transform: rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .subMenu,
+    .arrow {
+        transition: none;
+    }
 }
 
 .sideMenu {
     a {
         color: var(--text-primary-color-light);
-        display: inline-block; /* важно */
         transition: transform 0.25s ease;
 
         &:visited {
